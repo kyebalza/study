@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<!-- xml 이름상관 없음. *.xml로 설정했으니까 -->
+<!-- 이 xml이 어떤 interface와 연결되는지 설정 -->
+<mapper namespace="com.quiz.bank.dao.TodoListDAO">
+
+
+</mapper>

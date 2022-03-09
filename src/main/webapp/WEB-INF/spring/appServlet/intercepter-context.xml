@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- joinFrom, del에 test르 위해서 intercepter 걸어놈 -->
+			<mvc:mapping path="/joinForm"/>
+			<mvc:mapping path="/del*"/>
+			<bean class="com.quiz.bank.utils.LoginIntercepter"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+<!-- <mvc:mapping path="/*/"/>  페이지가 너무 많을 때는 *이 것을 넣어서 반대로 빼주는것이 좋음-->
+</beans>

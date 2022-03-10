@@ -6,5 +6,64 @@
 <!-- 이 xml이 어떤 interface와 연결되는지 설정 -->
 <mapper namespace="com.quiz.bank.dao.AdminStudyDAO">
 
+	<update id="deleteDetailCate" parameterType="hashmap">
+	UPDATE detailed_subject_category SET del_flag = TRUE WHERE detailed_subject_cate_no = #{detailed_subject_cate_no}
+	</update>
+	<update id="deleteSubjectCate" parameterType="hashmap">
+	UPDATE subject_category SET del_flag = TRUE WHERE subject_cate_no = #{subject_cate_no}
+	</update>
+	<update id="deleteTestCate" parameterType="hashmap">
+	UPDATE test_category SET del_flag = TRUE WHERE test_cate_no = #{test_cate_no}
+	</update>
 
+	<select id="testCategoryCall" resultType="hashmap">
+	SELECT * FROM test_category WHERE del_flag = false
+	</select>
+	<select id="subjectCategoryCall" resultType="hashmap">
+	SELECT * FROM subject_category WHERE del_flag = false AND test_cate_no = #{upperCate}
+	</select>
+	<select id="detailSubjectCategoryCall" resultType="hashmap">
+	SELECT * FROM detailed_subject_category WHERE del_flag = false AND subject_cate_no = #{upperCate}
+	</select>
+	
+	
+	<insert id="registTestCategory" parameterType="hashmap">
+	INSERT INTO test_category (test_cate) VALUES (#{registCategory})
+	</insert>
+	<insert id="registSubjectCategory" parameterType="hashmap">
+	INSERT INTO subject_category (subject_cate,test_cate_no) VALUES (#{registCategory},${upperCateNo})
+	</insert>
+	<insert id="registDetailSubject" parameterType="hashmap">
+	INSERT INTO detailed_subject_category (detailed_subject_cate,subject_cate_no) VALUES (#{registCategory},${upperCateNo})
+	</insert>
+	
+	<select id="overlayTestCate" parameterType="hashmap" resultType="int">
+	SELECT COUNT(test_cate) FROM test_category WHERE test_cate = #{registCategory} AND del_flag = false
+	</select>
+	<select id="overlaySubjectCate" parameterType="hashmap" resultType="int">
+	SELECT COUNT(subject_cate) FROM subject_category WHERE subject_cate = #{registCategory} AND test_cate_no = #{upperCateNo} AND del_flag = false
+	</select>
+	<select id="overlayDetailSubjectCate" parameterType="hashmap" resultType="int">
+	SELECT COUNT(detailed_subject_cate) FROM detailed_subject_category WHERE detailed_subject_cate = #{registCategory} AND subject_cate_no =#{upperCateNo} AND del_flag = false
+	</select>
+	
+	
+	<!-- 대분류 삭제 -->
+	<update id="deleteTestCategory" parameterType="hashmap">
+	UPDATE test_category SET del_flag = true WHERE test_cate_no = #{test_cate_no}
+	</update>
+	<!-- 삭제대분류와 연관된 과목 삭제 -->
+	<update id="deleteTestCategory_subject">
+	UPDATE subject_category SET del_flag = true WHERE test_cate_no = #{test_cate_no}
+	</update>
+	<!-- 삭제대분류와 연관된 과목 리스트 -->
+	<select id="deleteTestCategory_subjectList" parameterType="hashmap" resultType="String">
+	SELECT subject_cate_no FROM subject_category WHERE test_cate_no = #{test_cate_no}
+	</select>
+	<!-- 삭제대분류와 연관돈 과목들(ArrayList)과 연관된 세부과목들 삭제 -->
+	<update id="deleteTestCategory_detailed_subject" parameterType="String">
+	UPDATE detailed_subject_category SET del_flag = true WHERE subject_cate_no = #{param1}
+	</update> 
+	
+	
 </mapper>

@@ -6,5 +6,18 @@
 <!-- 이 xml이 어떤 interface와 연결되는지 설정 -->
 <mapper namespace="com.quiz.bank.dao.InquiryBoardDAO">
 
+	<!-- 문의글쓰기 -->
+	<insert id="inquiryWrite" 
+		useGeneratedKeys="true"
+		keyProperty="board_no"
+		keyColumn="board_no"
+		parameterType="com.quiz.bank.dto.InquiryBoardDTO">
+		INSERT INTO Inquiry_board
+			(title,content,user_id)
+		values
+			(#{title},#{content},#{user_id})
+	</insert>
+	
+
 
 </mapper>

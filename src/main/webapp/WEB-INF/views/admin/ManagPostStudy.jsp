@@ -112,7 +112,7 @@ function SearchList(){
 
 
 //페이징 처리
-var currPage = 1;
+/* var currPage = 1;
 var totalPage = 2;
 
 listCall(currPage,10);
@@ -125,7 +125,7 @@ function more(){ //다음 페이지로 넘겼을 때
 	}else{
 		listCall(currPage, 100);			
 	}
-}
+} */
 
 /* function listCall(page, cnt){				
 	

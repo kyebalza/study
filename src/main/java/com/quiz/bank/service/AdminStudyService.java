@@ -70,27 +70,29 @@ public class AdminStudyService {
 		return dao.overlayDetailSubjectCate(obj);
 	}
 
-	public String deleteTestCategory(HashMap<String, String> obj) {
+	public int deleteTestCategory(HashMap<String, String> obj) {
 		int del_success_test_cate = dao.deleteTestCategory(obj);
 		logger.info("대분류 삭제한거 : {}",del_success_test_cate);
-		
-		int del_success_subject_cate = dao.deleteTestCategory_subject(obj);
-		logger.info("중분류 삭제한거 : {}",del_success_subject_cate);
-		
-		/*
-		int del_success_detailed_subject_cate = 0;
-		ArrayList<String> del_subject_list = dao.deleteTestCategory_subjectList(obj);
-		logger.info("가져온 중분류 {}",del_subject_list);
-		if(del_subject_list.get(0) != null) {
-			for (String subject : del_subject_list) {
-				logger.info("{}",subject);
-				del_success_detailed_subject_cate += dao.deleteTestCategory_detailed_subject(subject);
-			}
-		}
-		*/
-		String msg = "관련된 카테고리들의 삭제가 완료되었습니다.";
-		logger.info("보내기 전에 검수 : {}",msg);
-		return msg;
+
+		return del_success_test_cate;
 	}
+
+	public int deleteSubjectCategory(HashMap<String, String> obj) {
+		return dao.deleteSubjectCategory(obj);
+	}
+
+	public int adminDeleteDetailedSubjectCategory(HashMap<String, String> obj) {
+		return dao.adminDeleteDetailedSubjectCategory(obj);
+	}
+
+	public String getTestCategoryName(HashMap<String, String> params) {
+		return dao.getTestCategoryName(params);
+	}
+
+	public ArrayList<HashMap<String, String>> getSubjectCategoryList(HashMap<String, String> params) {
+		return dao.getSubjectCategoryList(params);
+	}
+
+
 
 }

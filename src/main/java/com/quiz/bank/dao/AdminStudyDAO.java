@@ -31,5 +31,13 @@ public interface AdminStudyDAO {
 
 	int deleteTestCategory_detailed_subject(String subject);
 
+	int deleteSubjectCategory(HashMap<String, String> obj);
+
+	int adminDeleteDetailedSubjectCategory(HashMap<String, String> obj);
+
+	String getTestCategoryName(HashMap<String, String> params);
+
+	ArrayList<HashMap<String, String>> getSubjectCategoryList(HashMap<String, String> params);
+
 
 }

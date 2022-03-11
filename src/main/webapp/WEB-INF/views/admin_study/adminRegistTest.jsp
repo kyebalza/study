@@ -68,7 +68,7 @@
         <br/><br/>
             <select id="subjectCategory"><option>과목카테고리</option></select>&nbsp;&nbsp;&nbsp;<input type="button" id="deleteSubjectCategory" value="삭제"/>
         <br/><br/>
-            <select id="detailSubjectCategory"><option>세부과목카테고리</option></select>&nbsp;&nbsp;&nbsp;<input type="button" id="deleteDetailTestCategory" value="삭제"/>
+            <select id="detailSubjectCategory"><option>세부과목카테고리</option></select>&nbsp;&nbsp;&nbsp;<input type="button" id="deleteDetailedSubjectCategory" value="삭제"/>
         <br/><br/>
         <h5 id="addCategory">추가 할 카테고리 : </h5>
         <input id="registCategoryText" type="text" placeholder="저장 할 카테고리 이름을 입력하세요."/>&nbsp;&nbsp;&nbsp;<input id="registCategoryBtn" type="button" value="저장"/>
@@ -77,7 +77,7 @@
         <h3>시험 등록</h3>
         <hr/><br/>
         <div id="registTest">
-        	<form action="toRegistQuizForm" id="toRegistQuizForm" method="get">
+        	<form action="adminRegistQuizForm" id="toRegistQuizForm" method="get">
 	            <table>
 	                <tr>
 	                    <td>
@@ -184,55 +184,102 @@ $('#registCategoryBtn').click(function(){
 		obj.nowCate = 'detailSubject';
 	}
 	$.ajax({
-		url : 'registCategory',
+		url : 'adminRegistCategory',
 		type : 'GET',
 		data : obj,
 		dataType : 'JSON',
 		success : function(data){
 			alert(data.msg);
+			if(addCate == 'test'){
+				testCategoryCall("0","test",$('#testCategory'));
+				testCategoryCall("0","test",$('#testCategory_2'));
+				$('#testCategory').val('addCate').prop("selected",true);
+			}
+			if(addCate == 'subject'){
+				subjectCategoryCall($testCategory,"subject",$('#subjectCategory'));
+				//$('#subjectCategory').val('addCate').prop("selected",true);
+			}
+			if(addCate == 'detailSubject'){
+				detailSubjectCategoryCall($subjectCategory,"detail",$('#detailSubjectCategory'));
+				//('#detailSubjectCategory').val('addCate').prop("selected",true);
+			}	
 			},
 		error : function(e){}
 	});
-	if(addCate == 'test'){
-		testCategoryCall("0","test",$('#testCategory'));
-		testCategoryCall("0","test",$('#testCategory_2'));
-		$('#testCategory').val('addCate').prop("selected",true);
-	}
-	if(addCate == 'subject'){
-		subjectCategoryCall($testCategory,"subject",$('#subjectCategory'));
-		$('#subjectCategory').val('addCate').prop("selected",true);
-	}
-	if(addCate == 'detailSubject'){
-		detailSubjectCategoryCall($subjectCategory,"detail",$('#detailSubjectCategory'));
-		$('#detailSubjectCategory').val('addCate').prop("selected",true);
-	}	
 });
 //시험 삭제버튼
 $('#deleteTestCategory').click(function(){
 	var obj = {};
 	obj.test_cate_no = $('#testCategory').val();
 	console.log(obj);
+	var yn = confirm('시험을 삭제하시겠습니까?');
+	if(yn){
+		$.ajax({
+			url : 'adminDeleteTestCategory',
+			type : 'get',
+			data : obj,
+			dataType : 'json',		
+			success : function(data){
+				console.log(data);
+				testCategoryCall("0","test",$('#testCategory'));
+				subjectCategoryCall("0","subject",$('#subjectCategory'));
+				detailSubjectCategoryCall("0","detail",$('#detailSubjectCategory'));
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});		
+	}
 	
-	$.ajax({
-		url : 'deleteTestCategory',
-		type : 'get',
-		data : obj,
-		dataType : 'JSON',
-		success : function(data){
-			console.log(data);
-			//testCategoryCall("0","test",$('#testCategory'));
-			//subjectCategoryCall("0","subject",$('#subjectCategory'));
-			//detailSubjectCategoryCall("0","detail",$('#detailSubjectCategory'));
-		},
-		error : function(e){
-			console.log(e);
-		}
-	});
 });
 //과목 삭제버튼
-
+$('#deleteSubjectCategory').click(function(){
+	var obj = {};
+	obj.subject_cate_no = $('#subjectCategory').val();
+	console.log(obj);
+	var yn = confirm('과목을 삭제하시겠습니까?');
+	if(yn){
+		$.ajax({
+			url : 'adminDeleteSubjectCategory',
+			type : 'get',
+			data : obj,
+			dataType : 'json',		
+			success : function(data){
+				console.log(data);
+				//testCategoryCall("0","test",$('#testCategory'));
+				subjectCategoryCall($testCategory,"subject",$('#subjectCategory'));
+				detailSubjectCategoryCall($subjectCategory,"detail",$('#detailSubjectCategory'));
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});		
+	}
+});
 //세부과목 삭제버튼
-
+$('#deleteDetailedSubjectCategory').click(function(){
+	var obj = {};
+	obj.detailed_subject_cate_no = $('#detailSubjectCategory').val();
+	console.log(obj);
+	var yn = confirm('세부과목을 삭제하시겠습니까?');
+	if(yn){
+		$.ajax({
+			url : 'adminDeleteDetailedSubjectCategory',
+			type : 'get',
+			data : obj,
+			dataType : 'json',		
+			success : function(data){
+				console.log(data);
+				//testCategoryCall("0","test",$('#testCategory'));
+				//subjectCategoryCall("0","subject",$('#subjectCategory'));
+				detailSubjectCategoryCall($subjectCategory,"detail",$('#detailSubjectCategory'));
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+	}
+});
 
 
 
@@ -244,14 +291,14 @@ function testCategoryCall(upperCate,Cate,id){
 	var obj = {upperCate:upperCate,Cate:Cate};
 	console.log(obj);
 	$.ajax({
-		url : 'testCategoryCall',
+		url : 'adminTestCategoryCall',
 		type : 'get',
 		data : obj,
-		dataType : 'JSON',
+		dataType : 'json',
 		success : function(data){
 			console.log(data.Category);
 			
-			var txt = '<option value="none" style="text-align : center">-- 시험카테고리 --</option>';
+			var txt = '<option value="none">시험카테고리</option>';
 			
 			txt += '<option value="addCate">+ 추가하기</option>';
 			data.Category.forEach(function(item,idx){
@@ -270,14 +317,14 @@ function subjectCategoryCall(upperCate,Cate,id){
 	var obj = {upperCate:upperCate,Cate:Cate};
 	console.log(obj);
 	$.ajax({
-		url : 'subjectCategoryCall',
+		url : 'adminSubjectCategoryCall',
 		type : 'get',
 		data : obj,
 		dataType : 'JSON',
 		success : function(data){
 			console.log(data);
 			
-			var txt = '<option value="none" style="text-align : center">-- 과목카테고리 --</option>';
+			var txt = '<option value="none">-- 과목카테고리 --</option>';
 			txt += '<option value="addCate">+ 추가하기</option>';
 			data.Category.forEach(function(item,idx){
 				txt += '<option value="'+item.subject_cate_no+'">'+item.subject_cate+'</option>';
@@ -297,14 +344,14 @@ function detailSubjectCategoryCall(upperCate,Cate,id){
 	var obj = {upperCate:upperCate,Cate:Cate};
 	console.log(obj);
 	$.ajax({
-		url : 'detailSubjectCategoryCall',
+		url : 'adminDetailSubjectCategoryCall',
 		type : 'get',
 		data : obj,
 		dataType : 'JSON',
 		success : function(data){
 			console.log(data);
 			
-			var txt = '<option value="none" style="text-align : center">-- 시험과목 카테고리 --</option>';
+			var txt = '<option value="none">-- 시험과목 카테고리 --</option>';
 			txt += '<option value="addCate">추가하기</option>';
 			data.Category.forEach(function(item,idx){
 				txt += '<option value="'+item.detailed_subject_cate_no+'">'+item.detailed_subject_cate+'</option>';
@@ -348,6 +395,8 @@ $('#registTestBtn').click(function(){
 		$('#toRegistQuizForm').submit();
 	}
 });
+
+
 
 </script>
 </html>

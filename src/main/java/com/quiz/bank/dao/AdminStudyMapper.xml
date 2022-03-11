@@ -50,20 +50,29 @@
 	
 	<!-- 대분류 삭제 -->
 	<update id="deleteTestCategory" parameterType="hashmap">
-	UPDATE test_category SET del_flag = true WHERE test_cate_no = #{test_cate_no}
+	UPDATE (test_category t left JOIN subject_category sc USING (test_cate_no) left JOIN detailed_subject_category dsc USING (subject_cate_no))
+	SET t.del_flag = true , sc.del_flag = true , dsc.del_flag = true WHERE test_cate_no = #{test_cate_no}
 	</update>
-	<!-- 삭제대분류와 연관된 과목 삭제 -->
-	<update id="deleteTestCategory_subject">
-	UPDATE subject_category SET del_flag = true WHERE test_cate_no = #{test_cate_no}
+	
+	
+	<!-- 중분류 삭제 -->
+	<update id="deleteSubjectCategory" parameterType="hashmap">
+	UPDATE (subject_category sc LEFT JOIN detailed_subject_category dsc USING (subject_cate_no))
+	SET sc.del_flag =TRUE , dsc.del_flag = TRUE WHERE subject_cate_no = #{subject_cate_no}
 	</update>
-	<!-- 삭제대분류와 연관된 과목 리스트 -->
-	<select id="deleteTestCategory_subjectList" parameterType="hashmap" resultType="String">
-	SELECT subject_cate_no FROM subject_category WHERE test_cate_no = #{test_cate_no}
+	
+	<!-- 소분류 삭제 -->
+	<update id="adminDeleteDetailedSubjectCategory" parameterType="hashmap">
+	UPDATE detailed_subject_category SET del_flag = true WHERE detailed_subject_cate_no = #{detailed_subject_cate_no}
+	</update>
+	
+	<select id="getTestCategoryName" parameterType="hashmap" resultType="string">
+	SELECT test_cate FROM test_category WHERE test_cate_no = #{test_category}
 	</select>
-	<!-- 삭제대분류와 연관돈 과목들(ArrayList)과 연관된 세부과목들 삭제 -->
-	<update id="deleteTestCategory_detailed_subject" parameterType="String">
-	UPDATE detailed_subject_category SET del_flag = true WHERE subject_cate_no = #{param1}
-	</update> 
+	
+	<select id="getSubjectCategoryList" parameterType="hashmap" resultType="hashmap">
+	SELECT subject_cate_no ,subject_cate FROM subject_category WHERE test_cate_no = #{test_category} AND del_flag = false; 
+	</select>
 	
 	
 </mapper>

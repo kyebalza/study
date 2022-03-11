@@ -7,27 +7,44 @@
 <mapper namespace="com.quiz.bank.dao.AdminDAO">
 
 	<!-- 관리자 공부 게시판 리스트 호출 쿼리 -->
-	<select id="ManagPostStudy" resultType="com.quiz.bank.dto.StudyBoardDTO">
+	<select id="studylist" resultType="com.quiz.bank.dto.StudyBoardDTO">
 		SELECT * FROM study_board JOIN board_category ON study_board.board_cate_no = board_category.board_cate_no
 	</select>
 	
-	<!-- 관리자 공부 게시판 리스트 호출 쿼리 -->
+	<select id="allCount" resultType="int">
+		SELECT COUNT (board_no) FROM study_board
+	</select>
+	
+	<!-- 관리자 공부 게시판 검색 쿼리 -->
 	<select id="StudySearchList" parameterType="com.quiz.bank.dto.StudyBoardDTO" resultType="com.quiz.bank.dto.StudyBoardDTO">
 		SELECT * FROM study_board JOIN board_category ON study_board.board_cate_no = board_category.board_cate_no
 		
-		<trim prefix="WHERE" prefixOverrides="AND|OR">
-			<if test="keyword !=null">
-				<if test="searchType == all">
+		<choose>
+			<when test="SearchType != null and SearchType.equals('all') ">
+				WHERE title OR user_id LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+			<when test="SearchType != null and SearchType.equals('tit') ">
+				WHERE title LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+			<when test="SearchType != null and SearchType.equals('user') ">
+				WHERE user_id LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+		</choose>
+		
+		
+		<!-- <trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="Keyword !=null">
+				<if test="SearchType == all">
 					AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
 				</if>
-				<if test="searchType == 'title'">
+				<if test="SearchType == 'tit'">
 					AND title LIKE CONCAT ('%',#{keyword},'%')
 				</if>
-				<if test="searchTyple == 'user_id'">
+				<if test="SearchType == 'user'">
 					AND user_id LIKE CONCAT ('%',#{keyword},'%')
 				</if>
 			</if>
-		</trim>
+		</trim> -->
 	</select>
 	
 </mapper>

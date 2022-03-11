@@ -21,20 +21,36 @@ public class AdminService {
 	
 	@Autowired AdminDAO addao;
 
-	//공부 게시판 리스트 호출 서비스
-	public ArrayList<StudyBoardDTO> ManagPostStudy() {
-		logger.info("공부 게시판 리스트 호출 서비스 도착");
-		ArrayList<StudyBoardDTO> list = null;
-		list = addao.ManagPostStudy();
-		logger.info("size : "+list.size());
-		
-		return list;
-	}
 
 	//공부 게시판 리스트 검색 서비스
 	public List<StudyBoardDTO> StudySearchList(StudyBoardDTO SBdto) {
 		logger.info("공부 게시판 리스트 검색 서비스 도착");
-		return addao.StudyBoardDTO(SBdto);
+		return addao.StudySearchList(SBdto);
+	}
+
+	
+	
+	//공부 게시판 리스트 호출 (페이징)
+	public HashMap<String, Object> studylist(int currPage, int pagePerCnt) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		//어디서 부터 보여줄 것인가.
+		int offset = ((currPage-1)*pagePerCnt-1) >=0 ?
+				((currPage-1)*pagePerCnt-1) : 0;
+		logger.info("offset : "+offset);
+		
+		int totalCount = addao.allCount(); //테이블 모든 글의 총 갯수
+		//만들 수 있는 페이지의 수 (전체 갯수 / 보여줄 수)
+		int range = totalCount%pagePerCnt > 0 ? 
+				 (totalCount/pagePerCnt)+1 : (totalCount/pagePerCnt);
+		 logger.info("총 갯수 : {}",totalCount);
+		 logger.info("만들 수 있는 총 페이지 : {}",range);
+		 
+		 map.put("pages", range);
+		 map.put("list", addao.studylist(pagePerCnt, offset));
+		
+		return map;
 	}
 
 

@@ -6,11 +6,18 @@ import java.util.List;
 
 import com.quiz.bank.dto.StudyBoardDTO;
 
+
 public interface AdminDAO {
 
 	ArrayList<StudyBoardDTO> ManagPostStudy();
 
-	List<StudyBoardDTO> StudyBoardDTO(StudyBoardDTO sBdto);
+	List<StudyBoardDTO> StudySearchList(StudyBoardDTO sBdto);
+
+	int allCount();
+
+	ArrayList <StudyBoardDTO> studylist (int pagePerCnt, int offset);
+
+	
 
 
 }

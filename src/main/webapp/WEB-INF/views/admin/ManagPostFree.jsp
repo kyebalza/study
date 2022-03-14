@@ -26,12 +26,12 @@
 		<a target="_blank" id="L3" style="color: black; cursor:pointer;">문의</a>
 	</div>
 	</br>
-	<p>공부 게시판 관리</p>
+	<p>자유 게시판 관리</p>
 	</br>
 	</br>
 	</br>
 	<div>
-		<form action="StudySearch" method="GET" name="StudySearch" autocomplete="off">
+		<form action="FreeSearch" method="GET" name="FreeSearch" autocomplete="off">
 			<select name ="SearchType">
 				<option selected>검색 내용 선택</option>
 				<option value="all">전체</option>
@@ -54,8 +54,8 @@
 				<th>삭제</th>
 			</tr>
 		</thead>
-		<tbody id = "studyboardlist">
- 			
+		<tbody id = "Freeboardlist">
+
 		</tbody>
 			<tr>
 				<td colspan="7" id="paging" >
@@ -74,12 +74,12 @@
 	 function SearchList(){
 		$.ajax({
 			type: 'GET',
-			url : 'StudySearchList',
-			data : $("form[name=StudySearch]").serialize(),
+			url : 'FreeSearchList',
+			data : $("form[name=FreeSearch]").serialize(),
 			success : function(result){
 				console.log("확인");
 				//테이블 초기화
-				$('#studyboardlist').empty();
+				$('#Freeboardlist').empty();
 				if(result.length>=1){
 					var str = '';
 					result.forEach(function(item){
@@ -99,7 +99,7 @@
 						}
 						
 						str+="</tr>";
-						$('#studyboardlist').append(str);
+						$('#Freeboardlist').append(str);
 						
 		
 	        		})				 
@@ -107,7 +107,7 @@
 			}
 		})
 		
-		console.log($("form[name=StudySearch]").serialize());
+		console.log($("form[name=FreeSearch]").serialize());
 		console.log($("form[name=SearchType]").serialize());
 	}; 
 	
@@ -133,7 +133,7 @@
 
 		$.ajax({
 			type:'GET',
-			url:'studylist',
+			url:'Freelist',
 			data:{'page':page,'cnt':cnt},
 			dataTyps:'JSON',
 			success: function(data){
@@ -165,9 +165,8 @@
 		/* console.log(board_no,item); */
 		var content = '';	
 		list.forEach(function(item, board_no){
-			
 				var date = new Date(item.reg_date);
-				content+="<tr>";
+				content+="<tr>"
 				content+="<td>"+item.board_no+"</td>";
 				content+="<td><a href='detail?idx="+item.board_no+"'>"+item.title+"</a></td>";
 				content+="<td>"+item.board_cate+"</td>";
@@ -178,33 +177,31 @@
 					content+="<td>"+'<input type="button" class="why" onclick="studydel('+item.board_no+')" value="삭제"/>'+'</td>';					
 				} else {
 					content+="<td>"+'<input type="button" class="why" onclick="studydel('+item.board_no+')" value="복구"/>'+'</td>';				
-				}				
-				content+="</tr>";
+				}
 				
-			
+				content+="</tr>";
 		});
 		//console.log(content);
-		$('#studyboardlist').empty();
-		$('#studyboardlist').append(content);
+		$('#Freeboardlist').empty();
+		$('#Freeboardlist').append(content);
 		
 	}
 
-		var me = this;
 	
 	//관리자 공부 게시글 삭제
-	function studydel(e) {
-		console.log(e);
+	function Freedel(e) {
+		console.log("클릭 게시글 번호 : "+e);
 		
 		$.ajax({
 			context: this,
 			type:'POST',
-			url:'studydel',
+			url:'Freedel',
 			data:{"board_no":e}, // {}안에 아무것도 안넣으면 다보여줘라 라는 뜻
 			dataType:'JSON',
-			success:function(studydel_check) {
-				if (studydel_check == 0) {
+			success:function(Freedel_check) {
+				if (Freedel_check == 0) {
 					console.log("삭제 성공");
-					listCall(currPage,10);
+					listCall(currPage,10);	
 				}else {
 					console.log("복구 성공");
 					listCall(currPage,10);
@@ -216,14 +213,13 @@
 		});
 	}
 	
-	$('#L2').click(function(){
-		location.href='./ManagPostFree'
+	$('#L1').click(function(){
+		location.href='./ManagPostStudy' //어디로 갈지 링크 걸어주기
 	});
 	
 	$('#L3').click(function(){
-		location.href='./ManagPostInquriy' //어디로 갈지 링크 걸어주기
+		location.href='./ManagPostInquriy'
 	});
-	
 
 </script>
 </html>

@@ -11,9 +11,44 @@
 		SELECT * FROM study_board JOIN board_category ON study_board.board_cate_no = board_category.board_cate_no
 	</select>
 	
-	<select id="allCount" resultType="int">
+	<!-- 공부 게시판 페이징 관련 -->
+	<select id="SallCount" resultType="int">
 		SELECT COUNT (board_no) FROM study_board
 	</select>
+	
+	<!-- 관리자 문의 게시판 리스트 호출 쿼리 -->
+	<select id="Inquirylist" resultType="com.quiz.bank.dto.InquiryBoardDTO">
+		SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no
+	</select>
+	
+	<!-- 문의 게시판 페이징 관련 -->
+	<select id="IallCount" resultType="int">
+		SELECT COUNT (board_no) FROM inquiry_board
+	</select>
+	
+	<!-- 관리자 자유 게시판 리스트 호출 쿼리 -->
+	<select id="Freelist" resultType="com.quiz.bank.dto.FreeBoardDTO">
+		SELECT * FROM free_board JOIN board_category ON free_board.board_cate_no = board_category.board_cate_no
+	</select>
+	
+	<!-- 자유 게시판 페이징 관련 -->
+	<select id="FallCount" resultType="int">
+		SELECT COUNT (board_no) FROM free_board
+	</select>
+	
+	<!-- 유저 리스트 호출 쿼리 -->
+	<select id="Memlist" resultType="com.quiz.bank.dto.UserDTO">
+		SELECT * FROM user_info
+	</select>
+	
+	<!-- 유저 페이징 관련 -->
+	<select id="MallCount" resultType="int">
+		SELECT COUNT (user_id) FROM user_info
+	</select>
+	
+	
+	
+	
 	
 	<!-- 관리자 공부 게시판 검색 쿼리 -->
 	<select id="StudySearchList" parameterType="com.quiz.bank.dto.StudyBoardDTO" resultType="com.quiz.bank.dto.StudyBoardDTO">
@@ -30,21 +65,114 @@
 				WHERE user_id LIKE CONCAT ('%',#{keyword},'%')
 			</when>
 		</choose>
-		
-		
-		<!-- <trim prefix="WHERE" prefixOverrides="AND|OR">
-			<if test="Keyword !=null">
-				<if test="SearchType == all">
-					AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
-				</if>
-				<if test="SearchType == 'tit'">
-					AND title LIKE CONCAT ('%',#{keyword},'%')
-				</if>
-				<if test="SearchType == 'user'">
-					AND user_id LIKE CONCAT ('%',#{keyword},'%')
-				</if>
-			</if>
-		</trim> -->
 	</select>
+	
+	<!-- 관리자 문의 게시판 검색 쿼리 -->
+	<select id="InquirySearchList" parameterType="com.quiz.bank.dto.InquiryBoardDTO" resultType="com.quiz.bank.dto.InquiryBoardDTO">
+		SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no
+		
+		<choose>
+			<when test="SearchType != null and SearchType.equals('all') ">
+				WHERE title OR user_id LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+			<when test="SearchType != null and SearchType.equals('tit') ">
+				WHERE title LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+			<when test="SearchType != null and SearchType.equals('user') ">
+				WHERE user_id LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 관리자 자유 게시판 검색 쿼리 -->
+	<select id="FreeSearchList" parameterType="com.quiz.bank.dto.InquiryBoardDTO" resultType="com.quiz.bank.dto.InquiryBoardDTO">
+		SELECT * FROM free_board JOIN board_category ON free_board.board_cate_no = board_category.board_cate_no
+		
+		<choose>
+			<when test="SearchType != null and SearchType.equals('all') ">
+				WHERE title OR user_id LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+			<when test="SearchType != null and SearchType.equals('tit') ">
+				WHERE title LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+			<when test="SearchType != null and SearchType.equals('user') ">
+				WHERE user_id LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 관리자 회원 검색 쿼리 -->
+	<select id="MemSearchList" parameterType="com.quiz.bank.dto.UserDTO" resultType="com.quiz.bank.dto.UserDTO">
+				SELECT * FROM user_info
+		
+		<choose>
+			<when test="SearchType != null and SearchType.equals('all') ">
+				WHERE user_id OR user_name OR user_email LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+			<when test="SearchType != null and SearchType.equals('id') ">
+				WHERE user_id LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+			<when test="SearchType != null and SearchType.equals('name') ">
+				WHERE user_name LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+			<when test="SearchType != null and SearchType.equals('email') ">
+				WHERE user_email LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+		</choose>
+	</select>
+
+	
+	<!-- 공부 게시판 삭제 유무 확인 -->
+	<select id="studydel_check" resultType="int">
+		SELECT del_flag FROM study_board WHERE board_no = #{param1}
+	</select>
+	
+	<!-- 문의 게시판 삭제 유무 확인 -->
+	<select id="Inquirydel_check" resultType="int">
+		SELECT del_flag FROM inquiry_board WHERE board_no = #{param1}
+	</select>
+	
+	<!-- 자유 게시판 삭제 유무 확인 -->
+	<select id="Freedel_check" resultType="int">
+		SELECT del_flag FROM Free_board WHERE board_no = #{param1}
+	</select>
+	
+	
+	
+	<!-- 관리자 공부 게시판 삭제 쿼리 (del = 1) -->
+	<update id="studydel">
+		UPDATE study_board SET del_flag = del_flag+1 WHERE board_no = #{param1}
+	</update>
+	
+	<!-- 관리자 공부 게시판 복구 쿼리 (del = 0) -->
+	<update id="studycall">
+		UPDATE study_board SET del_flag = del_flag-1 WHERE board_no = #{param1}
+	</update>
+	
+	
+	<!-- 관리자 문의 게시판 삭제 쿼리 (del = 1) -->
+	<update id="Inquirydel">
+		UPDATE inquiry_board SET del_flag = del_flag+1 WHERE board_no = #{param1}
+	</update>
+	
+	<!-- 관리자 문의 게시판 복구 쿼리 (del = 0) -->
+	<update id="Inquirycall">
+		UPDATE inquiry_board SET del_flag = del_flag-1 WHERE board_no = #{param1}
+	</update>
+	
+	<!-- 관리자 자유 게시판 삭제 쿼리 (del = 1) -->
+	<update id="Freedel">
+		UPDATE Free_board SET del_flag = del_flag+1 WHERE board_no = #{param1}
+	</update>
+	
+	<!-- 관리자 자유 게시판 복구 쿼리 (del = 0) -->
+	<update id="Freecall">
+		UPDATE Free_board SET del_flag = del_flag-1 WHERE board_no = #{param1}
+	</update>
+	
+	
+	
+	
+	
 	
 </mapper>

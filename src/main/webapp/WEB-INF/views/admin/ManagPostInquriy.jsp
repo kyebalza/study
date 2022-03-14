@@ -26,12 +26,12 @@
 		<a target="_blank" id="L3" style="color: black; cursor:pointer;">문의</a>
 	</div>
 	</br>
-	<p>공부 게시판 관리</p>
+	<p>문의 게시판 관리</p>
 	</br>
 	</br>
 	</br>
 	<div>
-		<form action="StudySearch" method="GET" name="StudySearch" autocomplete="off">
+		<form action="InquirySearch" method="GET" name="InquirySearch" autocomplete="off">
 			<select name ="SearchType">
 				<option selected>검색 내용 선택</option>
 				<option value="all">전체</option>
@@ -50,11 +50,11 @@
 				<th>카테고리</th>
 				<th>작성자</th>
 				<th>작성 날짜</th>
-				<th>조회수</th>
+				<th>답변여부</th>
 				<th>삭제</th>
 			</tr>
 		</thead>
-		<tbody id = "studyboardlist">
+		<tbody id = "Inquiryboardlist">
  			
 		</tbody>
 			<tr>
@@ -74,12 +74,12 @@
 	 function SearchList(){
 		$.ajax({
 			type: 'GET',
-			url : 'StudySearchList',
-			data : $("form[name=StudySearch]").serialize(),
+			url : 'InquirySearchList',
+			data : $("form[name=InquirySearch]").serialize(),
 			success : function(result){
 				console.log("확인");
 				//테이블 초기화
-				$('#studyboardlist').empty();
+				$('#Inquiryboardlist').empty();
 				if(result.length>=1){
 					var str = '';
 					result.forEach(function(item){
@@ -90,7 +90,12 @@
 						str+="<td>"+item.board_cate+"</td>";
 						str+="<td>"+item.user_id+"</td>";
 						str+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
-						str+="<td>"+item.bHit+"</td>";
+						
+						if (item.answer == false) {
+							str+="<td><div>대기</div></td>";
+						}else{
+							str+="<td><div>완료</div></td>";
+						}
 						
 						if (item.del_flag == false){
 							str+="<td>"+'<input type="button" class="why" onclick="studydel('+item.board_no+')" value="삭제"/>'+'</td>';					
@@ -99,7 +104,7 @@
 						}
 						
 						str+="</tr>";
-						$('#studyboardlist').append(str);
+						$('#Inquiryboardlist').append(str);
 						
 		
 	        		})				 
@@ -107,7 +112,7 @@
 			}
 		})
 		
-		console.log($("form[name=StudySearch]").serialize());
+		console.log($("form[name=InquirySearch]").serialize());
 		console.log($("form[name=SearchType]").serialize());
 	}; 
 	
@@ -133,7 +138,7 @@
 
 		$.ajax({
 			type:'GET',
-			url:'studylist',
+			url:'Inquirylist',
 			data:{'page':page,'cnt':cnt},
 			dataTyps:'JSON',
 			success: function(data){
@@ -165,44 +170,48 @@
 		/* console.log(board_no,item); */
 		var content = '';	
 		list.forEach(function(item, board_no){
-			
 				var date = new Date(item.reg_date);
-				content+="<tr>";
+				content+="<tr>"
 				content+="<td>"+item.board_no+"</td>";
 				content+="<td><a href='detail?idx="+item.board_no+"'>"+item.title+"</a></td>";
 				content+="<td>"+item.board_cate+"</td>";
 				content+="<td>"+item.user_id+"</td>";
 				content+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
-				content+="<td>"+item.bHit+"</td>";
+				
+				if (item.answer == false) {
+					str+="<td><div>대기</div></td>";
+				}else{
+					str+="<td><div>완료</div></td>";
+				}
+				
 				if (item.del_flag == false){
 					content+="<td>"+'<input type="button" class="why" onclick="studydel('+item.board_no+')" value="삭제"/>'+'</td>';					
 				} else {
 					content+="<td>"+'<input type="button" class="why" onclick="studydel('+item.board_no+')" value="복구"/>'+'</td>';				
-				}				
-				content+="</tr>";
+				}
 				
-			
+				content+="</tr>";
 		});
 		//console.log(content);
-		$('#studyboardlist').empty();
-		$('#studyboardlist').append(content);
+		$('#Inquiryboardlist').empty();
+		$('#Inquiryboardlist').append(content);
 		
 	}
 
 		var me = this;
 	
 	//관리자 공부 게시글 삭제
-	function studydel(e) {
-		console.log(e);
+	function Inquirydel(e) {
+		console.log("클릭 게시글 번호 : "+e);
 		
 		$.ajax({
 			context: this,
 			type:'POST',
-			url:'studydel',
+			url:'Inquirydel',
 			data:{"board_no":e}, // {}안에 아무것도 안넣으면 다보여줘라 라는 뜻
 			dataType:'JSON',
-			success:function(studydel_check) {
-				if (studydel_check == 0) {
+			success:function(Inquirydel_check) {
+				if (Inquirydel_check == 0) {
 					console.log("삭제 성공");
 					listCall(currPage,10);
 				}else {
@@ -216,14 +225,13 @@
 		});
 	}
 	
+	$('#L1').click(function(){
+		location.href='./ManagPostStudy' //어디로 갈지 링크 걸어주기
+	});
+	
 	$('#L2').click(function(){
 		location.href='./ManagPostFree'
 	});
-	
-	$('#L3').click(function(){
-		location.href='./ManagPostInquriy' //어디로 갈지 링크 걸어주기
-	});
-	
 
 </script>
 </html>

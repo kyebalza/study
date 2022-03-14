@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.quiz.bank.dto.FreeBoardDTO;
+import com.quiz.bank.dto.InquiryBoardDTO;
 import com.quiz.bank.dto.StudyBoardDTO;
+import com.quiz.bank.dto.UserDTO;
 
 
 public interface AdminDAO {
@@ -13,9 +16,45 @@ public interface AdminDAO {
 
 	List<StudyBoardDTO> StudySearchList(StudyBoardDTO sBdto);
 
-	int allCount();
+	int SallCount();
 
 	ArrayList <StudyBoardDTO> studylist (int pagePerCnt, int offset);
+
+	int studydel(String board_no);
+
+	int studydel_check(String board_no);
+
+	int studycall(String board_no);
+
+	ArrayList <InquiryBoardDTO> Inquirylist(int pagePerCnt, int offset);
+
+	int IallCount();
+
+	ArrayList <FreeBoardDTO> Freelist(int pagePerCnt, int offset);
+
+	int FallCount();
+
+	List<InquiryBoardDTO> InquirySearchList(InquiryBoardDTO IBdto);
+
+	List<FreeBoardDTO> FreeSearchList(FreeBoardDTO fBdto);
+
+	int Inquirydel_check(String board_no);
+
+	int Inquirydel(String board_no);
+
+	int Inquirycall(String board_no);
+
+	int Freedel_check(String board_no);
+
+	int Freedel(String board_no);
+
+	int Freecall(String board_no);
+
+	int MallCount();
+
+	List <UserDTO> Memlist(int pagePerCnt, int offset);
+
+	List<UserDTO> MemSearchList(UserDTO uBdto);
 
 	
 

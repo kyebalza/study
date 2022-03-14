@@ -3,6 +3,9 @@ package com.quiz.bank.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.quiz.bank.dto.QuizDTO;
+import com.quiz.bank.dto.TestListDTO;
+
 public interface AdminStudyDAO {
 
 	ArrayList<HashMap<String, String>> testCategoryCall();
@@ -38,6 +41,13 @@ public interface AdminStudyDAO {
 	String getTestCategoryName(HashMap<String, String> params);
 
 	ArrayList<HashMap<String, String>> getSubjectCategoryList(HashMap<String, String> params);
+
+	ArrayList<HashMap<String, String>> getDetailedSubjectCategoryList(HashMap<String, String> params);
+
+	void registTest(TestListDTO testListDTO);
+
+	int registQuiz(QuizDTO dto);
+
 
 
 }

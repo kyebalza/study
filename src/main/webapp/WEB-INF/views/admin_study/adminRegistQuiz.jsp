@@ -9,23 +9,28 @@
 	
         <style>
             table,th,td{
-                border-collapse: separate;
-               
+                border-collapse: separate;               
             }
 
             select{
                 width: 100px;
-                
-
             }
            
 
             textarea{
-                width: 180px;
-                height: 200px;
+                width: 300px;
+                height: 100px;
                 border-radius: 5px;
                 border : 1px solid gray;
             }
+/*             .photoArea{
+                width: 300px;
+                height: 200px;
+                border-radius: 5px;
+                border : 1px solid gray;
+                padding : 0px;
+                margin : 0px;
+            } */
 
             select {
                 border-bottom : 1px solid gray;
@@ -34,14 +39,15 @@
                 width : 120px;
                 height: 20px;
             }
-            input {
+
+/*             input {
                 border-bottom : 1px solid gray;
                 border-top: none;
                 border-left : none;
                 border-right: none;
                 width : 200px;
                 height: 20px;
-            }
+            } */
             table {
                 border : 1px solid gray;
                 text-align: center;
@@ -54,6 +60,24 @@
             td{
                 width:150px;
             }
+            input[type="number"]{
+				border-bottom : 1px solid gray;
+                border-top: none;
+                border-left : none;
+                border-right: none;
+                width : 100px;
+                height: 20px;
+                text-align : center;
+            }
+            
+            input[type="text"] {
+                border-bottom : 1px solid gray;
+                border-top: none;
+                border-left : none;
+                border-right: none;
+                width : 200px;
+                height: 20px;
+            }
             input[type="checkbox"]{
                 width : 15px;
             }
@@ -64,11 +88,10 @@
 		}
             input[type="file"]{
                 border-color: gray;
-                background-color : greenyellow;
+                
                 color : black;
                 border-radius : 5px;
-                width : 50px;
-                height : 30px;
+                
                 
             }		
             input[type="button"]{
@@ -82,33 +105,48 @@
                 
             }
             .photoArea{
-                height:100px;
+                width: 300px;
+                height: 200px;
+                border-radius: 5px;
                 border : 1px solid gray;
-                padding: 10px;            
-            
             }
             .quiz_type{
             	width : 215px;
             }
-           
+			img{
+				width : 250px;
+				height : 200px;
+			
+			}            
+           #quiz_all_button{
+           	text-align : right;
+           }
         </style>
     </head>
 
     <body>
     	<div id="allDiv">
-	    
-	    	<h3>시험 문제 등록</h3>
-	    	<h4>
-	    		시험 : ${test_info.test_category_name }
-	    	</h4>
-	    	<h4>
-	    		시행년도 : ${test_info.test_year } 
-	    		회차 : ${test_info.test_count } 
-	    		시험시간 : ${test_info.test_time } 
-	    		만점 : ${test_info.test_fullscore }
-	    	</h4>
-	    	<hr/><br/>
-	    	<input type="file" value="엑셀업로드" onchange="readExcel()"/>
+	    	<div id="quiz_header">
+		    	<h3>시험 문제 등록</h3>
+		    	<h4>
+		    		시험 : ${test_info.test_category_name }
+		    	</h4>
+		    	<h4>
+		    		시행년월 : ${test_info.test_year }년 / ${test_info.test_month }
+		    		회차 : ${test_info.test_count } 
+		    	</h4>
+		    	<h4>
+		    		시험시간 : ${test_info.test_time } 
+		    		만점 : ${test_info.test_fullscore }
+					합격점수 : ${test_info.test_pass_rate }		    		
+		    	</h4>
+		    	<hr/><br/>
+	    	</div>
+	    	<div id="quiz_all_button">
+	    		<input type="button" id="quiz_save" style="width:80px;" value="전체저장"/>
+	    		<input type="button" id="excelBtn" style="width:90px;" value="엑셀업로드"/>
+		    	<input type="file" id="excelFileBtn" style="display : none;"  onchange="readExcel()"/>
+	    	</div>
 	    	<br/><br/><br/>
 	    	<div id="quiz_form">
 	    	
@@ -123,7 +161,8 @@
 console.log("${test_info.test_category}");
 var test = "${test_info.test_category}";
 var test_category_name = "${test_info.test_category_name}" 
-var testCategoryObjList = {};
+var subjectCategory_json = ${subjectCategory};
+var detailedCategory_json = ${detailedSubjectCategory};
 console.log(test);
 
 var quizCnt = 0;
@@ -131,8 +170,8 @@ subjectCategory();
 function subjectCategory(){
 	var txt = '<select class="quiz_subject '+quizCnt+'" onchange="detailSubjectCategoryCall(this)">';
 		txt += '<option value="none">선택하세요</option>';
-		${subjectCategory}.forEach(function(item,idx){
-		console.log(item);
+		subjectCategory_json.forEach(function(item,idx){
+		//console.log(item);
 		txt += '<option value="'+item.subject_cate_no+'">'+item.subject_cate+'</option>';
 	});
 	txt += '</select>';
@@ -141,35 +180,18 @@ function subjectCategory(){
 function detailSubjectCategoryCall(e){
 
 	var thisCnt = $(e)[0].classList[1];
-	console.log("thisCnt : "+thisCnt);
-	var obj = {upperCate:e.value,Cate:"detailed"};
-	console.log(obj);
-	$.ajax({
-		url : 'adminDetailSubjectCategoryCall',
-		type : 'get',
-		data : obj,
-		dataType : 'JSON',
-		success : function(data){
-			console.log(data);
-			
-			var txt = '';
-			txt +='<option>선택하세요</option>'
-			data.Category.forEach(function(item,idx){
-				txt += '<option value="'+item.detailed_subject_cate_no+'">'+item.detailed_subject_cate+'</option>';
-			});
-
-			
-			
-			$('.quiz_detailed_subject.'+thisCnt).empty();
-			$('.quiz_detailed_subject.'+thisCnt).append(txt);
-			//$('#testCategory').empty();
-			//$('#testCategory').append(txt);
-		},
-		error : function(e){
-			console.log(e);
+	var txt = '';
+	txt +='<option>선택하세요</option>';
+	detailedCategory_json.forEach(function(item,idx){
+		if(e.value == item.subject_cate_no){
+			txt += '<option value="'+item.detailed_subject_cate_no+'">'+item.detailed_subject_cate+'</option>';
 		}
-	});
+		
+		});
+	$('.quiz_detailed_subject.'+thisCnt).empty();
+	$('.quiz_detailed_subject.'+thisCnt).append(txt);
 }
+
 
 quizFormPlus();
 //문제 form 추가
@@ -179,47 +201,47 @@ function quizFormPlus(){
 	txt += '<div class="quiz_form '+quizCnt+'">';
 	txt += '<table>';
 	txt += '<tr><td></td><td></td><td></td><td style="text-align : right;"><input type="button" class="quizFormDelete '+quizCnt+'" onclick="quizFormDelete(this)" value="삭제"/></td></tr>'
-	txt += '<tr><td><h5>문제번호</h5><input type="number" min=1 class="quiz_no '+quizCnt+'" value="'+quizCnt+'"/></td>';
+	txt += '<tr><td><h5>문제번호</h5><input type="number" min=1 class="quiz_index '+quizCnt+'" value="'+quizCnt+'"/></td>';
 	txt += '<td><h5>배점</h5><input type="number" min=1 class="quiz_point '+quizCnt+'"/></td>';
 	txt += '<td><h5>과목선택</h5>';
 	txt += subjectCategory();
 	txt += '</td>';
 	txt += '<td><h5>세부과목선택</h5><select class="quiz_detailed_subject '+quizCnt+'"></select></td>';
-	txt += '<tr><td><h5>문제내용</h5><textarea class="quiz_content '+quizCnt+'"></textarea></td>';
-	txt += '<td><h5>해설</h5><textarea class="quiz_explation '+quizCnt+'"></textarea></td>';
+	txt += '<tr>';
+	txt += '<td colspan="2"><h5>사진</h5><div class="photoArea '+quizCnt+'" onclick="photoChildOpen(this)"></div></td>';
 	txt += '<td colspan="2" style="vertical-align:text-bottom;"><h5>문제유형선택</h5><select class="quiz_type '+quizCnt+'" onchange="selectQuizType(this)">';
 	txt += '<option value="1">주관식</option>';
 	txt += '<option value="2">2지선다</option>';
 	txt += '<option value="3">3지선다</option>';
 	txt += '<option value="4">4지선다</option>';
 	txt += '<option value="5">5지선다</option>';
-	txt += '</select><div></div></td></tr>';
-	txt += '<tr><td colspan="4" class="photoArea" onclick="photoChildOpen(this)"><h5>사진없음</h5></td></tr>'
+	txt += '</select><div class="quiz_type_opt_area '+quizCnt+'"></div></td></tr>';
+	txt += '<tr>';
+	txt += '<td colspan="2"><h5>문제내용</h5><textarea class="quiz_content '+quizCnt+'"></textarea></td>';
+	txt += '<td colspan="2"><h5>해설</h5><textarea class="quiz_explation '+quizCnt+'"></textarea></td>';
+	txt += '</tr>';
 	txt += '</div>';
 	$('#quiz_form').append(txt);
-	console.log($('.quiz_form '+quizCnt+' select[class="select_subject"]' ));
-	
-
 }
 
 function quizFormDelete(e){
+	
 	$(e).parents('.quiz_form').remove();
-	quizCnt -= 1;
-	console.log(quizCnt);
 }
 
 
 function selectQuizType(e){
 	var inputTxt = '';
-	console.log($(e).siblings('div'));
-	
+	//console.log($(e).siblings('div'));
+	console.log(e);
+	console.log($(e)[0].classList[1]);
 	if(e.value == 1){
 		console.log(e.value);
-		inputTxt += '<input type="text" class="option1 '+quizCnt+'"/>';
+		inputTxt += '<input type="text" class="option1 '+$(e)[0].classList[1]+'"/>';
 	} else {
 		inputTxt += '<ol>';
 		for (var i = 1; i <= e.value; i++) {
-		inputTxt += '<li><input type="text" class="opiont'+i+' '+quizCnt+'"/><input type="checkbox" class="option'+i+' '+quizCnt+'" value="'+i+'"></li>';
+		inputTxt += '<li><input type="text" class="option'+i+' '+$(e)[0].classList[1]+'"/><input type="checkbox" class="option_yn'+i+' '+$(e)[0].classList[1]+'" value="'+i+'"></li>';
 		}
 		inputTxt += '</ol>';		
 	}
@@ -237,23 +259,47 @@ function readExcel() {
         workBook.SheetNames.forEach(function (sheetName) {
             console.log('SheetName: ' + sheetName);
             let rows = XLSX.utils.sheet_to_json(workBook.Sheets[sheetName]);
-            console.log(rows);
-            console.log(JSON.stringify(rows[0]));
+            //console.log(rows);
+            //console.log(JSON.stringify(rows[0]));
             let array = [];
             let txt = '';
             
             //현재 양식 모두 삭제
             $('#quiz_form').empty();
-            quizCnt = 0;
+            	quizCnt = 0;
+            
             rows.forEach(function(item,idx){
             	quizFormPlus();
-            	$('.quiz_no.'+quizCnt).val(item.문제번호);
+            	$('.quiz_index.'+quizCnt).val(item.문제번호);
             	$('.quiz_point.'+quizCnt).val(item.배점);
             	$('.quiz_content.'+quizCnt).val(item.문제내용);
-            	$('.quiz_explation.'+quizCnt).val(item.해설);
+            	$('.quiz_explation.'+quizCnt).val(item.문제해설);
 
-           		$('.quiz_subject.'+quizCnt).val(item.과목);
-            	$('.quiz_detailed_subject'+quizCnt).val(item.세부과목);
+            	subjectCategory_json.forEach(function(item_json,idx){
+            		if(item_json.subject_cate == item.과목){
+            			//console.log(item_json.subject_cate+' / '+item.과목+' / '+item_json.subject_cate_no);
+	            		$('.quiz_subject.'+quizCnt).val(item_json.subject_cate_no);            			
+            		}
+            		
+            	});
+            	
+            	detailSubjectCategoryCall(document.querySelectorAll('.quiz_subject')[quizCnt-1]);
+            	detailedCategory_json.forEach(function(item_json,idx){
+					if(item_json.detailed_subject_cate == item.세부과목){
+						$('.quiz_detailed_subject.'+quizCnt).val(item_json.detailed_subject_cate_no);						
+					}            		
+            		
+            	});
+
+            	$('.quiz_type.'+quizCnt).val(item.문제유형);
+            	selectQuizType(document.querySelectorAll('.quiz_type')[quizCnt-1]);
+            	for (var i = 1; i <= item.문제유형; i++) {
+					$('.option'+i+'.'+item.문제번호).val(item["보기"+i]);
+					if(i == item.정답){
+						$('.option_yn'+i+'.'+item.문제번호).prop("checked",true);						
+					}
+					//console.log($('.option'+i+'.'+item.문제번호).val(item["보기"+i]));
+				}
             	
             });
             
@@ -265,11 +311,92 @@ function readExcel() {
 
 
 function photoChildOpen(e){
-	var photoChild = window.open('adminPhotoChildOpen','사진첨부','width=300,height=300');
+	console.log(e.classList[1]);
+	var photoChild = window.open('adminPhotoChildOpen?quizCnt='+e.classList[1],'사진첨부','width=300,height=300');
 }
 
 
 
+$('#excelBtn').click(function(){
+	$('#excelFileBtn').click();
+});
+
+
+$('#quiz_save').click(function(){
+	var quiz_list = [];
+	var all_quiz_cnt = $('div .quiz_form').length;//문제 양식의 갯수를 센다. quizCnt는 문제 있을 수 있음
+	var test_obj = {};
+	test_obj.test_category = "${test_info.test_category}";
+	test_obj.test_year = "${test_info.test_year}";
+	test_obj.test_count = "${test_info.test_count}";
+	test_obj.test_time = "${test_info.test_time}";
+	test_obj.test_fullscore = "${test_info.test_fullscore}";
+	test_obj.test_month = "${test_info.test_month}";
+	test_obj.test_pass_rate = "${test_info.test_pass_rate}";
+	quiz_list.push(JSON.stringify(test_obj));
+	
+	
+	for (var i = 0; i < all_quiz_cnt; i++) {
+		
+		var obj = {};
+		var class_num = $('div.quiz_form')[i].classList[1];//클래스 번호	
+		obj.quiz_index = $('.quiz_index.'+class_num).val();
+		obj.quiz_point = $('.quiz_point.'+class_num).val();
+		obj.quiz_subject = $('.quiz_subject.'+class_num).val();
+		obj.quiz_detailed_subject = $('.quiz_detailed_subject.'+class_num).val();
+		//var quiz_img;
+		obj.quiz_type = $('.quiz_type.'+class_num).val();
+		
+		obj.option1 = '';
+		obj.option2  = '';
+		obj.option3  = '';
+		obj.option4  = '';
+		obj.option5  = '';
+		for (var j = 1; j <= obj.quiz_type; j++) {
+			obj["option"+j] = $('.option'+j+'.'+class_num).val();
+		}
+		
+		
+		var answer = '';
+		//정답저장 : 주관식일때
+		if(obj.quiz_type == 1){
+			answer = obj.option1 = $('.option1.'+class_num).val();
+		} else {
+			for (var k = 1; k <= 5; k++) {
+				if($('.option_yn'+k+'.'+class_num+':checked').val() > 0){
+					answer += $('.option_yn'+k+'.'+class_num+':checked').val();							
+				}
+			}			
+		}
+		obj.answer = answer;
+		
+		
+		obj.quiz_content = $('.quiz_content.'+class_num).val();
+		obj.quiz_explation = $('.quiz_explation.'+class_num).val();
+		quiz_list.push(JSON.stringify(obj));
+		console.log(obj);
+	}
+	console.log(quiz_list);
+	console.log(JSON.stringify(quiz_list));
+	
+	console.log(test_obj);
+	$.ajax({
+		url : 'adminRegistTestAndQuiz',
+		type : 'get',
+		data : {
+			//"test_info":JSON.stringify(test_obj),
+			"params":quiz_list},
+		dataType : 'JSON',
+		success : function(data){
+			console.log(data.msg);
+		},
+		error : function(e){}
+	});
+	
+	
+	
+	
+});
 
 
 

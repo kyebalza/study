@@ -73,6 +73,23 @@
 	<select id="getSubjectCategoryList" parameterType="hashmap" resultType="hashmap">
 	SELECT subject_cate_no ,subject_cate FROM subject_category WHERE test_cate_no = #{test_category} AND del_flag = false; 
 	</select>
+	<select id="getDetailedSubjectCategoryList" parameterType="hashmap" resultType="hashmap">
+	SELECT test_cate_no,test_cate,subject_cate_no,subject_cate,detailed_subject_cate_no,detailed_subject_cate FROM test_category tc 
+LEFT JOIN subject_category sc USING (test_cate_no) 
+LEFT JOIN detailed_subject_category dsc  USING (subject_cate_no) 
+WHERE tc.del_flag = FALSE AND sc.del_flag = FALSE AND dsc.del_flag = FALSE AND test_cate_no = #{test_category} 
+	</select>
 	
-	
+	<insert id="registTest" useGeneratedKeys="true" keyColumn="test_no" keyProperty="test_no" parameterType="com.quiz.bank.dto.TestListDTO">
+	INSERT INTO test_list 
+	(test_cate_no,test_year,test_month,test_count,test_passrate,test_time,test_fullscore)
+	VALUES
+	(#{test_cate_no},#{test_year},#{test_month},#{test_count},#{test_passrate},#{test_time},#{test_fullscore})
+	</insert>
+	<insert id="registQuiz" parameterType="com.quiz.bank.dto.QuizDTO">
+	INSERT INTO quiz
+	(test_no,test_cate_no,subject_cate_no,detailed_subject_cate_no,quiz_index,quiz_content,quiz_explation,quiz_type,option1,option2,option3,option4,option5,quiz_answer,quiz_point)
+	VALUES
+	(#{test_no},#{test_cate_no},#{subject_cate_no},#{detailed_subject_cate_no},#{quiz_index},#{quiz_content},#{quiz_explation},#{quiz_type},#{option1},#{option2},#{option3},#{option4},#{option5},#{quiz_answer},#{quiz_point})
+	</insert>
 </mapper>

@@ -95,6 +95,11 @@
 	                </tr>
 	                <tr>
 	                    <td>
+	                        <input type="number" id="test_month" name="test_month" min='1' placeholder="시행월"/>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
 	                        <input type="number" id="test_count" name="test_count" min='1' placeholder="회차입력"/>
 	                    </td>
 	                </tr>
@@ -108,6 +113,11 @@
 	                        <input type="number" id="test_fullscore" name="test_fullscore" min='1' placeholder="만점기준"/>
 	                    </td>
 	                </tr>
+	                <tr>
+	                    <td>
+	                        <input type="number" id="test_pass_rate" name="test_pass_rate" min='1' placeholder="통과점수"/>
+	                    </td>
+	                </tr>	                	                
 	                <tr>
 	                    <td style="text-align : center">
 	                        <input type="button" id="registTestBtn" value="시험등록"/>
@@ -388,7 +398,16 @@ $('#registTestBtn').click(function(){
 	var $test_count = $('#test_count');
 	var $test_time = $('#test_time');
 	var $test_fullscore = $('#test_fullscore');
-	if($test_year.val() == '' || $test_count.val() == '' || $test_time.val() == '' || $test_fullscore.val() == ''){
+	var $test_month = $('#test_month');
+	var $test_pass_rate = $('#test_pass_rate');
+	
+	if($test_year.val() == '' 
+			|| $test_count.val() == '' 
+			|| $test_time.val() == '' 
+			|| $test_fullscore.val() == ''
+			|| $test_month.val() == ''
+			|| $test_pass_rate.val() == ''
+	){
 		alert('미입력된 항목이 있습니다.');
 	} else{
 		console.log('시험정보 전송');

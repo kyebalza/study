@@ -1,5 +1,8 @@
 package com.quiz.bank.dto;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias(value ="TestList")
 public class TestListDTO {
 	
 	private int test_no;

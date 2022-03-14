@@ -9,11 +9,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.quiz.bank.dto.UserDTO;
 import com.quiz.bank.service.UserService;
 
 @Controller
@@ -22,7 +26,43 @@ public class UserController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired UserService service;
-
+	
+	//0. 회원가입 페이지 이동
+	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
+	public String joinForm(Model model) {
+		logger.info("회원가입 페이지로 이동"); 
+		return "joinForm";
+	}
+	
+	//1-1. 아이디 중복확인(ajax)
+	@GetMapping(value = "/overlay")//get으로만 받고 싶을 때
+	@ResponseBody
+	public HashMap<String, Object> overlay(@RequestParam String user_id) {
+		logger.info("중복체크 : {}",user_id);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean overlay = service.overlay(user_id);
+		map.put("overlay", overlay);
+		return map;
+	}
+	
+	//1. 회원가입
+	//DTO로 파라메터 받기
+	//조건1. @ModelAttribute 로 파라메터 받을 것
+	//조건2. parameter 명이 DTO 필드와 같을 것
+	//조건3. POST 로 전송할 것
+	@PostMapping(value = "/join")//post로만 받고 싶을 때
+	public String join(@ModelAttribute UserDTO dto) {
+		String page = "joinForm";
+		logger.info("id : {}",dto.getUser_id());
+		int success = service.join(dto);
+		
+		if (success > 0) {
+			page = "login";
+		}
+		
+		return page;
+	}
+	
 	//0. 로그인 페이지 이동
 	@RequestMapping(value = "/loginPage", method = RequestMethod.GET)
 	public String loginPage(Model model) {
@@ -31,7 +71,7 @@ public class UserController {
 		return "login";
 	}
 
-	//1. 로그인 
+	//2. 로그인 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody 
     public HashMap<String, Object> login(@RequestParam String user_id, @RequestParam String user_pw, HttpSession session) {
@@ -51,35 +91,40 @@ public class UserController {
         
         return map;
 	}
-
 	
-	//2. 회원가입 페이지 이동
-	@RequestMapping(value = "/joinForm", method = RequestMethod.GET)
-	public String joinForm(Model model) {
-		logger.info("회원가입 페이지로 이동"); 
-		return "joinForm";
+	//3. 로그아웃 
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(Model model, HttpSession session) {
+		logger.info("로그아웃 요청"); 
+		session.removeAttribute("loginId");
+		session.removeAttribute("admin");
+		return "redirect:/";
 	}
 	
-/*	
-	//2. 회원가입
-	//DTO로 파라메터 받기
-	//조건1. @ModelAttribute 로 파라메터 받을 것
-	//조건2. parameter 명이 DTO 필드와 같을 것
-	//조건3. POST 로 전송할 것
-	@PostMapping(value = "/join")//post로만 받고 싶을 때
-	//public String join(@RequestParam HashMap<String, String> params) {
-	public String join(@ModelAttribute UserDTO dto) {
-		String page = "joinForm";
-		logger.info("id : {}",dto.getUser_id());
-		int success = service.join(dto);
+	//0. 아이디 찾기 페이지 이동 
+	@RequestMapping(value = "/idfind")
+	public String idfind(Model model) {
+		logger.info("idfind page 이동");
+		return "idfind";
 		
-		if (success > 0) {
-			page = "login";
-		}
-		
-		return page;
 	}
-*/	
+	
+	//4. 아이디 찾기
+	@RequestMapping(value = "/findid")
+    @ResponseBody 
+    public HashMap<String, Object> findid(@RequestParam String user_name,
+    		@RequestParam String user_phone, @RequestParam String user_email) {
+        String success = service.findid(user_name, user_phone, user_email);
+        //logger.info("아이디 찾기 여부 성공:{}", success);
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        
+        if (success != null) {
+        	map.put("success", success);    
+        } else {
+        	map.put("success", "아이디없음");
+        }
+        return map;
+    }
 	
 	
 }

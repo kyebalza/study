@@ -6,26 +6,37 @@
 <!-- 이 xml이 어떤 interface와 연결되는지 설정 -->
 <mapper namespace="com.quiz.bank.dao.UserDAO">
 
-	<!-- 1. 로그인 -->
-	<select id = "login" resultType="hashmap">
-		SELECT user_id,user_admin FROM user_info
-				WHERE user_id = #{param1} AND user_pw = #{param2}
-	</select>
-
-	<!-- 2. 회원가입 -->
-	<insert id = "join" parameterType="User">
-		INSERT INTO user_info (
-			user_id, user_pw, user_name, user_email, user_phone
-		)VALUES(
-			#{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_phone}
-		)
+	<!-- 1. 회원가입 --> 
+	<insert id = "join" parameterType="hashmap">
+		INSERT INTO user_info 
+			(user_id, user_pw, user_name, user_email, user_phone)
+		VALUES
+			(#{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_phone})
 	</insert>
 
 
-	<!-- 2-1. 중복아이디 체크 -->
+	<!-- 1-1. 중복아이디 체크 -->
 	<select id ="overlay" resultType = "String"> 
 		SELECT user_id FROM user_info WHERE user_id = #{param1}
 	</select>
+	
+	
+	<!-- 2. 로그인 -->
+	<select id = "login" resultType="hashmap">	
+		SELECT user_id,user_admin FROM user_info
+				WHERE user_id = #{param1}
+	</select>
+	
+	<!-- 2-1.암호화된 비밀번호 확인 -->
+	<select id="loginPw" resultType="String">
+		SELECT user_pw FROM user_info WHERE user_id = #{param1}
+	</select>
+	
+	<!-- 4. 아이디 찾기 -->
+	<select id="findid" resultType="string">
+		SELECT user_id FROM user_info WHERE user_name = #{param1} 
+			AND user_phone = #{param2} AND user_email = #{param3}
+	</select> 
 
 
 </mapper>

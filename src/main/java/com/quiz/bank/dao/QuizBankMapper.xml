@@ -6,5 +6,55 @@
 <!-- 이 xml이 어떤 interface와 연결되는지 설정 -->
 <mapper namespace="com.quiz.bank.dao.QuizBankDAO">
 
+	
+	<!-- 1. 시험 리스트 불러오기 -->
+	<select id="list" resultType="TestCategory">
+		SELECT test_cate_no, test_cate FROM test_category 
+			WHERE del_flag = 'false'
+			ORDER BY test_cate_no DESC
+	</select>
+	
+	<!-- 2. 시험 상세보기 리스트 불러오기 -->
+	<select id="detail" resultType="TestList">
+		SELECT * FROM test_list 
+			WHERE test_cate_no=#{param1} AND del_flag = 'false'
+			ORDER BY test_year DESC
+	</select>
+
+	<!-- 2-(1). 시험명 가져오기 -->
+	<select id="test_name" resultType="TestCategory">
+		SELECT test_cate FROM test_category 
+			WHERE del_flag = 'false' AND test_cate_no=#{param1}
+	</select>
+
+	<!-- 3.시험보기 페이지 및 시험문제 가져오기 -->
+	<select id="testFrom" resultType="Quiz">
+		SELECT * FROM quiz
+			WHERE del_flag= 'false' AND test_no=#{param1}
+			ORDER BY quiz_index
+	</select>
+	
+	<!-- 4. 시험명 검색기능 -->
+	<select id="search" parameterType="hashmap" 
+		resultType="TestCategory">
+		SELECT test_cate_no, test_cate FROM test_category 
+		<where>		
+			<if test="opt.equals('test_cate') and !keyword.equals('')">
+				test_cate LIKE CONCAT('%',#{keyword},'%')
+			</if>
+		</where> 
+	</select>
+	
+	
+	
+	<!-- 테스트1 -->
+	<!-- 테스트2 -->
+
+	<select id="test" resultType="TestList">
+		select test_cate_no from test_list
+	</select>
+	<select id="test2" resultType="TestList">
+		select test_cate_no from test_list where test_cate_no = 1
+	</select>
 
 </mapper>

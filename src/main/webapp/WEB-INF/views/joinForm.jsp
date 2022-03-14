@@ -10,67 +10,86 @@
 			border : 1px solid black;
 			border-collapse: collapse;
 			padding: 5px;
-		}	
+		}
+		.alljoin{
+			width: 600px;
+			/*height: 600px;*/
+			text-align: center;
+			top: 20px;	
+			margin : auto;
+		}
+		#joinForm{
+			text-align: center;
+		}
 	</style>
 </head>
 <body>
-	<form id="joinForm" action="join" method="post">
-		<table>
-			<tr>
-				<th>아이디</th>
-				<td>
-					<input type="text" name="user_id"/>
-					<input id="overlay" type="button" value="중복체크"/>
-					<p id="overlay_msg"></p>
-				</td>
-			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td><input id="pass" type="text" name="user_pw"/></td>
-			</tr>
-			<tr>
-				<th>비밀번호 확인</th>
-				<td>
-					<input id="pass_confirm" type="text"/>
-					<p id="pw_confirm"></p>
-				</td>
-			</tr>
-			<tr>
-				<th>이름</th>
-				<td><input type="text" name="user_name"/></td>
-			</tr>
-			<tr>
-				<th>EMAIL</th>
-				<td><input type="email" name="user_email"/></td>
-			</tr>
-			<tr>
-				<th colspan="2">
-					<input id="user_join" type="button" value="회원가입"/>
-				</th>
-			</tr>
-		</table>
-	</form>
+	<div class="alljoin">
+		<form id="joinForm" action="join" method="post">
+			<table>
+				<tr>
+					<th>아이디</th>
+					<td>
+						<input type="text" name="user_id"/>
+						<input id="overlay" type="button" value="중복체크"/>
+						<p id="overlay_msg"></p>
+					</td>
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+					<td><input id="pass" type="password" name="user_pw"/></td>
+				</tr>
+				<tr>
+					<th>비밀번호 확인</th>
+					<td>
+						<input id="pass_confirm" type="password"/>
+						<p id="pw_confirm"></p>
+					</td>
+				</tr>
+				<tr>
+					<th>이름</th>
+					<td><input type="text" name="user_name"/></td>
+				</tr>
+				<tr>
+					<th>EMAIL</th>
+					<td>
+						<input type="email" name="user_email"/>
+					</td>
+				</tr>
+				<tr>
+					<th>전화번호</th>
+					<td><input type="text" name="user_phone" placeholder="010-0000-0000"/></td>
+				</tr>
+				<tr>
+					<th colspan="2">
+						<input id="user_join" type="button" value="회원가입"/>
+					</th>
+				</tr>
+			</table>
+		</form>
+	</div>
 </body>
 <script>
 	//1. 아이디 중복 확인
 	var overlayChk = false;
 	
+	
 	$('#overlay').on('click', function() {
 		console.log('click');
-		var chkId = $('input[name="id"]').val();
+		var chkId = $('input[name="user_id"]').val();
 		console.log('chkId : '+chkId);
 		$.ajax({
 			url:'overlay',
 			type:'get',
 			data:{
-				id:chkId //같은 내용 : id:$('input[name="id"]').val()
+				user_id:$('input[name="user_id"]').val()
 				},
 			dataType:'JSON',
 			success: function(data){
 				var msg = "";
 				if(data.overlay){
 					msg="사용중인 아이디 입니다";
-					$('input[name="id"]').val('');
+					$('input[name="user_id"]').val('');
 				}else{
 					msg="사용 가능한 아이디 입니다.";
 					overlayChk = true;
@@ -82,7 +101,6 @@
 			}
 		});
 	});
-	
 	
 	
 	//2. 비밀번호 확인
@@ -103,6 +121,7 @@
 	$('#user_join').click(function() {
 		if(overlayChk){
 			$('#joinForm').submit();//서버전송
+			alert('회원가입에 성공하셨습니다');					
 		}else{
 			alert('아이디 중복 체크를 해 주세요');			
 		}

@@ -11,6 +11,8 @@
 	<!-- <input type="button" value="로그인페이지" onclick="location.href='loginPage'"/> -->
 	<a href="loginPage">로그인페이지</a>
 	<a href="adminPage">관리자페이지</a>
+	<a href="quizBankList">문제은행</a>
+	
 </body>
 <script></script>
 </html>

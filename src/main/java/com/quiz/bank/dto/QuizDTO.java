@@ -1,6 +1,10 @@
 package com.quiz.bank.dto;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias(value ="Quiz")
 public class QuizDTO {
+	
 	private int quiz_no;
 	private int test_no;
 	private int test_cate_no;
@@ -18,6 +22,7 @@ public class QuizDTO {
 	private String option5;
 	private String quiz_answer;
 	private boolean del_flag;
+	
 	public int getQuiz_no() {
 		return quiz_no;
 	}

@@ -48,6 +48,12 @@ public interface AdminStudyDAO {
 
 	int registQuiz(QuizDTO dto);
 
+	ArrayList<String> adminQuizListQuizCountList();
+
+	ArrayList<HashMap<String, String>> adminSearchQuiz(HashMap<String, String> search_info);
+
+	int allCount(HashMap<String, String> search_info);
+
 
 
 }

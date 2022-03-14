@@ -194,6 +194,29 @@ public class AdminStudyController {
 	}
 	
 	
+	@RequestMapping(value="adminQuizList")
+	public ModelAndView adminQuizList() {
+		ModelAndView mav = new ModelAndView("admin_study/adminQuizList");
+		return mav;
+	}
+	@RequestMapping(value="adminQuizListQuizCountList")
+	@ResponseBody
+	public HashMap<String, Object> adminQuizListQuizCountList(){		
+		return service.adminQuizListQuizCountList();
+	}
+	
+	@RequestMapping(value="adminSearchQuiz")
+	@ResponseBody
+	public HashMap<String, Object> adminSearchQuiz(@RequestParam HashMap<String, String> search_info){
+		
+		logger.info("도착한 파라미터 : {}",search_info);
+		return service.adminSearchQuiz(search_info);
+	}
+	
+	
+	
+	
+	
 	
 	
 	

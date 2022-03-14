@@ -132,13 +132,14 @@
 		    		시험 : ${test_info.test_category_name }
 		    	</h4>
 		    	<h4>
-		    		시행년월 : ${test_info.test_year }년 / ${test_info.test_month }
-		    		회차 : ${test_info.test_count } 
+		    		${test_info.test_year }년 
+		    		${test_info.test_month }월
+		    		${test_info.test_count } 회
 		    	</h4>
 		    	<h4>
-		    		시험시간 : ${test_info.test_time } 
-		    		만점 : ${test_info.test_fullscore }
-					합격점수 : ${test_info.test_pass_rate }		    		
+		    		시험시간 : ${test_info.test_time } 분 
+		    		합격기준/만점 : ${test_info.test_pass_criterion }/${test_info.test_fullscore } 점
+					합격률 : ${test_info.test_pass_rate }%
 		    	</h4>
 		    	<hr/><br/>
 	    	</div>
@@ -333,6 +334,7 @@ $('#quiz_save').click(function(){
 	test_obj.test_fullscore = "${test_info.test_fullscore}";
 	test_obj.test_month = "${test_info.test_month}";
 	test_obj.test_pass_rate = "${test_info.test_pass_rate}";
+	test_obj.test_pass_criterion = "${test_info.test_pass_criterion}";
 	quiz_list.push(JSON.stringify(test_obj));
 	
 	

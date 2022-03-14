@@ -56,6 +56,13 @@
                 border-radius : 5px;
                 
             }
+            #registTest h5{
+            	margin : 10px 0px;
+            	font-size : 1px;
+            
+            }
+            
+            
 	</style>
 </head>
 <body>
@@ -95,29 +102,40 @@
 	                </tr>
 	                <tr>
 	                    <td>
+	                    	<h5>시행월</h5>
 	                        <input type="number" id="test_month" name="test_month" min='1' placeholder="시행월"/>
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <td>
+	                    	<h5>회차</h5>
 	                        <input type="number" id="test_count" name="test_count" min='1' placeholder="회차입력"/>
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <td>
+	                    	<h5>시험시간</h5>
 	                        <input type="number" id="test_time" name="test_time" min='1' placeholder="시간입력"/>
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <td>
+	                    	<h5>만점기준</h5>
 	                        <input type="number" id="test_fullscore" name="test_fullscore" min='1' placeholder="만점기준"/>
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <td>
-	                        <input type="number" id="test_pass_rate" name="test_pass_rate" min='1' placeholder="통과점수"/>
+	                    	<h5>합격기준</h5>
+	                        <input type="number" id="test_pass_criterion" name="test_pass_criterion" min='0' placeholder="합격기준"/>
 	                    </td>
-	                </tr>	                	                
+	                </tr>	             	                
+	                <tr>
+	                    <td>
+	                    	<h5>합격률</h5>
+	                        <input type="number" id="test_pass_rate" name="test_pass_rate" min='1' placeholder="합격률"/>
+	                    </td>
+	                </tr>	    
 	                <tr>
 	                    <td style="text-align : center">
 	                        <input type="button" id="registTestBtn" value="시험등록"/>
@@ -299,7 +317,7 @@ $('#deleteDetailedSubjectCategory').click(function(){
 //카테고리 불러오기. 상위카테고리 선택한거(value),부를 카테고리,선택자
 function testCategoryCall(upperCate,Cate,id){
 	var obj = {upperCate:upperCate,Cate:Cate};
-	console.log(obj);
+	console.log(id.attr('id'));
 	$.ajax({
 		url : 'adminTestCategoryCall',
 		type : 'get',
@@ -307,10 +325,10 @@ function testCategoryCall(upperCate,Cate,id){
 		dataType : 'json',
 		success : function(data){
 			console.log(data.Category);
-			
-			var txt = '<option value="none">시험카테고리</option>';
-			
-			txt += '<option value="addCate">+ 추가하기</option>';
+			if(id.attr('id') == 'testCategory'){
+				var txt = '<option value="none">시험카테고리</option>';
+				txt += '<option value="addCate">+ 추가하기</option>';				
+			}
 			data.Category.forEach(function(item,idx){
 				txt += '<option value="'+item.test_cate_no+'">'+item.test_cate+'</option>';
 			});
@@ -399,6 +417,7 @@ $('#registTestBtn').click(function(){
 	var $test_time = $('#test_time');
 	var $test_fullscore = $('#test_fullscore');
 	var $test_month = $('#test_month');
+	var $test_pass_criterion = $('#test_pass_criterion');
 	var $test_pass_rate = $('#test_pass_rate');
 	
 	if($test_year.val() == '' 
@@ -407,6 +426,7 @@ $('#registTestBtn').click(function(){
 			|| $test_fullscore.val() == ''
 			|| $test_month.val() == ''
 			|| $test_pass_rate.val() == ''
+			|| $test_pass_criterion.val() == ''
 	){
 		alert('미입력된 항목이 있습니다.');
 	} else{

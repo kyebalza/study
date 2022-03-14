@@ -75,16 +75,16 @@
 	</select>
 	<select id="getDetailedSubjectCategoryList" parameterType="hashmap" resultType="hashmap">
 	SELECT test_cate_no,test_cate,subject_cate_no,subject_cate,detailed_subject_cate_no,detailed_subject_cate FROM test_category tc 
-LEFT JOIN subject_category sc USING (test_cate_no) 
-LEFT JOIN detailed_subject_category dsc  USING (subject_cate_no) 
-WHERE tc.del_flag = FALSE AND sc.del_flag = FALSE AND dsc.del_flag = FALSE AND test_cate_no = #{test_category} 
+	LEFT JOIN subject_category sc USING (test_cate_no) 
+	LEFT JOIN detailed_subject_category dsc  USING (subject_cate_no) 
+	WHERE tc.del_flag = FALSE AND sc.del_flag = FALSE AND dsc.del_flag = FALSE AND test_cate_no = #{test_category} 
 	</select>
 	
 	<insert id="registTest" useGeneratedKeys="true" keyColumn="test_no" keyProperty="test_no" parameterType="com.quiz.bank.dto.TestListDTO">
 	INSERT INTO test_list 
-	(test_cate_no,test_year,test_month,test_count,test_passrate,test_time,test_fullscore)
+	(test_cate_no,test_year,test_month,test_count,test_passrate,test_time,test_fullscore,pass_criterion)
 	VALUES
-	(#{test_cate_no},#{test_year},#{test_month},#{test_count},#{test_passrate},#{test_time},#{test_fullscore})
+	(#{test_cate_no},#{test_year},#{test_month},#{test_count},#{test_passrate},#{test_time},#{test_fullscore},#{pass_criterion})
 	</insert>
 	<insert id="registQuiz" parameterType="com.quiz.bank.dto.QuizDTO">
 	INSERT INTO quiz
@@ -92,4 +92,69 @@ WHERE tc.del_flag = FALSE AND sc.del_flag = FALSE AND dsc.del_flag = FALSE AND t
 	VALUES
 	(#{test_no},#{test_cate_no},#{subject_cate_no},#{detailed_subject_cate_no},#{quiz_index},#{quiz_content},#{quiz_explation},#{quiz_type},#{option1},#{option2},#{option3},#{option4},#{option5},#{quiz_answer},#{quiz_point})
 	</insert>
+	
+	
+	<select id="adminQuizListQuizCountList" resultType="string">
+	SELECT DISTINCT test_count FROM test_list
+	</select>
+	
+	
+	<select id="adminSearchQuiz" resultType="hashmap" parameterType="hashmap">
+	SELECT * FROM quiz q
+	LEFT JOIN test_category tc USING (test_cate_no)
+	LEFT JOIN subject_category sc USING (subject_cate_no)
+	LEFT JOIN detailed_subject_category dsc USING (detailed_subject_cate_no)
+	LEFT JOIN test_list t USING (test_no)	
+		<where>
+		<if test="!test_year.equals('')">
+		AND t.test_year = #{test_year}
+		</if>
+		<if test="!test_count.equals('')">
+		AND t.test_count = #{test_count}
+		</if>
+		<if test="!test_cate_no.equals('')">
+		AND q.test_cate_no = #{test_cate_no}	
+		</if>
+		<if test="!subject_cate_no.equals('')">
+		AND q.subject_cate_no = #{subject_cate_no}
+		</if>
+		<if test="!detailed_subject_cate_no.equals('')">
+		AND q.detailed_subject_cate_no = #{detailed_subject_cate_no}
+		</if>
+		<if test="quiz_content != null">
+		AND quiz_content LIKE CONCAT ('%', #{quiz_content}, '%')
+		</if>
+	</where>
+	ORDER BY quiz_no DESC LIMIT #{pagePerCnt} OFFSET #{offset}
+	</select>
+	
+	<select id="allCount" resultType="int">
+	SELECT count (quiz_no) FROM quiz q
+	LEFT JOIN test_category tc USING (test_cate_no)
+	LEFT JOIN subject_category sc USING (subject_cate_no)
+	LEFT JOIN detailed_subject_category dsc USING (detailed_subject_cate_no)
+	LEFT JOIN test_list t USING (test_no)	
+		<where>
+		<if test="!test_year.equals('')">
+		AND t.test_year = #{test_year}
+		</if>
+		<if test="!test_count.equals('')">
+		AND t.test_count = #{test_count}
+		</if>
+		<if test="!test_cate_no.equals('')">
+		AND q.test_cate_no = #{test_cate_no}	
+		</if>
+		<if test="!subject_cate_no.equals('')">
+		AND q.subject_cate_no = #{subject_cate_no}
+		</if>
+		<if test="!detailed_subject_cate_no.equals('')">
+		AND q.detailed_subject_cate_no = #{detailed_subject_cate_no}
+		</if>
+		<if test="quiz_content != null">
+		AND quiz_content LIKE CONCAT ('%', #{quiz_content}, '%')
+		</if>
+	</where>
+	</select>
+	
+	
 </mapper>

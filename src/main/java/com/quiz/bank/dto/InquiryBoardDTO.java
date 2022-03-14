@@ -72,6 +72,10 @@ public class InquiryBoardDTO {
 	}
 	
 	
+	private String SearchType;
+	   private String Keyword;
+	
+	
 	
 
 }

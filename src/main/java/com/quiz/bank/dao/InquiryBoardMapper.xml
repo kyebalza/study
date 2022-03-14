@@ -12,11 +12,30 @@
 		keyProperty="board_no"
 		keyColumn="board_no"
 		parameterType="com.quiz.bank.dto.InquiryBoardDTO">
-		INSERT INTO Inquiry_board
-			(title,content,user_id)
-		values
-			(#{title},#{content},#{user_id})
+		INSERT INTO Inquiry_board (user_id,title,content) values (#{user_id},#{title},#{content})
 	</insert>
+	
+	
+	
+	
+	<!-- 문의게시판 리스트 호출 -->
+	<select id="inquirylist" resultType="com.quiz.bank.dto.InquiryBoardDTO">
+	SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no
+	</select>
+	
+	<select id="allCount" resultType="int">
+		SELECT COUNT (board_no) FROM inquiry_board
+	</select>
+	
+	
+	<!-- 문의게시판 상세보기 -->
+	<select id="inquirydetail" resultType="com.quiz.bank.dto.InquiryBoardDTO">
+	SELECT * FROM inquiry_board WHERE board_no = #{param1}
+	</select>
+	
+	
+	
+
 	
 
 

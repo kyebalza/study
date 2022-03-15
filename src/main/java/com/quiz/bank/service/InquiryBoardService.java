@@ -130,10 +130,25 @@ public class InquiryBoardService {
 	public InquiryBoardDTO inquirydetail(String board_no) {
 		logger.info("문의게시판 상세보기 서비스 요청");
 		
-		// dao.upHit(board_no);
+		dao.inquiryupHit(board_no);
 		
 		return dao.inquirydetail(board_no);
 	}
+
+
+
+
+	public void exposure(String board_no) {
+		logger.info("문의게시글 삭제(비노출) 처리 요청");
+		
+		dao.exposure(board_no);
+		
+	}
+
+
+
+
+
 	
 
 	

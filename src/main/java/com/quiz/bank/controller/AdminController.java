@@ -77,9 +77,26 @@ public class AdminController {
 		
 		return "admin/ManagUser";
 	}
+
+	//신고 페이지 이동
+	@RequestMapping(value = "/ManagDe", method = RequestMethod.GET)
+	public String ManagDe(Model model) {
+		logger.info("신고 페이지 이동");
+		
+		return "admin/ManagDe";
+	}
 	
-	
-	
+	//회원 수정 요청
+	@RequestMapping(value = "/adminUserUpdate", method = RequestMethod.POST)
+	public String adminUserUpdate(Model model, @RequestParam HashMap<String, String> params) {
+		logger.info("수정 요청 중 : "+params);
+		adservice.adminUserUpdate(params);
+		String user_id = params.get("user_id");
+		logger.info(user_id);
+		
+		
+		return "redirect:/ADdetail?user_id="+user_id;
+	}	
 	
 	
 	
@@ -168,7 +185,7 @@ public class AdminController {
 //	  }
 //	  
 //	  
-//	  //자유 게시글 리스트 검색 요청
+//	  //자유 게시글 리스트 검색 요청 (자유게시판 dto에... 아무것도 없다...)
 //	  @ResponseBody 
 //	  @RequestMapping(value = "/FreeSearchList", method = RequestMethod.GET)
 //	  public List<FreeBoardDTO> FreeSearchList(@RequestParam("SearchType") String SearchType, @RequestParam("Keyword") String Keyword) {
@@ -265,5 +282,18 @@ public class AdminController {
 		
 		return Freedel_check;
 	}
+	
+	
+	//회원 상세보기 요청
+	//회원 관리 페이지 이동
+	@RequestMapping(value = "/ADdetail", method = RequestMethod.GET)
+	public String ADdetail(Model model, @RequestParam String user_id) {
+		logger.info("회원 상세보기 페이지 이동 : "+user_id);
+		UserDTO udto = adservice.ADdetail(user_id, "detail");
+		model.addAttribute("info", udto);
+		
+		return "admin/ADdetail";
+	}
+	
 	
 }

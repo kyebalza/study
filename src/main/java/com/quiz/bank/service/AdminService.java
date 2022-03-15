@@ -219,6 +219,22 @@ public class AdminService {
 		return addao.MemSearchList(uBdto);
 	}
 
+
+	//관리자 회원 상세보기 페이지
+	public UserDTO ADdetail(String user_id, String method) {
+		logger.info("관리자 회원 상세보기 페이지 서비스 : "+user_id);
+		
+		return addao.ADdetail(user_id);
+	}
+
+
+	//관리자 회원 업데이트 요청
+	public void adminUserUpdate(HashMap<String, String> params) {
+		logger.info("회원 수정 요청 서비스 : "+params);
+		addao.adminUserUpdate(params);
+		
+	}
+
 	
 
 }

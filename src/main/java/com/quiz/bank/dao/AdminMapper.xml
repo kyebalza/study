@@ -170,9 +170,16 @@
 		UPDATE Free_board SET del_flag = del_flag-1 WHERE board_no = #{param1}
 	</update>
 	
+		
+	<!-- 유저 상세보기 호출 쿼리 -->
+	<select id="ADdetail" resultType="com.quiz.bank.dto.UserDTO">
+		SELECT * FROM user_info WHERE user_id = #{param1}
+	</select>
 	
-	
-	
+	<!-- 관리자 유저 업데이트 쿼리 -->
+	<update id="adminUserUpdate" parameterType="hashmap">
+		UPDATE user_info SET user_state = #{user_state}, user_admin = #{user_admin} WHERE user_id = #{user_id}
+	</update>	
 	
 	
 </mapper>

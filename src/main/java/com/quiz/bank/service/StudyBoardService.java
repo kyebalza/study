@@ -1,5 +1,8 @@
 package com.quiz.bank.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,29 +55,6 @@ public class StudyBoardService {
 		
 	}
 
-	public String write(HashMap<String, String> params, MultipartFile uploadFile) {
-		logger.info("글쓰기 서비스 도착");
-		String page = "redirect:/studyBoard/list";
-		StudyBoardDTO dto = new StudyBoardDTO();
-		dto.setTitle(params.get("title"));
-		dto.setUser_id(params.get("user_id"));
-		dto.setContent(params.get("content"));
-		dto.setBoard_cate_no(Integer.parseInt(params.get("board_cate_no")));
-		dto.setQuiz_no(Integer.parseInt(params.get("quiz_no")));
-		dao.write(dto);
-		
-		int board_no = dto.getBoard_no();
-		logger.info("board_no : {}",board_no);
-		
-//		if(board_no>0) {
-//			page = "redirect:/detail?board_no="+board_no;
-//			saveFile(board_no,uploadFile);
-//		}
-		
-		return page;
-		
-	}
-
 	public ArrayList<HashMap<String, String>> studyboard_cate() {
 		logger.info("게시판 세부 카테고리");
 		
@@ -92,18 +72,54 @@ public class StudyBoardService {
 		return dao.test_year();
 	}
 
-//	private void saveFile(int board_no, MultipartFile uploadFile) {
-//		
-//		try {
-//			String oriFileName = uploadFile.getOriginalFilename();
-//			int index = oriFileName.lastIndexOf(".");
-//			logger.info("index : {}",index);
-//			
-//		}catch(Exception e){
-//			
-//		}
-//		
-//	}
+
+	public String write(HashMap<String, String> params, MultipartFile uploadFile) {
+		logger.info("글쓰기 서비스 도착");
+		String page = "redirect:/studyBoard/list";
+		StudyBoardDTO dto = new StudyBoardDTO();
+		dto.setTitle(params.get("title"));
+		dto.setUser_id(params.get("user_id"));
+		dto.setContent(params.get("content"));
+		dto.setBoard_cate_no(Integer.parseInt(params.get("board_cate_no")));
+		dto.setQuiz_no(Integer.parseInt(params.get("quiz_no")));
+		dao.write(dto);
+		
+		int board_no = dto.getBoard_no();
+		logger.info("board_no : {}",board_no);
+		
+		if(board_no>0) {
+			page = "redirect:/studyBoard/detail?board_no="+board_no;
+			saveFile(board_no,uploadFile);
+		}
+		
+		return page;
+		
+	}
+
+	private void saveFile(int board_no, MultipartFile uploadFile) {
+		
+		try {
+			String oriFileName = uploadFile.getOriginalFilename();
+			int index = oriFileName.lastIndexOf(".");
+			logger.info("index : {}",index);
+			
+			if(index>0) {
+				String ext = oriFileName.substring(index);
+				String newFileName = System.currentTimeMillis()+ext;
+				logger.info(oriFileName+"->"+newFileName);
+				
+				byte[] bytes = uploadFile.getBytes();
+				Path path = Paths.get("C:/upload/"+newFileName);
+				Files.write(path,bytes);
+				logger.info(oriFileName+"Save완료!");
+				dao.fileWrite(board_no,oriFileName,newFileName);
+			}
+			
+		}catch(Exception e){
+			logger.info("오류 발생 : {}",e);
+		}
+		
+	}
 
 //	public void upload(MultipartFile uploadFile) {
 //		//1. 파일명 추출

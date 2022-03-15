@@ -31,5 +31,7 @@ ArrayList<HashMap<String, String>> test_name();
 
 ArrayList<HashMap<String, String>> test_year();
 
+void fileWrite(int board_no, String oriFileName, String newFileName);
+
 
 }

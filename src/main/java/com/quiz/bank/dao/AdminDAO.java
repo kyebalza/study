@@ -56,6 +56,10 @@ public interface AdminDAO {
 
 	List<UserDTO> MemSearchList(UserDTO uBdto);
 
+	UserDTO ADdetail(String user_id);
+
+	void adminUserUpdate(HashMap<String, String> params);
+
 	
 
 

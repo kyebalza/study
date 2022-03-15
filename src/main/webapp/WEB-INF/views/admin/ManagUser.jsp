@@ -76,7 +76,7 @@
 					var str = '';
 					result.forEach(function(item){
 						str="<tr>"
-						str+="<td><a href='detail?idx="+item.user_id+"'>"+item.user_id+"</a></td>";
+						str+="<td><a href='ADdetail?idx="+item.user_id+"'>"+item.user_id+"</a></td>";
 						str+="<td>"+item.user_name+"</td>";
 						str+="<td>"+item.user_email+"</td>";
 						str+="<td>"+item.use_phone+"</td>";
@@ -150,7 +150,7 @@
 		var content = '';	
 		list.forEach(function(item, user_id){
 				content+="<tr>"
-				content+="<td><a href='ADdetail?idx="+item.user_id+"'>"+item.user_id+"</a></td>";
+				content+="<td><a href='ADdetail?user_id="+item.user_id+"'>"+item.user_id+"</a></td>";
 				content+="<td>"+item.user_name+"</td>";
 				content+="<td>"+item.user_email+"</td>";
 				content+="<td>"+item.user_phone+"</td>";

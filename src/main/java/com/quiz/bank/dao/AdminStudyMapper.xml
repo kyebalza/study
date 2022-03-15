@@ -125,7 +125,7 @@
 		AND quiz_content LIKE CONCAT ('%', #{quiz_content}, '%')
 		</if>
 	</where>
-	ORDER BY quiz_no DESC LIMIT #{pagePerCnt} OFFSET #{offset}
+	ORDER BY quiz_no DESC LIMIT ${pagePerCnt} OFFSET ${offset}
 	</select>
 	
 	<select id="allCount" resultType="int">
@@ -154,6 +154,10 @@
 		AND quiz_content LIKE CONCAT ('%', #{quiz_content}, '%')
 		</if>
 	</where>
+	</select>
+	
+	<select id="adminUpdateQuizForm" resultType="hashmap">
+	SELECT * FROM quiz WHERE quiz_no = #{param1}
 	</select>
 	
 	

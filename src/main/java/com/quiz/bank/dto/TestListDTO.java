@@ -13,12 +13,13 @@ public class TestListDTO {
 	private int test_passrate;
 	private int test_time;
 	private int test_fullscore;
-	private int pass_criteria;
-	public int getPass_criteria() {
-		return pass_criteria;
+	private int pass_criterion;
+
+	public int getPass_criterion() {
+		return pass_criterion;
 	}
-	public void setPass_criteria(int pass_criteria) {
-		this.pass_criteria = pass_criteria;
+	public void setPass_criterion(int pass_criterion) {
+		this.pass_criterion = pass_criterion;
 	}
 	private boolean del_flag;
 	

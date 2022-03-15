@@ -14,10 +14,10 @@
 		<input type="hidden" name="quizCnt" value="${quizCnt }"/>
 		<button>저장</button>
 	</form>
-	<c:if test="${photoName ne null }">
+	<c:if test="${newPhotoName ne null }">
 		<div id="image_container">
-				<img src="/photo/${photoName}" class="${photoName}" width="250px"/>
-				<a href="#" class="${photoName}" onclick="delPhoto()">삭제</a>
+				<img src="/photo/${newPhotoName}" class="${newPhotoName}" width="250px"/>
+				<a href="#" class="${newPhotoName}" onclick="delPhoto()">삭제</a>
 				<br/><br/>
 		</div>	
 	</c:if>
@@ -25,18 +25,20 @@
 <script>
 console.log("${quizCnt}")
 
-console.log("${photoName}");
-var photoName = "${photoName}";
+console.log("${newPhotoName}");
+var newPhotoName = "${newPhotoName}";
+var oriPhotoName = "${oriPhotoName}";
 var quizCnt = "${quizCnt}";
 
-if(photoName == ''){
+if(newPhotoName == ''){
 	console.log('null입니다!');
 } else {
-	console.log('부모창의 quizCnt에 photoName 을 보냅니다.');
+	console.log('부모창의 quizCnt에 newPhotoName 을 보냅니다.');
 	$('.photoArea.'+quizCnt,opener.document).empty();
 	var txt = '';
-	txt += '<img src="/photo/'+photoName+'" class="quiz_img "'+quizCnt+'"/>';
-	txt += '<input type="hidden" class="quiz_img_name '+quizCnt+'" value="'+photoName+'"/>';
+	txt += '<img src="/photo/'+newPhotoName+'" class="quiz_img "'+quizCnt+'"/>';
+	txt += '<input type="hidden" class="quiz_img_newName '+quizCnt+'" value="'+newPhotoName+'"/>';
+	txt += '<input type="hidden" class="quiz_img_oriName '+quizCnt+'" value="'+oriPhotoName+'"/>';
 	
 	$('.photoArea.'+quizCnt,opener.document).append(txt);
 	window.close();

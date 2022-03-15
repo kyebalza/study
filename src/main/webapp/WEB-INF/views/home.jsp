@@ -12,6 +12,7 @@
 	<a href="loginPage">로그인페이지</a>
 	<a href="adminPage">관리자페이지</a>
 	<a href="quizBankList">문제은행</a>
+	<a href="studyBoard/list">공부게시판</a>
 	
 </body>
 <script></script>

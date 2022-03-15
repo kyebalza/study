@@ -4,7 +4,54 @@
 >
 <!-- xml 이름상관 없음. *.xml로 설정했으니까 -->
 <!-- 이 xml이 어떤 interface와 연결되는지 설정 -->
-<mapper namespace="com.quiz.bank.dao.StudyBoardDAO">
-
-
+<mapper namespace="com.quiz.bank.dao.StudyBoardDAO">	
+	
+	<!-- 리스트 불러오기 -->
+	<select id="list" resultType="StudyBoard">
+		SELECT * FROM study_board
+		 	ORDER BY board_no DESC
+	</select>
+	
+	<!-- 게시판 세부 카테고리(문제,개념) 가져오기 -->
+	<select id="studyboard_cate" resultType="hashmap">
+		SELECT * FROM board_category WHERE board_name = 'study_board'
+	</select>
+	
+	<!-- 자격증 종류 가져오기 -->
+	<select id="test_name" resultType="hashmap">
+		SELECT * FROM test_category 
+	</select>
+	
+	<!-- 시험 시행년도,회차 가져오기 -->
+	<select id="test_year" resultType="hashmap">
+		SELECT test_year, test_count FROM test_list
+	</select>
+	
+	<!-- 글쓰기 -->
+	<insert id="write" 
+		useGeneratedKeys="true"
+		keyProperty="board_no"
+		keyColumn="board_no"
+		parameterType="StudyBoard">
+		INSERT INTO study_board (title, user_id, content, board_cate_no,quiz_no)
+			VALUES(#{title}, #{user_id}, #{content},#{board_cate_no},#{quiz_no})
+	</insert>
+	
+	<!-- 조회수 올리기 -->
+	<update id="upHit">
+		UPDATE study_board SET bHit = bHit+1
+			WHERE board_no = #{param1}
+	</update>
+	
+	<!-- 상세보기 -->
+	<select id="detail" resultType="StudyBoard">
+		SELECT board_no,title,user_id,reg_date,bHit,content FROM study_board 
+			WHERE board_no=#{param1}
+	</select>
+	
+	<!-- 삭제하기 -->
+	<delete id="delete">
+		DELETE FROM study_board WHERE board_no = #{param1}
+	</delete>
+ <!--	 -->	
 </mapper>

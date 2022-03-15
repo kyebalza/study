@@ -24,4 +24,13 @@ public class HomeController {
 		return "home";
 	}
 	
+	
+	
+	@RequestMapping(value = "/righter", method = RequestMethod.GET)
+	public String righter(Model model) {
+		logger.info("righter 이동");
+
+		return "righter";
+	}
+	
 }

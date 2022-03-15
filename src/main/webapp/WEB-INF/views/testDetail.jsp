@@ -34,7 +34,11 @@
 		</fieldset>	
 	</form>
  -->
-	
+ <div class="quizPage">
+	<input type="button" value="회차별 문제풀기" onclick="location.href='testDetail?test_cate_no=${test_name.test_cate_no}'"/>
+	<input type="button" value="과목별 문제풀기" onclick="location.href='loginPage'"/>
+	<input type="button" value="북마크 문제풀기" onclick="location.href='loginPage'"/> 
+ </div>
 <body>
 	<div class="testList">
 		<table>

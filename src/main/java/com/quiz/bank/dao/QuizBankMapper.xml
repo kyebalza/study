@@ -23,7 +23,7 @@
 
 	<!-- 2-(1). 시험명 가져오기 -->
 	<select id="test_name" resultType="TestCategory">
-		SELECT test_cate FROM test_category 
+		SELECT test_cate, test_cate_no FROM test_category 
 			WHERE del_flag = 'false' AND test_cate_no=#{param1}
 	</select>
 

@@ -177,7 +177,8 @@ public class AdminStudyController {
 		ModelAndView mav = new ModelAndView("admin_study/adminPhotoChildOpen");
 		
 		mav.addObject("quizCnt", quizCnt);
-		mav.addObject("photoName",photo_new_name.get("1"));
+		mav.addObject("newPhotoName",photo_new_name.get("1"));
+		mav.addObject("oriPhotoName",photo_new_name.get("2"));
 		
 		return mav;
 	}
@@ -189,6 +190,7 @@ public class AdminStudyController {
 	public HashMap<String, Object> adminRegistTestAndQuiz(@RequestParam(value="params[]") ArrayList <String> params){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int success = service.registTestAndQuiz(params);
+		logger.info("{}",params);
 		map.put("msg", success);
 		return map;
 	}
@@ -214,7 +216,13 @@ public class AdminStudyController {
 	}
 	
 	
-	
+	@RequestMapping(value="adminUpdateQuizForm")
+	public ModelAndView adminUpdateQuizForm (@RequestParam String quiz_no) {
+		ModelAndView mav = new ModelAndView("admin_study/adminUpdateQuiz");
+		HashMap<String, String> map = service.adminUpdateQuizForm(quiz_no);
+		mav.addObject("quiz_info", map);
+		return mav;
+	}
 	
 	
 	

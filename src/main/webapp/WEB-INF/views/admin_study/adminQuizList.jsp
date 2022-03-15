@@ -19,8 +19,17 @@
 	table,th,td {
 	 border : 1px solid gray;
 	 border-collapse : collapse;
-	 
+	 font-size : 9px;
 		
+	}
+	.quiz_content a{
+		color : red;
+		width : 300px;
+		display : inline-block;
+		test-overflow : ellipsis;
+		overflow : hidden;
+		white-space:nowrap;
+		word-wrap : break-word;
 	}
 	
 	</style>
@@ -69,8 +78,9 @@
 	</thead>
 	<tbody id="quizList">
 	</tbody>
+	<tbody>
 	<tr>
-		<td colspan="3" id="paging">
+		<td colspan="19" id="paging">
             <div class="container">                           
                <nav aria-label="Page navigation" style="text-align:center">
                   <ul class="pagination" id="pagination"></ul>
@@ -78,6 +88,7 @@
             </div>
 		</td>
 	</tr>	
+	</tbody>
 </table>
 </div>
 	
@@ -90,88 +101,31 @@ testCategoryCall("0","test",$('#test_cate_no'));
 
 
 $('#test_cate_no').change(function(){
-	search(
-	$('#test_cate_no').val(),		
-	$('#test_year').val(),
-	$('#test_count').val(),
-	$('#subject_cate_no').val(),
-	$('#detailed_subject_cate_no').val(),
-	$('#quiz_content').val(),
-	currPage,
-	10
-	);
+	search(currPage,10);
+
 	
 });
 $('#test_year').change(function(){
-	search(
-			$('#test_cate_no').val(),		
-			$('#test_year').val(),
-			$('#test_count').val(),
-			$('#subject_cate_no').val(),
-			$('#detailed_subject_cate_no').val(),
-			$('#quiz_content').val(),
-			currPage,
-			10
-			);
+	search(currPage,10);
+
 });
 $('#test_count').change(function(){
-	search(
-			$('#test_cate_no').val(),		
-			$('#test_year').val(),
-			$('#test_count').val(),
-			$('#subject_cate_no').val(),
-			$('#detailed_subject_cate_no').val(),
-			$('#quiz_content').val(),
-			currPage,
-			10
-			);
+	search(currPage,10);
+
 });
 $('#subject_cate_no').change(function(){
-	search(
-			$('#test_cate_no').val(),		
-			$('#test_year').val(),
-			$('#test_count').val(),
-			$('#subject_cate_no').val(),
-			$('#detailed_subject_cate_no').val(),
-			$('#quiz_content').val(),
-			currPage,
-			10
-			);
+	search(currPage,10);
+
 });
 $('#detailed_subject_cate_no').change(function(){
-	search(
-			$('#test_cate_no').val(),		
-			$('#test_year').val(),
-			$('#test_count').val(),
-			$('#subject_cate_no').val(),
-			$('#detailed_subject_cate_no').val(),
-			$('#quiz_content').val(),
-			currPage,
-			10
-			);
+	search(currPage,10);
+
 });
-$('#quiz_content').change(function(){
-	search(
-			$('#test_cate_no').val(),		
-			$('#test_year').val(),
-			$('#test_count').val(),
-			$('#subject_cate_no').val(),
-			$('#detailed_subject_cate_no').val(),
-			$('#quiz_content').val(),
-			currPage,
-			10
-			);
+$('#quiz_content').keyup(function(){
+	search(currPage,10);
+
 });
-search(
-		$('#test_cate_no').val(),		
-		$('#test_year').val(),
-		$('#test_count').val(),
-		$('#subject_cate_no').val(),
-		$('#detailed_subject_cate_no').val(),
-		$('#quiz_content').val(),
-		currPage,
-		10
-		);
+search(currPage,10);
 /*
 function listCall(page, cnt){
 	$.ajax({
@@ -202,14 +156,14 @@ function listCall(page, cnt){
 }
 */
 
-function search(test_cate_no,test_year,test_count,subject_cate_no,detailed_subject_cate_no,quiz_content,page,cnt){
+function search(page,cnt){
 	var search_info = {};
-	search_info.test_cate_no = test_cate_no;
-	search_info.test_year = test_year;
-	search_info.test_count = test_count;
-	search_info.subject_cate_no = subject_cate_no;
-	search_info.detailed_subject_cate_no = detailed_subject_cate_no;
-	search_info.quiz_content = quiz_content;
+	search_info.test_cate_no = $('#test_cate_no').val();
+	search_info.test_year = $('#test_year').val();
+	search_info.test_count = $('#test_count').val();
+	search_info.subject_cate_no = $('#subject_cate_no').val();
+	search_info.detailed_subject_cate_no = $('#detailed_subject_cate_no').val();
+	search_info.quiz_content = $('#quiz_content').val();
 	search_info.page = page;
 	search_info.cnt = cnt;
 	
@@ -229,15 +183,8 @@ function search(test_cate_no,test_year,test_count,subject_cate_no,detailed_subje
                 onPageClick:function(evt,page){//해당 페이지 번호를 클릭했을때 일어날 일들
                    console.log(evt); //현재 일어나는 클릭 이벤트 관련 정보들
                    console.log(page);//몇 페이지를 클릭 했는지에 대한 정보
-                   search(
-                		   test_cate_no,
-                		   test_year,
-                		   test_count,
-                		   subject_cate_no,
-                		   detailed_subject_cate_no,
-                		   quiz_content,
-                		   page,
-                		   cnt)
+                   search(page,10);
+
                 }
              });
 			},
@@ -260,7 +207,7 @@ function listDraw(list){
 			txt += '<td>'+item.test_cate+'</td>';
 			txt += '<td>'+item.subject_cate+'</td>';
 			txt += '<td>'+item.detailed_subject_cate+'</td>';
-			txt += '<td>'+item.quiz_content+'</td>';
+			txt += '<td class="quiz_content"><a href="adminUpdateQuizForm?quiz_no='+item.quiz_no+'">'+item.quiz_content+'</a></td>';
 			txt += '<td>'+item.quiz_explation+'</td>';
 			txt += '<td>'+item.quiz_type+'</td>';
 			txt += '<td>'+item.quiz_point+'</td>';

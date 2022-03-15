@@ -130,6 +130,7 @@ public class AdminStudyService {
 					Files.write(path, bytes);
 					logger.info(oriFileName + " 컴퓨터에 SAVE");
 					newphotonames.put(Integer.toString(i), newFileName);
+					newphotonames.put(Integer.toString(i+1), oriFileName);
 					i++;
 				}
 			} catch (Exception e) {
@@ -157,7 +158,7 @@ public class AdminStudyService {
 				testListDTO.setTest_passrate(Integer.parseInt(jObject.getString("test_pass_rate")));
 				testListDTO.setTest_time(Integer.parseInt(jObject.getString("test_time")));
 				testListDTO.setTest_fullscore(Integer.parseInt(jObject.getString("test_fullscore")));
-				testListDTO.setPass_criteria(Integer.parseInt(jObject.getString("test_pass_criterion")));
+				testListDTO.setPass_criterion(Integer.parseInt(jObject.getString("test_pass_criterion")));
 				logger.info("{}", testListDTO.getTest_cate_no());
 				logger.info("{}", testListDTO.getTest_year());
 				logger.info("{}", testListDTO.getTest_month());
@@ -229,5 +230,9 @@ public class AdminStudyService {
 		map.put("quiz_search_list", quiz_search_list);
 		return map;
 
+	}
+
+	public HashMap<String, String> adminUpdateQuizForm(String quiz_no) {
+		return dao.adminUpdateQuizForm(quiz_no);
 	}
 }

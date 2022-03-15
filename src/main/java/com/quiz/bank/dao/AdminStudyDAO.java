@@ -54,6 +54,8 @@ public interface AdminStudyDAO {
 
 	int allCount(HashMap<String, String> search_info);
 
+	HashMap<String, String> adminUpdateQuizForm(String quiz_no);
+
 
 
 }

@@ -375,6 +375,10 @@ $('#quiz_save').click(function(){
 		
 		obj.quiz_content = $('.quiz_content.'+class_num).val();
 		obj.quiz_explation = $('.quiz_explation.'+class_num).val();
+		obj.newPhotoName = $('.quiz_img_newName.'+class_num).val()
+		obj.oriPhotoName = $('.quiz_img_oriName.'+class_num).val()
+		
+		
 		quiz_list.push(JSON.stringify(obj));
 		console.log(obj);
 	}

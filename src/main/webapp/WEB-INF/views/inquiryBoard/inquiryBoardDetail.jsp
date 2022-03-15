@@ -5,7 +5,22 @@
  <meta charset="UTF-8">
  <title>Insert title here</title>
  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
- <style></style>
+ <style>
+ 
+ table, th, td{
+	border: 1px solid black;
+	border-collapse: collapse;
+	padding : 5px 10px;	
+}
+
+textarea {
+	width: 100%;
+	height: 150px;
+	resize: none;
+}
+
+ 
+ </style>
 </head>
 <body>
 
@@ -18,6 +33,10 @@
 		<tr>
 			<th>카테고리</th>
 			<td>${info.board_cate_no}</td>
+		</tr>
+		<tr>
+			<th>조회수</th>
+			<td>${info.bHit}</td>
 		</tr>
 		<tr>
 			<th>작성자</th>
@@ -33,8 +52,8 @@
 		</tr>
 	
 		<tr>
-			<th colspan="2">
-				<input type="button" class="identify" onclick="location.href='./inqupdateForm?board_no=${info.board_no}'" value="수정"/>
+			<th colspan="3">
+				<input type="button" class="identify" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
 				<input type="button" class="identify" onclick="exposure()" value="삭제"/>			
 				<input type="button" onclick="location.href='./inquiryBoardList?currpage=1'" value="목록"/>
 			</th>
@@ -86,36 +105,7 @@
 		
 	}
 	
-	var files = [];
-	
-	<c:forEach items="${photos}" var="photo">
-	files.push("${photo}");
-	</c:forEach>
-	
-	console.log(files);
-	
-	if(files.length>0){//업로드된 파일이 있을 경우
-		
-		var content="";
-		
-		for(var i=0; i<files.length;i++){			
-			console.log("fileName : "+files[i]);//풀 파일명
-			//확장자만 추출(마지막에 있는 . 의 취를 찾아 substring 으로 잘라낸다.)
-			var ext = files[i].substring(files[i].lastIndexOf(".")+1);
-			console.log("ext : "+ext);
-			
-			content += '<a href="/photo/'+files[i]+'"/>'+files[i]+' 다운로드 <a>';
-			content += '<br/>';			
-		}
-		
-		$("#area").html(content);
-		
-				
-	}else{		//업로드 된 파일이 없을 경우
-		$("#area").html("<p>업로드 된 파일이 없습니다.</p>");
-	}
-	
-	
+
 	
 	
 	
@@ -124,9 +114,6 @@
 	
 	
 	/* reply 기능 */
-	
-	
-	
 	$.ajax({
 		type : 'GET',
 		url : 'reply_call',
@@ -188,7 +175,7 @@
 						alert('로그인 후 이용 가능한 서비스입니다.');
 					} else {
 						console.log(data.msg);
-						//ajax 는 페이지를 새로고치하지 않기 때문에, 적용된 내용을 확인하기 위해서는 리스트를 다시 그려야 한다.
+						//ajax 는 페이지를 새로고침하지 않기 때문에, 적용된 내용을 확인하기 위해서는 리스트를 다시 그려야 한다.
 						//listCall();
 						listDraw(data.list);
 						$('textarea[name="reply_comment"]').val('');

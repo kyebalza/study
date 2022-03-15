@@ -1,4 +1,4 @@
-package com.quiz.bank.controller;
+	package com.quiz.bank.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +40,7 @@ public class InquiryBoardController {
 	}
 	*/
 	
-	// 1. 문의글쓰기 페이지 요청
+	// 1. 문의게시판 작성하기 페이지 요청
 	@GetMapping(value="/inquiryWriteForm")
 	public String inquiryWriteForm(Model model, HttpSession session) {
 		logger.info("문의게시판 작성하기 페이지 요청");
@@ -51,10 +51,8 @@ public class InquiryBoardController {
 		}
 		return page;
 	}
-	
-	
-	//2.문의글쓰기 요청
-	@ResponseBody
+
+	//2.문의게시판 작성하기 요청
 	@PostMapping(value = "/inquiryWrite")
 	 public String inquiryWrite(Model model,
 			 @RequestParam HashMap<String, String> params) { 
@@ -63,52 +61,16 @@ public class InquiryBoardController {
 		 return service.inquiryWrite(params);
 	}
 	
+	// 2-1. 문의게시판 작성하기 (문의게시판 카테고리 추가하기)
 	
-
 	
-
-/*
-	// 3. 문의게시판 리스트 호출
-	@ResponseBody
-	@GetMapping(value = "/inquiryBoardList")
-	 public String inquiryBoardList(Model model, @RequestParam String currpage) {
-		logger.info("문의게시판 리스트 요청");
+	// 2-2. 문의게시판 파일 업로드
 	
-		
-		
-//        ArrayList<HashMap<String, String>> InquiryBoardList = service.InquiryBoardList();
-//        logger.info("글의 수 : {}",InquiryBoardList.size());
-//        model.addAttribute("size", InquiryBoardList.size());
-//        model.addAttribute("InquiryBoardList", InquiryBoardList);      
-//        return "inquiryBoardList";
-        
-        
-        
-        //String page = "/";
-        
-        int currPage = Integer.parseInt(currpage); // 호출을 요청할 페이지
-        logger.info("currpage : {}",currpage);
-        int pagePerCnt = 10; // 한 페이지당 몇개씩? 10개씩
-        logger.info("pagePerCnt : {}",pagePerCnt);
-        // 1. 총 페이지 갯수인 range 가 필요함
-        
-        int range = service.list_rangecall(currPage,pagePerCnt);
-        logger.info("range : {}",range);
-        // 2. 리스트가 필요함 (10개 밖에 안들어있음)
-        ArrayList<HashMap<String, String>> listCall = service.list_listCall(currPage,pagePerCnt);
-        model.addAttribute("pages", range);
-        model.addAttribute("InquiryBoadrList", listCall);
-        model.addAttribute("nowpage", currpage);
-        
-		return "inquiryBoard/inquiryBoardList";
-		
-      
-		
-	}
-*/
+	
+	
 
 	// 3. 문의게시판 리스트 페이지 호출
-	@ResponseBody
+	
 	@GetMapping(value = "/inquiryBoardList")
 	 public String inquiryBoardList(Model model) { 
 		 logger.info("문의게시판 리스트 이동");
@@ -120,8 +82,7 @@ public class InquiryBoardController {
 	@ResponseBody
 	@GetMapping(value = "/inquirylist")
 	public HashMap<String, Object> studylist(@RequestParam  String page, @RequestParam String cnt) {
-		logger.info("문의게시판 리스트 요청");
-		logger.info("리스트 요청 : {} 페이지, {} 개 씩",page, cnt);
+		logger.info("문의게시판 리스트 요청 : {} 페이지, {} 개 씩",page, cnt);
 		
 		int currPage = Integer.parseInt(page);
 		int pagePerCnt = Integer.parseInt(cnt);
@@ -131,8 +92,7 @@ public class InquiryBoardController {
 
 	
 
-	// 3. 문의게시판 상세보기
-	@ResponseBody
+	// 4. 문의게시판 상세보기
 	@GetMapping(value = "/inquiryBoardDetail")
 	public String inquiryBoardDetail(Model model, @RequestParam String board_no) {
 		logger.info("문의게시판 상세보기 요청 : {}", board_no);
@@ -147,8 +107,24 @@ public class InquiryBoardController {
 	
 	
 	
-	//4. 문의게시판 수정
+	//5. 문의게시판 수정페이지 요청
+	@GetMapping(value = "/inquiryUpdateForm")
+	public String inquiryUpdateForm(Model model, @RequestParam String board_no) {
+		logger.info("문의게시판 수정페이지 요청 : {}", board_no);
+		
+		
+		return "inquiryBoard/inquiryBoardList";
+	}
 	
+	
+	
+	//6. 문의게시판 삭제(비노출/블라인드)
+	@GetMapping(value = "/inquiryBoardExposure")
+	public String inquiryBoardExposure(Model model, @RequestParam String board_no) {
+		logger.info("문의게시판 삭제(블라인드) 요청 : {}", board_no);
+		service.exposure(board_no);
+		return "inquiryBoard/inquiryBoardList";
+	}
 	
 	 
 

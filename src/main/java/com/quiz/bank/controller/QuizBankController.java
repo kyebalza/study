@@ -28,8 +28,8 @@ public class QuizBankController {
 	}
 	
 	//2. 회차별 시험리스트 상세보기
-	@GetMapping(value="/testdetail")
-	public ModelAndView testdetail(@RequestParam String test_cate_no) {
+	@GetMapping(value="/testDetail")
+	public ModelAndView testDetail(@RequestParam String test_cate_no) {
 		logger.info("상세보기 요청 : {}",test_cate_no);
 		return service.testdetail(test_cate_no);
 	}

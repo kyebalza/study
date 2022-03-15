@@ -30,9 +30,19 @@
 	
 	<!-- 문의게시판 상세보기 -->
 	<select id="inquirydetail" resultType="com.quiz.bank.dto.InquiryBoardDTO">
-	SELECT * FROM inquiry_board WHERE board_no = #{param1}
+		SELECT * FROM inquiry_board WHERE board_no = #{param1}
 	</select>
 	
+	<!-- 문의게시판 조회수 올리기 -->
+	<update id="inquiryupHit">
+		UPDATE inquiry_board SET bHit = bHit+1 WHERE board_no = #{param1}
+	</update>
+	
+	
+	<!-- 문의게시판 삭제(비노출) -->
+	<update id="exposure">
+		UPDATE inquiry_board SET del_flag= #{del_flag} WHERE board_no = #{board_no}
+	</update>
 	
 	
 

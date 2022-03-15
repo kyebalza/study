@@ -7,7 +7,7 @@
 	<script src = "https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<style>
 	.alllogin{
-		width: 300px;
+		width: 375px;
 		height: 300px;
 		text-align: center;
 		top: 20px;	
@@ -15,11 +15,45 @@
 		}			
 	.login {
 		text-align: center;
-		}	
+		margin-top: 150px;
+		}
+	#login{
+		height: 35px;
+	    width: 75px;
+	    text-align: center;
+	    border: solid #4caf50;
+	    border-radius: 8px;
+	    background-color: #4caf50;
+	    color: white;
+	}
+	#login:hover{
+		cursor: pointer;
+		color: #4caf50;
+		background-color: white;
+	}
+	#user_id{
+		width: 350px;
+    	height: 30px;
+    	text-align: center;
+    	border: solid #4caf50;
+	}
+	#user_pw{
+		width: 350px;
+    	height: 30px;
+    	text-align: center;
+    	border: solid #4caf50;
+	}		
 	table,th,td{
-		border-collapse : collapse ;
+		/*border-collapse : collapse ;*/
 		padding : 5px;
-		border: solid 1px gray;
+		/*border: solid 1px gray;*/
+	}
+	a{
+		color: black;
+    	text-decoration: none;	
+	}
+	a:hover{
+		color: #4caf50;
 	}
 		
 	</style>
@@ -28,22 +62,27 @@
 <div class = "alllogin">
 <div class = "login">
 	<table>
-		<h2>로그인</h2>	
+		<img id="MainLogo" src="resources/img/Logo.png" alt="메인로고"/>
 		<tr>
-			<th>ID</th>
-			<td><input type = "text" id = "user_id" /></td>
+			<!-- <th>ID</th> -->
+			<td><input type = "text" id = "user_id" placeholder="아이디를 입력하세요"/></td>
 		</tr>
 		<tr>
-			<th>PW</th>
-			<td><input type = "password" id = "user_pw" /></td>
+			<!-- <th>PW</th> -->
+			<td><input type = "password" id = "user_pw" placeholder="비밀번호를 입력하세요"/></td>
 		</tr>
 		<tr>
 			<th colspan = "2">
-			<input type = "button" id = "login" value = "LOGIN"/>
+			<input type = "button" id = "login" value = "로그인"/>
 			</br>
-			<input type = "button" id= "pwfind" value = "비밀번호 찾기" onclick = "location.href='pwfind'"/> | 
-			<input type = "button" id= "infind" value = "아이디 찾기" onclick = "location.href='idfind'"/> | 
-			<input type = "button" id= "joinForm" value = "회원가입" onclick = "location.href='joinForm'"/>
+			</br>
+			<a href="idfind">아이디 찾기</a> | 
+			<a href="pwfind">비밀번호 찾기</a> | 
+			<a href="joinForm">회원가입</a>
+			
+			<!-- <input type = "button" id= "pwfind" value = "비밀번호 찾기" onclick = "location.href='pwfind'"/> -->
+			<!-- <input type = "button" id= "idfind" value = "아이디 찾기" onclick = "location.href='idfind'"/> -->
+			<!-- <input type = "button" id= "joinForm" value = "회원가입" onclick = "location.href='joinForm'"/> -->
 			</th>
 		</tr>
 	</table>

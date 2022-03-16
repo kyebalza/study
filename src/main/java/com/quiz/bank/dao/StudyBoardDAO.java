@@ -2,6 +2,7 @@ package com.quiz.bank.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,6 +33,20 @@ ArrayList<HashMap<String, String>> test_name();
 ArrayList<HashMap<String, String>> test_year();
 
 void fileWrite(int board_no, String oriFileName, String newFileName);
+
+StudyBoardDTO photo(String board_no);
+
+int update(HashMap<String, String> params);
+
+ArrayList<StudyBoardDTO> listCall(int pagePerCnt, int offset);
+
+int allCount();
+
+List<StudyBoardDTO> studySearch(StudyBoardDTO sBdto);
+
+ArrayList<HashMap<String, String>> test_no();
+
+
 
 
 }

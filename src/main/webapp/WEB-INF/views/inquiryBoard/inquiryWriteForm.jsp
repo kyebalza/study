@@ -36,37 +36,32 @@
 </head>
 <body>
  
-	<form action="inquiryWrite" method="post">
-	<input type="hidden" name="user_id" value="${sessionScope.loginId}"/>
+	<form action="inquiryWrite" method="post" enctype="multipart/form-data">
 		<table> 
 			<tr>
-				<th>
-					<select class="category" name="Category">
-                    <option value="" disabled selected>전체</option>
-                    <option value="계정문의">계정문의</option>
-                    <option value="이용문의">이용문의</option>
+				<td>
+					<select onclick="boardcate" name="board_cate_no">
+						<c:forEach items="${inquiry_cate}" var="inquiry_cate"> 
+		               		<option value="${inquiry_cate.board_cate_no}">${inquiry_cate.board_cate}</option>
+		               	</c:forEach>
             		</select>
             		<input class="title" type="text" placeholder="제목을 입력하세요" name="title"/>
-				</th>
-				
+				</td>
 			</tr>
 			<tr>
 				<td><textarea placeholder="내용을 입력하세요 " name="content"></textarea></td>
 			</tr>
 
 			<tr>
-				<td><input type="file" name="photos" multiple="multiple"/></td>
-			</tr>
-			
-			<tr>
-				<th colspan="2">
-				<input type="button" onclick="location.href='./inquiryBoardList'" value="취소" />
-				<button>등록</button>
-				</th>
+				<td><input type="file" name="uploadFile"/></td>
 			</tr>
 		</table>
+		
+		<input type="button" onclick="location.href='inquiryBoardList'" value="취소"/>
+		<input type="submit" value="등록"/>
 	</form>
   	
 </body>
-<script></script>
+<script>
+</script>
 </html>

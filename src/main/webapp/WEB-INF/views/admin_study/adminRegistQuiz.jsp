@@ -398,10 +398,6 @@ $('#quiz_save').click(function(){
 		},
 		error : function(e){}
 	});
-	
-	
-	
-	
 });
 
 

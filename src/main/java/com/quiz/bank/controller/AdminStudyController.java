@@ -179,7 +179,7 @@ public class AdminStudyController {
 		mav.addObject("quizCnt", quizCnt);
 		mav.addObject("newPhotoName",photo_new_name.get("1"));
 		mav.addObject("oriPhotoName",photo_new_name.get("2"));
-		
+		mav.addObject("index", photo_new_name.get("index"));
 		return mav;
 	}
 	
@@ -223,6 +223,49 @@ public class AdminStudyController {
 		mav.addObject("quiz_info", map);
 		return mav;
 	}
+	
+	
+	@RequestMapping(value="adminUpdateQuiz")
+	@ResponseBody
+	public HashMap<String, Object> adminUpdateQuiz (@RequestParam HashMap<String, String> params){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("{}",params);
+		logger.info("{}",params.getOrDefault("ori_filename", "없습니다"));
+		logger.info("{}",params.get("ori_filename"));
+		
+		service.updateQuiz(params);
+		
+		map.put("msg", service.updateQuiz(params));
+		return map;
+	}
+	
+	@RequestMapping(value="adminQuizReport")
+	public String adminQuizReport() {
+		return "admin_study/adminQuizReport";
+	}
+	
+	@RequestMapping(value="adminQuizReportCall")
+	@ResponseBody
+	public HashMap<String, Object> adminQuizReportCall(@RequestParam HashMap<String, String> search_info){
+		HashMap<String, Object> map = service.adminQuizReportCall(search_info);
+		
+		
+		
+
+		
+
+		
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

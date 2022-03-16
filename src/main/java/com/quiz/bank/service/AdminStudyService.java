@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.quiz.bank.dao.AdminStudyDAO;
 import com.quiz.bank.dao.TodoListDAO;
 import com.quiz.bank.dao.UserDAO;
+import com.quiz.bank.dto.PhotoDTO;
 import com.quiz.bank.dto.QuizDTO;
 import com.quiz.bank.dto.TestListDTO;
 
@@ -132,6 +133,8 @@ public class AdminStudyService {
 					newphotonames.put(Integer.toString(i), newFileName);
 					newphotonames.put(Integer.toString(i+1), oriFileName);
 					i++;
+				} else {
+					newphotonames.put("index", Integer.toString(index));
 				}
 			} catch (Exception e) {
 				System.out.println(e.toString());
@@ -189,7 +192,18 @@ public class AdminStudyService {
 				dto.setQuiz_answer(jObject.getString("answer"));
 
 				success += dao.registQuiz(dto);
-
+				
+				if(jObject.has("newPhotoName")) {
+					logger.info("사진 존재, 사진입력 시작 : {}",jObject);
+					PhotoDTO photoDTO= new PhotoDTO();
+					photoDTO.setBoard_name("quiz");
+					photoDTO.setBoard_no(dto.getQuiz_no());
+					photoDTO.setOri_filename(jObject.getString("oriPhotoName"));
+					photoDTO.setNew_filename(jObject.getString("newPhotoName"));
+					dao.registPhoto(photoDTO);
+					
+				}
+				
 			}
 		}
 
@@ -235,4 +249,78 @@ public class AdminStudyService {
 	public HashMap<String, String> adminUpdateQuizForm(String quiz_no) {
 		return dao.adminUpdateQuizForm(quiz_no);
 	}
+
+	public int updateQuiz(HashMap<String, String> params) {
+		dao.updateQuiz(params);
+		
+		
+		
+		
+		
+		//사진 수정부분
+		PhotoDTO photoDTO = new PhotoDTO();
+		photoDTO.setBoard_name("quiz");
+		photoDTO.setBoard_no(Integer.parseInt(params.get("quiz_no")));
+		photoDTO.setNew_filename(params.get("new_filename"));
+		photoDTO.setOri_filename(params.get("ori_filename"));
+		int success = 0;
+		//1.없던 사진을 추가하는 경우
+		if(params.get("before_new_filename").equals("") && params.get("new_filename") !=null)
+		{
+			logger.info("{}","1.없던 사진을 추가하는 경우 INSERT");
+			success = dao.registPhoto(photoDTO);
+			}
+		//2.사진을 삭제하는 경우
+		else if (!params.get("before_new_filename").equals("") && params.get("new_filename") ==null)
+		{
+			logger.info("{}","2.사진을 삭제하는 경우 DELETE");
+			success = dao.deletePhoto(params.get("before_new_filename"));
+			}
+		//3.사진을 바꾸는 경우
+		else if(!params.get("before_new_filename").equals("") && params.get("new_filename") !=null && !params.get("before_new_filename").equals(params.get("new_filename")))
+		{
+			logger.info("{}","3.사진을 바꾸는 경우 UPDATE");
+			success = dao.updatePhoto(params);
+			}
+		//4.사진이 있는데 그대로인 경우
+		else if(!params.get("before_new_filename").equals("") && params.get("new_filename") !=null && params.get("before_new_filename").equals(params.get("new_filename")))
+		{
+			logger.info("{}","4.사진이 있는데 그대로인 경우 PASS");
+			}
+		//5.원래 없는데 없는 경우
+		else if(params.get("before_new_filename").equals("") && params.get("new_filename") ==null) 
+		{
+			logger.info("{}","5.원래 없는데 없는 경우 PASS");
+			}
+		
+		return success;
+	}
+
+	public HashMap<String, Object> adminQuizReportCall(HashMap<String, String> search_info) {
+		int currPage = Integer.parseInt(search_info.get("page"));
+		int pagePerCnt = Integer.parseInt(search_info.get("cnt"));
+		int offset= ((currPage-1) * pagePerCnt-1)>=0 ? ((currPage-1) * pagePerCnt-1) :0;
+		//0-9,10-19,20-29,30-39
+		logger.info("offset : {}",offset);
+		int totalCount = dao.quizReportAllCount(search_info); // bbs테이블의 모든 글의 갯수
+		logger.info("totalCount : {}",totalCount);
+		//만들수 있는 총 페이지의 수(전체 갯수/보여줄 수)
+		int range = totalCount%pagePerCnt > 0 ? (totalCount/pagePerCnt) +1 : (totalCount/pagePerCnt) ;
+		//map.put("pages",range);
+		search_info.put("pagePerCnt", Integer.toString(pagePerCnt));
+		search_info.put("offset", Integer.toString(offset));
+		
+		
+		
+		logger.info("{}", search_info);
+		logger.info("검색할 값들 : {}", search_info);
+		ArrayList<HashMap<String, String>> quiz_search_list = dao.adminSearchQuiz(search_info);
+		logger.info("검색 결과 : {}", quiz_search_list);
+
+		//map.put("quiz_search_list", quiz_search_list);		
+		
+		return null;
+	}
+
+
 }

@@ -3,6 +3,7 @@ package com.quiz.bank.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.quiz.bank.dto.PhotoDTO;
 import com.quiz.bank.dto.QuizDTO;
 import com.quiz.bank.dto.TestListDTO;
 
@@ -55,6 +56,16 @@ public interface AdminStudyDAO {
 	int allCount(HashMap<String, String> search_info);
 
 	HashMap<String, String> adminUpdateQuizForm(String quiz_no);
+
+	int registPhoto(PhotoDTO photoDTO);
+
+	int updateQuiz(HashMap<String, String> params);
+
+	int deletePhoto(String string);
+
+	int updatePhoto(HashMap<String, String> params);
+
+	int quizReportAllCount(HashMap<String, String> search_info);
 
 
 

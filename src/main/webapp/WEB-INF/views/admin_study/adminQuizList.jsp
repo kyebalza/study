@@ -47,7 +47,7 @@
 	</tr>
 	<tr>
 		<th colspan="4"><input type="text" id="quiz_content" placeholder="문제 내용을 입력해주세요"/></th>
-		<th><input type="button" value="신규문제등록"/></th>
+		<th><input type="button" value="신규문제등록" onclick="location.href='adminRegistTest'"/></th>
 	</tr>
 </table>
 </div>

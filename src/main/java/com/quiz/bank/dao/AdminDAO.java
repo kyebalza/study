@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.quiz.bank.dto.FreeBoardDTO;
 import com.quiz.bank.dto.InquiryBoardDTO;
+import com.quiz.bank.dto.ReprotDTO;
 import com.quiz.bank.dto.StudyBoardDTO;
 import com.quiz.bank.dto.UserDTO;
 
@@ -59,6 +60,22 @@ public interface AdminDAO {
 	UserDTO ADdetail(String user_id);
 
 	void adminUserUpdate(HashMap<String, String> params);
+
+	ArrayList <ReprotDTO> ManagDelist(int pagePerCnt, int offset);
+
+	int MDallCount();
+
+	List<ReprotDTO> ManageDePostSearchList(ReprotDTO rdto);
+
+	int MCallCount();
+
+	ArrayList <ReprotDTO> ManagDeComentlist(int pagePerCnt, int offset);
+
+	void ManagDeUpdate(String board_no, String inputOut);
+
+	List<ReprotDTO> ManagDeComentSearch(ReprotDTO rdto);
+
+	void ManagDeComUpdate(String board_no, String inputOut);
 
 	
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.quiz.bank.dto.FreeBoardDTO;
 import com.quiz.bank.dto.InquiryBoardDTO;
+import com.quiz.bank.dto.ReprotDTO;
 import com.quiz.bank.dto.StudyBoardDTO;
 import com.quiz.bank.dto.UserDTO;
 import com.quiz.bank.service.AdminService;
@@ -78,30 +79,23 @@ public class AdminController {
 		return "admin/ManagUser";
 	}
 
-	//신고 페이지 이동
+	//신고 게시글 페이지 이동
 	@RequestMapping(value = "/ManagDe", method = RequestMethod.GET)
 	public String ManagDe(Model model) {
-		logger.info("신고 페이지 이동");
+		logger.info("신고 게시글 페이지 이동");
 		
 		return "admin/ManagDe";
 	}
 	
-	//회원 수정 요청
-	@RequestMapping(value = "/adminUserUpdate", method = RequestMethod.POST)
-	public String adminUserUpdate(Model model, @RequestParam HashMap<String, String> params) {
-		logger.info("수정 요청 중 : "+params);
-		adservice.adminUserUpdate(params);
-		String user_id = params.get("user_id");
-		logger.info(user_id);
+	//신고 댓글 페이지 이동
+	@RequestMapping(value = "/ManagDeComent", method = RequestMethod.GET)
+	public String ManagDeComent(Model model) {
+		logger.info("신고 댓글 페이지 이동");
 		
-		
-		return "redirect:/ADdetail?user_id="+user_id;
-	}	
+		return "admin/ManagDeComent";
+	}
 	
-	
-	
-	
-	
+
 	
 	//공부 질문 게시물 리스트 출력 (페이징)
 	@ResponseBody
@@ -155,7 +149,33 @@ public class AdminController {
 		return adservice.Memlist(currPage,pagePerCnt);
 	}
 	
-
+	//게시판 신고 리스트 출력 (페이징)
+	@ResponseBody
+	@RequestMapping(value = "/ManagDelist", method = RequestMethod.GET)
+	public HashMap<String, Object> ManagDelist(@RequestParam  String page, @RequestParam String cnt) {
+		logger.info("게시판 신고 리스트 요청");
+		logger.info("리스트 요청 : {} 페이지, {} 개 씩",page, cnt);
+		
+		int currPage = Integer.parseInt(page);
+		int pagePerCnt = Integer.parseInt(cnt);
+		
+		return adservice.ManagDelist(currPage,pagePerCnt);
+	}
+	
+	//댓글 신고 리스트 출력 (페이징)
+	@ResponseBody
+	@RequestMapping(value = "/ManagDeComentlist", method = RequestMethod.GET)
+	public HashMap<String, Object> ManagDeComentlist(@RequestParam  String page, @RequestParam String cnt) {
+		logger.info("게시판 신고 리스트 요청");
+		logger.info("리스트 요청 : {} 페이지, {} 개 씩",page, cnt);
+		
+		int currPage = Integer.parseInt(page);
+		int pagePerCnt = Integer.parseInt(cnt);
+		
+		return adservice.ManagDeComentlist(currPage,pagePerCnt);
+	}
+	
+	
 	//공부 게시글 리스트 검색 요청
 	@ResponseBody
 	@RequestMapping(value = "/StudySearchList", method = RequestMethod.GET)
@@ -200,7 +220,7 @@ public class AdminController {
 //	  }
 //	  
 //	  
-//	  //유저 리스트 검색 요청 (유저 dto에 검색 추가 필요) 
+//	  //회원 리스트 검색 요청 (유저 dto에 검색 추가 필요) 
 //	  @ResponseBody 
 //	  @RequestMapping(value = "/MemSearchList", method = RequestMethod.GET)
 //	  public List<UserDTO> MemSearchList(@RequestParam("SearchType") String SearchType, @RequestParam("Keyword") String Keyword) {
@@ -215,9 +235,30 @@ public class AdminController {
 //	  }
 	  
 	 
+	//신고 게시글 리스트 검색 요청
+	@ResponseBody
+	@RequestMapping(value = "/ManageDePostSearchList", method = RequestMethod.GET)
+	public List<ReprotDTO> ManageDePostSearchList(@RequestParam("SearchType") String SearchType) {
+		logger.info("신고 게시글 리스트 검색 요청");
+		logger.info(SearchType);
+		ReprotDTO Rdto = new ReprotDTO();
+		Rdto.setSearchType(SearchType);
+		
+		return adservice.ManageDePostSearchList(Rdto);
+	}
 	
-	
-	
+	//신고 댓글 리스트 검색 요청
+	@ResponseBody
+	@RequestMapping(value = "/ManagDeComentSearch", method = RequestMethod.GET)
+	public List<ReprotDTO> ManagDeComentSearch(@RequestParam("SearchType") String SearchType) {
+		logger.info("신고 댓글 리스트 검색 요청");
+		logger.info(SearchType);
+		ReprotDTO Rdto = new ReprotDTO();
+		Rdto.setSearchType(SearchType);
+		
+		return adservice.ManagDeComentSearch(Rdto);
+	}	
+
 	//공부 게시글 관리자 페이지 삭제/복구 요청
 	@ResponseBody
 	@RequestMapping(value = "/studydel", method = RequestMethod.POST)
@@ -295,5 +336,38 @@ public class AdminController {
 		return "admin/ADdetail";
 	}
 	
+	//회원 수정 요청
+	@RequestMapping(value = "/adminUserUpdate", method = RequestMethod.POST)
+	public String adminUserUpdate(Model model, @RequestParam HashMap<String, String> params) {
+		logger.info("수정 요청 중 : "+params);
+		adservice.adminUserUpdate(params);
+		String user_id = params.get("user_id");
+		logger.info(user_id);
+		
+		return "redirect:/ADdetail?user_id="+user_id;
+	}	
+	
+	//게시글 신고 처리사항 업데이트
+	@RequestMapping(value = "/ManagDeUpdate", method = RequestMethod.GET)
+	public String ManagDeUpdate(Model model, @RequestParam String board_no, @RequestParam String inputOut) {
+		logger.info("받은 번호 : "+board_no+", 받은 내용 : "+inputOut);
+		
+		adservice.ManagDeUpdate(board_no, inputOut);
+		
+		return "redirect:/ManagDe";
+	}
+	
+	
+	//댓글 신고 처리사항 업데이트
+	@RequestMapping(value = "/ManagDeComUpdate", method = RequestMethod.GET)
+	public String ManagDeComUpdate(Model model, @RequestParam String board_no, @RequestParam String inputOut) {
+		logger.info("받은 번호 : "+board_no+", 받은 내용 : "+inputOut);
+		
+		adservice.ManagDeComUpdate(board_no, inputOut);
+		
+		return "redirect:/ManagDeComent";
+	}
 	
 }
+
+

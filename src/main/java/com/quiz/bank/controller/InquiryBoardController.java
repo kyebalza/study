@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.bank.dto.InquiryBoardDTO;
@@ -40,48 +41,19 @@ public class InquiryBoardController {
 	}
 	*/
 	
-	// 1. 문의게시판 작성하기 페이지 요청
-	@GetMapping(value="/inquiryWriteForm")
-	public String inquiryWriteForm(Model model, HttpSession session) {
-		logger.info("문의게시판 작성하기 페이지 요청");
-		String page = "/redirect:/inquiryBoardList";
-		
-		if (session.getAttribute("loginId") != null) {
-			page = "inquiryBoard/inquiryWriteForm";
-		}
-		return page;
-	}
-
-	//2.문의게시판 작성하기 요청
-	@PostMapping(value = "/inquiryWrite")
-	 public String inquiryWrite(Model model,
-			 @RequestParam HashMap<String, String> params) { 
-		 logger.info("문의게시판 작성하기 요청 : {}", params);
-
-		 return service.inquiryWrite(params);
-	}
-	
-	// 2-1. 문의게시판 작성하기 (문의게시판 카테고리 추가하기)
-	
-	
-	// 2-2. 문의게시판 파일 업로드
-	
-	
-	
-
-	// 3. 문의게시판 리스트 페이지 호출
+	// 1. 문의게시판 리스트 페이지 호출
 	
 	@GetMapping(value = "/inquiryBoardList")
-	 public String inquiryBoardList(Model model) { 
-		 logger.info("문의게시판 리스트 이동");
-		 
-		 return "inquiryBoard/inquiryBoardList";
+	public String inquiryBoardList(Model model) { 
+		logger.info("문의게시판 리스트 이동");
+		
+		return "inquiryBoard/inquiryBoardList";
 	}
 	
-	// 3-1. 문의게시판 리스트 출력
+	// 1-1. 문의게시판 리스트 출력
 	@ResponseBody
 	@GetMapping(value = "/inquirylist")
-	public HashMap<String, Object> studylist(@RequestParam  String page, @RequestParam String cnt) {
+	public HashMap<String, Object> inquirylist(@RequestParam  String page, @RequestParam String cnt) {
 		logger.info("문의게시판 리스트 요청 : {} 페이지, {} 개 씩",page, cnt);
 		
 		int currPage = Integer.parseInt(page);
@@ -89,6 +61,49 @@ public class InquiryBoardController {
 		
 		return service.inquirylist(currPage,pagePerCnt);
 	}
+	
+	// 1-2 문의 게시글 리스트 검색 요청
+	  @ResponseBody  
+	  @GetMapping(value = "/InquirySearchBoardList")
+	  public List<InquiryBoardDTO> InquirySearchBoardList(@RequestParam("SearchType")String SearchType, @RequestParam("Keyword") String Keyword) {
+		  logger.info("문의 게시판 리스트 검색 요청");
+		  logger.info(SearchType +" : "+Keyword);
+		  InquiryBoardDTO dto = new InquiryBoardDTO();
+		  dto.setKeyword(Keyword);
+		  dto.setSearchType(SearchType);
+		  
+		  return service.InquirySearchBoardList(dto); 
+	  
+	  }
+	
+	
+	// 2. 문의게시판 작성하기 페이지 요청
+	@GetMapping(value="/inquiryWriteForm")
+	public String inquiryWriteForm(Model model, HttpSession session) {
+		logger.info("문의게시판 작성하기 페이지 요청");
+		//문의게시판 세부 카테고리
+		ArrayList<HashMap<String, String>> inquiry_cate = service.inquiryboard_cate();
+		model.addAttribute("inquiry_cate", inquiry_cate);
+		
+		// 로그인 여부 확인
+		String page = "redirect:/loginPage";
+		if (session.getAttribute("loginId") != null) {
+			page = "inquiryBoard/inquiryWriteForm";
+		}
+		return page;
+	}
+
+	//2-1.문의게시판 작성하기 요청
+	@PostMapping(value = "/inquiryWrite")
+	 public String inquiryWrite(Model model, @RequestParam HashMap<String, String> params, MultipartFile uploadFile, HttpSession session) { 
+		logger.info("문의게시판 파일업로드 요청 : {}", uploadFile);
+		// 세션에서 로그인 한 아이디를 가져와서 params 에 넣어줌
+		params.put("user_id", (String) session.getAttribute("loginId"));
+		logger.info("문의게시판 작성하기 요청 : {}", params);
+		return service.inquiryWrite(params,uploadFile);
+	}
+	
+
 
 	
 
@@ -106,23 +121,33 @@ public class InquiryBoardController {
 
 	
 	
+
+	/*
 	
 	//5. 문의게시판 수정페이지 요청
 	@GetMapping(value = "/inquiryUpdateForm")
 	public String inquiryUpdateForm(Model model, @RequestParam String board_no) {
 		logger.info("문의게시판 수정페이지 요청 : {}", board_no);
-		
-		
-		return "inquiryBoard/inquiryBoardList";
+		return service.inquiryUpdateForm(model,board_no);
 	}
 	
+	//5-1. 문의게시판 수정 요청
+	@PostMapping(value = "/inquiryUpdate")
+	public String inquiryUpdate(Model model, @RequestParam HashMap<String, String> params) {
+		logger.info("문의게시판 수정 요청 : {}", params);
+		return service.inquiryUpdate(params);
+	}
+	
+*/
 	
 	
-	//6. 문의게시판 삭제(비노출/블라인드)
-	@GetMapping(value = "/inquiryBoardExposure")
-	public String inquiryBoardExposure(Model model, @RequestParam String board_no) {
-		logger.info("문의게시판 삭제(블라인드) 요청 : {}", board_no);
-		service.exposure(board_no);
+	
+	
+	//6. 문의게시판 삭제
+	@GetMapping(value = "/inquirydelete")
+	public String inquirydelete(Model model, @RequestParam String board_no) {
+		logger.info("문의게시판 삭제 요청 : {}", board_no);
+		service.inquirydelete(board_no);
 		return "inquiryBoard/inquiryBoardList";
 	}
 	

@@ -7,8 +7,9 @@
 <mapper namespace="com.quiz.bank.dao.AdminDAO">
 
 	<!-- 관리자 공부 게시판 리스트 호출 쿼리 -->
+	<!-- 페이징 작업시에 맨 뒤에 있는 LIMIT 을 붙이지 않으면 페이지가 잘리지 않음 -->
 	<select id="studylist" resultType="com.quiz.bank.dto.StudyBoardDTO">
-		SELECT * FROM study_board JOIN board_category ON study_board.board_cate_no = board_category.board_cate_no
+		SELECT * FROM study_board JOIN board_category ON study_board.board_cate_no = board_category.board_cate_no LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<!-- 공부 게시판 페이징 관련 -->
@@ -18,7 +19,7 @@
 	
 	<!-- 관리자 문의 게시판 리스트 호출 쿼리 -->
 	<select id="Inquirylist" resultType="com.quiz.bank.dto.InquiryBoardDTO">
-		SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no
+		SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<!-- 문의 게시판 페이징 관련 -->
@@ -28,7 +29,7 @@
 	
 	<!-- 관리자 자유 게시판 리스트 호출 쿼리 -->
 	<select id="Freelist" resultType="com.quiz.bank.dto.FreeBoardDTO">
-		SELECT * FROM free_board JOIN board_category ON free_board.board_cate_no = board_category.board_cate_no
+		SELECT * FROM free_board JOIN board_category ON free_board.board_cate_no = board_category.board_cate_no LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<!-- 자유 게시판 페이징 관련 -->
@@ -38,12 +39,42 @@
 	
 	<!-- 유저 리스트 호출 쿼리 -->
 	<select id="Memlist" resultType="com.quiz.bank.dto.UserDTO">
-		SELECT * FROM user_info
+		SELECT * FROM user_info LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<!-- 유저 페이징 관련 -->
 	<select id="MallCount" resultType="int">
 		SELECT COUNT (user_id) FROM user_info
+	</select>
+	
+	<!-- 신고 게시판 리스트 호출 쿼리 -->
+	<select id="ManagDelist" resultType="com.quiz.bank.dto.ReprotDTO">
+		SELECT * FROM report_board WHERE reply_no = 0 LIMIT #{param1} OFFSET #{param2}
+		
+		<!-- <choose>
+			<when test="board_name.equals('free_board') ">
+				free_board ON report_board.board_no = free_board.board_no LIMIT #{param1} OFFSET #{param2}
+			</when>
+			<when test="board_name.equals('study_board') ">
+				study_board ON report_board.board_no = study_board.board_no LIMIT #{param1} OFFSET #{param2}
+			</when>
+		</choose> -->
+		
+	</select>
+	
+	<!-- 신고 게시판 페이징 관련 -->
+	<select id="MDallCount" resultType="int">
+		SELECT COUNT (report_no) FROM report_board WHERE reply_no = 0
+	</select>
+	
+	<!-- 신고 댓글 리스트 호출 쿼리 -->
+	<select id="ManagDeComentlist" resultType="com.quiz.bank.dto.UserDTO">
+		SELECT * FROM report_board WHERE reply_no not in ('0') LIMIT #{param1} OFFSET #{param2}
+	</select>
+	
+	<!-- 신고 댓글 페이징 관련 -->
+	<select id="MCallCount" resultType="int">
+		SELECT COUNT (report_no) FROM report_board WHERE reply_no not in ('0')
 	</select>
 	
 	
@@ -121,6 +152,40 @@
 		</choose>
 	</select>
 
+	<!-- 관리자 신고 게시글 검색 쿼리 -->
+	<select id="ManageDePostSearchList" parameterType="com.quiz.bank.dto.ReprotDTO" resultType="com.quiz.bank.dto.ReprotDTO">
+				SELECT * FROM report_board
+		
+		<choose>
+			<when test="SearchType != null and SearchType.equals('all') ">
+				WHERE report_state = '0' or report_state = '1' AND reply_no = 0
+			</when>
+			<when test="SearchType != null and SearchType.equals('ProcessWait') ">
+				WHERE report_state = '0' AND reply_no = 0
+			</when>
+			<when test="SearchType != null and SearchType.equals('ProcessCom') ">
+				WHERE report_state = '1' AND reply_no = 0
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 관리자 신고 댓글 검색 쿼리 -->
+	<select id="ManagDeComentSearch" parameterType="com.quiz.bank.dto.ReprotDTO" resultType="com.quiz.bank.dto.ReprotDTO">
+				SELECT * FROM report_board
+		
+		<choose>
+			<when test="SearchType != null and SearchType.equals('all') ">
+				WHERE report_state = '0' or report_state = '1' AND reply_no not in ('0')
+			</when>
+			<when test="SearchType != null and SearchType.equals('ProcessWait') ">
+				WHERE report_state = '0' AND reply_no not in ('0')
+			</when>
+			<when test="SearchType != null and SearchType.equals('ProcessCom') ">
+				WHERE report_state = '1' AND reply_no not in ('0')
+			</when>
+		</choose>
+	</select>	
+	
 	
 	<!-- 공부 게시판 삭제 유무 확인 -->
 	<select id="studydel_check" resultType="int">
@@ -180,6 +245,20 @@
 	<update id="adminUserUpdate" parameterType="hashmap">
 		UPDATE user_info SET user_state = #{user_state}, user_admin = #{user_admin} WHERE user_id = #{user_id}
 	</update>	
+	
+	<!-- 관리자 신고 게시판 업데이트 쿼리 -->
+	<update id="ManagDeUpdate" parameterType="String">
+		UPDATE report_board SET report_processing = #{param2}, report_state = report_state+1 WHERE report_no = #{param1}
+	</update>		
+	
+	<!-- 관리자 신고 댓글 업데이트 쿼리 -->
+	<update id="ManagDeComUpdate" parameterType="String">
+		UPDATE report_board SET report_processing = #{param2}, report_state = report_state+1 WHERE report_no = #{param1}
+	</update>		
+	
+	
+	
+	
 	
 	
 </mapper>

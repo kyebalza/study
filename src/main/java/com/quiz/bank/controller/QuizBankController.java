@@ -2,13 +2,17 @@ package com.quiz.bank.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.bank.service.QuizBankService;
@@ -37,9 +41,11 @@ public class QuizBankController {
 	
 	//3.시험보기 페이지 및 시험문제 가져오기
 	@GetMapping(value="/testForm")
-	public ModelAndView testForm(@RequestParam String test_no) {
+	public ModelAndView testForm(@RequestParam String test_no, HttpSession session) {
 		logger.info("시험페이지 요청 : {}",test_no);
-		return service.testFroml(test_no);
+		String loginId = (String)session.getAttribute("loginId");
+		
+		return service.testFroml(test_no, loginId);
 	}
 	
 	//4.검색기능
@@ -51,4 +57,39 @@ public class QuizBankController {
 		logger.info("params : {}", params);
 		return service.search(params);
 	}
+	
+	//5. 북마크 추가/ 삭제
+	@RequestMapping(value = "/bookMarkChange", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> bookMarkChange(@RequestParam String loginId, @RequestParam String quiz_no) {
+		
+		logger.info("로그인아이디: {}",loginId);
+		logger.info("게시글 번호 : {}",quiz_no);
+		
+		
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		//5-1. 현재 id 북마크 여부 확인
+		 String wishlist2 = service.bookMark2(loginId,quiz_no);
+		
+		 logger.info(wishlist2);
+		 
+		 if(wishlist2 != null) { //5-2. 북마크 삭제
+			 int row2 = service.bookmark_delete(quiz_no,loginId);
+			 map.put("row2", row2);
+			 
+		 }else {
+			 //5-3. 북마크 추가
+			 int row = service.bookmark_Insert(loginId,quiz_no);
+			 map.put("success",row);
+		 }
+		 
+		//select-> loginid랑 board_no 일치하는게 있는지??
+		//if 존재하면 -> DB로 가서 delete
+		//존재하지않으면 -> insert
+
+		return map;
+	}
+	
 }

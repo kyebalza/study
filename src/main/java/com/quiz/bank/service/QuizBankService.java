@@ -3,6 +3,8 @@ package com.quiz.bank.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.bank.dao.QuizBankDAO;
 import com.quiz.bank.dto.QuizDTO;
+import com.quiz.bank.dto.QuizSolveDTO;
 import com.quiz.bank.dto.TestCategoryDTO;
 
 @Service
@@ -48,12 +51,20 @@ public class QuizBankService {
 	}
 
 	//3.시험보기 페이지 및 시험문제 가져오기
-	public ModelAndView testFroml(String test_no) {
+	public ModelAndView testFroml(String test_no, String loginId) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("testForm");
 		ArrayList<QuizDTO> dto = dao.testFrom(test_no);
 		logger.info("회차별 시험문제 리스트 갯수 : {}", dto.size());
 		mav.addObject("test", dto);
+		
+		//로그인 아이디 확인
+		logger.info("로그인 아이디 : "+loginId);
+		mav.addObject("loginId", loginId);
+		
+
+		
+		
 		
 		
 		/////////////////////////////////////////////////////////////
@@ -68,6 +79,10 @@ public class QuizBankService {
 		logger.info("모든 사이즈" +all2+"일부 사이즈"+ part2);
 		logger.info("나누기 결과값"+per);
 		logger.info("나누기 결과값2"+per2);
+		
+		////////////////////////////////////////////////////////////
+		//시험 문제별 정답률 통계
+		//ArrayList<QuizSolveDTO> 
 		return mav;
 	}
 
@@ -87,9 +102,22 @@ public class QuizBankService {
 		return mav;
 	}
 
-	public ModelAndView test_search(HashMap<String, String> params) {
-		// TODO Auto-generated method stub
-		return null;
+	//5-1. 북마크 여부 확인
+	public String bookMark2(String loginId, String quiz_no) {
+		String wishlist2 = dao.bookMark2(quiz_no,loginId);
+		return wishlist2;
+	}
+
+	//5-2. 북마크 삭제
+	public int bookmark_delete(String quiz_no, String loginId) {
+		return dao.bookMark_delete(quiz_no,loginId);
+	}
+
+	//5-3. 북마크 추가
+	public int bookmark_Insert(String loginId, String quiz_no) {
+		int row = dao.bookMark_Insert(loginId,quiz_no);
+		logger.info(" 입력된 건수 : {}",row);
+		return row;
 	}
 
 	

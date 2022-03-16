@@ -30,6 +30,7 @@
 	<!-- 3.시험보기 페이지 및 시험문제 가져오기 -->
 	<select id="testFrom" resultType="Quiz">
 		SELECT * FROM quiz
+			LEFT JOIN bookmark ON (bookmark.bookmark_quiz_no = quiz.quiz_no)
 			WHERE del_flag= 'false' AND test_no=#{param1}
 			ORDER BY quiz_index
 	</select>
@@ -37,15 +38,24 @@
 	<!-- 4. 시험명 검색기능 -->
 	<select id="search" parameterType="hashmap" 
 		resultType="TestCategory">
-		SELECT test_cate_no, test_cate FROM test_category 
-		<where>		
-			<if test="opt.equals('test_cate') and !keyword.equals('')">
-				test_cate LIKE CONCAT('%',#{keyword},'%')
-			</if>
-		</where> 
+		SELECT test_cate_no, test_cate FROM test_category WHERE
+				test_cate LIKE CONCAT('%',#{keyword},'%') AND del_flag = 'false' 
 	</select>
 	
+	<!-- 5-1 북마크 여부 확인 -->
+	<select id="bookMark2" resultType="String" >
+		SELECT bookmark_quiz_no FROM bookmark WHERE bookmark_quiz_no = #{param1} AND user_id = #{param2}
+	</select>
 	
+	<!-- 5-1 북마크 삭제 -->
+	<delete id="bookMark_delete">
+		DELETE FROM bookmark WHERE bookmark_quiz_no = #{param1} AND user_id = #{param2}
+	</delete>
+	
+	<!-- 5-1 북마크 추가 -->
+	<insert id="bookMark_Insert" >
+		INSERT INTO bookmark(user_id,bookmark_quiz_no) VALUES (#{param1}, #{param2})
+	</insert>
 	
 	<!-- 테스트1 -->
 	<!-- 테스트2 -->

@@ -20,12 +20,12 @@
 		<a target="_blank" id="L2" style="color: black; cursor:pointer;">신고 댓글</a>
 	</div>
 	</br>
-	<p>신고 게시글 관리</p>
+	<p>신고 댓글 관리</p>
 	</br>
 	</br>
 	</br>
 	<div>
-		<form action="ManagDePostSearch" method="GET" name="ManagDePostSearch" autocomplete="off">
+		<form action="ManagDeComentSearch" method="GET" name="ManagDeComentSearch" autocomplete="off">
 			<select name ="SearchType">
 				<option selected>출력 내용 선택</option>
 				<option value="all">전체보기</option>
@@ -39,7 +39,7 @@
 		<thead>
 			<tr>
 				<th>게시글 종류</th>
-				<th>글 번호</th>
+				<th>댓글 번호</th>
 				<!-- <th>게시글 제목</th> -->
 				<th>신고자 ID</th>
 				<th>신고 ID</th>
@@ -50,7 +50,7 @@
 			</tr>
 		</thead>
 		
-		<tbody id = "ManageDePostList">
+		<tbody id = "ManageDeComentList">
  			
 		</tbody>
 			<tr>
@@ -71,12 +71,12 @@
 		function SearchList(){
 			$.ajax({
 				type: 'GET',
-				url : 'ManageDePostSearchList',
-				data : $("form[name=ManagDePostSearch]").serialize(),
+				url : 'ManagDeComentSearch',
+				data : $("form[name=ManagDeComentSearch]").serialize(),
 				success : function(result){
 					console.log("확인");
 					//테이블 초기화
-					$('#ManageDePostList').empty();
+					$('#ManageDeComentList').empty();
 					if(result.length>=1){
 						var str = '';
 						result.forEach(function(item){
@@ -87,7 +87,7 @@
 								}else{
 									str+="<td>자유 게시판</td>";
 								}
-							str+="<td>"+item.board_no+"</td>";
+							str+="<td>"+item.reply_no+"</td>";
 							/* str+="<td>"+item.title+"</td>"; */
 							str+="<td>"+item.report_user+"</td>";
 							str+="<td>"+item.reported_user+"</td>";
@@ -101,7 +101,7 @@
 							}
 							
 							str+="</tr>";
-							$('#ManageDePostList').append(str);
+							$('#ManageDeComentList').append(str);
 							
 			
 		       		})				 
@@ -139,7 +139,7 @@
 		
 			$.ajax({
 				type:'GET',
-				url:'ManagDelist',
+				url:'ManagDeComentlist',
 				data:{'page':page,'cnt':cnt},
 				dataTyps:'JSON',
 				success: function(data){
@@ -179,7 +179,7 @@
 						}else{
 							content+="<td>자유 게시판</td>";
 						}
-					content+="<td>"+item.board_no+"</td>";
+					content+="<td>"+item.reply_no+"</td>";
 					/* content+="<td>"+item.title+"</td>"; */
 					content+="<td>"+item.report_user+"</td>";
 					content+="<td>"+item.reported_user+"</td>";
@@ -190,17 +190,16 @@
 						content+="<td>"+'<input type="button" id="Processing" onclick="manap('+item.report_no+')" value="처리대기"/>'+'</td>';					
 					} else {
 						content+="<td>"+'<input type="button" disabled="disabled" value="처리완료"/>'+'</td>';				
-					}				
+					}			
 					content+="</tr>";
 					
 				
 			});
 			//console.log(content);
-			$('#ManageDePostList').empty();
-			$('#ManageDePostList').append(content);
+			$('#ManageDeComentList').empty();
+			$('#ManageDeComentList').append(content);
 			
 		}
-		
 		
 		$('#L1').click(function(){
 			location.href='./ManagDe' //어디로 갈지 링크 걸어주기
@@ -211,8 +210,7 @@
 		});
 		
 		
-		
-		function manap(e) {
+			function manap(e) {
 			
 			console.log("클릭 확인 : "+e);
 			var inputOut = prompt("처리 내용을 입력해주세요.");
@@ -222,7 +220,7 @@
 		    	 
 		    	 $.ajax({
 		    		 type: "GET", 
-		    		 url: "ManagDeUpdate", 
+		    		 url: "ManagDeComUpdate", 
 		    		 data: {"board_no":e, "inputOut":inputOut}, 
 		    		 success: function(data){
 		    			 console.log('처리 완료 : '+inputOut);
@@ -235,7 +233,6 @@
 		    	} 
 		
 			}
-		
 		
 </script>
 </html>

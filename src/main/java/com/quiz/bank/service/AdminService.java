@@ -14,6 +14,7 @@ import com.quiz.bank.dao.TodoListDAO;
 import com.quiz.bank.dao.UserDAO;
 import com.quiz.bank.dto.FreeBoardDTO;
 import com.quiz.bank.dto.InquiryBoardDTO;
+import com.quiz.bank.dto.ReprotDTO;
 import com.quiz.bank.dto.StudyBoardDTO;
 import com.quiz.bank.dto.UserDTO;
 
@@ -127,8 +128,52 @@ public class AdminService {
 		return map;
 	}
 
+	//관리자 신고 게시글 리스트 호출 (페이징)
+	public HashMap<String, Object> ManagDelist(int currPage, int pagePerCnt) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		//어디서 부터 보여줄 것인가.
+		int offset = ((currPage-1)*pagePerCnt-1) >=0 ?
+				((currPage-1)*pagePerCnt-1) : 0;
+		logger.info("offset : "+offset);
+		
+		int totalCount = addao.MDallCount(); //테이블 모든 글의 총 갯수
+		//만들 수 있는 페이지의 수 (전체 갯수 / 보여줄 수)
+		int range = totalCount%pagePerCnt > 0 ? 
+				 (totalCount/pagePerCnt)+1 : (totalCount/pagePerCnt);
+		 logger.info("총 갯수 : {}",totalCount);
+		 logger.info("만들 수 있는 총 페이지 : {}",range);
+		 
+		 map.put("totalCount", totalCount);
+		 map.put("pages", range);
+		 map.put("list", addao.ManagDelist(pagePerCnt, offset));
+		
+		return map;
+	}
 
-
+	//관리자 신고 댓글 리스트 호출 (페이징)
+	public HashMap<String, Object> ManagDeComentlist(int currPage, int pagePerCnt) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		//어디서 부터 보여줄 것인가.
+		int offset = ((currPage-1)*pagePerCnt-1) >=0 ?
+				((currPage-1)*pagePerCnt-1) : 0;
+		logger.info("offset : "+offset);
+		
+		int totalCount = addao.MCallCount(); //테이블 모든 글의 총 갯수
+		//만들 수 있는 페이지의 수 (전체 갯수 / 보여줄 수)
+		int range = totalCount%pagePerCnt > 0 ? 
+				 (totalCount/pagePerCnt)+1 : (totalCount/pagePerCnt);
+		 logger.info("총 갯수 : {}",totalCount);
+		 logger.info("만들 수 있는 총 페이지 : {}",range);
+		 
+		 map.put("totalCount", totalCount);
+		 map.put("pages", range);
+		 map.put("list", addao.ManagDeComentlist(pagePerCnt, offset));
+		
+		return map;
+	}
+	
 	
 	//관리자 문의 게시판 검색 
 	public List<InquiryBoardDTO> InquirySearchList(InquiryBoardDTO IBdto) {
@@ -234,6 +279,42 @@ public class AdminService {
 		addao.adminUserUpdate(params);
 		
 	}
+
+
+	//신고 게시판 검색
+	public List<ReprotDTO> ManageDePostSearchList(ReprotDTO rdto) {
+		logger.info("신고 게시판 검색 서비스 도착");
+		return addao.ManageDePostSearchList(rdto);
+	}
+
+
+	//신고 게시판 처리
+	public void ManagDeUpdate(String board_no, String inputOut) {
+		addao.ManagDeUpdate(board_no, inputOut);
+		
+	}
+
+
+	//신고 댓글 처리
+	public void ManagDeComUpdate(String board_no, String inputOut) {
+		addao.ManagDeComUpdate(board_no, inputOut);
+		
+	}
+
+
+	//신고 댓글 검색
+	public List<ReprotDTO> ManagDeComentSearch(ReprotDTO rdto) {
+		logger.info("신고 댓글 검색 서비스 도착");
+		return addao.ManagDeComentSearch(rdto);
+	}
+
+
+
+
+
+
+
+
 
 	
 

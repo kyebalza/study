@@ -54,6 +54,12 @@
 				<th>삭제</th>
 			</tr>
 		</thead>
+		
+			<c:if test="${Freeboardlist eq null || size == 0}">
+			<tr><td colspan="7">해당 게시글은 존재하지 않습니다.</td></tr>
+			</c:if>
+		
+		
 		<tbody id = "Freeboardlist">
 
 		</tbody>
@@ -189,7 +195,7 @@
 
 	
 	//관리자 공부 게시글 삭제
-	function Freedel(e) {
+	function studydel(e) {
 		console.log("클릭 게시글 번호 : "+e);
 		
 		$.ajax({

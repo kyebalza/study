@@ -54,6 +54,11 @@
 				<th>삭제</th>
 			</tr>
 		</thead>
+		
+<%-- 			<c:if test="${studyboardlist eq null || size == 0}">
+			<tr><td colspan="7">해당 게시글은 존재하지 않습니다.</td></tr>
+			</c:if> --%>
+		
 		<tbody id = "studyboardlist">
  			
 		</tbody>
@@ -103,6 +108,11 @@
 						
 		
 	        		})				 
+				} else{
+					var str = '';
+					str="<tr>"
+					str+="<td><p>게시글이 존재하지 않습니다.</p></td>";
+					str+="</tr>";
 				}
 			}
 		})
@@ -114,7 +124,7 @@
 	
 	//페이징 처리
 	var currPage = 1;
-	var totalPage = 2;
+	var totalPage = 10;
 
 	
 	listCall(currPage,10);

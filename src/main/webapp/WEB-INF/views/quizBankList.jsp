@@ -39,9 +39,6 @@
 	
 	<form action="search" method="get">
 		<fieldset>
-			<select name="opt">
-				<option value="test_cate">시험명</option>
-			</select>
 			<input type="text" name="keyword" placeholder="검색어를 입력하세요">
 			<button>검색</button>
 		</fieldset>	

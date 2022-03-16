@@ -1,7 +1,11 @@
 package com.quiz.bank.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.bank.dao.InquiryBoardDAO;
@@ -27,28 +32,60 @@ public class InquiryBoardService {
 	
 	@Autowired InquiryBoardDAO dao;
 
-	private Object board_cate_no;
+	
+	// 문의게시판 세부 카테고리 추가
+	public ArrayList<HashMap<String, String>> inquiryboard_cate() {
+		logger.info("문의게시판 세부 카테고리");
+		return dao.inquiryboard_cate();
+	}
 
 
-
-	// 2. 문의글쓰기
-	public String inquiryWrite(HashMap<String, String> params) {
-		
-		String page = "redirect:/inquiryBoardList";
-		
+	// 문의게시판 작성하기
+	public String inquiryWrite(HashMap<String, String> params, MultipartFile uploadFile) {
+		logger.info("문의게시판 작성하기 서비스 도착");
+		String page = "/inquiryBoard/inquiryBoardList";
 		InquiryBoardDTO dto = new InquiryBoardDTO();
 		dto.setTitle(params.get("title"));
-		dto.setContent(params.get("content"));
 		dto.setUser_id(params.get("user_id"));
+		dto.setContent(params.get("content"));
+		dto.setBoard_cate_no(Integer.parseInt(params.get("board_cate_no")));
 		dao.inquiryWrite(dto);
 		
 		int board_no = dto.getBoard_no();
-		logger.info("board_no : "+board_no);
+		logger.info("board_no : {}",board_no);
 		
 		if (board_no > 0) {
 			page = "redirect:/inquiryBoardDetail?board_no="+board_no;
+			saveFile(board_no,uploadFile);
 		}
 		return page;
+	}
+	
+	// 문의게시판 파일 업로드
+	private void saveFile(int board_no, MultipartFile uploadFile) {
+		
+		try {
+			String oriFileName = uploadFile.getOriginalFilename();
+			int index = oriFileName.lastIndexOf(".");
+			logger.info("index : {}",index);
+			
+			if (index>0) {
+				String ext = oriFileName.substring(index);
+				String newFileName = System.currentTimeMillis()+ext;
+				logger.info(oriFileName+"->"+newFileName);
+				
+				byte[] bytes = uploadFile.getBytes();
+				Path path = Paths.get("C:/upload/"+newFileName);
+				Files.write(path,bytes);
+				logger.info(oriFileName+"문의Save완료!");
+				dao.inquiryfileWrite(board_no,oriFileName,newFileName);
+			}
+			
+			
+		}catch (Exception e) {
+			logger.info("오류 발생 : {}",e);
+		}
+		
 	}
 	
 
@@ -94,10 +131,8 @@ public class InquiryBoardService {
 
 
 
-
 	// 3. 문의게시판 리스트 호출(페이징)
 	public HashMap<String, Object> inquirylist(int currPage, int pagePerCnt) {
-		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		// 어디서 부터 보여줄 것인가.
@@ -113,17 +148,19 @@ public class InquiryBoardService {
 		logger.info("총 갯수 : {}",totalCount);
 		logger.info("만들 수 있는 총 페이지 : {}",range);
 		
+		map.put("totalCount", totalCount);
 		map.put("pages", range);
 		map.put("list", dao.inquirylist(pagePerCnt,offset));
 	
 		return map;
 	}
-
-
-
-
-
 	
+	
+	// 문의게시글 리스트 검색
+	public List<InquiryBoardDTO> InquirySearchBoardList(InquiryBoardDTO dto) {
+		logger.info("문의게시판 리스트 검색 요청 도착");
+		return dao.InquirySearchBoardList(dto);
+	}
 	
 
 	// 문의게시판 상세보기
@@ -134,16 +171,71 @@ public class InquiryBoardService {
 		
 		return dao.inquirydetail(board_no);
 	}
+	
+	
 
-
-
-
-	public void exposure(String board_no) {
-		logger.info("문의게시글 삭제(비노출) 처리 요청");
+	/*
+	
+	// 문의게시글 수정페이지 요청
+	public String inquiryUpdateForm(Model model, String board_no) {
+		logger.info("문의게시글 수정페이지 요청");
+		InquiryBoardDTO dto = dao.inquirydetail(board_no);
+		ArrayList<InquiryBoardDTO> list = dao.
 		
-		dao.exposure(board_no);
+		logger.info("content : "+dto.getContent());
+		logger.info("photos : {}", list);
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("photos", list);
+		
+		return "inquiryUpdateForm";
+	}
+	
+	// 문의게시글 수정 요청
+	public String inquiryUpdate(HashMap<String, String> params) {
+		
+		int board_no = Integer.parseInt(params.get("board_no"));
+		String page = "/inquiryBoard/inquiryBoardDetail?board_no="+board_no;
+		
+		if (dao.inquiryUpdate(params)>0) {
+			page = "/inquiryBoard/inquiryBoardDetail?board_no="+board_no;
+		}
+		
+		return page;
+	}
+	
+	*/
+	
+	
+
+	
+	// 문의게시글 삭제
+	public void inquirydelete(String board_no) {
+		logger.info("문의게시글 삭제 서비스 : {}", board_no);
+		int success = dao.inquirydelete(board_no);
+		logger.info("문의게시글 삭제완료 여부 : "+success);
 		
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

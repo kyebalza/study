@@ -6,26 +6,57 @@
 <!-- 이 xml이 어떤 interface와 연결되는지 설정 -->
 <mapper namespace="com.quiz.bank.dao.InquiryBoardDAO">
 
+
+	<!-- 문의게시판 리스트 호출 -->
+	<select id="inquirylist" resultType="com.quiz.bank.dto.InquiryBoardDTO">
+		SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no ORDER BY board_no DESC
+	</select>
+	
+	<!-- 문의 게시판 페이징 관련 -->
+	<select id="allCount" resultType="int">
+		SELECT COUNT (board_no) FROM inquiry_board
+	</select>
+	
+	<!-- 문의 게시판 검색 쿼리 -->
+	<select id="InquirySearchBoardList" parameterType="com.quiz.bank.dto.InquiryBoardDTO" resultType="com.quiz.bank.dto.InquiryBoardDTO">
+		SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no
+		
+		<choose>
+			<when test="SearchType != null and SearchType.equals('all') ">
+				WHERE title OR user_id LIKE CONCAT ('%',#{keyword},'%') ORDER BY board_no DESC
+			</when>
+			<when test="SearchType != null and SearchType.equals('tit') ">
+				WHERE title LIKE CONCAT ('%',#{keyword},'%') ORDER BY board_no DESC
+			</when>
+			<when test="SearchType != null and SearchType.equals('user') ">
+				WHERE user_id LIKE CONCAT ('%',#{keyword},'%') ORDER BY board_no DESC
+			</when>
+		</choose>
+	</select>
+	
+
 	<!-- 문의글쓰기 -->
 	<insert id="inquiryWrite" 
 		useGeneratedKeys="true"
 		keyProperty="board_no"
 		keyColumn="board_no"
 		parameterType="com.quiz.bank.dto.InquiryBoardDTO">
-		INSERT INTO Inquiry_board (user_id,title,content) values (#{user_id},#{title},#{content})
+		INSERT INTO inquiry_board (title, user_id, content, board_cate_no) 
+			VALUES (#{title},#{user_id},#{content},#{board_cate_no})
 	</insert>
 	
 	
+	<!-- 문의게시판 파일 업로드 -->
+	<insert id="inquiryfileWrite">
+		INSERT INTO photo(board_no,ori_filename,new_filename,board_name)
+			VALUES(#{param1},#{param2},#{param3},'inquiry_board')
+	</insert>
 	
-	
-	<!-- 문의게시판 리스트 호출 -->
-	<select id="inquirylist" resultType="com.quiz.bank.dto.InquiryBoardDTO">
-	SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no
+	<!-- 문의게시판 세부 카테고리(계정문의,이용문의) 가져오기 -->
+	<select id="inquiryboard_cate" resultType="hashmap">
+		SELECT * FROM board_category WHERE board_name = 'inquiry_board' 
 	</select>
 	
-	<select id="allCount" resultType="int">
-		SELECT COUNT (board_no) FROM inquiry_board
-	</select>
 	
 	
 	<!-- 문의게시판 상세보기 -->
@@ -38,11 +69,17 @@
 		UPDATE inquiry_board SET bHit = bHit+1 WHERE board_no = #{param1}
 	</update>
 	
-	
-	<!-- 문의게시판 삭제(비노출) -->
-	<update id="exposure">
-		UPDATE inquiry_board SET del_flag= #{del_flag} WHERE board_no = #{board_no}
+	<!-- 문의게시글 수정하기 -->
+	<update id="inquiryUpdate">
+		UPDATE inquiry_board SET title = #{title}, content= #{content} 
+		WHERE user_id = #{user_id} AND borad_no = #{board_no} AND board_cate_no = #{board_cate_no}
 	</update>
+	
+	
+	<!-- 문의게시판 삭제하기 -->
+	<delete id="inquirydelete">
+		DELETE FROM inquiry_board WHERE board_no = #{param1}
+	</delete>
 	
 	
 

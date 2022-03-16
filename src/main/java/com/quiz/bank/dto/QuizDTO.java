@@ -1,5 +1,7 @@
 package com.quiz.bank.dto;
 
+import java.sql.Date;
+
 import org.apache.ibatis.type.Alias;
 
 @Alias(value ="Quiz")
@@ -23,6 +25,31 @@ public class QuizDTO {
 	private String quiz_answer;
 	private boolean del_flag;
 	
+	
+	//북마크
+	private String bookmark_quiz_no; 
+	private String user_id; 
+	private Date bookmark_date; 
+	
+	
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public Date getBookmark_date() {
+		return bookmark_date;
+	}
+	public String getBookmark_quiz_no() {
+		return bookmark_quiz_no;
+	}
+	public void setBookmark_quiz_no(String bookmark_quiz_no) {
+		this.bookmark_quiz_no = bookmark_quiz_no;
+	}
+	public void setBookmark_date(Date bookmark_date) {
+		this.bookmark_date = bookmark_date;
+	}
 	public int getQuiz_no() {
 		return quiz_no;
 	}

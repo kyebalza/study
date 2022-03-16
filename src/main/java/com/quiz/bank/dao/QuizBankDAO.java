@@ -30,5 +30,14 @@ public interface QuizBankDAO {
 
 	ArrayList<TestCategoryDTO> test2();
 
+	//5-1. 북마크 여부 확인
+	String bookMark2(String quiz_no, String loginId);
+
+	//5-2. 북마크 삭제
+	int bookMark_delete(String quiz_no, String loginId);
+
+	//5-3. 북마크 추가
+	int bookMark_Insert(String loginId, String quiz_no);
+
 
 }

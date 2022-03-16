@@ -67,7 +67,9 @@
 		const yn = confirm("회원 정보를 수정하시겠습니까?");
 		
 		if (yn) {
+			
 			location.href='adminUserUpdate?user_id=${info.user_id}';
+			
 		}
 	}
 	

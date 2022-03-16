@@ -37,6 +37,12 @@
 			VALUES(#{title}, #{user_id}, #{content},#{board_cate_no},#{quiz_no})
 	</insert>
 	
+	<!-- 파일업로드 -->
+	<insert id="fileWrite">
+		INSERT INTO photo(board_no,ori_filename,new_filename,board_name)
+			VALUES(#{param1},#{param2},#{param3},'study_board')
+	</insert>
+	
 	<!-- 조회수 올리기 -->
 	<update id="upHit">
 		UPDATE study_board SET bHit = bHit+1

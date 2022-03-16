@@ -7,29 +7,36 @@
  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
  <script src="resources/js/jquery.twbsPagination.js"></script>
+ 	<!-- 아래 요 친구가 있어야지 페이징이 깨지지 않아요 -->
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="resources/js/jquery.twbsPagination.js"></script>
  
  <style>
- 	table,tr,th,td{
- 		border:1px solid black;
-		border-collapse : collapse ;
+ 	table{
+ 		border: 2px solid green;
 		text-align: center;
 	}
-	
+	tr,td,th{
+		border: 1px solid green;
+	}
+	input.button{
+		text-align: center;
+	}	
  </style>
 </head>
 <body>
 
-	
-<button onclick="inquiryWriteForm">글쓰기</button>
-
+	<button onclick="location.href='inquiryWriteForm'">글쓰기</button>
 	<div>
 		<form action="InquiryBoardSearch" method="GET" name="InquiryBoardSearch" autocomplete="off">
-			<select name ="CategoryType">
+		
+			<select name = "ICateGoryType">
 				<option selected>카테고리 선택</option>
 				<option value="all">전체</option>
 				<option value="account">계정문의</option>
 				<option value="use">이용문의</option>
 			</select>
+		
 		
 			<select name ="SearchType">
 				<option selected>검색 내용 선택</option>
@@ -37,6 +44,7 @@
 				<option value="tit">제목</option>
 				<option value="user">작성자</option>
 			</select>
+			
 			<input type="text" name="Keyword"/>
 			<input type="button" value="검색" id="btnSearch" onclick="SearchList()"/>
 		</form>
@@ -54,13 +62,15 @@
 				<th>작성일자</th>
 				<th>답변여부</th>
 			</tr>
-		</thead>
+			</thead>
 		
-	
-		<c:if test="${InquiryBoardList eq null || size == 0}">
-			<tr><td colspan="7">해당 게시글은 존재하지 않습니다.</td></tr>
+		<!--  
+		
+		<c:if test="${list eq null || size ==0}">
+		<tr><td colspan="7">등록된 글이 없습니다.</td></tr>
 		</c:if>
 		
+		-->	
 		
 		<tbody id= "inquirylist"></tbody>
 			<tr>
@@ -75,13 +85,56 @@
 	</table>
 </body>
 <script>
-  	
+
+	//검색
+	function SearchList(){
+		$.ajax({
+			type: 'GET',
+			url : 'InquirySearchBoardList',
+			data : $("form[name=InquiryBoardSearch]").serialize(),
+			success : function(result){
+				console.log("확인");
+				//테이블 초기화
+				$('#inquirylist').empty();
+				if(result.length>=1){
+					var str = '';
+					result.forEach(function(item){
+						var date = new Date(item.reg_date);
+						str="<tr>"
+						str+="<td>"+item.board_no+"</td>";
+						str+="<td><a href='inquiryBoardDetail?board_no="+item.board_no+"'>"+item.title+"</a></td>";
+						str+="<td>"+item.board_cate+"</td>";
+						str+="<td>"+item.user_id+"</td>";
+						str+="<td>"+item.bHit+"</td>";
+						str+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
+						
+						if (item.answer == false) {
+							str+="<td><div>답변대기</div></td>";
+						}else{
+							str+="<td><div>답변완료</div></td>";
+						}
+						
+						str+="</tr>";
+						$('#inquirylist').append(str);
+						
+		
+	       		})				 
+				}
+			}
+		})
+	
+	console.log($("form[name=InquirySearch]").serialize());
+	console.log($("form[name=ICateGoryType]").serialize());
+	console.log($("form[name=SearchType]").serialize());
+}; 
+
+	// 페이징 처리
 	var currPage = 1;
 	var totalPage = 2;
 	
 	listCall(currPage,10);
 	
-	function more(){ // 다음 페이지로 넘겼을 때
+	function more(){
 		currPage++;
 		console.log('currPage',currPage);
 		if(currPage>totalPage){
@@ -95,7 +148,7 @@
 		
 		$.ajax({
 			type:'GET',
-			url:'Inquirylist',
+			url:'inquirylist',
 			data:{'page':page,'cnt':cnt},
 			dataTyps:'JSON',
 			success: function(data){
@@ -122,33 +175,47 @@
 	}
 	
 	// 리스트를 불러올 때 하단 생성
-	function listDraw(list){
-		console.log("문의게시판 리스트 호출 확인");
-		var content = '';		
+	function listDraw(list){ 
+		console.log("리스트 호출 확인");
+		/* console.log(board_no,item); */
+		var content = '';	
 		list.forEach(function(item, board_no){
-			var date = new Date(item.reg_date);
-			content += '<tr>';
-			content += '<td>'+item.board_no+'</td>';
-			content+="<td><a href='detail?idx="+item.board_no+"'>"+item.title+"</a></td>";
-			content += '<td>'+item.board_cate+'</td>';
-			content += '<td>'+item.user_id+'</td>';
-			content += '<td>'+item.bHit+'</td>';
-			content+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
-			
-			if (item.answer == false) {
-				str+="<td><div>답변대기</div></td>";
-			}else{
-				str+="<td><div>답변완료</div></td>";
-			}
-			content += '</tr>';	
+				var date = new Date(item.reg_date);
+				
+				
+				/*
+				<th>글번호</th>
+				<th>제목</th>
+				<th>카테고리</th>
+				<th>작성자</th>
+				<th>조회수</th>
+				<th>작성일자</th>
+				<th>답변여부</th>
+				*/
+				
+				
+				content+="<tr>"
+				content+="<td>"+item.board_no+"</td>"; // 글번호
+				content+="<td><a href='inquiryBoardDetail?board_no="+item.board_no+"'>"+item.title+"</a></td>"; // 제목
+				content+="<td>"+item.board_cate+"</td>"; // 카테고리
+				content+="<td>"+item.user_id+"</td>"; // 작성자
+				content+="<td>"+item.bHit+"</td>"; // 조회수
+				content+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>"; // 작성일자
+				
+				if (item.answer == false) { // 답변여부
+					content+="<td><div>답변대기</div></td>";
+				}else{
+					content+="<td><div>답변완료</div></td>";
+				}
+				
+				content+="</tr>";
 		});
 		//console.log(content);
-		$('#list').empty();
-		$('#list').append(content);		
+		$('#inquirylist').empty();
+		$('#inquirylist').append(content);
+		
 	}
-	
-
-
+  	
 
 
 </script>

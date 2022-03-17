@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.StringJoiner;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +27,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.quiz.bank.dto.QuizDTO;
 import com.quiz.bank.dto.TestListDTO;
 import com.quiz.bank.service.AdminStudyService;
+import com.quiz.bank.service.QuizBankService;
 
 
 @Controller
@@ -179,7 +182,7 @@ public class AdminStudyController {
 		mav.addObject("quizCnt", quizCnt);
 		mav.addObject("newPhotoName",photo_new_name.get("1"));
 		mav.addObject("oriPhotoName",photo_new_name.get("2"));
-		
+		mav.addObject("index", photo_new_name.get("index"));
 		return mav;
 	}
 	
@@ -197,8 +200,11 @@ public class AdminStudyController {
 	
 	
 	@RequestMapping(value="adminQuizList")
-	public ModelAndView adminQuizList() {
-		ModelAndView mav = new ModelAndView("admin_study/adminQuizList");
+	public ModelAndView adminQuizList(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin_study/adminQuizList");
+		session.setAttribute("prevPage", "adminQuizList");
+		
 		return mav;
 	}
 	@RequestMapping(value="adminQuizListQuizCountList")
@@ -223,6 +229,76 @@ public class AdminStudyController {
 		mav.addObject("quiz_info", map);
 		return mav;
 	}
+	
+	
+	@RequestMapping(value="adminUpdateQuiz")
+	@ResponseBody
+	public HashMap<String, Object> adminUpdateQuiz (@RequestParam HashMap<String, String> params){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("{}",params);
+		logger.info("{}",params.getOrDefault("ori_filename", "없습니다"));
+		logger.info("{}",params.get("ori_filename"));
+		
+		service.updateQuiz(params);
+		
+		map.put("msg", service.updateQuiz(params));
+		return map;
+	}
+	
+	@RequestMapping(value="adminQuizReport")
+	public String adminQuizReport(HttpSession session) {
+		session.setAttribute("prevPage", "adminQuizReport");
+		
+		
+		return "admin_study/adminQuizReport";
+	}
+	
+	@RequestMapping(value="adminQuizReportCall")
+	@ResponseBody
+	public HashMap<String, Object> adminQuizReportCall(@RequestParam HashMap<String, String> search_info){
+		HashMap<String, Object> map = service.adminQuizReportCall(search_info);
+		
+
+		return map;
+	}
+	
+	@RequestMapping(value="adminQuizReportComplete")
+	@ResponseBody
+	public HashMap<String, Object>adminQuizReportComplete(@RequestParam HashMap<String, String> params){
+		logger.info("quiz_no : {}",params.get("quiz_report_no"));
+		service.quizReportComplete(params.get("quiz_report_no"));
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		return map;
+	}
+	
+	
+	
+	@RequestMapping(value="testCountListCall")
+	@ResponseBody
+	public HashMap<String, Object> testCountListCall (@RequestParam HashMap<String, String> params){
+		return service.testCountListCall(params.get("test_cate_no"));	
+	}
+	@RequestMapping(value="subjectListCall")
+	@ResponseBody
+	public HashMap<String, Object> subjectListCall (@RequestParam HashMap<String, String> params){
+		return service.subjectListCall(params.get("test_cate_no"));
+	}
+	@RequestMapping(value="bookmarkListCall")
+	@ResponseBody
+	public HashMap<String, Object> bookmarkListCall (HttpSession session){
+		return service.bookmarkListCall((String) session.getAttribute("loginId"));
+	}
+	
+	
+	@GetMapping
+	public ModelAndView quizBankTestDetail(@RequestParam String test_cate_no) {
+		ModelAndView mav = new ModelAndView();
+		return service.quizBankTestDetail(test_cate_no);
+		
+	}
+	
+	
 	
 	
 	
@@ -250,9 +326,6 @@ public class AdminStudyController {
 			return jsonArray;
 			}
 		}
-	
 
-
-	
 }
 

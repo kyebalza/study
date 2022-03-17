@@ -10,7 +10,7 @@
 </head>
 <body>
  	<form action="adminQuizPhotoUpload" method="post" enctype="multipart/form-data">
-		<input type="file" name="photos" multiple="multiple"/>
+		<input type="file" name="photos"/>
 		<input type="hidden" name="quizCnt" value="${quizCnt }"/>
 		<button>저장</button>
 	</form>
@@ -29,9 +29,12 @@ console.log("${newPhotoName}");
 var newPhotoName = "${newPhotoName}";
 var oriPhotoName = "${oriPhotoName}";
 var quizCnt = "${quizCnt}";
+var index = "${index}";
+
 
 if(newPhotoName == ''){
 	console.log('null입니다!');
+
 } else {
 	console.log('부모창의 quizCnt에 newPhotoName 을 보냅니다.');
 	$('.photoArea.'+quizCnt,opener.document).empty();
@@ -39,11 +42,16 @@ if(newPhotoName == ''){
 	txt += '<img src="/photo/'+newPhotoName+'" class="quiz_img "'+quizCnt+'"/>';
 	txt += '<input type="hidden" class="quiz_img_newName '+quizCnt+'" value="'+newPhotoName+'"/>';
 	txt += '<input type="hidden" class="quiz_img_oriName '+quizCnt+'" value="'+oriPhotoName+'"/>';
-	
 	$('.photoArea.'+quizCnt,opener.document).append(txt);
 	window.close();
 	
 }
+if(index == '-1'){
+	$('.photoArea.'+quizCnt,opener.document).empty();
+	
+	window.close();
+}
+
 
 </script>
 </html>

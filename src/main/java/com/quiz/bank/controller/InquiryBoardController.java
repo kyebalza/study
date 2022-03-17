@@ -103,13 +103,31 @@ public class InquiryBoardController {
 		return service.inquiryWrite(params,uploadFile);
 	}
 	
+	
+	// 3. 문의게시판 수정페이지 요청
+	@GetMapping(value = "/inquiryUpdateForm")
+	public String inquiryUpdateForm(Model model, @RequestParam String board_no) {
+		logger.info("inquiryUpdateForm : {}",board_no);
+		return service.inquiryUpdateForm(model, board_no);
+	}
+	
+	// 3-1. 문의게시판 수정하기
+	@PostMapping(value = "/inquiryUpdate")
+	public String update(Model model, @RequestParam HashMap<String, String> params
+			,MultipartFile uploadFile,HttpSession session) {
+		logger.info("문의게시판 수정 요청 : {}", params);
+		logger.info("업로드할 파일 : {}", uploadFile);
+		return service.inquiryUpdate(params,uploadFile);
+		
+	}
+	
 
 
 	
 
 	// 4. 문의게시판 상세보기
 	@GetMapping(value = "/inquiryBoardDetail")
-	public String inquiryBoardDetail(Model model, @RequestParam String board_no) {
+	public String inquiryBoardDetail(Model model, @RequestParam String board_no, HttpSession session) {
 		logger.info("문의게시판 상세보기 요청 : {}", board_no);
 
 		InquiryBoardDTO dto = service.inquirydetail(board_no);
@@ -120,26 +138,7 @@ public class InquiryBoardController {
 	}
 
 	
-	
 
-	/*
-	
-	//5. 문의게시판 수정페이지 요청
-	@GetMapping(value = "/inquiryUpdateForm")
-	public String inquiryUpdateForm(Model model, @RequestParam String board_no) {
-		logger.info("문의게시판 수정페이지 요청 : {}", board_no);
-		return service.inquiryUpdateForm(model,board_no);
-	}
-	
-	//5-1. 문의게시판 수정 요청
-	@PostMapping(value = "/inquiryUpdate")
-	public String inquiryUpdate(Model model, @RequestParam HashMap<String, String> params) {
-		logger.info("문의게시판 수정 요청 : {}", params);
-		return service.inquiryUpdate(params);
-	}
-	
-*/
-	
 	
 	
 	
@@ -150,6 +149,8 @@ public class InquiryBoardController {
 		service.inquirydelete(board_no);
 		return "inquiryBoard/inquiryBoardList";
 	}
+	
+	
 	
 	 
 

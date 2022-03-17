@@ -44,11 +44,33 @@
 				<br/>
 				<div>사진</div>
 				<br/>
-				<ul>
-					<li>①${test.option1}</li>
-					<li>②${test.option2}</li>
-					<li>③${test.option3}</li>
-					<li>④${test.option4}</li>
+				<c:set var="i" value="${i+1}"/>
+				<ul class="${test.quiz_no}+'${i}'">
+					<c:if test="${test.quiz_type eq '1'}">
+						<li value="1">①${test.option1}</li>
+					</c:if>
+					<c:if test="${test.quiz_type eq '2'}">
+						<li value="1">①${test.option1}</li>
+						<li value="2">②${test.option2}</li>
+					</c:if>
+					<c:if test="${test.quiz_type eq '3'}">
+						<li value="1">①${test.option1}</li>
+						<li value="2">②${test.option2}</li>
+						<li value="3">③${test.option3}</li>
+					</c:if>
+					<c:if test="${test.quiz_type eq '4'}">
+						<li value="1">①${test.option1}</li>
+						<li value="2">②${test.option2}</li>
+						<li value="3">③${test.option3}</li>
+						<li value="4">④${test.option4}</li>
+					</c:if>
+					<c:if test="${test.quiz_type eq '5'}">
+						<li value="1">①${test.option1}</li>
+						<li value="2">②${test.option2}</li>
+						<li value="3">③${test.option3}</li>
+						<li value="4">④${test.option4}</li>
+						<li value="5">⑤${test.option5}</li>
+					</c:if>
 				</ul>
 			</div>
 		</c:forEach>
@@ -117,7 +139,7 @@ $('.bookmark').click(function(){
         function printTime() {
             time++;
             
-            timeData = getTimeFormatString();// 변환한 시간 변수에 넣어주기
+            var timeData = getTimeFormatString();// 변환한 시간 변수에 넣어주기
             stopwatch.innerText = timeData;// HTML에 변환한 시간 넣어주기
         }
 

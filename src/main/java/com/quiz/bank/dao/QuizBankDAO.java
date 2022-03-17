@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.quiz.bank.dto.QuizDTO;
+import com.quiz.bank.dto.QuizSolveDTO;
 import com.quiz.bank.dto.TestCategoryDTO;
 
 public interface QuizBankDAO {
@@ -24,20 +25,24 @@ public interface QuizBankDAO {
 	//4. 시험 검색기능 
 	ArrayList<TestCategoryDTO> search(HashMap<String, String> params);
 
+	//5-1. 북마크 여부 확인
+	String bookMark2(String quiz_no, String loginId);
+	
+	//5-2. 북마크 삭제
+	int bookMark_delete(String quiz_no, String loginId);
+	
+	//5-3. 북마크 추가
+	int bookMark_Insert(String loginId, String quiz_no);
 	
 	//////////////////////////////////////////////////////////////////////////////
 	ArrayList<TestCategoryDTO> test();
 
 	ArrayList<TestCategoryDTO> test2();
 
-	//5-1. 북마크 여부 확인
-	String bookMark2(String quiz_no, String loginId);
+	// 통계 테스트
+	ArrayList<QuizSolveDTO> QuizST();
 
-	//5-2. 북마크 삭제
-	int bookMark_delete(String quiz_no, String loginId);
-
-	//5-3. 북마크 추가
-	int bookMark_Insert(String loginId, String quiz_no);
+	ArrayList<QuizSolveDTO> QuizS();
 
 
 }

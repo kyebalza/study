@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.quiz.bank.dao.StudyBoardDAO;
@@ -29,16 +31,6 @@ public class StudyBoardService {
 		logger.info("게시글 리스트 service 도착");
 		return dao.list();
 	}
-
-//	public void write(HashMap<String, String> params, HttpSession session) {	
-//		
-//		StudyBoardDTO dto = new StudyBoardDTO();
-//		UserDTO udto = dao.userid((String)session.getAttribute("userId"));
-//		logger.info("가져온 아이디 : {}", udto);
-//		int row = dao.write(params,session);
-//		logger.info("입력된 건수 : {}", row);
-//		
-//	}
 	
 	public StudyBoardDTO detail(String board_no, String method) {
 		logger.info("상세보기 페이지 서비스 : {}",board_no);
@@ -120,15 +112,74 @@ public class StudyBoardService {
 		}
 		
 	}
+	
+	public StudyBoardDTO photo(String board_no) {
+		// TODO Auto-generated method stub
+		return dao.photo(board_no);
+	}
 
-//	public void upload(MultipartFile uploadFile) {
-//		//1. 파일명 추출
-//		String oriFileName = uploadFile.getOriginalFilename();//업로드파일의 오리지날 파일이름을 가져와서 오리파일네임 변수에 넣어준다.
-//		//2. 새 파일명 작성(업로드한 시간을 밀리세컨드로 환산한 값을파일명으로)
-//		String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
-//		String newFileName = System.currentTimeMillis()+ext;
-//		logger.info(oriFileName+"=>"+newFileName);
-//	}
+	public String updateForm(Model model, String board_no) {
+		
+		StudyBoardDTO dto = dao.detail(board_no);
+		StudyBoardDTO photo = dao.photo(board_no);
+		
+		logger.info("title : "+dto.getTitle());
+		logger.info("photo : {}",photo);
+		
+		model.addAttribute("dto",dto);
+		model.addAttribute("photo",photo);
+		
+		return "/studyBoard/updateForm";
+	}
+
+	public String update(HashMap<String, String> params, MultipartFile uploadFile) {
+		logger.info("update 서비스 도착 : {}",params);
+		int board_no = Integer.parseInt(params.get("board_no"));
+		String page = "redirect:/studyBoard/detail?board_no="+board_no;
+		
+		if(dao.update(params)>0) {
+			page = "redirect:/studyBoard/detail?board_no="+board_no;
+			saveFile(board_no, uploadFile);//파일저장 처리			
+		}
+		return page;
+	}
+
+	public ArrayList<StudyBoardDTO> listCall() {
+		logger.info("listCall service : DAO 호출");
+		return dao.listCall(0,0);
+	}
+
+	public HashMap<String, Object> list(int currPage, int pagePerCnt) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		//어디서부터 보여줘야 하는거?
+		int offset = ((currPage-1) * pagePerCnt-1) >= 0 ? ((currPage-1)* pagePerCnt-1) : 0;
+		logger.info("offset : {}", offset);
+		
+		int totalCount = dao.allCount();//studyBoard테이블의 모든 글의 갯수를 가져온다.
+		//만들 수 있는 총 페이지의 수(전체갯수/보여줄 수)
+		int range = totalCount%pagePerCnt > 0 ? (totalCount%pagePerCnt)+1 : (totalCount/pagePerCnt);
+		logger.info("총 갯수 : {}", totalCount);
+		logger.info("만들 수 있는 총 페이지 : {}",range);
+		
+		map.put("totalCount", totalCount);
+		map.put("pages", range);
+		map.put("list", dao.listCall(pagePerCnt, offset));
+		return map;
+	}
+
+	public List<StudyBoardDTO> studySearch(StudyBoardDTO SBdto) {
+		logger.info("공부게시판 검색 서비스 도착");
+		return dao.studySearch(SBdto);
+	}
+
+	public ArrayList<HashMap<String, String>> test_no() {
+		logger.info("문제번호 카테고리");
+		return dao.test_no();
+	}
+
+
+
 
 
 

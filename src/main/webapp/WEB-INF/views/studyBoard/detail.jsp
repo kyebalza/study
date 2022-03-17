@@ -38,14 +38,23 @@
 			<td>${info.content}</td>
 		</tr>
 		<tr>
-			<th>첨부파일</th>
-			<td><div id="area"></div></td>
+			<th>이미지</th>
+			<td><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
 		</tr>
 	</table>
-	<button>좋아요</button>&nbsp;&nbsp;<p>조회수(${info.bHit})</p>&nbsp;&nbsp;<button>신고하기</button>
+	<button onclick="uplike()">좋아요</button>&nbsp;&nbsp;
+	<p>조회수(${info.bHit})</p>&nbsp;&nbsp;
+	<button>신고하기</button>
 	<input type="button" onclick="location.href='./list'" value="목록"/>
-	<input type="button" onclick="location.href='./updateForm?idx=${info.board_no}'" value="수정"/>
+	<input type="button" onclick="location.href='./updateForm?board_no=${info.board_no}'" value="수정"/>
 	<input type="button" onclick="del()" value="삭제"/>
+	
+	<!-- 댓글 -->
+	<hr/>
+	<form action="reply" method="post">
+		<input type="text" name="reply"/>
+		<input type="submit" value="등록"/>
+	</form>
 
 </body>
 <script>
@@ -56,5 +65,23 @@ function del(){
 		location.href='./delete?board_no=${info.board_no}';
 	}
 }
+
+	//좋아요
+	function uplike(){
+		console.log("좋아요");
+		$.ajax({
+			type:'GET',
+			url:'uplike',
+			data:{'like':like},
+			dataType:'JSON',
+			success:function(data){
+				console.log("")
+			},
+			error:function(e){
+				
+			}
+		});
+	};
+
 </script>
 </html>

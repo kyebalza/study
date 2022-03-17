@@ -6,10 +6,20 @@
 <!-- 이 xml이 어떤 interface와 연결되는지 설정 -->
 <mapper namespace="com.quiz.bank.dao.StudyBoardDAO">	
 	
-	<!-- 리스트 불러오기 -->
+	<!-- 리스트 불러오기
 	<select id="list" resultType="StudyBoard">
 		SELECT * FROM study_board
 		 	ORDER BY board_no DESC
+	</select> -->
+	
+	<!-- 공부게시판 페이징 -->
+	<select id="listCall" resultType="StudyBoard">
+		SELECT board_no, title, board_cate_no, user_id, reg_date FROM study_board ORDER BY board_no DESC
+			LIMIT #{param1} OFFSET #{param2}
+	</select>
+	
+	<select id="allCount" resultType="int">
+		SELECT COUNT(board_no) FROM study_board
 	</select>
 	
 	<!-- 게시판 세부 카테고리(문제,개념) 가져오기 -->
@@ -25,6 +35,11 @@
 	<!-- 시험 시행년도,회차 가져오기 -->
 	<select id="test_year" resultType="hashmap">
 		SELECT test_year, test_count FROM test_list
+	</select>
+	
+	<!-- 문제번호 가져오기 -->
+	<select id="test_no" resultType="hashmap">
+		SELECT * FROM quiz ORDER BY quiz_no
 	</select>
 	
 	<!-- 글쓰기 -->
@@ -55,9 +70,59 @@
 			WHERE board_no=#{param1}
 	</select>
 	
+	<!-- 상세보기 파일 가져오기 -->
+	<select id="photo" resultType="StudyBoard">
+		SELECT ori_filename, new_filename FROM photo 
+			WHERE board_no = #{board_no}
+	</select>
+	
+	<!-- 수정하기 -->
+	<update id="update" parameterType="hashmap">
+		UPDATE study_board SET title = #{title}
+			,content = #{content}
+			WHERE board_no = #{board_no}
+	</update>
+	
 	<!-- 삭제하기 -->
 	<delete id="delete">
 		DELETE FROM study_board WHERE board_no = #{param1}
 	</delete>
- <!--	 -->	
+	
+	
+	 <!-- 공부게시판 검색-->	
+ 	<select id="studySearch" parameterType="StudyBoard" resultType="StudyBoard">
+ 		SELECT * FROM study_board JOIN board_category ON study_board.board_cate_no = board_category.board_cate_no
+ 		
+ 		<choose>
+ 			<when test="SearchType != null and SearchType.equals('all')">
+ 				WHERE title OR user_id LIKE CONCAT ('%',#{keyword},'%')
+ 			</when>
+ 			<when test="SearchType != null and SearchType.equals('title') ">
+				WHERE title LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+			<when test="SearchType != null and SearchType.equals('user') ">
+				WHERE user_id LIKE CONCAT ('%',#{keyword},'%')
+			</when>
+ 		</choose>
+ 	</select>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 </mapper>

@@ -19,49 +19,50 @@
 	</style>
 </head>
 <body>
-	<form action="write" method="post">
+	<form action="update" method="post"  enctype="multipart/form-data">
 		<table>
 			<tr>
+				<th>제목</th>
 				<td>
-					<select onclick="boardcate" name="boardcate">
-		                <option value="문제">문제</option>
-		                <option value="개념">개념</option>
-	            </select>
-					<td><input type="text" name="title" value="${info.title }"/></td>
-					<td><input type="hidden" name="user_id" value=""/></td>
+	            	<input type="hidden" name="board_no" value="${dto.board_no}"/>
+	            	<input type="text" name="title" value="${dto.title }"/>
+			   </td>
+			</tr>
+			<tr>
+				<th>작성자</th>
+				<td>
+	            	<input type="text" name="user_id" value="${dto.user_id }"/>
+			   </td>
+			   <th>작성일자</th>
+			   <td>
+	            	<input type="text" name="user_id" value="${dto.reg_date}"/>
 			   </td>
 			</tr>
 			<tr>
 				<th>문제</th>
 				<td>
-					<input type="selectbox" name="quiz_name" placeholder="시험이름"/>
-					<input type="selectbox" name="quiz_year" placeholder="시험년도"/>
-					<input type="selectbox" name="quiz_times" placeholder="시험회차"/>
-					<input type="text" name="quiz_num" placeholder="문제번호를 입력해주세요"/>
-					<button name="quiz">문제불러오기</button>
-					<hr/>
-					<textarea type="text" name="quiz"></textarea>
+					<input type="text" name="quiz"/>
 				</td>
 			</tr>
 			<tr>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea name="content" value="${info.content}"></textarea></td>
+				<td><input name="content" value="${dto.content}"/></td>
 			</tr>
 			<tr>
-				<th colspan="2">
-					<form action="upload" method="post" enctype="multipart/form-data">
-						<input type="text" name="title"/>
-						<input type="file" name="uploadFile"/>
-						<input type="submit" name="전송"/>
-					</form>
-				</th>
+				<th>이미지</th>
+				<td><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
 			</tr>
 		</table>
+		<br/>
+		<input type="file" name="uploadFile"/>
+		<br/>
 		<input type="button" onclick="location.href='list'" value="취소"/>
 		<input type="submit" value="등록"/>
 	</form>
 </body>
-<script></script>
+<script>
+	
+</script>
 </html>

@@ -9,6 +9,8 @@
 	<style>
 		table{
 			border: 2px solid green;
+			text-align: center;
+			padding : 10px;
 		}
 		tr,td,th{
 			border: 1px solid green;
@@ -22,37 +24,42 @@
 	<form action="write" method="post"  enctype="multipart/form-data">
 		<table>
 			<tr>
+				<th>제목</th>
 				<td>
 					<select onclick="boardcate" name="board_cate_no">
 		               <c:forEach items="${study_cate}" var="study_cate"> 
 		               		<option value="${study_cate.board_cate_no }">${study_cate.board_cate }</option>
 		               	</c:forEach>
-	            </select>
-					<td><input type="text" name="title" placeholder="제목을 입력해주세요."/></td>
+	            	</select>
+	            	<input type="text" name="title" placeholder="제목을 입력해주세요."/>
 			   </td>
 			</tr>
 			<tr>
 				<th>문제</th>
 				<td>
-					<select onclick="quiz_name" name="quiz_name" placeholder="시험회차">
+					<select onclick="quiz_name" name="quiz_name"><!-- 시험종류 -->
 						<c:forEach items="${quiz_name}" var="quiz_name">
 							<option value="${quiz_name.test_cate}">${quiz_name.test_cate}</option>
 						</c:forEach>
 					</select>
-					<select onclick="quiz_year" name="quiz_year" placeholder="시행년도">
+					<select onclick="quiz_year" name="quiz_year"><!-- 시행년도 -->
 						<c:forEach items="${year_count}" var="year_count">
 							<option value="${year_count.test_year}">${year_count.test_year}</option>
 						</c:forEach>
 					</select>
-					<select onclick="quiz_times" name="quiz_times" placeholder="시험회차">
+					<select onclick="quiz_times" name="quiz_times"><!-- 시험회차 -->
 						<c:forEach items="${year_count}" var="year_count">
 							<option value="${year_count.test_count}">${year_count.test_count}</option>
 						</c:forEach>
 					</select>
-					<input type="text" name="quiz_no" placeholder="문제번호를 입력해주세요"/>
+					<select onclick="quiz_no" name="quiz_no"><!-- 문제번호 -->
+						<c:forEach items="${quiz_no}" var="quiz_no">
+							<option value="${quiz_no.quiz_no}">${quiz_no.quiz_no}</option>
+						</c:forEach>
+					</select>
 					<button name="quiz">문제불러오기</button>
 					<hr/>
-					<textarea type="text" name="quiz"></textarea>
+					<textarea name="quiz_content">문제불러오기</textarea>
 				</td>
 			</tr>
 			<tr>

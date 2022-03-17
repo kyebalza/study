@@ -66,8 +66,7 @@
 	
 	<!-- 상세보기 -->
 	<select id="detail" resultType="StudyBoard">
-		SELECT board_no,title,user_id,reg_date,bHit,content FROM study_board 
-			WHERE board_no=#{param1}
+		select board_no,title,user_id,reg_date,bHit,content,board_name from study_board inner join board_category using (board_cate_no) WHERE board_no=#{param1}
 	</select>
 	
 	<!-- 상세보기 파일 가져오기 -->
@@ -105,8 +104,23 @@
 			</when>
  		</choose>
  	</select>
- 
- 
+ 	
+ 	<!-- 게시글 좋아요 여부 확인 -->
+ 	<select id="like2" resultType="String">
+ 		SELECT * FROM board_like JOIN board ON board_like.board_name = board.board_name
+ 	</select>
+ 	
+ 	<!-- 게시글 좋아요 삭제 : board_name 필요 -> detail mapper에서 세부 카테고리로 board_name 가져와야함 -->
+ 	<delete id="like_del">
+ 		DELETE FROM board_like WHERE user_id = #{param1} AND board_no =#{param2} AND board_name = #{param3}
+ 	</delete>
+ 	
+ 	<!-- 게시글 좋아요 추가-->
+ 	<insert id="uplike">
+ 		INSERT INTO board_like(user_id,board_no,board_name)
+ 			VALUES (#{param1}, #{param2}, #{param3})
+ 	</insert> 
+ 	
  
  
  

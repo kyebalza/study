@@ -107,7 +107,7 @@
  	
  	<!-- 게시글 좋아요 여부 확인 -->
  	<select id="like2" resultType="String">
- 		SELECT * FROM board_like JOIN board ON board_like.board_name = board.board_name
+ 		SELECT board_no FROM board_like WHERE user_id = #{param1} AND board_no =#{param2} AND board_name =#{param3}
  	</select>
  	
  	<!-- 게시글 좋아요 삭제 : board_name 필요 -> detail mapper에서 세부 카테고리로 board_name 가져와야함 -->

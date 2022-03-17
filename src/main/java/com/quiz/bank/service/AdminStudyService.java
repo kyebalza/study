@@ -12,12 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.bank.dao.AdminStudyDAO;
 import com.quiz.bank.dao.TodoListDAO;
 import com.quiz.bank.dao.UserDAO;
 import com.quiz.bank.dto.PhotoDTO;
 import com.quiz.bank.dto.QuizDTO;
+import com.quiz.bank.dto.TestCategoryDTO;
 import com.quiz.bank.dto.TestListDTO;
 
 @Service
@@ -297,6 +299,7 @@ public class AdminStudyService {
 	}
 
 	public HashMap<String, Object> adminQuizReportCall(HashMap<String, String> search_info) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		int currPage = Integer.parseInt(search_info.get("page"));
 		int pagePerCnt = Integer.parseInt(search_info.get("cnt"));
 		int offset= ((currPage-1) * pagePerCnt-1)>=0 ? ((currPage-1) * pagePerCnt-1) :0;
@@ -314,12 +317,66 @@ public class AdminStudyService {
 		
 		logger.info("{}", search_info);
 		logger.info("검색할 값들 : {}", search_info);
-		ArrayList<HashMap<String, String>> quiz_search_list = dao.adminSearchQuiz(search_info);
-		logger.info("검색 결과 : {}", quiz_search_list);
-
-		//map.put("quiz_search_list", quiz_search_list);		
+		ArrayList<HashMap<String, String>> quiz_report_list = dao.adminSearchQuizReport(search_info);
+		logger.info("검색 결과 : {}", quiz_report_list);
 		
-		return null;
+		map.put("quiz_report_list", quiz_report_list);		
+		map.put("pages",range);
+		return map;
+	}
+
+	public void quizReportComplete(String quiz_no) {
+		dao.quizReportComplete(quiz_no);
+	}
+
+	public ModelAndView quizBankTestDetail(String test_cate_no) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("quiz_bank2/quizBankTestDetail");
+		HashMap<String, String> test_category = dao.test_category(test_cate_no);
+		mav.addObject("test_category", test_category);
+		return mav;
+	}
+
+	public HashMap<String, Object> testCountListCall(String test_cate_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<HashMap<String, String>> testCountList  = dao.testCountListCall(test_cate_no);
+		map.put("testCountList", testCountList);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> subjectListCall(String test_cate_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<HashMap<String, String>> subjectList = dao.subjectList(test_cate_no);
+		for (HashMap<String, String> subjectUnitMap : subjectList) {
+			//String subject_cate_no = subjectUnitMap.get("subject_cate_no");
+			int rightCnt = dao.subjectRightCnt(subjectUnitMap);
+			int AllCnt = dao.subjectAllCnt(subjectUnitMap);
+			subjectUnitMap.put("rightCnt", Integer.toString(rightCnt));
+			subjectUnitMap.put("AllCnt",Integer.toString(AllCnt));
+
+		}
+		
+		ArrayList<HashMap<String, String>> detailedSubjectList = dao.detailedSubjectList(test_cate_no);
+		for (HashMap<String, String> detailedSubjectUnitMap : detailedSubjectList) {
+			int rightCnt = dao.detailedSubjectRightCnt(detailedSubjectUnitMap);
+			int AllCnt = dao.detailedSubjectAllCnt(detailedSubjectUnitMap);
+			detailedSubjectUnitMap.put("rightCnt", Integer.toString(rightCnt));
+			detailedSubjectUnitMap.put("AllCnt",Integer.toString(AllCnt));			
+		}
+		
+		map.put("subjectList", subjectList);
+		map.put("detailedSubjectList", detailedSubjectList);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> bookmarkListCall(String loginId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<HashMap<String, String>> bookMarkList = dao.bookmarkListCall(loginId);
+		map.put("bookMarkList", bookMarkList);
+		
+		return map;
 	}
 
 

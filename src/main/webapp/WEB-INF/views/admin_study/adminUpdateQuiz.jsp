@@ -120,13 +120,24 @@
 	</table>
 	</div>
 	<div>
-	<input type="button" value="목록" onclick="location.href='adminQuizList'"/>
+	<input type="button" value="목록" onclick="toList()"/>
 	</div>
 
 
 	
 </body>
 <script>
+
+function toList(){
+	if("${sessionScope.prevPage}" == "adminQuizReport"){
+		location.href='adminQuizReport';
+	} else {
+		location.href='adminQuizList';		
+	}
+}
+
+
+
 var test_cate_no = "${quiz_info.test_cate_no}";
 var subject_cate_no = "${quiz_info.subject_cate_no}";
 var quiz_type = "${quiz_info.quiz_type}"*1;

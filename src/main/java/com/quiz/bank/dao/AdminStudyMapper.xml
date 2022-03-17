@@ -193,9 +193,79 @@
 	WHERE new_filename = #{new_filename}
 	</update>
 	
-	<select id="quizReportAllCount" resultType="int">
-	SELECT count (quiz_report) FROM quiz
-
+	<select id="quizReportAllCount" resultType="int" parameterType="hashmap">
+	SELECT count (quiz_report_no) FROM quiz_report
+	<where>
+		<if test="compl_yn.equals('true')">
+		compl_flag = true
+		</if>
+		<if test="compl_yn.equals('false')">
+		compl_flag = false
+		</if>
+	</where>
 	</select>
 
+	<select id="adminSearchQuizReport" resultType="hashmap" parameterType="hashmap" >
+	SELECT * FROM quiz_report
+	<where>
+		<if test="compl_yn.equals('true')">
+		compl_flag = true
+		</if>
+		<if test="compl_yn.equals('false')">
+		compl_flag = false
+		</if>
+	</where>
+	</select>
+	
+	<update id="quizReportComplete">
+	UPDATE quiz_report SET compl_flag = true WHERE quiz_report_no = #{param1} ORDER BY quiz_report_no DESC
+	</update>
+
+	<!-- 2. 시험 상세보기 리스트 불러오기 -->
+	<select id="test_category" resultType="hashmap">
+	SELECT * FROM test_category WHERE test_cate_no = #{param1}
+	</select>
+
+	<select id="testCountListCall" resultType="hashmap">
+	SELECT * FROM test_list INNER JOIN test_category
+	USING (test_cate_no)
+	WHERE test_cate_no = #{param1} AND test_list.del_flag = FALSE
+	</select>
+	<select id="subjectList" resultType="hashmap">
+	SELECT subject_cate_no,subject_cate,sc.del_flag 
+	FROM subject_category sc left JOIN test_category t
+	USING (test_cate_no)
+	WHERE test_cate_no = #{param1} AND sc.del_flag = false
+	</select>
+	<select id="detailedSubjectList" resultType="hashmap">
+	SELECT * FROM detailed_subject_category dsc 
+	LEFT JOIN subject_category USING (subject_cate_no)
+	left JOIN test_category USING (test_cate_no)
+	WHERE test_cate_no = #{param1} AND dsc.del_flag = false;
+	</select>
+	
+	<select id="subjectRightCnt" resultType="int" parameterType="hashmap">
+	SELECT COUNT(quiz_no) FROM quiz_solve WHERE correct_wrong = true AND subject_cate_no = #{subject_cate_no}
+	</select>
+	<select id="subjectAllCnt" resultType="int" parameterType="hashmap">
+	SELECT COUNT(quiz_no) FROM quiz_solve WHERE subject_cate_no = #{subject_cate_no}
+	</select>
+	
+	<select id="detailedSubjectRightCnt" resultType="int" parameterType="hashmap">
+	SELECT COUNT(quiz_no) FROM quiz_solve WHERE correct_wrong = true AND detailed_subject_cate_no = #{detailed_subject_cate_no}	
+	</select>
+	<select id="detailedSubjectAllCnt" resultType="int" parameterType="hashmap">
+	SELECT COUNT(quiz_no) FROM quiz_solve WHERE detailed_subject_cate_no  = #{detailed_subject_cate_no }	
+	</select>
+	
+	<select id="bookmarkListCall" resultType="hashmap">
+	SELECT quiz.quiz_no,tl.test_year,tl.test_count,quiz.quiz_index FROM bookmark 
+	INNER JOIN quiz ON (bookmark.bookmark_quiz_no = quiz.quiz_no) 
+	INNER JOIN test_list tl ON (tl.test_no = quiz.test_no) 
+	WHERE user_id = #{param1}
+	ORDER BY bookmark_date DESC
+	</select>
+	
+	
+	
 </mapper>

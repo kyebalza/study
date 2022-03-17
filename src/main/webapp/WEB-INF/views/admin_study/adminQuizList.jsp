@@ -47,7 +47,7 @@
 	</tr>
 	<tr>
 		<th colspan="4"><input type="text" id="quiz_content" placeholder="문제 내용을 입력해주세요"/></th>
-		<th><input type="button" value="신규문제등록"/></th>
+		<th><input type="button" value="신규문제등록" onclick="location.href='adminRegistTest'"/></th>
 	</tr>
 </table>
 </div>
@@ -126,35 +126,6 @@ $('#quiz_content').keyup(function(){
 
 });
 search(currPage,10);
-/*
-function listCall(page, cnt){
-	$.ajax({
-		type:'GET',
-		url:'list',
-		data:{'page':page,'cnt':cnt},
-		dataType :'JSON',
-		success : function(data){
-			console.log(data);
-			totalPage = data.list.pages;//
-			listDraw(data.list.list);
-			
-            $('#pagination').twbsPagination({
-                startPage: currPage,//현재 페이지
-                totalPages: totalPage,//만들수 있는 총 페이지 수
-                visiblePages:5, //[1][2][3]... 이걸 몇개 까지 보여줄 것인지
-                onPageClick:function(evt,page){//해당 페이지 번호를 클릭했을때 일어날 일들
-                   console.log(evt); //현재 일어나는 클릭 이벤트 관련 정보들
-                   console.log(page);//몇 페이지를 클릭 했는지에 대한 정보
-                   listCall(page,10);
-                }
-             });			
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
-}
-*/
 
 function search(page,cnt){
 	var search_info = {};
@@ -175,6 +146,7 @@ function search(page,cnt){
 		dataType : 'json',
 		success : function(data){
 			console.log(data);
+			totalPage = data.pages;
 			listDraw(data.quiz_search_list);
             $('#pagination').twbsPagination({
                 startPage: currPage,//현재 페이지
@@ -278,8 +250,6 @@ function subjectCategoryCall(upperCate,Cate,id){
 			
 			id.empty();
 			id.append(txt);
-			//$('#testCategory').empty();
-			//$('#testCategory').append(txt);
 		},
 		error : function(e){
 			console.log(e);
@@ -304,8 +274,6 @@ function detailSubjectCategoryCall(upperCate,Cate,id){
 			
 			id.empty();
 			id.append(txt);
-			//$('#testCategory').empty();
-			//$('#testCategory').append(txt);
 		},
 		error : function(e){
 			console.log(e);
@@ -323,7 +291,7 @@ $('#subject_cate_no').change(function(){
 	detailSubjectCategoryCall(this.value,"detail",$('#detailed_subject_cate_no'));
 });
 //
-$.ajax({
+$.ajax({  
 	url : 'adminQuizListQuizCountList',
 	type : 'get',
 	data : '',

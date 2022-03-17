@@ -85,9 +85,6 @@ public class QuizBankController {
 			 map.put("success",row);
 		 }
 		 
-		//select-> loginid랑 board_no 일치하는게 있는지??
-		//if 존재하면 -> DB로 가서 delete
-		//존재하지않으면 -> insert
 
 		return map;
 	}

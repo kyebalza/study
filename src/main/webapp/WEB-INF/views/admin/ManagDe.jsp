@@ -87,7 +87,7 @@
 								}else{
 									str+="<td>자유 게시판</td>";
 								}
-							str+="<td>"+item.board_no+"</td>";
+							str+="<td>"+"<a onclick='mamde(\""+item.board_name+"\","+item.board_no+")'>"+item.board_no+"</a>"+"</td>";
 							/* str+="<td>"+item.title+"</td>"; */
 							str+="<td>"+item.report_user+"</td>";
 							str+="<td>"+item.reported_user+"</td>";
@@ -179,7 +179,7 @@
 						}else{
 							content+="<td>자유 게시판</td>";
 						}
-					content+="<td>"+item.board_no+"</td>";
+					content+="<td>"+"<a onclick='mamde(\""+item.board_name+"\","+item.board_no+")'>"+item.board_no+"</a>"+"</td>";
 					/* content+="<td>"+item.title+"</td>"; */
 					content+="<td>"+item.report_user+"</td>";
 					content+="<td>"+item.reported_user+"</td>";
@@ -229,12 +229,26 @@
 				    	 alert('처리 완료');
 				    	 listCall(currPage,10);
 		    		 }
-		    	 });
-		    	
-		    		
+		    	 });	
 		    	} 
-		
 			}
+		
+		function mamde(a,b) {
+			console.log("클릭 확인 : "+a+b);
+			var board_name = a;
+			var board_no = b;
+			console.log("재확인 게시글 이름 : "+a+" 글번호 : "+b);
+			
+			if (board_name == "study_board") {
+				location.href='adminUserUpdate?board_no=${info.user_id}';
+				//공부 게시판 상세보기로 넘어가기
+			}else{
+				location.href='adminUserUpdate?board_no=${info.user_id}';
+				//자유 게시판 상세보기로 넘어가기
+			}
+			
+		}
+		
 		
 		
 </script>

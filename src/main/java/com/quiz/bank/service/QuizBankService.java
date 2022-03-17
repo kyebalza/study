@@ -27,7 +27,7 @@ public class QuizBankService {
 	public ModelAndView list() {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("quizBankList");
+		mav.setViewName("quizBank/quizBankList");
 		ArrayList<TestCategoryDTO> list = dao.list();
 		logger.info("리스트 갯수 : {}",list.size());
 		mav.addObject("list", list);
@@ -38,7 +38,7 @@ public class QuizBankService {
 	//2. 회차별 시험 리스트
 	public ModelAndView testdetail(String test_cate_no) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("testDetail");
+		mav.setViewName("quizBank/testDetail");
 		ArrayList<TestCategoryDTO> dto =dao.detail(test_cate_no);//상세보기
 		logger.info("시험 상세보기 리스트 갯수 : {}",dto.size());
 		mav.addObject("test", dto);
@@ -53,7 +53,7 @@ public class QuizBankService {
 	//3.시험보기 페이지 및 시험문제 가져오기
 	public ModelAndView testFroml(String test_no, String loginId) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("testForm");
+		mav.setViewName("quizBank/testForm");
 		ArrayList<QuizDTO> dto = dao.testFrom(test_no);
 		logger.info("회차별 시험문제 리스트 갯수 : {}", dto.size());
 		mav.addObject("test", dto);
@@ -96,7 +96,7 @@ public class QuizBankService {
 		ArrayList<TestCategoryDTO> list = dao.search(params);
 		mav.addObject("list", list);
 		
-		mav.setViewName("quizBankList");//가고 싶은 jsp 파일명
+		mav.setViewName("quizBank/quizBankList");//가고 싶은 jsp 파일명
 		
 		
 		return mav;

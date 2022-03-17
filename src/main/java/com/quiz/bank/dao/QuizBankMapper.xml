@@ -66,5 +66,15 @@
 	<select id="test2" resultType="TestList">
 		select test_cate_no from test_list where test_cate_no = 1
 	</select>
+	<!-- 
+	
+	<select id="QuizST" resultType="QuizSlove">
+		SELECT quiz_no , count(quiz_no) FROM quiz_solve  GROUP BY quiz_no
+	</select>
+	
+	<select id="QuizS" resultType="QuizSlove">
+		SELECT quiz_no , count(quiz_no) FROM quiz_solve  WHERE correct_wrong = TRUE GROUP BY quiz_no
+	</select>
+	 -->
 
 </mapper>

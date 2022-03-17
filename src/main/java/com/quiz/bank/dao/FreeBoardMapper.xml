@@ -6,5 +6,140 @@
 <!-- 이 xml이 어떤 interface와 연결되는지 설정 -->
 <mapper namespace="com.quiz.bank.dao.FreeBoardDAO">
 
+	<!-- 자유게시판 리스트 호출 쿼리 -->
+	<select id="FBlistCall" resultType="com.quiz.bank.dto.FreeBoardDTO">
+		SELECT * FROM free_board JOIN board_category ON
+			free_board.board_cate_no = board_category.board_cate_no
+				WHERE del_flag = 0 LIMIT #{param1} OFFSET #{param2}
+	</select>
+	
+	<!-- 공부 게시판 페이징 관련 -->
+	<select id="FballCount" resultType="int">
+		SELECT COUNT (board_no) FROM free_board
+	</select>
+
+	<!-- 자유게시판 세부 카테고리 호출 -->
+	<select id="freeboard_cate" resultType="hashmap">
+		SELECT * FROM board_category WHERE board_name = 'free_board' 
+	</select>
+
+	<!-- 자유게시판 글작성 -->
+	<insert id="freeWrite" 
+		useGeneratedKeys="true"
+		keyProperty="board_no"
+		keyColumn="board_no"
+		parameterType="com.quiz.bank.dto.FreeBoardDTO">
+		INSERT INTO free_board (title, user_id, content, board_cate_no) 
+			VALUES (#{title},#{user_id},#{content},#{board_cate_no})
+	</insert>
+
+	<!-- 자유게시판 파일 업로드 -->
+	<insert id="freefileWrite">
+		INSERT INTO photo(board_no,ori_filename,new_filename,board_name)
+			VALUES(#{param1},#{param2},#{param3},'free_board')
+	</insert>
+
+	<!-- 자유게시판 상세보기 -->
+	<select id="freeBoardDetail" resultType="com.quiz.bank.dto.FreeBoardDTO">
+		SELECT * FROM free_board WHERE board_no = #{param1}
+	</select>
+	
+	<!-- 자유게시판 조회수 올리기 -->
+	<update id="freeBoardupHit">
+		UPDATE free_board SET bHit = bHit+1 WHERE board_no = #{param1}
+	</update>
+
+	<!-- 자유게시판 삭제하기 -->
+	<!-- 어 자유게시판 delete 가 아니라 del_flag 1로 만드는건데 낼 가서 수정하기 -->
+	<delete id="freedelete">
+		DELETE FROM free_board WHERE board_no = #{param1}
+	</delete>
+
+	<!-- 자유 게시판 검색 쿼리 -->
+	<select id="FreeSeasrch" parameterType="com.quiz.bank.dto.FreeBoardDTO" resultType="com.quiz.bank.dto.FreeBoardDTO">
+		SELECT * FROM free_board JOIN board_category ON study_board.board_cate_no = board_category.board_cate_no
+		
+		
+		<if test="FBSearchType != null and FBSearchType.equals('fball')">
+			<choose>
+				<when test="SearchType != null and SearchType.equals('all') ">
+					WHERE del_flag = 0 AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
+				</when>
+				<when test="SearchType != null and SearchType.equals('tit') ">
+					WHERE del_flag = 0 AND title LIKE CONCAT ('%',#{keyword},'%')
+				</when>
+				<when test="SearchType != null and SearchType.equals('user') ">
+					WHERE del_flag = 0 AND user_id LIKE CONCAT ('%',#{keyword},'%')
+				</when>	
+			</choose>	
+		</if>
+		<if test="FBSearchType != null and FBSearchType.equals('testim')">
+			<choose>
+				<when test="SearchType != null and SearchType.equals('all') ">
+					WHERE del_flag = 0 AND board_cate_no = '8' AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
+				</when>
+				<when test="SearchType != null and SearchType.equals('tit') ">
+					WHERE del_flag = 0 AND board_cate_no = '8' AND title LIKE CONCAT ('%',#{keyword},'%')
+				</when>
+				<when test="SearchType != null and SearchType.equals('user') ">
+					WHERE del_flag = 0 AND board_cate_no = '8' AND user_id LIKE CONCAT ('%',#{keyword},'%')
+				</when>	
+			</choose>	
+		</if>
+		<if test="FBSearchType != null and FBSearchType.equals('worry')">
+			<choose>
+				<when test="SearchType != null and SearchType.equals('all') ">
+					WHERE del_flag = 0 AND board_cate_no = '9' AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
+				</when>
+				<when test="SearchType != null and SearchType.equals('tit') ">
+					WHERE del_flag = 0 AND board_cate_no = '9' AND title LIKE CONCAT ('%',#{keyword},'%')
+				</when>
+				<when test="SearchType != null and SearchType.equals('user') ">
+					WHERE del_flag = 0 AND board_cate_no = '9' AND user_id LIKE CONCAT ('%',#{keyword},'%')
+				</when>	
+			</choose>	
+		</if>
+		<if test="FBSearchType != null and FBSearchType.equals('cert')">
+			<choose>
+				<when test="SearchType != null and SearchType.equals('all') ">
+					WHERE del_flag = 0 AND board_cate_no = '10' AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
+				</when>
+				<when test="SearchType != null and SearchType.equals('tit') ">
+					WHERE del_flag = 0 AND board_cate_no = '10' AND title LIKE CONCAT ('%',#{keyword},'%')
+				</when>
+				<when test="SearchType != null and SearchType.equals('user') ">
+					WHERE del_flag = 0 AND board_cate_no = '10' AND user_id LIKE CONCAT ('%',#{keyword},'%')
+				</when>	
+			</choose>	
+		</if>
+		<if test="FBSearchType != null and FBSearchType.equals('jock')">
+			<choose>
+				<when test="SearchType != null and SearchType.equals('all') ">
+					WHERE del_flag = 0 AND board_cate_no = '11' AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
+				</when>
+				<when test="SearchType != null and SearchType.equals('tit') ">
+					WHERE del_flag = 0 AND board_cate_no = '11' AND title LIKE CONCAT ('%',#{keyword},'%')
+				</when>
+				<when test="SearchType != null and SearchType.equals('user') ">
+					WHERE del_flag = 0 AND board_cate_no = '11' AND user_id LIKE CONCAT ('%',#{keyword},'%')
+				</when>	
+			</choose>	
+		</if>
+		<if test="FBSearchType == null">
+			<choose>
+				<when test="SearchType != null and SearchType.equals('all') ">
+					WHERE del_flag = 0 AND board_cate_no = '11' AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
+				</when>
+				<when test="SearchType != null and SearchType.equals('tit') ">
+					WHERE del_flag = 0 AND board_cate_no = '11' AND title LIKE CONCAT ('%',#{keyword},'%')
+				</when>
+				<when test="SearchType != null and SearchType.equals('user') ">
+					WHERE del_flag = 0 AND board_cate_no = '11' AND user_id LIKE CONCAT ('%',#{keyword},'%')
+				</when>	
+			</choose>	
+		</if>
+	</select>
+
+
 
 </mapper>

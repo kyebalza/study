@@ -42,7 +42,17 @@
 			<td><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
 		</tr>
 	</table>
-	<button onclick="uplike()">좋아요</button>&nbsp;&nbsp;
+	<input type="hidden" value="${info.board_name}"/>
+	<c:choose>
+		<c:when test="${like.board_no != null && like.user_id == loginId}">
+			<img class="like" src="/bank/resources/img/like.png" alt="좋아요">
+		</c:when>
+		
+		<c:otherwise> 
+			<img class="like" src="/bank/resources/img/unlike.png" alt="빈 좋아요">
+		</c:otherwise> 
+	</c:choose>
+	<input type="hidden" value="${info.board_no}" />
 	<p>조회수(${info.bHit})</p>&nbsp;&nbsp;
 	<button>신고하기</button>
 	<input type="button" onclick="location.href='./list'" value="목록"/>
@@ -66,22 +76,59 @@ function del(){
 	}
 }
 
-	//좋아요
-	function uplike(){
-		console.log("좋아요");
-		$.ajax({
-			type:'GET',
-			url:'uplike',
-			data:{'like':like},
-			dataType:'JSON',
-			success:function(data){
-				console.log("")
-			},
-			error:function(e){
-				
+//좋아요
+	$('.like').click(function(){
+		//console.log("좋아요");
+		if('${loginId}' == ''){
+			alert('로그인이 필요한 서비스 입니다.');
+		}else{
+			
+			var loginId = '${loginId}';
+			var board_name = $(this).prev().val();
+			var board_no = $(this).next().val();
+			
+			console.log("로그인 아이디 : "+loginId);
+			console.log("게시판 : "+board_name);
+			console.log("글번호 : "+board_no);
+			
+			var param = {'loginId':loginId,'board_name':board_name,'board_no':board_no};
+			console.log(param);
+			
+			var thissrc = $(this).attr('src');
+			
+			if(thissrc == '/bank/resources/img/unlike.png'){
+				$(this).attr('src','/bank/resources/img/like.png');
+			}else{
+				$(this).attr('src','/bank/resources/img/unlike.png');
 			}
-		});
-	};
+			
+	
+			$.ajax({
+				type:'POST',
+				url:'uplike',
+				data:param,
+				dataType:'JSON',
+				success:function(data){
+					if(data.success==1){
+						console.log('좋아요 추가');
+					}
+					if(data.row2 == 1){
+						console.log('좋아요 취소');
+					}
+				},
+				error:function(e){
+					console.log(e);
+					alert('서버에 문제가 발생했습니다.');
+				}
+			});
+		
+			
+			
+			
+			
+		}
+	});
+
 
 </script>
 </html>

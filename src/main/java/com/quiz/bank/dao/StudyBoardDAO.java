@@ -46,6 +46,12 @@ List<StudyBoardDTO> studySearch(StudyBoardDTO sBdto);
 
 ArrayList<HashMap<String, String>> test_no();
 
+String like2(String loginId, String board_no, String board_name);
+
+int like_del(String loginId, String board_no, String board_name);
+
+int uplike(String loginId, String board_no, String board_name);
+
 
 
 

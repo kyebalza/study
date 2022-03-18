@@ -177,6 +177,25 @@ public class StudyBoardService {
 		logger.info("문제번호 카테고리");
 		return dao.test_no();
 	}
+	
+	//게시글 좋아요 여부 확인
+	public String like2(String loginId, String board_no, String board_name) {
+		String like2 = dao.like2(loginId,board_no,board_name);
+		return like2;
+	}
+	
+	//게시글 좋아요 삭제
+	public int like_del(String loginId, String board_no, String board_name) {
+		logger.info("좋아요 취소 서비스");
+		return dao.like_del(loginId,board_no,board_name);
+	}
+	
+	//북마크 추가
+	public int uplike(String loginId, String board_no, String board_name) {
+		int row = dao.uplike(loginId,board_no,board_name);
+		logger.info("좋아요 등록 서비스 : {}",row);
+		return row;
+	}
 
 
 

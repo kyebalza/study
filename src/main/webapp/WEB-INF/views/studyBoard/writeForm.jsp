@@ -5,7 +5,6 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="resources/css/common.css">
 	<style>
 		table{
 			border: 2px solid green;
@@ -57,9 +56,9 @@
 							<option value="${quiz_no.quiz_no}">${quiz_no.quiz_no}</option>
 						</c:forEach>
 					</select>
-					<button name="quiz">문제불러오기</button>
+					<input type="button" onclick="quiz()" value="문제불러오기"/>
 					<hr/>
-					<textarea name="quiz_content">문제불러오기</textarea>
+					<textarea name="quiz_content">문제 가져오기</textarea>
 				</td>
 			</tr>
 			<tr>
@@ -78,6 +77,27 @@
 	</form>
 </body>
 <script>
+	function quiz(){
+		console.log('문제 가져오기');
+		
+		var quiz_no = '${quiz_no}';
+		var quiz = {'quiz':quiz};
+		
+		$.ajax({
+			type:'GET',
+			url:'selectquiz',
+			data: quiz,
+			dataType:'JSON',
+			success:function(data){
+				console.log('문제 불러오기');
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+		
+		
 	
+	};
 </script>
 </html>

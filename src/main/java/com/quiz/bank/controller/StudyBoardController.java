@@ -121,16 +121,22 @@ public class StudyBoardController {
 	
 	/*공부 게시판 상세보기- 도연*/
 	@RequestMapping(value = "/studyBoard/detail", method = RequestMethod.GET)
-	public String detail(Model model, @RequestParam String board_no) {
+	public String detail(Model model, @RequestParam String board_no,HttpSession session) {
 		logger.info("detail 요청 : {}", board_no);
+		//String loginId = (String)session.getAttribute("loginId");
+		
 		
 		StudyBoardDTO dto = service.detail(board_no, "detail");
-		logger.info("dto : {}", dto.getContent());
+		logger.info("dto : {},{}", dto.getBoard_name(), dto.getBoard_no());
 		model.addAttribute("info", dto);
 		//사진 가져오기
 		StudyBoardDTO photo = service.photo(board_no);
 		logger.info("사진 : {}",photo);
 		model.addAttribute("photo",photo);
+		
+		//좋아요 가져오기
+//		String like = service.like2(loginId,board_no,board_name);
+//		model.addAttribute("like",like);
 		
 		return "studyBoard/detail";
 	}
@@ -166,7 +172,8 @@ public class StudyBoardController {
 	/*공부게시판 리스트 검색*/
 	@ResponseBody
 	@RequestMapping(value = "/studyBoard/studySearch", method = RequestMethod.GET)
-	public  List<StudyBoardDTO> studySearch(@RequestParam("SearchType") String SearchType, @RequestParam("Keyword") String Keyword) {
+	public  List<StudyBoardDTO> studySearch(@RequestParam("SearchType") String SearchType
+			, @RequestParam("Keyword") String Keyword) {
 		logger.info("공부게시판 리스트 검색 요청");
 		logger.info(SearchType + " : "+Keyword);
 		StudyBoardDTO SBdto = new StudyBoardDTO();
@@ -177,5 +184,48 @@ public class StudyBoardController {
 	}
 	
 	/*좋아요*/
+	@ResponseBody
+	@RequestMapping(value = "/studyBoard/uplike", method = RequestMethod.POST)
+	public  HashMap<String, Object> uplike(@RequestParam String loginId
+			, @RequestParam String board_no,@RequestParam String board_name) {
+		
+		logger.info(board_name,"게시판 좋아요 요청");
+		logger.info("로그인아이디/게시글번호 : {},{}",loginId,board_no);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		/*현재 id 좋아요 여부 확인*/
+		String like2 = service.like2(loginId,board_no,board_name);
+		logger.info("좋아요 여부확인 : {}",like2);
+		
+		if(like2 != null) {//좋아요 취소
+			int row2 = service.like_del(loginId,board_no,board_name);
+			map.put("row2", row2);
+		}else {
+			int row = service.uplike(loginId,board_no,board_name);
+			map.put("success", row);
+		}
+		
+		
+		return map;
+	}
+	
+	/*글쓰기 문제불러오기*/
+	@ResponseBody
+	@RequestMapping(value = "/studyBoard/selectquiz", method = RequestMethod.GET)
+	public  List<StudyBoardDTO> selectquiz(@RequestParam String quiz) {
+		logger.info("공부게시판 문제불러오기 요청");
+		
+		
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

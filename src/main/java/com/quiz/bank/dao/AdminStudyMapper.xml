@@ -245,17 +245,23 @@
 	</select>
 	
 	<select id="subjectRightCnt" resultType="int" parameterType="hashmap">
-	SELECT COUNT(quiz_no) FROM quiz_solve WHERE correct_wrong = true AND subject_cate_no = #{subject_cate_no}
+	SELECT COUNT(quiz_no) FROM quiz_solve 
+	WHERE correct_wrong = true AND subject_cate_no = #{subject_cate_no}
+	AND user_id = #{loginId}
 	</select>
 	<select id="subjectAllCnt" resultType="int" parameterType="hashmap">
 	SELECT COUNT(quiz_no) FROM quiz_solve WHERE subject_cate_no = #{subject_cate_no}
+	AND user_id = #{loginId}
 	</select>
 	
 	<select id="detailedSubjectRightCnt" resultType="int" parameterType="hashmap">
-	SELECT COUNT(quiz_no) FROM quiz_solve WHERE correct_wrong = true AND detailed_subject_cate_no = #{detailed_subject_cate_no}	
+	SELECT COUNT(quiz_no) FROM quiz_solve 
+	WHERE correct_wrong = true AND detailed_subject_cate_no = #{detailed_subject_cate_no}
+	AND user_id = #{loginId}
 	</select>
 	<select id="detailedSubjectAllCnt" resultType="int" parameterType="hashmap">
 	SELECT COUNT(quiz_no) FROM quiz_solve WHERE detailed_subject_cate_no  = #{detailed_subject_cate_no }	
+	AND user_id = #{loginId}
 	</select>
 	
 	<select id="bookmarkListCall" resultType="hashmap">
@@ -266,6 +272,9 @@
 	ORDER BY bookmark_date DESC
 	</select>
 	
+	<select id="quizSubjectList" resultType="int" parameterType="string">
+	SELECT quiz_no FROM quiz WHERE subject_cate_no = #{param1}
+	</select>
 	
 	
 </mapper>

@@ -14,6 +14,7 @@
 	<a href="quizBankList">문제은행</a>
 	<a href="studyBoard/list">공부게시판</a>
 	<input type = "button" value = "로그아웃" onclick = "location.href='logout'"/>
+	<img src="resources/img/별.png"/>
 </body>
 <script></script>
 </html>

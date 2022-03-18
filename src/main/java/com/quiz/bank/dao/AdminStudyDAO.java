@@ -92,6 +92,14 @@ public interface AdminStudyDAO {
 
 	ArrayList<HashMap<String, String>> bookmarkListCall(String loginId);
 
+	ArrayList<Integer> quizSubjectList(String no);
+
+	ArrayList<Integer> quizDetailedSubjectList(String no);
+
+	ArrayList<Integer> quizBookmarkList(String no, String loginId);
+
+	ArrayList<Integer> quizOneList(String no);
+
 
 
 }

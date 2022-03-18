@@ -345,11 +345,12 @@ public class AdminStudyService {
 		return map;
 	}
 
-	public HashMap<String, Object> subjectListCall(String test_cate_no) {
+	public HashMap<String, Object> subjectListCall(String test_cate_no, String loginId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<HashMap<String, String>> subjectList = dao.subjectList(test_cate_no);
 		for (HashMap<String, String> subjectUnitMap : subjectList) {
 			//String subject_cate_no = subjectUnitMap.get("subject_cate_no");
+			subjectUnitMap.put("loginId", loginId);
 			int rightCnt = dao.subjectRightCnt(subjectUnitMap);
 			int AllCnt = dao.subjectAllCnt(subjectUnitMap);
 			subjectUnitMap.put("rightCnt", Integer.toString(rightCnt));
@@ -359,6 +360,7 @@ public class AdminStudyService {
 		
 		ArrayList<HashMap<String, String>> detailedSubjectList = dao.detailedSubjectList(test_cate_no);
 		for (HashMap<String, String> detailedSubjectUnitMap : detailedSubjectList) {
+			detailedSubjectUnitMap.put("loginId", loginId);
 			int rightCnt = dao.detailedSubjectRightCnt(detailedSubjectUnitMap);
 			int AllCnt = dao.detailedSubjectAllCnt(detailedSubjectUnitMap);
 			detailedSubjectUnitMap.put("rightCnt", Integer.toString(rightCnt));
@@ -377,6 +379,23 @@ public class AdminStudyService {
 		map.put("bookMarkList", bookMarkList);
 		
 		return map;
+	}
+
+	public ArrayList<Integer> quizOneByOneList(String table_type, String no, String loginId) {
+		ArrayList<Integer> quizList = null;
+		if(table_type.equals("subject")) {
+			quizList = dao.quizSubjectList(no);
+		}
+		if(table_type.equals("detailedSubject")) {
+			quizList = dao.quizDetailedSubjectList(no);			
+		}
+		if(table_type.equals("bookmark")) {
+			quizList = dao.quizBookmarkList(no,loginId);
+		}
+		if(table_type.equals("quiz")) {
+			quizList = dao.quizOneList(no);
+		}
+		return quizList;
 	}
 
 

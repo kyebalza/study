@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.quiz.bank.dto.FreeBoardDTO;
 import com.quiz.bank.dto.InquiryBoardDTO;
+import com.quiz.bank.dto.PhotoDTO;
 import com.quiz.bank.dto.StudyBoardDTO;
 import com.quiz.bank.service.FreeBoardService;
 
@@ -81,16 +82,25 @@ public class FreeBoardController {
 		logger.info("자유게시판 상세보기 요청 : {}", board_no);
 
 		FreeBoardDTO fbdto = fbservice.freeBoardDetail(board_no);
-		logger.info("fbdto : {}",fbdto.getContent());
-		model.addAttribute("info", fbdto);
+		logger.info("dto : {}", fbdto.getBoard_no());
 
+		model.addAttribute("info", fbdto);
+		
+		ArrayList<PhotoDTO> fbphoto = fbservice.fbphoto(board_no);
+		logger.info("사진 : "+fbphoto);
+		model.addAttribute("fbphoto", fbphoto);
+
+		int CountLike = fbservice.CountLike(board_no);
+		logger.info("좋아요 갯수 : "+CountLike);
+		model.addAttribute("like", CountLike);
+		
 		return "freeBoard/freeBoardDetail";
 	}	
 	
 	//자유게시판 삭제
 	@RequestMapping(value = "/freedelete", method = RequestMethod.GET)
 	public String freedelete(Model model, @RequestParam String board_no) {
-		logger.info("문의게시판 삭제 요청 : {}", board_no);
+		logger.info("자유게시판 삭제 요청 : {}", board_no);
 		fbservice.freedelete(board_no);
 		return "redirect:/freeBoardList";
 	}
@@ -100,8 +110,8 @@ public class FreeBoardController {
 	@ResponseBody
 	@RequestMapping(value = "/FreeSearch", method = RequestMethod.GET)
 	public List<FreeBoardDTO> FreeSearch(@RequestParam("SearchType") String SearchType, @RequestParam("Keyword") String Keyword, @RequestParam("FBSearchType") String FBSearchType) {
-		logger.info("공부 게시판 리스트 검색 요청");
-		logger.info(SearchType +" : "+Keyword);
+		logger.info("자유 게시판 리스트 검색 요청");
+		logger.info(SearchType +" : "+FBSearchType+" : "+Keyword);
 		FreeBoardDTO fbdto = new FreeBoardDTO();
 		fbdto.setKeyword(Keyword);
 		fbdto.setSearchType(SearchType);
@@ -109,6 +119,57 @@ public class FreeBoardController {
 		
 		return fbservice.FreeSearch(fbdto);
 	}	
+	
+	
+	//자유게시판 수정폼 이동
+	@RequestMapping(value = "/freeUpdateForm", method = RequestMethod.GET)
+	public String updateForm(Model model, @RequestParam String board_no) {
+		logger.info("updateForm : {}",board_no);
+		
+		ArrayList<HashMap<String, String>> free_cate = fbservice.freeboard_cate();
+		model.addAttribute("free_cate", free_cate);
+		
+		return fbservice.freeUpdateForm(model, board_no);
+	}	
+	
+	//자유게시판 수정
+	@RequestMapping(value = "freeUpdate", method = RequestMethod.POST)
+	public String freeUpdate(Model model, @RequestParam HashMap<String, String>params, MultipartFile uploadFile, HttpSession session) {
+		
+		logger.info("freeUpdate 요청 : {}", params);
+		logger.info("업로드할 파일 : {}", uploadFile);
+		return fbservice.freeUpdate(params,uploadFile);
+		
+	}
+	
+	
+	//자유 게시판 좋아요
+	@ResponseBody
+	@RequestMapping(value = "fbUplike", method = RequestMethod.POST)
+	public  HashMap<String, Object> uplike(@RequestParam String loginId, @RequestParam String board_no,@RequestParam String board_name) {
+		
+		logger.info("게시판 좋아요 요청");
+		logger.info("로그인아이디/게시글번호 : {},{}",loginId,board_no);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		/*현재 id 좋아요 여부 확인*/
+		String like2 = fbservice.likecheck(loginId,board_no,board_name);
+		logger.info("좋아요 여부확인 : {}",like2);
+		
+		if(like2 != null) {//좋아요 취소
+			int row2 = fbservice.fbDownlike(loginId,board_no,board_name);
+			map.put("row2", row2);
+		}else {
+			int row = fbservice.fbUplike(loginId,board_no,board_name);
+			map.put("success", row);
+		}
+		
+		
+		return map;
+	}	
+	
+	
 	
 	
 }

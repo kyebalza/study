@@ -19,7 +19,7 @@ public class FreeBoardDTO {
 	private int bHit;
 	private boolean del_falg;
 	private String content;
-	
+	private String board_name;
 	private String board_cate;
 	
 	//댓글
@@ -29,7 +29,38 @@ public class FreeBoardDTO {
 	
 	
 	
+	//파일 업로드
+	private int photo_no;
+	private String ori_filename;
+	private String new_filename;
 	
+	
+	
+	
+	public String getBoard_name() {
+		return board_name;
+	}
+	public void setBoard_name(String board_name) {
+		this.board_name = board_name;
+	}
+	public int getPhoto_no() {
+		return photo_no;
+	}
+	public void setPhoto_no(int photo_no) {
+		this.photo_no = photo_no;
+	}
+	public String getOri_filename() {
+		return ori_filename;
+	}
+	public void setOri_filename(String ori_filename) {
+		this.ori_filename = ori_filename;
+	}
+	public String getNew_filename() {
+		return new_filename;
+	}
+	public void setNew_filename(String new_filename) {
+		this.new_filename = new_filename;
+	}
 	public String getSearchType() {
 		return SearchType;
 	}

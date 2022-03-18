@@ -41,7 +41,12 @@
 
 	<!-- 자유게시판 상세보기 -->
 	<select id="freeBoardDetail" resultType="com.quiz.bank.dto.FreeBoardDTO">
-		SELECT * FROM free_board WHERE board_no = #{param1}
+		SELECT * FROM free_board join board_category ON free_board.board_cate_no = board_category.board_cate_no WHERE board_no = #{param1}
+	</select>
+	
+	<!-- 자유게시판 파일 가져오기 -->
+	<select id="fbphoto" resultType="com.quiz.bank.dto.PhotoDTO">
+		SELECT ori_filename, new_filename FROM photo WHERE board_no = #{board_no}
 	</select>
 	
 	<!-- 자유게시판 조회수 올리기 -->
@@ -52,12 +57,19 @@
 	<!-- 자유게시판 삭제하기 -->
 	<!-- 어 자유게시판 delete 가 아니라 del_flag 1로 만드는건데 낼 가서 수정하기 -->
 	<delete id="freedelete">
-		DELETE FROM free_board WHERE board_no = #{param1}
+		UPDATE free_board SET del_flag = del_flag+1 WHERE board_no = #{param1}
 	</delete>
+	
+	<!-- 자유게시판 수정 -->
+	<update id="freeUpdate" parameterType="hashmap">
+		UPDATE free_board SET title = #{title} ,content = #{content}, board_cate_no = #{board_cate_no} WHERE board_no = #{board_no}
+	</update>
+	
+	
 
 	<!-- 자유 게시판 검색 쿼리 -->
 	<select id="FreeSeasrch" parameterType="com.quiz.bank.dto.FreeBoardDTO" resultType="com.quiz.bank.dto.FreeBoardDTO">
-		SELECT * FROM free_board JOIN board_category ON study_board.board_cate_no = board_category.board_cate_no
+		SELECT * FROM free_board JOIN board_category ON free_board.board_cate_no = board_category.board_cate_no
 		
 		
 		<if test="FBSearchType != null and FBSearchType.equals('fball')">
@@ -73,7 +85,7 @@
 				</when>	
 			</choose>	
 		</if>
-		<if test="FBSearchType != null and FBSearchType.equals('testim')">
+		<!-- <if test="FBSearchType != null and FBSearchType.equals('testim')">
 			<choose>
 				<when test="SearchType != null and SearchType.equals('all') ">
 					WHERE del_flag = 0 AND board_cate_no = '8' AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
@@ -124,22 +136,27 @@
 					WHERE del_flag = 0 AND board_cate_no = '11' AND user_id LIKE CONCAT ('%',#{keyword},'%')
 				</when>	
 			</choose>	
-		</if>
-		<if test="FBSearchType == null">
-			<choose>
-				<when test="SearchType != null and SearchType.equals('all') ">
-					WHERE del_flag = 0 AND board_cate_no = '11' AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
-				</when>
-				<when test="SearchType != null and SearchType.equals('tit') ">
-					WHERE del_flag = 0 AND board_cate_no = '11' AND title LIKE CONCAT ('%',#{keyword},'%')
-				</when>
-				<when test="SearchType != null and SearchType.equals('user') ">
-					WHERE del_flag = 0 AND board_cate_no = '11' AND user_id LIKE CONCAT ('%',#{keyword},'%')
-				</when>	
-			</choose>	
-		</if>
+		</if> -->
 	</select>
 
+	<!-- 게시글 좋아요 여부 확인 -->
+	<select id="likecheck" resultType="String">
+		SELECT board_no FROM board_like WHERE user_id = #{param1} AND board_no =#{param2} AND board_name =#{param3}
+	</select>
 
+	<!-- 좋아요 삭제  -->
+	<delete id="fbDownlike">
+		DELETE FROM board_like WHERE user_id = #{param1} AND board_no =#{param2} AND board_name = #{param3}
+	</delete>
 
+	<!-- 좋아요 추가 -->
+	<insert id="fbUplike">
+		INSERT INTO board_like(user_id,board_no,board_name) VALUES (#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<select id="CountLike" resultType="int">
+		SELECT count(*) FROM board_like where board_no = #{parma1} and board_name = 'free_board'
+	</select>
+	
+	
 </mapper>

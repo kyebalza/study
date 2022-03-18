@@ -11,12 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.quiz.bank.dao.FreeBoardDAO;
 import com.quiz.bank.dao.TodoListDAO;
 import com.quiz.bank.dao.UserDAO;
 import com.quiz.bank.dto.FreeBoardDTO;
+import com.quiz.bank.dto.PhotoDTO;
 
 @Service
 public class FreeBoardService {
@@ -125,6 +127,69 @@ public class FreeBoardService {
 	public List<FreeBoardDTO> FreeSearch(FreeBoardDTO fbdto) {
 		logger.info("자유 게시판 리스트 검색");
 		return fbdao.FreeSeasrch(fbdto);
+	}
+
+	//자유 게시판 상세보기 이동
+	public String freeUpdateForm(Model model, String board_no) {
+		
+		FreeBoardDTO fbdto = fbdao.freeBoardDetail(board_no);
+		ArrayList<PhotoDTO> fbphoto = fbdao.fbphoto(board_no);
+		
+		logger.info("title : "+fbdto.getTitle());
+		logger.info("photo : "+fbphoto);
+		
+		model.addAttribute("fbdto",fbdto);
+		model.addAttribute("fbphoto", fbphoto);
+		
+		
+		return "freeBoard/freeUpdateForm";
+	}
+
+	//자유게시판 상세보기 사진 불러오기
+	public ArrayList<PhotoDTO> fbphoto(String board_no) {
+		
+		return fbdao.fbphoto(board_no);
+	}
+
+	//자유게시판 수정
+	public String freeUpdate(HashMap<String, String> params, MultipartFile uploadFile) {
+		logger.info("free update 서비스 : "+params);
+		int board_no = Integer.parseInt(params.get("board_no"));
+		String page = "redirect:/freeBoardDetail?board_no="+board_no;
+		
+		if (fbdao.freeUpdate(params)>0) {
+			page = "redirect:/freeBoardDetail?board_no="+board_no;
+			saveFile(board_no, uploadFile);
+		}
+
+		return page;
+	}
+
+	//자유 게시글 좋아요 여부 확인
+	public String likecheck(String loginId, String board_no, String board_name) {
+		logger.info("좋아요 유무 확인 서비스");
+		String likecheck = fbdao.likecheck(loginId,board_no,board_name);
+		return likecheck;
+	}
+
+	//자유 게시글 좋아요 삭제
+	public int fbDownlike(String loginId, String board_no, String board_name) {
+		logger.info("좋아요 취소 서비스");
+		return fbdao.fbDownlike(loginId,board_no,board_name);
+	}
+
+	//자유 게시글 좋아요 추가
+	public int fbUplike(String loginId, String board_no, String board_name) {
+		logger.info("좋아요 등록 서비스");
+		int row = fbdao.fbUplike(loginId,board_no,board_name);
+		
+		return row;
+	}
+
+	//좋아요 수 카운트
+	public int CountLike(String board_no) {
+		logger.info("좋아요 수 카운트 서비스");
+		return fbdao.CountLike(board_no);
 	}
 
 }

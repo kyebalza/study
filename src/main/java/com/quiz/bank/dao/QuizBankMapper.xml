@@ -28,7 +28,7 @@
 	</select>
 
 	<!-- 3.시험보기 페이지 및 시험문제 가져오기 -->
-	<select id="testFrom" resultType="Quiz">
+	<select id="testFrom" resultType="hashmap">
 		SELECT * FROM quiz
 			LEFT JOIN bookmark ON (bookmark.bookmark_quiz_no = quiz.quiz_no)
 			WHERE del_flag= 'false' AND test_no=#{param1}
@@ -66,15 +66,16 @@
 	<select id="test2" resultType="TestList">
 		select test_cate_no from test_list where test_cate_no = 1
 	</select>
-	<!-- 
-	
-	<select id="QuizST" resultType="QuizSlove">
-		SELECT quiz_no , count(quiz_no) FROM quiz_solve  GROUP BY quiz_no
+
+
+	<!-- 문제통계 -->
+	<select id="quizAllCnt" resultType="hashmap">
+		SELECT quiz_no , count(quiz_no) as 'all' FROM quiz_solve  GROUP BY quiz_no
 	</select>
 	
-	<select id="QuizS" resultType="QuizSlove">
-		SELECT quiz_no , count(quiz_no) FROM quiz_solve  WHERE correct_wrong = TRUE GROUP BY quiz_no
+	<select id="quizRightCnt" resultType="hashmap">
+		SELECT quiz_no , count(quiz_no) as 'right' FROM quiz_solve  WHERE correct_wrong = TRUE GROUP BY quiz_no
 	</select>
-	 -->
+
 
 </mapper>

@@ -23,7 +23,7 @@
         </h1>
 	</div>
 	<h3>시험페이지입니다.</h3>
-		
+		${test}
 		<c:forEach items="${test}" var="test">
 			<hr/>
 				<input type="hidden" value="${test.quiz_no}"/>
@@ -40,7 +40,7 @@
 			<div >
 				<div>${test.quiz_index}번. ${test.quiz_content}</div>
 				<br/>
-				<div>정답률</div>
+				<div>정답률 ${test.percent}%</div>
 				<br/>
 				<div>사진</div>
 				<br/>

@@ -100,6 +100,10 @@ public interface AdminStudyDAO {
 
 	ArrayList<Integer> quizOneList(String no);
 
+	HashMap<String, String> quiz_call(String quiz_no);
+
+	String quiz_photo(String quiz_no);
+
 
 
 }

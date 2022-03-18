@@ -309,6 +309,12 @@ public class AdminStudyController {
 		return mav;
 	}
 	
+	@RequestMapping(value="quiz_call")
+	@ResponseBody
+	public HashMap<String, Object> quiz_call(@RequestParam String quiz_no){
+		return service.quiz_call(quiz_no);
+	}
+	
 	
 	
 	//

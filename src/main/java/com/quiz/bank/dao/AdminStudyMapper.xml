@@ -273,8 +273,30 @@
 	</select>
 	
 	<select id="quizSubjectList" resultType="int" parameterType="string">
-	SELECT quiz_no FROM quiz WHERE subject_cate_no = #{param1}
+	SELECT quiz_no FROM quiz WHERE subject_cate_no = #{param1} ORDER BY rand()
 	</select>
+	<select id="quizDetailedSubjectList" resultType="int" parameterType="string">
+	SELECT quiz_no FROM quiz WHERE detailed_subject_cate_no = #{param1} ORDER BY rand()
+	</select>
+	<select id="quizBookmarkList" resultType="int" parameterType="string">
+	SELECT quiz_no FROM quiz LEFT JOIN bookmark ON (bookmark.bookmark_quiz_no = quiz.quiz_no)
+	WHERE subject_cate_no = #{param1} AND 
+	user_id = #{param2} ORDER BY rand()	
+	<!-- SELECT quiz_no FROM quiz WHERE subject_cate_no = #{param1} -->
+	</select>
+	<select id="quizOneList" resultType="int" parameterType="string">
+	SELECT quiz_no FROM quiz WHERE subject_cate_no = #{param1}
+	</select>	
 	
+	<select id="quiz_call" resultType="hashmap">
+	SELECT * FROM quiz
+	LEFT JOIN test_category USING (test_cate_no)
+	LEFT JOIN subject_category USING (subject_cate_no)
+	LEFT JOIN detailed_subject_category USING (detailed_subject_cate_no)
+	WHERE quiz_no = #{param1}
+	</select>
+	<select id="quiz_photo" resultType="string">
+	SELECT new_filename FROM photo WHERE board_no = #{quiz_no} AND board_name = 'quiz'
+	</select>
 	
 </mapper>

@@ -17,6 +17,10 @@
 			background-color : blue;
 		
 		}
+		img{
+			width : 20px;
+			height : 20px;
+		}
 		
 	</style>
 </head>
@@ -51,7 +55,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="4">${test_category.test_cate}</th>
+					<th colspan="6">${test_category.test_cate}</th>
 				</tr>
 			</thead>
 			<tbody id="listArea">
@@ -122,17 +126,19 @@ function subjectListCall(){
 				txt += '<tr style="background-color : lightgreen;">';
 				txt += '<td>'+item.subject_cate+'</td>';
 				txt += '<td>정답률 '+subjectCorrectPer +'</td>';
-				txt += '<td><input type="button" onclick="" value="시험보기"/><input type="button" class="'+item.subject_cate_no+'" onclick="detailView(this)" value="▲"/></td>';
+				txt += '<td><input type="button" value="문제풀기" onclick="subjectOnebyOne('+item.subject_cate_no+')"/><input type="button" class="'+item.subject_cate_no+'" onclick="detailView(this)" value="▲"/></td>';
+				txt += '</tr>';
 				data.detailedSubjectList.forEach(function(item2,idx2){
 					var detailedSubjectCorrectPer ='없음';
 					if(item2.AllCnt > 0){
 						detailedSubjectCorrectPer = (item2.rightCnt/(item2.AllCnt)*100).toFixed() + '%';
 					}					
 					if(item.subject_cate_no == item2.subject_cate_no){
+						console.log('asd');
 						txt +='<tr class="'+item.subject_cate_no+'">';
 						txt +='<td>'+item2.detailed_subject_cate+'</td>';
 						txt +='<td>정답률 '+detailedSubjectCorrectPer +'</td>';
-						txt += '<td><input type="button" value="시험보기"/></td>';
+						txt +='<td><input type="button" value="시험보기" onclick="detailedOnebyOne('+item2.detailed_subject_cate_no+')"/></td>';
 						txt +='</tr>';	
 					}
 				});				
@@ -155,17 +161,19 @@ function bookmarkListCall(){
 		dataType : 'json',
 		success : function(data){
 			console.log(data);
-			var txt = '';
+			var txt = '<tr><input type="button" value="문제풀기" onclick="bookMarkOneByOne()"/></tr>';
 			data.bookMarkList.forEach(function(item,idx){
+				console.log(item);
 				txt += '<tr>';
-				txt += '<td>';
-				txt += '<img src="resources/img/별.png" class="bookmark '+item.quiz_no+'" onclick="bookMarkChange('+item.quiz_no+')"/>'
+				txt += '<td colspan="5">';
+				txt += '<img src="resources/img/별.png" class="bookmark '+item.quiz_no+'" onclick="bookMarkChange('+item.quiz_no+')"/>';
 				txt += item.test_year+'년 '+item.test_count+'회 '+test_cate+' '+item.quiz_no;
 				txt += '</td>';
-				txt += '<td><input type="button" value="문제풀기"/></td>';
+				txt += '<td><input type="button" value="문제풀기" onclick="bookMarkOne('+item.quiz_no+')"/></td>';
+				txt += '</tr>';
 			});
-				$('#listArea').empty();
-				$('#listArea').append(txt);
+			$('#listArea').empty();
+			$('#listArea').append(txt);
 		},
 		error : function(e){console.log(e)}		
 	});
@@ -176,7 +184,7 @@ function bookmarkListCall(){
 function detailView(e){
 	console.log(e);
 	console.log($('tr.'+e.classList[0]));
-	$('tr.'+e.classList[0]).slideToggle();
+	$('tr.'+e.classList[0]).slideToggle('slow');
 	if(e.value == '▼'){
 		$(e).val('▲');				
 		//$('tr.'+e.classList[0]).css('display','');
@@ -213,6 +221,10 @@ function bookMarkChange(quiz_no){
 }
 
 
+function subjectOnebyOne(no){location.href='quizOneByOne?table_type=subject&no='+no;}
+function detailedOnebyOne(no){location.href='quizOneByOne?table_type=detailedSubject&no='+no;}
+function bookMarkOneByOne(no){location.href='quizOneByOne?table_type=bookmark&no='+no;}
+function bookMarkOne(no){location.href='quizOneByOne?table_type=quiz&no='+no;}
 
 </script>
 </html>

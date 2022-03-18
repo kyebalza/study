@@ -13,6 +13,9 @@
 	<a href="adminPage">관리자페이지</a>
 	<a href="quizBankList">문제은행</a>
 	<a href="studyBoard/list">공부게시판</a>
+	<a href="inquiryBoardList">문의게시판</a>
+	<a href="freeBoardList">자유게시판</a>
+	
 	<input type = "button" value = "로그아웃" onclick = "location.href='logout'"/>
 </body>
 <script></script>

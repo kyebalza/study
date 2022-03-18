@@ -21,7 +21,19 @@
 	}
 	input.button{
 		text-align: center;
-	}	
+	}
+	
+	th{
+		background-color: yellowgreen;
+		text-align: center;
+	}
+	
+	button{
+		text-align: center;
+		background-color : yellowgreen;
+		color: white;
+	}
+		
  </style>
 </head>
 <body>
@@ -54,13 +66,13 @@
 	<table>
 		<thead>
 			<tr>
-				<th>글번호</th>
-				<th>제목</th>
-				<th>카테고리</th>
-				<th>작성자</th>
-				<th>조회수</th>
-				<th>작성일자</th>
-				<th>답변여부</th>
+				<th style="color:white;">글번호</th>
+				<th style="color:white;">제목</th>
+				<th style="color:white;">카테고리</th>
+				<th style="color:white;">작성자</th>
+				<th style="color:white;">조회수</th>
+				<th style="color:white;">작성일자</th>
+				<th style="color:white;">답변여부</th>
 			</tr>
 			</thead>
 		

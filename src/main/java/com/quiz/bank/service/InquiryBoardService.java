@@ -218,6 +218,20 @@ public class InquiryBoardService {
 
 
 
+	public ArrayList<HashMap<String, String>> reply_call(String board_no) {
+
+		return null;
+	}
+
+
+	public void reply_write(HashMap<String, String> reply) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
 
 
 

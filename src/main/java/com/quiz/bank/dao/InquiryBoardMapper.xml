@@ -89,6 +89,21 @@
 	</delete>
 	
 	
+	<!-- 문의게시판 관리자 답변(댓글) 보여주기 -->
+	<select id="reply_call" resultType="hashmap">
+		SELECT * FROM reply WHERE board_no = #{param1}
+	
+	</select>
+
+	<!-- 문의게시판 관리자 답변(댓글) 작성하기 -->
+	<select id="reply_write" parameterType="hashmap">
+	INSERT INTO reply (user_id,board_no,reply_comment,reply_exposure) 
+	VALUES(#{user_id},#{board_no},#{reply_comment},'Y')
+	</select>
+	
+	
+	
+	
 
 	
 

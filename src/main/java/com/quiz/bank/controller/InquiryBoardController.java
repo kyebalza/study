@@ -122,9 +122,6 @@ public class InquiryBoardController {
 	}
 	
 
-
-	
-
 	// 4. 문의게시판 상세보기
 	@GetMapping(value = "/inquiryBoardDetail")
 	public String inquiryBoardDetail(Model model, @RequestParam String board_no, HttpSession session) {
@@ -138,8 +135,6 @@ public class InquiryBoardController {
 	}
 
 	
-
-	
 	
 	
 	//6. 문의게시판 삭제
@@ -149,6 +144,61 @@ public class InquiryBoardController {
 		service.inquirydelete(board_no);
 		return "inquiryBoard/inquiryBoardList";
 	}
+	
+	
+	
+	
+	// 관리자 댓글기능 관련
+	
+	@RequestMapping(value="/reply_call" , method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> reply_call(HttpSession session, @RequestParam String board_no) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+			logger.info("{} reply 리스트 불러오기",board_no);
+			ArrayList<HashMap<String, String>> list= service.reply_call(board_no);
+			
+			for (HashMap<String, String> list_date : list) {
+				logger.info("list date {}",String.valueOf(list_date.get("reply_date")));
+				
+
+				String dateYear = (String.valueOf(list_date.get("reply_date"))).substring(0, 4);
+				logger.info("dateYear {}",dateYear);
+
+				String dateMonth = (String.valueOf(list_date.get("reply_date"))).substring(5,7);
+				logger.info("dateMonth {}",dateMonth);
+
+				String dateDate = (String.valueOf(list_date.get("reply_date"))).substring(8,10);
+				logger.info("dateDate {}",dateDate);
+
+				String newDate = dateYear+"년 "+dateMonth+"월"+dateDate+"일";
+				list_date.put("reply_date", newDate);
+
+			}
+			
+			logger.info("list  {}",list);
+			map.put("list", list);
+			map.put("count", list.size());
+		return map;
+	}
+	
+	@RequestMapping(value="/reply_write" , method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> reply_write(HttpSession session, @RequestParam HashMap<String, String> reply) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		if(session.getAttribute("loginId") != null) {
+			
+			logger.info("{} 문의게시판 reply 등록하기",reply);
+			service.reply_write(reply);
+			map.put("msg", "success");
+			map.put("list",service.reply_call(reply.get("board_no")));
+		} else {
+			map.put("msg", "fail");
+		}
+		
+		return map;
+	}	
 	
 	
 	

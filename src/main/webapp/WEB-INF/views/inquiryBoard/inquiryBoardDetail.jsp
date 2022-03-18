@@ -13,10 +13,24 @@
 	padding : 5px 10px;	
 }
 
+th {
+	background-color: yellowgreen;
+}
+
+td {
+	text-align: center;
+}
+
 textarea {
 	width: 100%;
 	height: 150px;
 	resize: none;
+}
+
+.none2{
+	border-left:1px solid #ffffff;
+	border-right:1px solid #ffffff;
+	text-alian: center;
 }
 
  
@@ -27,45 +41,43 @@ textarea {
 	
 	<table>
 		<tr>
-			<th>제목</th>
+			<th style="color:white;">제목</th>
 			<td>${info.title}</td>
-		</tr>
-		<tr>
-			<th>카테고리</th>
+			<th style="color:white;">카테고리</th>
 			<td>${info.board_cate_no}</td>
 		</tr>
 		<tr>
-			<th>작성자</th>
+			<th style="color:white;">작성자</th>
 			<td id="user_id">${info.user_id}</td>
-		</tr>
-		<tr>
-			<th>작성일자</th>
+			<th style="color:white;">작성일자</th>
 			<td>${info.reg_date}</td>
 		</tr>
 		<tr>
-			<th>내용</th>
-			<td>${info.content}</td>
+			<th style="color:white;">내용</th>
+			<td colspan="4">${info.content}</td>
 		</tr>
 		<tr>
-			<th>첨부파일</th>
-			<td><div id="area"></div></td>
+			<th style="color:white;">첨부파일</th>
+			<td colspan="4"><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
 		</tr>
 	</table>
 	
-	<p>조회수(${info.bHit})</p>
+	<img class="bHit" src="/bank/resources/img/bHit.png"> ${info.bHit}
+	
+	<br/>
 	<input type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
 	<input type="button" onclick="del()" value="삭제"/>			
 	<input type="button" onclick="location.href='./inquiryBoardList?currpage=1'" value="목록"/>
 	
 	
-	<hr/>
+	<br/><br/>
+	
 	
 	<table>
 		<thead>
 			<tr>
-			<p>답변</p>
 				<td colspan="3">
-					<textarea class="adminbutton" name="reply_comment"></textarea><input class="adminbutton" type="button" onclick="reply_write()" value="저장"/>
+					<textarea class="adminbutton" name="reply_comment"></textarea><input class="adminbutton" type="button" onclick="reply_write()" value="등록"/>
 						<input type="hidden" name="user_id" value="${sessionScope.loginId}"/>
 						<input type="hidden" name="board_no" value="${info.board_no}"/>	
 				</td>
@@ -75,7 +87,8 @@ textarea {
 	<tbody id="reply">
 	</tbody>
 	
-	</table>	
+	</table>
+	</form>
 	
 	
 	
@@ -83,6 +96,22 @@ textarea {
 	
 </body>
 <script>
+
+console.log("${sessionScope.loginId}");
+console.log($('#user_id').html());
+console.log("${sessionScope.admin}");
+
+if("${sessionScope.loginId}" != $('#user_id').html()) {
+	$('.identify[type="button"]').attr('type','hidden');
+
+};
+
+if("${sessionScope.admin}" != 'Y') {
+	$('.adminbutton').css('display','none');
+
+};
+
+
 
 	function del(){
 		var yn = confirm("정말 이 글을 삭제 하시겠습니까?");
@@ -116,17 +145,17 @@ textarea {
 			content += '<br/>';			
 		}
 		
-		$("#area").html(content);
+		$("#photos").html(content);
 		
 				
 	}else{		//업로드 된 파일이 없을 경우
-		$("#area").html("<p>업로드 된 파일이 없습니다.</p>");
+		$("#photos").html("<p>업로드 된 파일이 없습니다.</p>");
 	}
 	
 	
 
 
-	/* reply 기능 */
+	// 관리자 문의게시글 답변 기능
 	$.ajax({
 		type : 'GET',
 		url : 'reply_call',
@@ -134,7 +163,7 @@ textarea {
 		dataType : 'JSON',
 		success : function(data){
 			console.log(data);
-			//ajax 는 페이지를 새로고치하지 않기 때문에, 적용된 내용을 확인하기 위해서는 리스트를 다시 그려야 한다.
+			//ajax 는 페이지를 새로고침하지 않기 때문에, 적용된 내용을 확인하기 위해서는 리스트를 다시 그려야 한다.
 			//listCall();
 			listDraw(data.list);
 		},
@@ -188,7 +217,7 @@ textarea {
 						alert('로그인 후 이용 가능한 서비스입니다.');
 					} else {
 						console.log(data.msg);
-						//ajax 는 페이지를 새로고치하지 않기 때문에, 적용된 내용을 확인하기 위해서는 리스트를 다시 그려야 한다.
+						//ajax 는 페이지를 새로고침하지 않기 때문에, 적용된 내용을 확인하기 위해서는 리스트를 다시 그려야 한다.
 						//listCall();
 						listDraw(data.list);
 						$('textarea[name="reply_comment"]').val('');

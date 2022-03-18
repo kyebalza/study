@@ -159,6 +159,7 @@ function bookmarkListCall(){
 			data.bookMarkList.forEach(function(item,idx){
 				txt += '<tr>';
 				txt += '<td>';
+				txt += '<img src="resources/img/별.png" class="bookmark '+item.quiz_no+'" onclick="bookMarkChange('+item.quiz_no+')"/>'
 				txt += item.test_year+'년 '+item.test_count+'회 '+test_cate+' '+item.quiz_no;
 				txt += '</td>';
 				txt += '<td><input type="button" value="문제풀기"/></td>';
@@ -169,6 +170,7 @@ function bookmarkListCall(){
 		error : function(e){console.log(e)}		
 	});
 }
+
 
 
 function detailView(e){
@@ -185,7 +187,30 @@ function detailView(e){
 	
 }
 
+function bookMarkChange(quiz_no){
 
+	if($('.bookmark.'+quiz_no).attr('src') == 'resources/img/빈별.png'){
+		$('.bookmark.'+quiz_no).attr('src','resources/img/별.png');
+	}else{ 
+		$('.bookmark.'+quiz_no).attr('src','resources/img/빈별.png');
+	}
+	
+	
+	$.ajax({
+		url : 'bookMarkChange',
+		type : 'post',
+		data : {'loginId':loginId,'quiz_no':quiz_no},
+		dataType : 'json',
+		success : function(data){
+			
+		},
+		error : function(e){
+			console.log(e);
+		}
+		
+	});
+	
+}
 
 
 

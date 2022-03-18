@@ -276,13 +276,13 @@ public class AdminStudyController {
 	
 	@RequestMapping(value="testCountListCall")
 	@ResponseBody
-	public HashMap<String, Object> testCountListCall (@RequestParam HashMap<String, String> params){
-		return service.testCountListCall(params.get("test_cate_no"));	
+	public HashMap<String, Object> testCountListCall (@RequestParam String test_cate_no){
+		return service.testCountListCall(test_cate_no);	
 	}
 	@RequestMapping(value="subjectListCall")
 	@ResponseBody
-	public HashMap<String, Object> subjectListCall (@RequestParam HashMap<String, String> params){
-		return service.subjectListCall(params.get("test_cate_no"));
+	public HashMap<String, Object> subjectListCall (@RequestParam String test_cate_no, HttpSession session){
+		return service.subjectListCall(test_cate_no,(String) session.getAttribute("loginId"));
 	}
 	@RequestMapping(value="bookmarkListCall")
 	@ResponseBody
@@ -291,7 +291,7 @@ public class AdminStudyController {
 	}
 	
 	
-	@GetMapping
+	@GetMapping(value="quizBankTestDetail")
 	public ModelAndView quizBankTestDetail(@RequestParam String test_cate_no) {
 		ModelAndView mav = new ModelAndView();
 		return service.quizBankTestDetail(test_cate_no);
@@ -299,8 +299,15 @@ public class AdminStudyController {
 	}
 	
 	
-	
-	
+	@RequestMapping(value="quizOneByOne")
+	public ModelAndView quizOneByOne(@RequestParam String table_type,@RequestParam String no, HttpSession session) {
+		ModelAndView mav = new ModelAndView("quiz_bank2/quizOneByOne");
+		String loginId = (String) session.getAttribute("loginId");
+		ArrayList<Integer> quizNumList = service.quizOneByOneList(table_type,no,loginId);
+		mav.addObject("quizNumList", quizNumList);
+		
+		return mav;
+	}
 	
 	
 	

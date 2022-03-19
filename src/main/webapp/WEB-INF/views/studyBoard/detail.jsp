@@ -52,22 +52,27 @@
 			<img class="like" src="/bank/resources/img/unlike.png" alt="빈 좋아요">
 		</c:otherwise> 
 	</c:choose>
-	<input type="hidden" value="${info.board_no}" />
-	<p>조회수(${info.bHit})</p>&nbsp;&nbsp;
-	<button>신고하기</button>
+	<input type="hidden" value="${info.board_no}"></input>
+	<p>${countlike}</p>
+	<p><img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수">(${info.bHit})</p>&nbsp;&nbsp;
+	<img class="report" src="/bank/resources/img/report.png" alt="신고하기">
 	<input type="button" onclick="location.href='./list'" value="목록"/>
 	<input type="button" onclick="location.href='./updateForm?board_no=${info.board_no}'" value="수정"/>
 	<input type="button" onclick="del()" value="삭제"/>
 	
 	<!-- 댓글 -->
 	<hr/>
-	<form action="reply" method="post">
 		<input type="text" name="reply"/>
-		<input type="submit" value="등록"/>
-	</form>
-
+		<input id="reply" type="button" onclick="reply" value="등록"/>
+	<br/>
+	<!-- 
+	<c:forEach items="${reply_list}" var="reply">
+		<input>
+	</c:forEach>
+	 -->
 </body>
 <script>
+
 function del(){
 	var yn = confirm("정말 이 글을 삭제하시겠습니까?");
 	
@@ -120,14 +125,20 @@ function del(){
 					console.log(e);
 					alert('서버에 문제가 발생했습니다.');
 				}
-			});
-		
-			
-			
-			
-			
+			});//ajax괄호끝
 		}
+	});//좋아요 괄호끝
+	
+	
+	//신고하기
+	$('.report').click(function(){
+		console.log('신고하기');
 	});
+	
+	$('#reply').click(function reply(){
+		console.log('댓글등록');
+		
+	});//댓글괄호 끝
 
 
 </script>

@@ -37,9 +37,15 @@
 		SELECT test_year, test_count FROM test_list
 	</select>
 	
-	<!-- 문제번호 가져오기 -->
+	<!-- 문제번호 가져오기 : 문제번호에  null값 있어서 오류? java.lang.NumberFormatException: For input string: "quiz_index" -->
 	<select id="test_no" resultType="hashmap">
-		SELECT * FROM quiz ORDER BY quiz_no
+		SELECT quiz_index FROM quiz ORDER BY quiz_index
+	</select>
+	
+	<!-- 문제가져오기 -->
+	<select id="quizselect" resultType="hashmap">
+		SELECT quiz_content, option1,option2,option3,option4,option5,quiz_answer FROM quiz
+			WHERE quiz_index = #{quiz_index}, test_no =#{test_no}, 
 	</select>
 	
 	<!-- 글쓰기 -->
@@ -105,6 +111,10 @@
  		</choose>
  	</select>
  	
+ 	<select id="like" resultType="StudyBoard">
+ 		SELECT * FROM board_like WHERE board_no = #{param1} AND user_id = #{param2} AND board_name = 'study_board'
+ 	</select>
+ 	
  	<!-- 게시글 좋아요 여부 확인 -->
  	<select id="like2" resultType="String">
  		SELECT board_no FROM board_like WHERE user_id = #{param1} AND board_no =#{param2} AND board_name =#{param3}
@@ -121,7 +131,10 @@
  			VALUES (#{param1}, #{param2}, #{param3})
  	</insert> 
  	
- 
+ 	<!-- 좋아요 수 -->
+ 	<select id="countlike" resultType="int">
+ 		SELECT COUNT(*) FROM board_like WHERE board_no = #{param1} AND board_name='study_board'
+ 	</select>
  
  
  

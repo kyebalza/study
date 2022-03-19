@@ -87,12 +87,15 @@ public class StudyBoardController {
 		model.addAttribute("study_cate",study_cate);
 		//자격증종류 카테고리
 		ArrayList<HashMap<String, String>> quiz_name = service.test_name();
+		logger.info("quiz_name : {}", quiz_name);
 		model.addAttribute("quiz_name",quiz_name);
 		//시행년도 카테고리
 		ArrayList<HashMap<String, String>> year_count = service.test_year();
+		logger.info("year_count : {}", year_count);
 		model.addAttribute("year_count",year_count);
-		//문제 번호 가져오기
+		//문제 가져오기
 		ArrayList<HashMap<String, String>> quiz_no = service.test_no();
+		logger.info("quiz_no : {}", quiz_no);
 		model.addAttribute("quiz_no",quiz_no);
 		
 		//로그인 여부 확인
@@ -121,11 +124,10 @@ public class StudyBoardController {
 	
 	/*공부 게시판 상세보기- 도연*/
 	@RequestMapping(value = "/studyBoard/detail", method = RequestMethod.GET)
-	public String detail(Model model, @RequestParam String board_no,HttpSession session) {
+	public String detail(Model model, @RequestParam String board_no, HttpSession session) {
 		logger.info("detail 요청 : {}", board_no);
-		//String loginId = (String)session.getAttribute("loginId");
-		
-		
+		String loginId = (String)session.getAttribute("loginId");
+		//게시글
 		StudyBoardDTO dto = service.detail(board_no, "detail");
 		logger.info("dto : {},{}", dto.getBoard_name(), dto.getBoard_no());
 		model.addAttribute("info", dto);
@@ -133,11 +135,13 @@ public class StudyBoardController {
 		StudyBoardDTO photo = service.photo(board_no);
 		logger.info("사진 : {}",photo);
 		model.addAttribute("photo",photo);
-		
 		//좋아요 가져오기
-//		String like = service.like2(loginId,board_no,board_name);
-//		model.addAttribute("like",like);
-		
+		StudyBoardDTO like = service.like(board_no,loginId);
+		model.addAttribute("like",like);
+		logger.info("가져온 좋아요 : {}",like);
+		//좋아요 수
+		int countlike = service.countlike(board_no);
+		model.addAttribute("countlike", countlike);
 		return "studyBoard/detail";
 	}
 	
@@ -212,12 +216,10 @@ public class StudyBoardController {
 	
 	/*글쓰기 문제불러오기*/
 	@ResponseBody
-	@RequestMapping(value = "/studyBoard/selectquiz", method = RequestMethod.GET)
-	public  List<StudyBoardDTO> selectquiz(@RequestParam String quiz) {
-		logger.info("공부게시판 문제불러오기 요청");
-		
-		
-		return null;
+	@RequestMapping(value = "/studyBoard/selectquiz", method = RequestMethod.POST)
+	public HashMap<String, Object> selectquiz(@RequestParam HashMap<String, String> params) {
+		logger.info("공부게시판 문제불러오기 요청 : {}",params);
+		return service.quizselect(params);
 	}
 	
 	

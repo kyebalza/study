@@ -61,6 +61,7 @@ public class StudyBoardDTO {
 	private int photo_no;
 	private String ori_filename;
 	private String new_filename;
+	
 
 	public int getTest_year() {
 		return test_year;

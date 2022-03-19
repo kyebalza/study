@@ -17,6 +17,8 @@
 		input.button{
 			text-align: center;
 		}
+		input.quiz_content{
+		}
 	</style>
 </head>
 <body>
@@ -36,29 +38,29 @@
 			<tr>
 				<th>문제</th>
 				<td>
-					<select onclick="quiz_name" name="quiz_name"><!-- 시험종류 -->
+					<select onclick="quiz_name" name="quiz_name" id="quiz_name"><!-- 시험종류 -->
 						<c:forEach items="${quiz_name}" var="quiz_name">
 							<option value="${quiz_name.test_cate}">${quiz_name.test_cate}</option>
 						</c:forEach>
 					</select>
-					<select onclick="quiz_year" name="quiz_year"><!-- 시행년도 -->
+					<select onclick="quiz_year" name="quiz_year" id="quiz_year"><!-- 시행년도 -->
 						<c:forEach items="${year_count}" var="year_count">
 							<option value="${year_count.test_year}">${year_count.test_year}</option>
 						</c:forEach>
 					</select>
-					<select onclick="quiz_times" name="quiz_times"><!-- 시험회차 -->
+					<select onclick="quiz_times" name="quiz_times" id="quiz_times"><!-- 시험회차 -->
 						<c:forEach items="${year_count}" var="year_count">
 							<option value="${year_count.test_count}">${year_count.test_count}</option>
 						</c:forEach>
 					</select>
-					<select onclick="quiz_no" name="quiz_no"><!-- 문제번호 -->
+					<select onclick="quiz_no" name="quiz_no" id="quiz_no"><!-- 문제번호 -->
 						<c:forEach items="${quiz_no}" var="quiz_no">
-							<option value="${quiz_no.quiz_no}">${quiz_no.quiz_no}</option>
+							<option value="${quiz_no.quiz_index}">${quiz_no.quiz_index}</option>
 						</c:forEach>
 					</select>
 					<input type="button" onclick="quiz()" value="문제불러오기"/>
 					<hr/>
-					<textarea name="quiz_content">문제 가져오기</textarea>
+					<input class="quiz_content" value=""/>
 				</td>
 			</tr>
 			<tr>
@@ -77,27 +79,36 @@
 	</form>
 </body>
 <script>
+	
 	function quiz(){
-		console.log('문제 가져오기');
+		console.log("문제불러오기");
 		
-		var quiz_no = '${quiz_no}';
-		var quiz = {'quiz':quiz};
+		var quiz_name = $('#quiz_name').val();
+		var quiz_year = $('#quiz_year').val();
+		var quiz_times = $('#quiz_times').val();
+		var quiz_no = $('#quiz_no').val();
+		console.log(quiz_name,quiz_year,quiz_times,quiz_no);
+		
+		var params = {'quiz_name':quiz_name,'quiz_year':quiz_year,'quiz_times':quiz_times,'quiz_no':quiz_no};
+		console.log(params);
 		
 		$.ajax({
-			type:'GET',
+			type:'POST',
 			url:'selectquiz',
-			data: quiz,
+			data:params,
 			dataType:'JSON',
 			success:function(data){
-				console.log('문제 불러오기');
+				console.log('문제가져오기 : ',data);
 			},
 			error:function(e){
-				console.log(e);
+				console.log('문제발생: ',e);
 			}
-		});
+		});//ajax괄호끝
+		
+	};//quiz() 괄호끝
 		
 		
 	
-	};
+	
 </script>
 </html>

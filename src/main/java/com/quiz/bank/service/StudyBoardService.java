@@ -197,6 +197,25 @@ public class StudyBoardService {
 		return row;
 	}
 
+	public StudyBoardDTO like(String board_no, String loginId) {
+		logger.info("좋아요 가져오기");
+		return dao.like(board_no,loginId);
+	}
+
+	public int countlike(String board_no) {
+		
+		return dao.countlike(board_no);
+	}
+
+	public HashMap<String, Object> quizselect(HashMap<String, String> params) {
+		logger.info("문제가져오기 서비스");
+		return null;//dao.quizselect(params);
+	}
+
+	
+
+
+
 
 
 

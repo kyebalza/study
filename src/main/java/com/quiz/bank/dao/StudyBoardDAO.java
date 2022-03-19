@@ -52,6 +52,14 @@ int like_del(String loginId, String board_no, String board_name);
 
 int uplike(String loginId, String board_no, String board_name);
 
+StudyBoardDTO like(String board_no, String loginId);
+
+int countlike(String board_no);
+
+HashMap<String, Object> quizselect(HashMap<String, String> params);
+
+
+
 
 
 

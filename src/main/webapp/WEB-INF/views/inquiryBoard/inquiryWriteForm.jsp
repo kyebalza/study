@@ -29,7 +29,14 @@
  	.title{
  		width: 1099px;
  		height:50px;
- 	}  
+ 	}
+ 			
+ 			
+ 	button{
+ 		text-align: center;
+		background-color : green;
+		color: white;
+	}  
  
  
  </style>

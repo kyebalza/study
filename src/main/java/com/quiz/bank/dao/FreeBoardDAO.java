@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.quiz.bank.dto.FreeBoardDTO;
+import com.quiz.bank.dto.PhotoDTO;
 
 public interface FreeBoardDAO {
 
@@ -25,6 +26,18 @@ public interface FreeBoardDAO {
 	int freedelete(String board_no);
 
 	List<FreeBoardDTO> FreeSeasrch(FreeBoardDTO fbdto);
+
+	ArrayList<PhotoDTO> fbphoto(String board_no);
+
+	int freeUpdate(HashMap<String, String> params);
+
+	String likecheck(String loginId, String board_no, String board_name);
+
+	int fbDownlike(String loginId, String board_no, String board_name);
+
+	int fbUplike(String loginId, String board_no, String board_name);
+
+	int CountLike(String board_no);
 
 	
 

@@ -8,7 +8,7 @@
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script> 
 	<!-- 아래 요 친구가 있어야지 페이징이 깨지지 않아요 -->
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<script src="/bank/resources/js/jquery.twbsPagination.js"></script>
+	<script src="resources/js/jquery.twbsPagination.js"></script>
 	<style>
 		table{
 			border: 2px solid green;
@@ -46,13 +46,12 @@
 			</select>
 			
 			<select name ="SearchType">
-				<option selected>검색 내용 선택</option>
-				<option value="all">전체</option>
-				<option value="title">제목</option>
+				<option value="all" selected>전체</option>
+				<option value="tit">제목</option>
 				<option value="user">작성자</option>
 			</select>
 			<input type="text" name="Keyword"/>
-			<input type="button" value="검색" onclick="studySearch()"/>
+			<input type="button" value="검색" onclick="fbSearchList()"/>
 		</form>
 		<!-- 카테고리 검색 -->
 		
@@ -83,8 +82,8 @@
 
 
 	//검색
-	function FreeboardSearch(){
-		//console.log("검색");
+	function fbSearchList(){
+		console.log("검색");
 		$.ajax({
 			type:'GET',
 			url:'FreeSearch',
@@ -92,7 +91,7 @@
 			success : function(result){
 				console.log("확인");
 				//테이블 초기화
-				$('#boardlist').empty();
+				$('#Fboardlist').empty();
 				if(result.length>0){
 					var str = '';
 					result.forEach(function(item){

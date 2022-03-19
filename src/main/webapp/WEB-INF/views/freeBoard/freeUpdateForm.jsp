@@ -36,32 +36,33 @@
 </head>
 <body>
  
-	<form action="inquiryUpdate" method="post" enctype="multipart/form-data">
+	<form action="freeUpdate" method="post" enctype="multipart/form-data">
 		<table> 
 			<tr>
 				<td>
 					<select onclick="boardcate" name="board_cate_no">
-						<c:forEach items="${inquiry_cate}" var="inquiry_cate"> 
-		               		<option value="${inquiry_cate.board_cate_no}">${inquiry_cate.board_cate}</option>
+						<c:forEach items="${free_cate}" var="free_cate"> 
+		               		<option value="${free_cate.board_cate_no}">${free_cate.board_cate}</option>
 		               	</c:forEach>
             		</select>
-            		<input class="title" type="text" placeholder="제목을 입력하세요" name="title" value="${info.title}"/>
+            		<input type="hidden" name="board_no" value="${fbdto.board_no}"/>
+            		<input class="title" type="text" placeholder="제목을 입력하세요" name="title" value="${fbdto.title}"/>
 				</td>
 			</tr>
 			<tr>
-				<td><textarea placeholder="내용을 입력하세요 " name="content">${info.content}</textarea></td>
+				<td><textarea placeholder="내용을 입력하세요 " name="content">${fbdto.content}</textarea></td>
 			</tr>
 
 			<tr>
 				<td><input type="file" name="uploadFile"/></td>
 				<!-- 현재 업로드된 파일 삭제 -->
 				<c:forEach items="${uploadFile}">
-				<img src="/photo/${photo.newFileName}"/>
+					<img src="/photo/${fbphoto.new_filename}"/>
 				</c:forEach>
 			</tr>
 		</table>
 		
-		<input type="button" onclick="location.href='inquiryBoardDetail'" value="취소"/>
+		<input type="button" onclick="location.href='freeBoardDetail?board_no=${fbdto.board_no}'" value="취소"/>
 		<input type="submit" value="저장"/>
 	</form>
   	

@@ -13,10 +13,24 @@
 	padding : 5px 10px;	
 }
 
+th {
+	background-color: yellowgreen;
+}
+
+td {
+	text-align: center;
+}
+
 textarea {
 	width: 100%;
 	height: 150px;
 	resize: none;
+}
+
+.none2{
+	border-left:1px solid #ffffff;
+	border-right:1px solid #ffffff;
+	text-alian: center;
 }
 
  
@@ -27,40 +41,77 @@ textarea {
 	
 	<table>
 		<tr>
-			<th>제목</th>
+			<th style="color:white;">제목</th>
 			<td>${info.title}</td>
-		</tr>
-		<tr>
-			<th>카테고리</th>
+			<th style="color:white;">카테고리</th>
 			<td>${info.board_cate_no}</td>
 		</tr>
 		<tr>
-			<th>작성자</th>
+			<th style="color:white;">작성자</th>
 			<td id="user_id">${info.user_id}</td>
-		</tr>
-		<tr>
-			<th>작성일자</th>
+			<th style="color:white;">작성일자</th>
 			<td>${info.reg_date}</td>
 		</tr>
 		<tr>
-			<th>내용</th>
-			<td>${info.content}</td>
+			<th style="color:white;">내용</th>
+			<td colspan="4">${info.content}</td>
 		</tr>
 		<tr>
-			<th>첨부파일</th>
-			<td><div id="area"></div></td>
+			<th style="color:white;">첨부파일</th>
+			<td colspan="4"><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
 		</tr>
 	</table>
 	
-	<p>조회수(${info.bHit})</p>
+	<img class="bHit" src="/bank/resources/img/bHit.png"> ${info.bHit}
+	
+	<br/>
 	<input type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
 	<input type="button" onclick="del()" value="삭제"/>			
 	<input type="button" onclick="location.href='./inquiryBoardList?currpage=1'" value="목록"/>
+	
+	
+	<br/><br/>
+	
+	
+	<table>
+		<thead>
+			<tr>
+				<td colspan="3">
+					<textarea class="adminbutton" name="reply_comment"></textarea><input class="adminbutton" type="button" onclick="reply_write()" value="등록"/>
+						<input type="hidden" name="user_id" value="${sessionScope.loginId}"/>
+						<input type="hidden" name="board_no" value="${info.board_no}"/>	
+				</td>
+			</tr>
+		</thead>
+	
+	<tbody id="reply">
+	</tbody>
+	
+	</table>
+	</form>
+	
+	
 	
 
 	
 </body>
 <script>
+
+console.log("${sessionScope.loginId}");
+console.log($('#user_id').html());
+console.log("${sessionScope.admin}");
+
+if("${sessionScope.loginId}" != $('#user_id').html()) {
+	$('.identify[type="button"]').attr('type','hidden');
+
+};
+
+if("${sessionScope.admin}" != 'Y') {
+	$('.adminbutton').css('display','none');
+
+};
+
+
 
 	function del(){
 		var yn = confirm("정말 이 글을 삭제 하시겠습니까?");
@@ -70,6 +121,121 @@ textarea {
 		}
 		
 	}
+	
+	
+	var files = [];
+
+	<c:forEach items="${photos}" var="photo">
+	files.push("${photo}");
+	</c:forEach>
+
+	console.log(files);
+
+	if(files.length>0){//업로드된 파일이 있을 경우
+		
+		var content="";
+		
+		for(var i=0; i<files.length;i++){			
+			console.log("fileName : "+files[i]);//풀 파일명
+			//확장자만 추출(마지막에 있는 . 의 취를 찾아 substring 으로 잘라낸다.)
+			var ext = files[i].substring(files[i].lastIndexOf(".")+1);
+			console.log("ext : "+ext);
+			
+			content += '<a href="/photo/'+files[i]+'"/>'+files[i]+' 다운로드 <a>';
+			content += '<br/>';			
+		}
+		
+		$("#photos").html(content);
+		
+				
+	}else{		//업로드 된 파일이 없을 경우
+		$("#photos").html("<p>업로드 된 파일이 없습니다.</p>");
+	}
+	
+	
+
+
+	// 관리자 문의게시글 답변 기능
+	$.ajax({
+		type : 'GET',
+		url : 'reply_call',
+		data : {'board_no':"${info.board_no}"},
+		dataType : 'JSON',
+		success : function(data){
+			console.log(data);
+			//ajax 는 페이지를 새로고침하지 않기 때문에, 적용된 내용을 확인하기 위해서는 리스트를 다시 그려야 한다.
+			//listCall();
+			listDraw(data.list);
+		},
+		error : function(e){
+			console.log(e);
+		}
+	});
+
+
+	function listDraw(list){
+		var content = '';
+
+		//list.forEach(function(item,idx)) 으로 해도 된다.
+		for(var i = 0; i<list.length; i++){
+			//console.log(list[i]);
+			content += '<tr>';
+			content += '<td style="width:200px" class="none2">'+list[i].user_id+'</td>';
+			content += '<td style="width:500px" class="none2">'+list[i].reply_comment+'</td>';
+			content += '<td style="width:200px" class="none2">'+list[i].reply_date+'</td>';		
+			content += '</tr>';
+			
+		}
+		
+		$("#reply").empty();
+		$("#reply").append(content);
+	}
+
+
+	function reply_write(){
+
+		var loginId = "${sessionScope.loginId}";
+
+		var $reply_comment = $('textarea[name="reply_comment"]');
+		var $user_id = $('input[name="user_id"]');
+		var $board_no = $('input[name="board_no"]');
+			
+		var reply = {}
+		reply.reply_comment = $reply_comment.val();			
+		reply.user_id = $user_id.val();
+		reply.board_no = $board_no.val();
+		reply.board_name = '문의게시판';
+		console.log(reply);
+			$.ajax({
+				type : 'GET',
+				url : 'reply_write',
+				data : reply,
+				dataType : 'JSON',
+				success : function(data){
+					
+					if(data.msg == 'fail'){
+						alert('로그인 후 이용 가능한 서비스입니다.');
+					} else {
+						console.log(data.msg);
+						//ajax 는 페이지를 새로고침하지 않기 때문에, 적용된 내용을 확인하기 위해서는 리스트를 다시 그려야 한다.
+						//listCall();
+						listDraw(data.list);
+						$('textarea[name="reply_comment"]').val('');
+						alert('댓글이 정상적으로 등록되었습니다.');
+					}
+					
+				},
+				error : function(e){
+					console.log(e);
+				}
+			});		
+	}
+
+
+
+
+
+
 	
 
 

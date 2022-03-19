@@ -21,9 +21,9 @@ public class InquiryBoardDTO {
 	private String board_cate;
 	
 	//댓글(reply)
-	private int reply_no;
-	private int ori_reply;
-	private String reply_content;
+	private int reply_no; // 댓글식별번호
+	private int ori_reply; // 원댓글
+	private String reply_content; // 댓글 내용
 	
 	
 	// 검색 필터

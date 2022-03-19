@@ -398,5 +398,18 @@ public class AdminStudyService {
 		return quizList;
 	}
 
+	public HashMap<String, Object> quiz_call(String quiz_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();		
+		HashMap<String, String> quiz = dao.quiz_call(quiz_no);
+		map.put("quiz", quiz);
+		String photoname = "noPhoto";
+		photoname = dao.quiz_photo(quiz_no);
+		if(photoname != null) {
+		}
+		map.put("photo", photoname);			
+		
+		return map;
+	}
+
 
 }

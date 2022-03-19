@@ -173,38 +173,36 @@ public class InquiryBoardService {
 	}
 	
 	
-
-	/*
-	
-	// 문의게시글 수정페이지 요청
+	// 문의게시판 수정페이지 요청
 	public String inquiryUpdateForm(Model model, String board_no) {
-		logger.info("문의게시글 수정페이지 요청");
-		InquiryBoardDTO dto = dao.inquirydetail(board_no);
-		ArrayList<InquiryBoardDTO> list = dao.
 		
-		logger.info("content : "+dto.getContent());
-		logger.info("photos : {}", list);
+		InquiryBoardDTO dto = dao.inquirydetail(board_no);
+		InquiryBoardDTO photo = dao.photo(board_no);
+		
+		logger.info("title : "+dto.getTitle());
+		logger.info("photo : {}",photo);
 		
 		model.addAttribute("dto", dto);
-		model.addAttribute("photos", list);
+		model.addAttribute("photo", photo);
 		
 		return "inquiryUpdateForm";
 	}
-	
-	// 문의게시글 수정 요청
-	public String inquiryUpdate(HashMap<String, String> params) {
-		
+
+
+	// 문의게시판 수정 요청
+	public String inquiryUpdate(HashMap<String, String> params, MultipartFile uploadFile) {
+		logger.info("문의게시판 수정 요청 : {}",params);
 		int board_no = Integer.parseInt(params.get("board_no"));
-		String page = "/inquiryBoard/inquiryBoardDetail?board_no="+board_no;
+		String page = "inquiryBoardDetail?board_no="+board_no;
 		
 		if (dao.inquiryUpdate(params)>0) {
-			page = "/inquiryBoard/inquiryBoardDetail?board_no="+board_no;
+			page = "inquiryBoardDetail?board_no=\"+board_no="+board_no;
+			saveFile(board_no, uploadFile); // 파일저장 처리
+			
 		}
 		
 		return page;
 	}
-	
-	*/
 	
 	
 
@@ -216,6 +214,24 @@ public class InquiryBoardService {
 		logger.info("문의게시글 삭제완료 여부 : "+success);
 		
 	}
+
+
+
+
+	public ArrayList<HashMap<String, String>> reply_call(String board_no) {
+
+		return null;
+	}
+
+
+	public void reply_write(HashMap<String, String> reply) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
 
 
 

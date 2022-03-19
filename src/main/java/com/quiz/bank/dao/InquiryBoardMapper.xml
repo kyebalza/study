@@ -64,15 +64,22 @@
 		SELECT * FROM inquiry_board WHERE board_no = #{param1}
 	</select>
 	
+	<!-- 상세보기 파일 가져오기 -->
+	<select id="photo" resultType="com.quiz.bank.dto.InquiryBoardDTO">
+		SELECT ori_filename, new_filename FROM photo 
+			WHERE board_no = #{board_no}
+	</select>
+	
 	<!-- 문의게시판 조회수 올리기 -->
 	<update id="inquiryupHit">
 		UPDATE inquiry_board SET bHit = bHit+1 WHERE board_no = #{param1}
 	</update>
 	
 	<!-- 문의게시글 수정하기 -->
-	<update id="inquiryUpdate">
-		UPDATE inquiry_board SET title = #{title}, content= #{content} 
-		WHERE user_id = #{user_id} AND borad_no = #{board_no} AND board_cate_no = #{board_cate_no}
+	<update id="inquiryUpdate" parameterType="hashmap">
+		UPDATE study_board SET title = #{title}
+			,content = #{content}
+			WHERE board_no = #{board_no}
 	</update>
 	
 	
@@ -80,6 +87,21 @@
 	<delete id="inquirydelete">
 		DELETE FROM inquiry_board WHERE board_no = #{param1}
 	</delete>
+	
+	
+	<!-- 문의게시판 관리자 답변(댓글) 보여주기 -->
+	<select id="reply_call" resultType="hashmap">
+		SELECT * FROM reply WHERE board_no = #{param1}
+	
+	</select>
+
+	<!-- 문의게시판 관리자 답변(댓글) 작성하기 -->
+	<select id="reply_write" parameterType="hashmap">
+	INSERT INTO reply (user_id,board_no,reply_comment,reply_exposure) 
+	VALUES(#{user_id},#{board_no},#{reply_comment},'Y')
+	</select>
+	
+	
 	
 	
 

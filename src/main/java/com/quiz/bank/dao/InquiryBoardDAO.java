@@ -34,6 +34,8 @@ public interface InquiryBoardDAO {
 	int inquiryUpdate(HashMap<String, String> params); // 문의게시글 수정
 
 	HashMap<String, String> inquiryBoarddetail(String board_no); //
+
+	InquiryBoardDTO photo(String board_no);
 	
 
 	

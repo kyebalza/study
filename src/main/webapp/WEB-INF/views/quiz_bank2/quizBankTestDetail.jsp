@@ -7,65 +7,107 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<style>
 		table, th, td{
-			border : 1px solid black;
+			border-top : 1px solid white;
+			border-bottom : 1px solid white;
 			border-collapse: collapse;
 			padding: 5px;
 		}
-		
-		.onClk{
-			color : red;
-			background-color : blue;
-		
+		th {
+		 background-color : LimeGreen; 
+		 color : white; 
+		 font-weight : bold;
 		}
+		td {
+		 background-color : BEFABF; 
+		 color : gray; 
+		 font-weight : bold;
+		}
+		
+
+		.quizPage{
+			height: 40px;
+			color : black;
+			
+		}
+		
+		.quizPage input{
+			height : 40px;
+			/*
+			background-color : BEFABF;
+			*/
+			border : none;
+			width : 156px;
+			padding : 0px;
+			margin : 0px;
+				
+		}
+		.onClk{
+			color : white;
+			background-color : LimeGreen; 
+			font-weight : bold;
+		}	
+			
 		img{
 			width : 20px;
 			height : 20px;
 		}
-		
+		span{
+			font-size : 3px;
+		}
+		.testList input[type="button"]{
+			border-radius : 5px;
+			border : none;
+			color : white;
+		}
+		.testList input[value="시험보기"]{
+			background-color : Coral;
+		}
+		.testList input[value="연습하기"]{
+			background-color : CornflowerBlue;
+		}
+		th input[value="문제풀기"]{
+			background-color : Coral;
+		}
+		td input[value="문제풀기"]{
+			background-color : CornflowerBlue;		
+		}
+		table{
+			width : 480px;
+		}
+		#all{
+			width : 500px;
+		}
+		#listBtnArea{
+			width : 450px;
+			text-align : right;
+		}
 	</style>
 </head>
-<h3>${test_name.test_cate} 시험 상세보기 페이지 입니다.</h3>
-
-<!-- 검색기능인데 지울 것
-	<form action="test_search" method="get">
-		<fieldset>
-			<select name="opt">
-				<option value="test_year">시험년도</option>
-				<c:forEach items="${test}" var="test">
-					<option value="${test.test_year}">${test.test_year}</option>
-				</c:forEach>
-			</select>
-			<select name="opt2">
-				<option value="test_count">시험회차</option>
-				<c:forEach items="${test}" var="test">
-					<option value="${test.test_count}">${test.test_count}</option>
-				</c:forEach>
-			</select>
-			<button>검색</button>
-		</fieldset>	
-	</form>
- -->
+<body>
+<h3>${test_category.test_cate}</h3>
+<div id="all">
  <div class="quizPage">
 	<input type="button" id="countListBtn" class="" value="회차별 문제풀기" onclick="testCountListCall(this)"/>
 	<input type="button" id="subjectListBtn" class="" value="과목별 문제풀기" onclick="subjectListCall(this)"/>
 	<input type="button" id="bookMarkListBtn" class="" value="북마크 문제풀기" onclick="bookmarkListCall(this)"/> 
  </div>
-<body>
 	<div class="testList">
 		<table>
-			<thead>
+			<!-- <thead>
 				<tr>
 					<th colspan="6">${test_category.test_cate}</th>
 				</tr>
-			</thead>
+			</thead> -->
 			<tbody id="listArea">
 			
 			</tbody>
 
 		</table>	
 	</div>
-	
-	<button onclick="location.href='quizBankList'">리스트</button>
+	<div id="listBtnArea">
+		<button onclick="location.href='quizBankList'">리스트</button>
+	</div>
+</div>
 </body>
 <script>
 var test_cate = "${test_category.test_cate}"
@@ -88,14 +130,14 @@ function testCountListCall(e){
 		dataType : 'json',
 		success : function(data){
 			console.log(data);
-			var txt = '';
+			var txt = '<tr><th colspan="3">'+test_cate+'</th></tr>';
 			data.testCountList.forEach(function(item,idx){
 				txt += '<tr>';
 				txt += '<td>';
 				txt += item.test_year+'년 '+item.test_count+'회 '+test_cate;
 				txt += '</td>';
-				txt += '<td><input type="button" value="시험보기"/></td>';
-				txt += '<td><input type="button" value="연습하기"/></td>';
+				txt += '<td style="text-align : center;" ><input type="button" value="시험보기"/></td>';
+				txt += '<td style="text-align : center;" ><input type="button" value="연습하기"/></td>';
 
 			});
 			$('#listArea').empty();
@@ -119,26 +161,25 @@ function subjectListCall(){
 			var txt = '';
 			
 			data.subjectList.forEach(function(item,idx){
-				var subjectCorrectPer ='없음';
+				var subjectCorrectPer =' -';
 				if(item.AllCnt > 0){
 					subjectCorrectPer = (item.rightCnt/(item.AllCnt)*100).toFixed() + '%';
 				}				
-				txt += '<tr style="background-color : lightgreen;">';
-				txt += '<td>'+item.subject_cate+'</td>';
-				txt += '<td>정답률 '+subjectCorrectPer +'</td>';
-				txt += '<td><input type="button" value="문제풀기" onclick="subjectOnebyOne('+item.subject_cate_no+')"/><input type="button" class="'+item.subject_cate_no+'" onclick="detailView(this)" value="▲"/></td>';
+				txt += '<tr>';
+				txt += '<th>'+item.subject_cate+'</th>';
+				txt += '<th><span>나의 정답률  </span> '+subjectCorrectPer +'</th>';
+				txt += '<th style="text-align : center;"><input type="button" value="문제풀기" onclick="subjectOnebyOne('+item.subject_cate_no+')"/><input type="button" style="background-color:LimeGreen;" class="'+item.subject_cate_no+'" onclick="detailView(this)" value="▲"/></th>';
 				txt += '</tr>';
 				data.detailedSubjectList.forEach(function(item2,idx2){
-					var detailedSubjectCorrectPer ='없음';
+					var detailedSubjectCorrectPer =' -';
 					if(item2.AllCnt > 0){
 						detailedSubjectCorrectPer = (item2.rightCnt/(item2.AllCnt)*100).toFixed() + '%';
 					}					
 					if(item.subject_cate_no == item2.subject_cate_no){
-						console.log('asd');
 						txt +='<tr class="'+item.subject_cate_no+'">';
 						txt +='<td>'+item2.detailed_subject_cate+'</td>';
-						txt +='<td>정답률 '+detailedSubjectCorrectPer +'</td>';
-						txt +='<td><input type="button" value="시험보기" onclick="detailedOnebyOne('+item2.detailed_subject_cate_no+')"/></td>';
+						txt +='<td><span>나의 정답률  </span> '+detailedSubjectCorrectPer +'</td>';
+						txt +='<td><input type="button" value="문제풀기" onclick="detailedOnebyOne('+item2.detailed_subject_cate_no+')"/></td>';
 						txt +='</tr>';	
 					}
 				});				
@@ -151,32 +192,39 @@ function subjectListCall(){
 	});
 }
 function bookmarkListCall(){
-	$($('.quizPage input[type="button"]')[0]).removeClass('onClk');
-	$($('.quizPage input[type="button"]')[1]).removeClass('onClk');
-	$($('.quizPage input[type="button"]')[2]).addClass('onClk');
-	$.ajax({
-		url : 'bookmarkListCall',
-		type : 'get',
-		data : '',
-		dataType : 'json',
-		success : function(data){
-			console.log(data);
-			var txt = '<tr><input type="button" value="문제풀기" onclick="bookMarkOneByOne()"/></tr>';
-			data.bookMarkList.forEach(function(item,idx){
-				console.log(item);
-				txt += '<tr>';
-				txt += '<td colspan="5">';
-				txt += '<img src="resources/img/별.png" class="bookmark '+item.quiz_no+'" onclick="bookMarkChange('+item.quiz_no+')"/>';
-				txt += item.test_year+'년 '+item.test_count+'회 '+test_cate+' '+item.quiz_no;
-				txt += '</td>';
-				txt += '<td><input type="button" value="문제풀기" onclick="bookMarkOne('+item.quiz_no+')"/></td>';
-				txt += '</tr>';
-			});
-			$('#listArea').empty();
-			$('#listArea').append(txt);
-		},
-		error : function(e){console.log(e)}		
-	});
+	var yn = ${sessionScope.loginId eq null};
+	if(yn){
+		alert('로그인이 필요한 기능입니다.');
+	} else {
+		$($('.quizPage input[type="button"]')[0]).removeClass('onClk');
+		$($('.quizPage input[type="button"]')[1]).removeClass('onClk');
+		$($('.quizPage input[type="button"]')[2]).addClass('onClk');
+		$.ajax({
+			url : 'bookmarkListCall',
+			type : 'get',
+			data : '',
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				var txt = '<tr><th colspan="5">북마크 문제</th><th style="text-align : center;"><input type="button" value="문제풀기" onclick="bookMarkOneByOne()"/></th></tr>';
+				data.bookMarkList.forEach(function(item,idx){
+					console.log(item);
+					txt += '<tr>';
+					txt += '<td colspan="5">';
+					txt += '<img src="resources/img/별.png" class="bookmark '+item.quiz_no+'" onclick="bookMarkChange('+item.quiz_no+')"/>';
+					txt += item.test_year+'년 '+item.test_count+'회 '+test_cate+' '+item.quiz_no;
+					txt += '</td>';
+					txt += '<td style="text-align : center;"><input type="button" value="문제풀기" onclick="bookMarkOne('+item.quiz_no+')"/></td>';
+					txt += '</tr>';
+				});
+				$('#listArea').empty();
+				$('#listArea').append(txt);
+			},
+			error : function(e){console.log(e)}		
+		});
+	}
+	
+	
 }
 
 
@@ -196,35 +244,41 @@ function detailView(e){
 }
 
 function bookMarkChange(quiz_no){
-
 	if($('.bookmark.'+quiz_no).attr('src') == 'resources/img/빈별.png'){
 		$('.bookmark.'+quiz_no).attr('src','resources/img/별.png');
 	}else{ 
 		$('.bookmark.'+quiz_no).attr('src','resources/img/빈별.png');
 	}
-	
-	
 	$.ajax({
 		url : 'bookMarkChange',
 		type : 'post',
 		data : {'loginId':loginId,'quiz_no':quiz_no},
 		dataType : 'json',
 		success : function(data){
-			
 		},
 		error : function(e){
 			console.log(e);
 		}
-		
 	});
-	
 }
 
 
-function subjectOnebyOne(no){location.href='quizOneByOne?table_type=subject&no='+no;}
-function detailedOnebyOne(no){location.href='quizOneByOne?table_type=detailedSubject&no='+no;}
-function bookMarkOneByOne(no){location.href='quizOneByOne?table_type=bookmark&no='+no;}
-function bookMarkOne(no){location.href='quizOneByOne?table_type=quiz&no='+no;}
+function subjectOnebyOne(no){
+	var openNewWindow = window.open("about:blank");
+	openNewWindow.location.href='quizOneByOne?table_type=subject&no='+no;
+	}
+function detailedOnebyOne(no){
+	var openNewWindow = window.open("about:blank");
+	openNewWindow.location.href='quizOneByOne?table_type=detailedSubject&no='+no;
+	}
+function bookMarkOneByOne(no){	
+	var openNewWindow = window.open("about:blank");
+	openNewWindow.location.href='quizOneByOne?table_type=bookmark&no='+no;
+	}
+function bookMarkOne(no){	
+	var openNewWindow = window.open("about:blank");
+	openNewWindow.location.href='quizOneByOne?table_type=quiz&no='+no;
+}
 
 </script>
 </html>

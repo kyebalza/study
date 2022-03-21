@@ -2,6 +2,8 @@ package com.quiz.bank.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import java.util.StringJoiner;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +30,7 @@ import com.quiz.bank.dto.QuizDTO;
 import com.quiz.bank.dto.TestListDTO;
 import com.quiz.bank.service.AdminStudyService;
 import com.quiz.bank.service.QuizBankService;
+import com.quiz.bank.utils.MailSend;
 
 
 @Controller
@@ -293,7 +296,6 @@ public class AdminStudyController {
 	
 	@GetMapping(value="quizBankTestDetail")
 	public ModelAndView quizBankTestDetail(@RequestParam String test_cate_no) {
-		ModelAndView mav = new ModelAndView();
 		return service.quizBankTestDetail(test_cate_no);
 		
 	}
@@ -311,9 +313,24 @@ public class AdminStudyController {
 	
 	@RequestMapping(value="quiz_call")
 	@ResponseBody
-	public HashMap<String, Object> quiz_call(@RequestParam String quiz_no){
-		return service.quiz_call(quiz_no);
+	public HashMap<String, Object> quiz_call(@RequestParam String quiz_no, HttpSession session){
+		String loginId = (String) session.getAttribute("loginId");
+		return service.quiz_call(quiz_no,loginId);
 	}
+	
+	@RequestMapping(value="quizErrorReport")
+	@ResponseBody
+	public HashMap<String, Object> quizErrorReport(@RequestParam HashMap<String, String> params){
+		return service.quizErrorReport(params);
+	}
+	
+	@RequestMapping(value="quizSolve")
+	@ResponseBody
+	public HashMap<String, Object> quizSolve(@RequestParam HashMap<String, String> params){
+		return service.quizSolve(params);
+	}
+	
+	
 	
 	
 	
@@ -340,5 +357,38 @@ public class AdminStudyController {
 			}
 		}
 
+	
+	@RequestMapping(value="mailTest")
+	public String mailTest() {
+		
+		return "mailTest";
+	}
+	
+	
+	@RequestMapping(value="overlayemail")
+	@ResponseBody
+	public HashMap<String, Object>overlayemail(@RequestParam String email){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int overLay = service.emailOverLay(email);
+		if(overLay > 0) {
+			map.put("overLay", overLay);
+		} else {
+			map.put("overLay",overLay);
+			String title = "EvaStudy 인증번호 입니다.";
+			double dValue = Math.random();
+			int iValue = (int)(dValue*100000);
+			String content  = "인증번호 : "+iValue;
+			
+			MailSend ms = new MailSend();
+			ms.MailSend(title,content,email);
+			map.put("certifiNum", iValue);			
+		}
+		
+		
+		return map;
+	}
+	
+	
+	
 }
 

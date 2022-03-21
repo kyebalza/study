@@ -18,8 +18,14 @@ public interface UserDAO {
 	//2-1. 암호화된 비밀번호 비교
 	String loginPw(String user_id);
 
+	int emailOverLay(String email);
+
 	//4. 아이디 찾기
 	String findid(String user_name, String user_phone, String user_email);
+
+	int confirmIdAndEmail(String user_id, String user_email);
+
+	void rePassword(String user_id, String encPw);
 	
 	
 }

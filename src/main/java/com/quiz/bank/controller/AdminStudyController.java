@@ -358,35 +358,7 @@ public class AdminStudyController {
 		}
 
 	
-	@RequestMapping(value="mailTest")
-	public String mailTest() {
-		
-		return "mailTest";
-	}
-	
-	
-	@RequestMapping(value="overlayemail")
-	@ResponseBody
-	public HashMap<String, Object>overlayemail(@RequestParam String email){
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		int overLay = service.emailOverLay(email);
-		if(overLay > 0) {
-			map.put("overLay", overLay);
-		} else {
-			map.put("overLay",overLay);
-			String title = "EvaStudy 인증번호 입니다.";
-			double dValue = Math.random();
-			int iValue = (int)(dValue*100000);
-			String content  = "인증번호 : "+iValue;
-			
-			MailSend ms = new MailSend();
-			ms.MailSend(title,content,email);
-			map.put("certifiNum", iValue);			
-		}
-		
-		
-		return map;
-	}
+
 	
 	
 	

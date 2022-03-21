@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.quiz.bank.dto.UserDTO;
 import com.quiz.bank.service.UserService;
+import com.quiz.bank.utils.MailSend;
 
 @Controller
 public class UserController {
@@ -125,6 +126,71 @@ public class UserController {
         }
         return map;
     }
+
+	@RequestMapping(value="mailTest")
+	public String mailTest() {
+		
+		return "mailTest";
+	}
+	
+	
+	@RequestMapping(value="overlayemail")
+	@ResponseBody
+	public HashMap<String, Object>overlayemail(@RequestParam String email){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int overLay = service.emailOverLay(email);
+		if(overLay > 0) {
+			map.put("overLay", overLay);
+		} else {
+			map.put("overLay",overLay);
+			String title = "EvaStudy 인증번호 입니다.";
+			double dValue = Math.random();
+			int iValue = (int)(dValue*100000);
+			String content  = "인증번호 : "+iValue;
+			
+			MailSend ms = new MailSend();
+			ms.MailSend(title,content,email);
+			map.put("certifiNum", iValue);			
+		}
+		
+		
+		return map;
+	}	
+	
+	
+	
+	
+	
+	//0. 아이디 찾기 페이지 이동 
+	@RequestMapping(value = "/pwfind")
+	public String pwfind(Model model) {
+		logger.info("idfind page 이동");
+		return "pwfind";
+		
+	}	
+	
+	@RequestMapping(value="/submitTempPw")
+	@ResponseBody
+	public HashMap<String, Object> submitTempPw(@RequestParam String user_id, @RequestParam String user_email){
+		logger.info("userid {},  useremail {}",user_id,user_email);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int count = service.confirmIdAndEmail(user_id,user_email);
+		if(count == 0) {
+			map.put("msg", count);
+		} else {
+			//1.비번 재발급해서 암호화 , 저장
+			String rePassword = service.rePassword(user_id,user_email);
+			MailSend ms = new MailSend();
+			String title = "[EvaStudy] 임시 비밀번호입니다.";
+			String content = "임시 비밀번호 : "+rePassword;
+			ms.MailSend(title,content,user_email);
+			map.put("msg", count);	
+		}
+		
+		
+		return map;
+	}
+	
 	
 	
 }

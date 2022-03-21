@@ -214,7 +214,11 @@ public class StudyBoardService {
 
 	public HashMap<String, Object> studyReport(HashMap<String, String> params) {
 		logger.info("공부게시판 신고 서비스 : {}",params);
-		return dao.studyReport(params);
+		int success = dao.studyReport(params);
+	
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("msg", success);
+		return map;
 	}
 
 	

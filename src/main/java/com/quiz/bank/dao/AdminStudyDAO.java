@@ -118,8 +118,6 @@ public interface AdminStudyDAO {
 
 	HashMap<String, String> quiz_one_statistic(String quiz_no);
 
-	int emailOverLay(String email);
-
 
 
 }

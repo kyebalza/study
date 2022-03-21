@@ -37,6 +37,17 @@
 		SELECT user_id FROM user_info WHERE user_name = #{param1} 
 			AND user_phone = #{param2} AND user_email = #{param3}
 	</select> 
+	
+	<select id="confirmIdAndEmail" resultType="int">
+	SELECT count(*) FROM user_info WHERE user_id = #{param1} AND user_email = #{param2}
+	</select>
 
-
+	<select id="emailOverLay" resultType="int">
+	SELECT count(*) FROM user_info WHERE user_email = #{param1}
+	</select>
+	
+	<update id="rePassword">
+	UPDATA user_info SET user_pw = #{param2} WHERE user_id = #{param1}
+	</update>
+	
 </mapper>

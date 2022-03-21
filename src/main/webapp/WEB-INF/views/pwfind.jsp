@@ -78,67 +78,55 @@
 		<tr>
 			
 			<td>
-    		<input type = "text" name = "user_name" placeholder="이름을 입력하세요"/> 
+    		<input type = "text" name = "user_id" placeholder="아이디를 입력하세요"/> 
 			</td>   
 		</tr>
-		<tr>
-			
+		<tr>			
 			<td>
-				<input type = "text" name = "user_phone" placeholder="핸드폰을 입력하세요"/>
-			</td>
-		</tr>
-		<tr>
-			
-			<td>
-				<input type = "text" name = "user_email" placeholder="이메일을 입력하세요"/>
+				<input type = "text" name = "user_email" placeholder="이메일 주소를 입력하세요"/>
 			</td>
 		</tr>	
 			<tr>
 				<th>
-				<input type="button" id = "idfind" value="아이디찾기"/>
+				<input type="button" id = "toemail" value="전송"/>
 				<input type="button" id = "idfindcan" onclick = "location.href='loginPage'" value="취소"/>
 				</th>
 			</tr>
-			<tr>
-				<th>비밀번호를 잊으셨나요?
-				<input type = "button" id = "findpass" value = "비밀번호 찾기" 
-				onclick = "location.href='pwfind'"/>
-				</th> 
-			</tr>
-		</table>
-		<br/><br/>
-		<table>
 		</table>
 	</div>
 </div>
 </body>
 <script>
- $('#idfind').click(function() {
-
-	var user_name = $('input[name="user_name"]').val();
-	var user_phone = $('input[name="user_phone"]').val();   
-	var user_email = $('input[name="user_email"]').val();
-	console.log(user_name+'/'+user_phone +'/'+user_email);
+$('#toemail').click(function(){
+	$user_id = $('input[name="user_id"]').val();
+	$user_email = $('input[name="user_email"]').val();
+	console.log($user_id);
+	console.log($user_email);
 	
 	$.ajax({
-		type:'POST',
-		url : 'findid',
-		data:{'user_name':user_name,
-				'user_phone':user_phone, 
-				'user_email':user_email},
-		dataType : 'JSON',
-		success : function (data) {
-			if (data.success != '아이디없음') {
-				alert('고객님의 아이디는 '+ data.success+'입니다.');
-				location.href = './loginPage';
-			}else{
-				alert('입력하신 정보가 일치 하지 않습니다. 다시 확인 후 입력바랍니다.');
+		url : 'submitTempPw',
+		type : 'get',
+		data : {'user_id':$user_id,'user_email':$user_email},
+		dataType : 'json',
+		success : function(data){
+			if(data.msg == 0){
+				alert('일치하는 회원정보가 없습니다.');
 			}
+			if(data.msg > 0){
+				alert('해당 이메일 주소로 임시비밀번호가 발급되었습니다.\n 이메일을 통해 확인해주세요');
+				location.href='loginPage';
+			}
+			
+			
 		},
-		error : function (e) {
-			console.log(e);
-		}  
+		error : function(e){}
+		
+		
+		
 	});
- }); 	
+	
+});
+
+
 </script>
 </html>

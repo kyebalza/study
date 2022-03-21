@@ -58,7 +58,7 @@ int countlike(String board_no);
 
 HashMap<String, Object> quizselect(HashMap<String, String> params);
 
-HashMap<String, Object> studyReport(HashMap<String, String> params);
+int studyReport(HashMap<String, String> params);
 
 
 

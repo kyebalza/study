@@ -492,9 +492,7 @@ public class AdminStudyService {
 		return map;
 	}
 
-	public int emailOverLay(String email) {
-		return dao.emailOverLay(email);
-	}
+
 
 
 }

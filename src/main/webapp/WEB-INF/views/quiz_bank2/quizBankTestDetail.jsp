@@ -136,8 +136,8 @@ function testCountListCall(e){
 				txt += '<td>';
 				txt += item.test_year+'년 '+item.test_count+'회 '+test_cate;
 				txt += '</td>';
-				txt += '<td style="text-align : center;" ><input type="button" value="시험보기"/></td>';
-				txt += '<td style="text-align : center;" ><input type="button" value="연습하기"/></td>';
+				txt += '<td style="text-align : center;" ><input type="button" value="시험보기" onclick="testForm('+item.test_no+')"/></td>';
+				txt += '<td style="text-align : center;" ><input type="button" value="연습하기" onclick="testForm('+item.test_no+')"/></td>';
 
 			});
 			$('#listArea').empty();
@@ -279,6 +279,9 @@ function bookMarkOne(no){
 	var openNewWindow = window.open("about:blank");
 	openNewWindow.location.href='quizOneByOne?table_type=quiz&no='+no;
 }
-
+function testForm(no){
+	var openNewWindow = window.open("about:blank");
+	openNewWindow.location.href='testForm?test_no='+no;	
+}
 </script>
 </html>

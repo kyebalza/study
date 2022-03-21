@@ -1,6 +1,7 @@
 package com.quiz.bank.service;
 
 import java.util.HashMap;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +67,36 @@ public class UserService {
 	//4. 아이디 찾기
 	public String findid(String user_name, String user_phone, String user_email) {
 		return dao.findid(user_name, user_phone, user_email);
+	}
+
+	public int emailOverLay(String email) {
+		return dao.emailOverLay(email);
+	}	
+	
+	
+	public int confirmIdAndEmail(String user_id, String user_email) {
+		return dao.confirmIdAndEmail(user_id,user_email);
+	}
+
+	public String rePassword(String user_id, String user_email) {
+		
+		Random rnd =new Random();
+		String tempPw = "";
+		for(int i=0;i<10;i++){
+		    // rnd.nextBoolean() 는 랜덤으로 true, false 를 리턴. true일 시 랜덤 한 소문자를, false 일 시 랜덤 한 숫자를 StringBuffer 에 append 한다.
+		    if(rnd.nextBoolean()){
+		    	tempPw += ((char)((int)(rnd.nextInt(26))+97));
+		    }else{
+		    	tempPw+=((rnd.nextInt(10)));
+		    }
+		}
+		logger.info("새로 발급 된 비번 : {}",tempPw);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String encPw = encoder.encode(tempPw);
+		logger.info("enc pw :"+encPw);		
+		dao.rePassword(user_id,encPw);
+		
+		return tempPw;
 	}
 
 

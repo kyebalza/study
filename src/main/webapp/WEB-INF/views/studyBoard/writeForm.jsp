@@ -60,18 +60,34 @@
 					</select>
 					<input type="button" onclick="quiz()" value="문제불러오기"/>
 					<hr/>
-					<input class="quiz_content" value=""/>
+					<textarea id="quiz_content" style="width: 596px; height: 102px;"></textarea><!-- 문제내용 -->
+					
+					<!-- 보기옵션 -->
+					<p class="option_num">보기1</p>
+					<input id="option1" class="option"/>
+					<p class="option_num">보기2</p>
+					<input id="option2" class="option"/>
+					<p class="option_num">보기3</p>
+					<input id="option3" class="option"/>
+					<p class="option_num">보기4</p>
+					<input id="option4" class="option"/>
+					<p class="option_num">보기5</p>
+					<input id="option5" class="option"/>
 				</td>
 			</tr>
 			<tr>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea name="content"></textarea></td>
+				<td>
+					<textarea name="content" style="width: 603px; height: 112px;"></textarea>
+				</td><!-- 글내용 -->
 			</tr>
 			<tr>
 				<th>이미지</th>
-				<td><input type="file" name="uploadFile"/></td>
+				<td>
+					<input type="file" name="uploadFile"/><!-- 파일첨부 -->
+				</td>
 			</tr>
 		</table>
 		<input type="button" onclick="location.href='list'" value="취소"/>
@@ -99,15 +115,24 @@
 			dataType:'JSON',
 			success:function(data){
 				console.log('문제가져오기 : ',data);
+				$('#quiz_content').val(data.quiz_content);
+				$('#option1').val(data.option1);
+				$('#option2').val(data.option2);
+				$('#option3').val(data.option3);
+				$('#option4').val(data.option4);
+				$('#option5').val(data.option5);//값 없으면 숨기기
+				
+				
 			},
 			error:function(e){
 				console.log('문제발생: ',e);
 			}
 		});//ajax괄호끝
 		
+		if($('#option5').val() == null){
+			$('#option5').hide();
+		};
 	};//quiz() 괄호끝
-		
-		
 	
 	
 </script>

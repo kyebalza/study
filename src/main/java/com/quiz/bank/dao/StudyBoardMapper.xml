@@ -29,12 +29,12 @@
 	
 	<!-- 자격증 종류 가져오기 -->
 	<select id="test_name" resultType="hashmap">
-		SELECT * FROM test_category 
+		SELECT test_cate_no , test_cate FROM test_category ;
 	</select>
 	
 	<!-- 시험 시행년도,회차 가져오기 -->
 	<select id="test_year" resultType="hashmap">
-		SELECT test_year, test_count FROM test_list
+		SELECT test_year, test_count FROM test_list INNER JOIN test_category using (test_cate_no);
 	</select>
 	
 	<!-- 문제번호 가져오기 : 문제번호에  null값 있어서 오류? java.lang.NumberFormatException: For input string: "quiz_index" -->
@@ -44,8 +44,14 @@
 	
 	<!-- 문제가져오기 -->
 	<select id="quizselect" resultType="hashmap">
-		SELECT quiz_content, option1,option2,option3,option4,option5,quiz_answer FROM quiz
-			WHERE quiz_index = #{quiz_index}, test_no =#{test_no}, 
+		SELECT * FROM quiz
+		LEFT JOIN test_category USING (test_cate_no)
+			LEFT JOIN test_list USING (test_no)
+			WHERE test_cate =#{test_cate}
+				AND test_year = #{test_year}
+				AND test_count = #{test_count}
+				AND quiz_index = #{quiz_index}
+				limit 1;
 	</select>
 	
 	<!-- 글쓰기 -->
@@ -72,7 +78,7 @@
 	
 	<!-- 상세보기 -->
 	<select id="detail" resultType="StudyBoard">
-		select board_no,title,user_id,reg_date,bHit,content,board_name from study_board inner join board_category using (board_cate_no) WHERE board_no=#{param1}
+		select board_no,title,user_id,reg_date,bHit,content,board_name,quiz_no from study_board inner join board_category using (board_cate_no) WHERE board_no=#{param1}
 	</select>
 	
 	<!-- 상세보기 파일 가져오기 -->

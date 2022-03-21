@@ -209,7 +209,7 @@ public class StudyBoardService {
 
 	public HashMap<String, Object> quizselect(HashMap<String, String> params) {
 		logger.info("문제가져오기 서비스");
-		return null;//dao.quizselect(params);
+		return dao.quizselect(params);
 	}
 
 	

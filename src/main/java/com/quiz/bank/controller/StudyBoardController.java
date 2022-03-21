@@ -222,7 +222,13 @@ public class StudyBoardController {
 		return service.quizselect(params);
 	}
 	
-	
+	/*신고하기*/
+	@ResponseBody
+	@RequestMapping(value = "/studyBoard/studyReport", method = RequestMethod.POST)
+	public HashMap<String, Object> studyReport(@RequestParam HashMap<String, String> params ) {
+		logger.info("공부게시판 문제불러오기 요청 : {}",params);
+		return service.quizselect(params);
+	}
 	
 	
 	

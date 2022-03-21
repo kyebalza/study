@@ -73,6 +73,29 @@
 </body>
 <script>
 
+//신고하기
+$('.report').click(function(){
+	console.log('신고하기');
+	var report = prompt("신고 사유를 입력해주세요.","");
+	console.log(report);
+	
+	var params : {''};
+	
+	$.ajax({
+		type:'POST',
+		url:'studyReport',
+		data:params,
+		dataType:'JSON',
+		success:function(result){
+			console.log(result);
+		},
+		error:function(e){
+			console.log('서버에 문제가 발생하였습니다.',e);
+		}
+	});//ajax괄호끝
+});//신고하기 괄호끝
+
+//글 삭제
 function del(){
 	var yn = confirm("정말 이 글을 삭제하시겠습니까?");
 	
@@ -130,10 +153,7 @@ function del(){
 	});//좋아요 괄호끝
 	
 	
-	//신고하기
-	$('.report').click(function(){
-		console.log('신고하기');
-	});
+
 	
 	$('#reply').click(function reply(){
 		console.log('댓글등록');

@@ -49,7 +49,7 @@
 			<div class="quizList">
 				<a class="boardtitle" href="testDetail?test_cate_no=${list.test_cate_no}">${list.test_cate}</a>
 				<br/>
-				<input type = "button" class= "testTitle" value = "문제리스트" onclick = "location.href='testDetail?test_cate_no=${list.test_cate_no}'"/>
+				<input type = "button" class= "testTitle" value = "문제리스트" onclick = "location.href='quizBankTestDetail?test_cate_no=${list.test_cate_no}'"/>
 			</div>
 		</c:forEach>
 	</div>

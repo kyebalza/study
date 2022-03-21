@@ -7,7 +7,7 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<style>
 		table, th, td{
-			border : 1px solid black;
+
 			border-collapse: collapse;
 			padding: 5px;
 		}
@@ -54,8 +54,17 @@
 					<th>EMAIL</th>
 					<td>
 						<input type="email" name="user_email"/>
+						<input type="button" id="indetify" value="인증"/>
 					</td>
 				</tr>
+				<tr>
+					<th>
+					</th>
+					<td>
+						<input type="hidden" id="emailIdnum" value=""/>
+						<input type="hidden" id="emailIdbtn" value="확인"/>
+					</td>		
+				</tr>				
 				<tr>
 					<th>전화번호</th>
 					<td><input type="text" name="user_phone" placeholder="010-0000-0000"/></td>
@@ -70,6 +79,56 @@
 	</div>
 </body>
 <script>
+$('#indetify').click(function(){
+	console.log('중복체크시작');
+	var email = $('input[name="user_email"]').val();
+	console.log('check email : ',email);
+	
+	$.ajax({
+		type:'get',
+		url :'overlayemail',
+		data:{'email':email},
+		dataType:'json',
+		success:function(data){
+			console.log(data.certifiNum);
+						
+			
+			if(data.overLay > 0){
+				alert('이미 사용중인 아이디 입니다.');
+
+			} else {
+				alert('메일로 인증번호를 전송했습니다.');
+				$('#emailIdnum').attr('type','text');
+				$('#emailIdbtn').attr('type','button');
+				console.log('인증번호 : '+data.certifiNum);		
+			} 
+			
+		
+
+		},
+		error:function(e){//에러시 서버에서보낸 에러관련 매개변수이다.
+			console.log('에러...');
+			console.log(e);	
+		}
+	});		
+});
+
+//인증확인 버튼
+$('#emailIdbtn').click(function(){
+	$('#emailIdnum').val();
+	if($('#emailIdnum').val() == certifinum){
+		certifinum_check = true;
+		alert('이메일 인증 성공!');
+		$('#emailIdnum').attr('type','hidden');
+		$('#emailIdbtn').attr('type','hidden');
+
+	} else {
+		certifinum_check = false;
+		alert('인증번호좀 똑바로 입력해주세요');
+	}		
+});
+
+
 	//1. 아이디 중복 확인
 	var overlayChk = false;
 	

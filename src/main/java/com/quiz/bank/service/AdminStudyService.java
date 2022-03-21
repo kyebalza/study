@@ -348,6 +348,32 @@ public class AdminStudyService {
 	public HashMap<String, Object> subjectListCall(String test_cate_no, String loginId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<HashMap<String, String>> subjectList = dao.subjectList(test_cate_no);
+		ArrayList<HashMap<String, String>> subjectStaticList = dao.subjectStatistics(test_cate_no);
+		logger.info("subjectList : {}",subjectList);
+		logger.info("subjectStaticList : {}",subjectStaticList);
+		for (HashMap<String, String> subject : subjectList) {
+			for (HashMap<String, String> subjectStatic : subjectStaticList) {
+				if(subject.get("subject_cate_no") == subjectStatic.get("subject_cate_no")) {
+					logger.info("valueof 전 : {}",subjectStatic.get("correct_cnt"));
+					logger.info("valueof 후 : {}",String.valueOf(subjectStatic.get("correct_cnt")));
+				
+					subject.put("rightCnt", String.valueOf(subjectStatic.get("correct_cnt")));
+					subject.put("AllCnt", String.valueOf(subjectStatic.get("all_cnt")));
+
+				}
+			}
+		}
+		logger.info("subjectList : {}",subjectList);
+		
+		/*
+		for (HashMap<String, String> subject : subjectList) {
+			for (HashMap<String, String> subjectStatic :  subjectStaticList) {
+				if(subject.get("subject_cate_no").equals(subjectStatic.get("subject_cate_no"))) {		
+				}
+			}
+		}
+		*/
+		/*
 		for (HashMap<String, String> subjectUnitMap : subjectList) {
 			//String subject_cate_no = subjectUnitMap.get("subject_cate_no");
 			subjectUnitMap.put("loginId", loginId);
@@ -355,10 +381,30 @@ public class AdminStudyService {
 			int AllCnt = dao.subjectAllCnt(subjectUnitMap);
 			subjectUnitMap.put("rightCnt", Integer.toString(rightCnt));
 			subjectUnitMap.put("AllCnt",Integer.toString(AllCnt));
-
 		}
+		*/
 		
 		ArrayList<HashMap<String, String>> detailedSubjectList = dao.detailedSubjectList(test_cate_no);
+		ArrayList<HashMap<String, String>> detailedsubjectStaticList = dao.detailedsubjectStatistics(test_cate_no);
+		logger.info("detailedSubjectList : {}",detailedSubjectList);
+		logger.info("detailedsubjectStaticList : {}",detailedsubjectStaticList);
+		for (HashMap<String, String> detailedSubject : detailedSubjectList) {
+			for (HashMap<String, String> detailedsubjectStatic : detailedsubjectStaticList) {
+				if(detailedSubject.get("detailed_subject_cate_no") == detailedsubjectStatic.get("detailed_subject_cate_no")) {
+					logger.info("valueof 전 : {}",detailedsubjectStatic.get("correct_cnt"));
+					logger.info("valueof 후 : {}",String.valueOf(detailedsubjectStatic.get("correct_cnt")));
+				
+					detailedSubject.put("rightCnt", String.valueOf(detailedsubjectStatic.get("correct_cnt")));
+					detailedSubject.put("AllCnt", String.valueOf(detailedsubjectStatic.get("all_cnt")));
+
+				}
+			}
+		}
+		
+		logger.info("detailedSubjectList : {}",detailedSubjectList);
+		
+		
+		/*
 		for (HashMap<String, String> detailedSubjectUnitMap : detailedSubjectList) {
 			detailedSubjectUnitMap.put("loginId", loginId);
 			int rightCnt = dao.detailedSubjectRightCnt(detailedSubjectUnitMap);
@@ -366,6 +412,7 @@ public class AdminStudyService {
 			detailedSubjectUnitMap.put("rightCnt", Integer.toString(rightCnt));
 			detailedSubjectUnitMap.put("AllCnt",Integer.toString(AllCnt));			
 		}
+		*/
 		
 		map.put("subjectList", subjectList);
 		map.put("detailedSubjectList", detailedSubjectList);
@@ -398,10 +445,15 @@ public class AdminStudyService {
 		return quizList;
 	}
 
-	public HashMap<String, Object> quiz_call(String quiz_no) {
+	public HashMap<String, Object> quiz_call(String quiz_no, String loginId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();		
 		HashMap<String, String> quiz = dao.quiz_call(quiz_no);
 		map.put("quiz", quiz);
+		int success = dao.bookmark_call(loginId,quiz_no);
+		map.put("book", success);
+		
+		HashMap<String, String> qos = dao.quiz_one_statistic(quiz_no);
+		map.put("qos", qos);
 		String photoname = "noPhoto";
 		photoname = dao.quiz_photo(quiz_no);
 		if(photoname != null) {
@@ -409,6 +461,39 @@ public class AdminStudyService {
 		map.put("photo", photoname);			
 		
 		return map;
+	}
+
+	public HashMap<String, Object> quizErrorReport(HashMap<String, String> params) {
+		HashMap<String, Object> mav = new HashMap<String, Object>();
+		int msg = dao.quizErrorReport(params);
+		mav.put("msg", msg);
+		return mav;
+	}
+
+	public HashMap<String, Object> quizSolve(HashMap<String, String> params) {
+		HashMap<String, Object>map = new HashMap<String, Object>();
+		String answer = dao.quizAnswer(params);
+		boolean correct_worng = answer.equals(params.get("answer"));
+		if(correct_worng) {
+			params.put("correct_worng", "1");		
+			map.put("result", 1);
+		} else {
+			params.put("correct_worng", "0");
+			map.put("result", 0);
+		}
+		params.put("test_prac_flag", "prac");
+		logger.info("loginId : {}",params.get("loginId"));
+		if(!params.get("loginId").equals("")) {
+			int success = dao.quizSolve(params);			
+			
+		}
+		
+		
+		return map;
+	}
+
+	public int emailOverLay(String email) {
+		return dao.emailOverLay(email);
 	}
 
 

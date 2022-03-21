@@ -104,6 +104,22 @@ public interface AdminStudyDAO {
 
 	String quiz_photo(String quiz_no);
 
+	int quizErrorReport(HashMap<String, String> params);
+
+	String quizAnswer(HashMap<String, String> params);
+
+	int quizSolve(HashMap<String, String> params);
+
+	ArrayList<HashMap<String, String>> subjectStatistics(String test_cate_no);
+
+	ArrayList<HashMap<String, String>> detailedsubjectStatistics(String test_cate_no);
+
+	int bookmark_call(String loginId, String quiz_no);
+
+	HashMap<String, String> quiz_one_statistic(String quiz_no);
+
+	int emailOverLay(String email);
+
 
 
 }

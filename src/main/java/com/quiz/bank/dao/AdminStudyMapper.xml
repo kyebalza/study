@@ -244,16 +244,39 @@
 	WHERE test_cate_no = #{param1} AND dsc.del_flag = false;
 	</select>
 	
+	<select id="subjectStatistics" resultType="hashmap">
+	SELECT q.test_cate_no, q.subject_cate_no,sum(correct_wrong) AS correct_cnt,count(*) AS all_cnt FROM quiz_solve
+	LEFT JOIN quiz q USING (quiz_no) 
+	LEFT JOIN subject_category sc USING (subject_cate_no)
+	WHERE q.test_cate_no = #{param1}
+	GROUP BY q.subject_cate_no;
+	</select>
+	<select id="detailedsubjectStatistics" resultType="hashmap">
+	SELECT q.detailed_subject_cate_no,sum(correct_wrong) AS correct_cnt,count(*) AS all_cnt FROM quiz_solve
+	LEFT JOIN quiz q USING (quiz_no) 
+	LEFT JOIN detailed_subject_category dsc USING (detailed_subject_cate_no)
+	WHERE q.test_cate_no = #{param1}
+	GROUP BY q.detailed_subject_cate_no
+	</select>
+	
+	
+	
+	
+	
+	<!-- 비효율적인 통계 쿼리들 -->
 	<select id="subjectRightCnt" resultType="int" parameterType="hashmap">
 	SELECT COUNT(quiz_no) FROM quiz_solve 
-	WHERE correct_wrong = true AND subject_cate_no = #{subject_cate_no}
+	left join subject_category sc using (subject_cate_no)
+	WHERE correct_wrong = true 
+	AND sc.subject_cate_no = #{subject_cate_no}
 	AND user_id = #{loginId}
 	</select>
 	<select id="subjectAllCnt" resultType="int" parameterType="hashmap">
-	SELECT COUNT(quiz_no) FROM quiz_solve WHERE subject_cate_no = #{subject_cate_no}
+	SELECT COUNT(quiz_no) FROM quiz_solve 
+	left join subject_category sc using (subject_cate_no)
+	WHERE sc.subject_cate_no = #{subject_cate_no}
 	AND user_id = #{loginId}
 	</select>
-	
 	<select id="detailedSubjectRightCnt" resultType="int" parameterType="hashmap">
 	SELECT COUNT(quiz_no) FROM quiz_solve 
 	WHERE correct_wrong = true AND detailed_subject_cate_no = #{detailed_subject_cate_no}
@@ -263,6 +286,7 @@
 	SELECT COUNT(quiz_no) FROM quiz_solve WHERE detailed_subject_cate_no  = #{detailed_subject_cate_no }	
 	AND user_id = #{loginId}
 	</select>
+	<!--  -->
 	
 	<select id="bookmarkListCall" resultType="hashmap">
 	SELECT quiz.quiz_no,tl.test_year,tl.test_count,quiz.quiz_index FROM bookmark 
@@ -285,18 +309,46 @@
 	<!-- SELECT quiz_no FROM quiz WHERE subject_cate_no = #{param1} -->
 	</select>
 	<select id="quizOneList" resultType="int" parameterType="string">
-	SELECT quiz_no FROM quiz WHERE subject_cate_no = #{param1}
+	SELECT quiz_no FROM quiz WHERE quiz_no = #{param1} AND del_flag = false
 	</select>	
 	
 	<select id="quiz_call" resultType="hashmap">
-	SELECT * FROM quiz
+	SELECT * FROM quiz q
 	LEFT JOIN test_category USING (test_cate_no)
 	LEFT JOIN subject_category USING (subject_cate_no)
 	LEFT JOIN detailed_subject_category USING (detailed_subject_cate_no)
-	WHERE quiz_no = #{param1}
+	WHERE quiz_no = #{param1} AND q.del_flag = false
 	</select>
+	<select id="bookmark_call" resultType="int">
+	SELECT count(*) FROM bookmark b WHERE user_id = #{param1} AND bookmark_quiz_no = #{param2}
+	</select>
+	
 	<select id="quiz_photo" resultType="string">
 	SELECT new_filename FROM photo WHERE board_no = #{quiz_no} AND board_name = 'quiz'
 	</select>
+	
+	<insert id="quizErrorReport">
+	INSERT INTO quiz_report (user_id,quiz_no,report_content) VALUES (#{user_id},#{quiz_no},#{report_content})
+	</insert>
+	
+	<select id="quizAnswer" resultType="string" parameterType="hashmap">
+	SELECT quiz_answer FROM quiz WHERE quiz_no = #{quiz_no}
+	</select>
+	<insert id="quizSolve" parameterType="hashmap">
+	INSERT INTO quiz_solve (user_id,quiz_no,correct_wrong,test_prac_flag)
+	VALUES (#{loginId},#{quiz_no},#{correct_worng},#{test_prac_flag})	
+	</insert>
+	
+	
+	<select id="quiz_one_statistic" resultType="hashmap">
+	SELECT count(*) as allCnt,sum(correct_wrong) as rightCnt FROM quiz_solve WHERE quiz_no = #{param1}
+	</select>
+	
+	
+	<select id="emailOverLay" resultType="int">
+	SELECT count(*) FROM user_info WHERE user_email = #{param1}
+	</select>
+	
+	
 	
 </mapper>

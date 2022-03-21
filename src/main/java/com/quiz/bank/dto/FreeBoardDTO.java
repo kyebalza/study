@@ -17,7 +17,7 @@ public class FreeBoardDTO {
 	private String user_id;
 	private Date reg_date;
 	private int bHit;
-	private boolean del_falg;
+	private boolean del_flag;
 	private String content;
 	private String board_name;
 	private String board_cate;
@@ -34,9 +34,7 @@ public class FreeBoardDTO {
 	private String ori_filename;
 	private String new_filename;
 	
-	
-	
-	
+
 	public String getBoard_name() {
 		return board_name;
 	}
@@ -115,11 +113,11 @@ public class FreeBoardDTO {
 	public void setbHit(int bHit) {
 		this.bHit = bHit;
 	}
-	public boolean isDel_falg() {
-		return del_falg;
+	public boolean isDel_flag() {
+		return del_flag;
 	}
-	public void setDel_falg(boolean del_falg) {
-		this.del_falg = del_falg;
+	public void setDel_flag(boolean del_flag) {
+		this.del_flag = del_flag;
 	}
 	public String getContent() {
 		return content;

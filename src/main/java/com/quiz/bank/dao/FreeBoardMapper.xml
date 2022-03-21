@@ -154,9 +154,21 @@
 		INSERT INTO board_like(user_id,board_no,board_name) VALUES (#{param1}, #{param2}, #{param3})
 	</insert>
 	
+	<!-- 좋아요 수 확인 -->
 	<select id="CountLike" resultType="int">
-		SELECT count(*) FROM board_like where board_no = #{parma1} and board_name = 'free_board'
+		SELECT count(*) FROM board_like where board_no = #{param1} and board_name = 'free_board'
 	</select>
+	
+	
+	<!-- 댓글 조회 -->
+	<select id="freeboardcoment" resultType="com.quiz.bank.dto.FreeBoardDTO">
+		SELECT * FROM reply where board_no = #{param1} and board_name ='free_board' and del_flag = 0
+	</select>
+	
+	<!-- 댓글 등록 -->
+	<insert id="fbcoment" useGeneratedKeys="true" keyProperty="reply_no" keyColumn="com.quiz.bank.dto.FreeBoardDTO" parameterType="com.quiz.bank.dto.FreeBoardDTO">
+		INSERT INTO reply (board_name, board_no, user_id, reply_content) VALUES ('free_board', #{board_no}, #{user_id}, #{reply_content})
+	</insert>
 	
 	
 </mapper>

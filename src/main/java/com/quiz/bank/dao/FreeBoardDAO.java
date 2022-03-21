@@ -39,6 +39,10 @@ public interface FreeBoardDAO {
 
 	int CountLike(String board_no);
 
+	void fbcoment(FreeBoardDTO fbdto);
+
+	ArrayList<FreeBoardDTO> freeboardcoment(String board_no);
+
 	
 
 

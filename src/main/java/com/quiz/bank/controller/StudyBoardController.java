@@ -225,9 +225,11 @@ public class StudyBoardController {
 	/*신고하기*/
 	@ResponseBody
 	@RequestMapping(value = "/studyBoard/studyReport", method = RequestMethod.POST)
-	public HashMap<String, Object> studyReport(@RequestParam HashMap<String, String> params ) {
-		logger.info("공부게시판 문제불러오기 요청 : {}",params);
-		return service.quizselect(params);
+	public HashMap<String, Object> studyReport(@RequestParam HashMap<String, String> params, HttpSession session ) {
+		logger.info("공부게시판 신고하기 요청 : {}",params);
+		String user_id = (String) session.getAttribute("loginId");
+		params.put("report_user", user_id);
+		return service.studyReport(params);
 	}
 	
 	

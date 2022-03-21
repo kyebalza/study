@@ -142,7 +142,11 @@
  		SELECT COUNT(*) FROM board_like WHERE board_no = #{param1} AND board_name='study_board'
  	</select>
  
- 
+ 	<!-- 공부게시판 신고하기 -->
+ 	<insert id="studyReport" parameterType="hashmap">
+ 		INSERT INTO report_board (board_name,board_no,reported_user,report_user,report_reason)
+ 			VALUES (#{board_name},#{board_no},#{reported_user},#{report_user},#{report})
+ 	</insert>
  
  
  

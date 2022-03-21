@@ -42,7 +42,7 @@
 			<td><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
 		</tr>
 	</table>
-	<input type="hidden" value="${info.board_name}"/>
+	<input id="board_name" type="hidden" value="${info.board_name}"/>
 	<c:choose>
 		<c:when test="${like.board_no != null && like.user_id == loginId}">
 			<img class="like" src="/bank/resources/img/like.png" alt="좋아요">
@@ -52,7 +52,7 @@
 			<img class="like" src="/bank/resources/img/unlike.png" alt="빈 좋아요">
 		</c:otherwise> 
 	</c:choose>
-	<input type="hidden" value="${info.board_no}"></input>
+	<input id="board_no" type="hidden" value="${info.board_no}"></input>
 	<p>${countlike}</p>
 	<p><img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수">(${info.bHit})</p>&nbsp;&nbsp;
 	<img class="report" src="/bank/resources/img/report.png" alt="신고하기">
@@ -79,7 +79,13 @@ $('.report').click(function(){
 	var report = prompt("신고 사유를 입력해주세요.","");
 	console.log(report);
 	
-	var params : {''};
+	var board_name = $('#board_name').val();
+	var board_no = $('#board_no').val();
+	var reported_user = '${info.user_id}';
+	
+	console.log(report,'+',board_name,'+',board_no,'+',reported_user);
+	
+	var params = {'report':report, 'board_name':board_name,'board_no':board_no,'reported_user':reported_user};
 	
 	$.ajax({
 		type:'POST',

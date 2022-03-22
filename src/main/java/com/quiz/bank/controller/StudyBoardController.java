@@ -131,6 +131,9 @@ public class StudyBoardController {
 		StudyBoardDTO dto = service.detail(board_no, "detail");
 		logger.info("dto : {},{}", dto.getBoard_name(), dto.getBoard_no());
 		model.addAttribute("info", dto);
+		//문제가져오기
+		StudyBoardDTO qdto = service.studyQuiz(board_no);
+		model.addAttribute("Qinfo", qdto);
 		//사진 가져오기
 		StudyBoardDTO photo = service.photo(board_no);
 		logger.info("사진 : {}",photo);

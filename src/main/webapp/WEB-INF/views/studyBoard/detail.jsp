@@ -15,13 +15,24 @@
 		input.button{
 			text-align: center;
 		}
+		#quiz{/*문제 전체*/
+			border : 1px solid black;
+		}
+		.quiz_option{/*문제 보기*/
+			
+		}
+		textarea {
+	width: 100%;
+	height: 150px;
+	resize: none;
+}
 	</style>
 </head>
 <body>
 	<table>
 		<tr>
 			<th>제목</th>
-			<td>${info.title}</td>
+			<td colspan="3">${info.title}</td>
 		</tr>
 		<tr>
 			<th>작성자</th>
@@ -31,15 +42,40 @@
 		</tr>
 		<tr>
 			<th>문제</th>
-			<td>${info.quiz_content}</td>
+			<td colspan="3">
+				<div id="quiz">
+					<p>${Qinfo.quiz_content}</p>
+					<!-- 문제보기 -->
+					<div class="quiz_option">
+						<p class="option_num">보기1</p>
+						<input id="option1" class="option" value="${Qinfo.option1}"/>
+					</div>
+					<div class="quiz_option">
+						<p class="option_num">보기2</p>
+						<input id="option2" class="option" value="${Qinfo.option2}"/>
+					</div>
+					<div class="quiz_option">
+						<p class="option_num">보기3</p>
+						<input id="option3" class="option" value="${Qinfo.option3}"/>
+					</div>
+					<div class="quiz_option">
+						<p class="option_num">보기4</p>
+						<input id="option4" class="option" value="${Qinfo.option4}"/>
+					</div>
+					<div class="quiz_option">
+						<p class="option_num">보기5</p>
+						<input id="option5" class="option" value="${Qinfo.option5}"/>
+					</div>
+				</div>
+			</td>
 		</tr>
 		<tr>
 			<th>내용</th>
-			<td>${info.content}</td>
+			<td colspan="3" height="100px">${info.content}</td>
 		</tr>
 		<tr>
 			<th>이미지</th>
-			<td><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
+			<td colspan="3"><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
 		</tr>
 	</table>
 	<input id="board_name" type="hidden" value="${info.board_name}"/>
@@ -53,23 +89,34 @@
 		</c:otherwise> 
 	</c:choose>
 	<input id="board_no" type="hidden" value="${info.board_no}"></input>
-	<p>${countlike}</p>
+	<p class="like">${countlike}</p>
 	<p><img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수">(${info.bHit})</p>&nbsp;&nbsp;
 	<img class="report" src="/bank/resources/img/report.png" alt="신고하기">
 	<input type="button" onclick="location.href='./list'" value="목록"/>
 	<input type="button" onclick="location.href='./updateForm?board_no=${info.board_no}'" value="수정"/>
 	<input type="button" onclick="del()" value="삭제"/>
 	
-	<!-- 댓글 -->
 	<hr/>
-		<input type="text" name="reply"/>
-		<input id="reply" type="button" onclick="reply" value="등록"/>
-	<br/>
-	<!-- 
-	<c:forEach items="${reply_list}" var="reply">
-		<input>
-	</c:forEach>
-	 -->
+	<!-- 댓글 -->
+	</br>
+	<div id="">
+		<span id="loginId"> ${loginId} </span>
+		<div id="">
+			<form action="" id="" method="POST">
+				<input type="hidden" name="" value="${loginId}">
+				<%-- <input type="hidden" name="" value="${loginId}">
+				<input type="hidden" name="" value="${loginId}">
+				<input type="hidden" name="" value="${loginId}"> --%>
+				<textarea id="" name="com_cont" placeholder="댓글을 입력하세요"></textarea>
+				<input type="button" id="" value="등록" />
+			</form>
+		</div>
+		<div>
+			<%-- <c:forEach items="" var="">
+				
+			</c:forEach> --%>
+		</div>
+	</div>
 </body>
 <script>
 
@@ -93,12 +140,13 @@ $('.report').click(function(){
 		data:params,
 		dataType:'JSON',
 		success:function(result){
-			console.log(result);
+			console.log('신고등록 완료',result);
 		},
 		error:function(e){
 			console.log('서버에 문제가 발생하였습니다.',e);
 		}
 	});//ajax괄호끝
+	
 });//신고하기 괄호끝
 
 //글 삭제

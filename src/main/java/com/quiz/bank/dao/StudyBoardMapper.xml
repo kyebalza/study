@@ -76,9 +76,15 @@
 			WHERE board_no = #{param1}
 	</update>
 	
-	<!-- 상세보기 -->
+	<!-- 게시글 상세보기 -->
 	<select id="detail" resultType="StudyBoard">
 		select board_no,title,user_id,reg_date,bHit,content,board_name,quiz_no from study_board inner join board_category using (board_cate_no) WHERE board_no=#{param1}
+	</select>
+	
+	<!-- 상세보기 문제불러오기 -->
+	<select id="studyQuiz" resultType="StudyBoard">
+		SELECT quiz_no, quiz_content, option1, option2, option3, option4, option5 
+			FROM quiz inner join study_board using (quiz_no) WHERE board_no = #{param1} limit 1;
 	</select>
 	
 	<!-- 상세보기 파일 가져오기 -->

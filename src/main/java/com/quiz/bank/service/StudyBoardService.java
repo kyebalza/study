@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.quiz.bank.dao.StudyBoardDAO;
 import com.quiz.bank.dto.StudyBoardDTO;
-import com.quiz.bank.dto.UserDTO;
 
 @Service
 public class StudyBoardService {
@@ -220,6 +217,12 @@ public class StudyBoardService {
 		map.put("msg", success);
 		return map;
 	}
+
+	public StudyBoardDTO studyQuiz(String board_no) {
+		logger.info("상세보기 문제 가져오기 : {}", board_no);
+		return dao.studyQuiz(board_no);
+	}
+
 
 	
 

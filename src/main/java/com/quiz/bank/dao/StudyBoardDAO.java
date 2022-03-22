@@ -60,6 +60,8 @@ HashMap<String, Object> quizselect(HashMap<String, String> params);
 
 int studyReport(HashMap<String, String> params);
 
+StudyBoardDTO studyQuiz(String board_no);
+
 
 
 

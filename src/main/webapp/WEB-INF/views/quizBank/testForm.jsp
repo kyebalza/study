@@ -296,6 +296,7 @@ $('.bookmark').click(function(){
         
         */
         test_timer(15); // <-- test_time(분) * 60  넣으세요
+        var timeOut;
         function test_timer(test_time){
 	        window.onload = function startClock(){
 	        	printTime();
@@ -307,12 +308,17 @@ $('.bookmark').click(function(){
 		            },test_time*1000);
 	        	}
 	        
-			setTimeout(function(){
+		        timeOut = setTimeout(function(){
 		       	alert('시험이 종료되었습니다.');
 		       	$('.result').click();
 				},test_time*1000);        	
         }
         
+        //결과보기 버튼 눌렀을때 , 
+		function result(){
+			clearInterval(timeId);//시계멈추기
+			clearTimeout(timeOut);//시험이 종료되었습니다 알림창 없애기
+		}
         
 
         // 시간(int)을 시, 분, 초 문자열로 변환

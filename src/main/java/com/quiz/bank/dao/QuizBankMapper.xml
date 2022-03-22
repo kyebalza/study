@@ -65,28 +65,30 @@
 	<insert id="bookMark_Insert" >
 		INSERT INTO bookmark(user_id,bookmark_quiz_no) VALUES (#{param1}, #{param2})
 	</insert>
-	
-	<!-- 테스트1 -->
-	<!-- 테스트2 -->
-
-	<select id="test" resultType="TestList">
-		select test_cate_no from test_list
-	</select>
-	<select id="test2" resultType="TestList">
-		select test_cate_no from test_list where test_cate_no = 1
-	</select>
 
 
-
-	<!-- 6-1. 개별 문제풀이 결과테이블 -->
-	<insert id="quiz_solve" parameterType="QuizSlove">
-		INSERT INTO quiz_solve(user_id, quiz_no, correct_wrong, test_prac_flag)
-			VALUES(#{user_id}, #{quiz_no}, #{correct_wrong}, #{test_prac_flag})
-	</insert>
-	<!-- 6-2. 시험 결과 테이블 -->
+<!-- 이전 코드
+	 6-2. 시험 결과 테이블
 	<insert id="test_result" parameterType="TestResult">
 		INSERT INTO test_result(user_id, test_no, elapse_time, score)
 			VALUES(#{user_id}, #{test_no}, #{elapse_time}, #{score})
 	</insert>
+-->
 
+	<!-- 6-1. 시험 결과 테이블(test_result_no) 받아오기 -->
+	<insert id="test_result2" parameterType="TestResult" useGeneratedKeys="true" keyProperty="test_result_no" keyColumn="test_result_no">
+		INSERT INTO test_result(user_id, test_no, elapse_time, score)
+			VALUES(#{user_id}, #{test_no}, #{elapse_time}, #{score})
+	</insert>
+	
+	<!-- 6-2. 개별 문제풀이 결과테이블  --> 
+	<insert id="quiz_solve" parameterType="QuizSlove">
+		INSERT INTO quiz_solve(user_id, quiz_no, correct_wrong, test_prac_flag)
+			VALUES(#{user_id}, #{quiz_no}, #{correct_wrong}, #{test_prac_flag})
+	</insert>
+	
+	<!-- 6-3. 시험 결과테이블에서 score 업데이트 -->
+	<update id="test_result_scoreUpdate" parameterType="int">
+		UPDATE test_result SET score = #{param1} WHERE test_result_no = #{param2};
+	</update>
 </mapper>

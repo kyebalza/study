@@ -91,12 +91,36 @@ public class QuizBankController {
 	}
 	
 	////////////////////////////////////
-	//6. 체점하기(테스트 중)
+	//6. 체점하기(시험)
 	@RequestMapping(value="testResult")
 	@ResponseBody
 	public HashMap<String, Object> testResult(@RequestParam(value="params[]") ArrayList <String> params, String test_prac_flag, String loginId, String elapse_time, String test_no){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		HashMap<String, Object> success = service.testResult(params, test_prac_flag, loginId, elapse_time, test_no);
+		logger.info("{}",params);
+		logger.info("{}",test_prac_flag);
+		logger.info("{}",loginId);
+		logger.info("{}",test_no);
+		logger.info("{}",elapse_time);
+		map.put("msg", success);
+		return map;
+	}
+	
+	//7.시험보기 페이지 및 시험문제 가져오기
+	@GetMapping(value="/practiceForm")
+	public ModelAndView practiceForm(@RequestParam String test_no, HttpSession session) {
+		logger.info("시험페이지 요청 : {}",test_no);
+		String loginId = (String)session.getAttribute("loginId");
+		
+		return service.practiceForm(test_no, loginId);
+	}
+	
+	//8. 체점하기(시험)
+	@RequestMapping(value="practiceResult")
+	@ResponseBody
+	public HashMap<String, Object> practiceResult(@RequestParam(value="params[]") ArrayList <String> params, String test_prac_flag, String loginId, String elapse_time, String test_no){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, Object> success = service.practiceResult(params, test_prac_flag, loginId, elapse_time, test_no);
 		logger.info("{}",params);
 		logger.info("{}",test_prac_flag);
 		logger.info("{}",loginId);

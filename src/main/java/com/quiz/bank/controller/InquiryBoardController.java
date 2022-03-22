@@ -22,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.bank.dto.InquiryBoardDTO;
+import com.quiz.bank.dto.PhotoDTO;
+import com.quiz.bank.dto.ReplyDTO;
 import com.quiz.bank.dto.StudyBoardDTO;
 import com.quiz.bank.service.InquiryBoardService;
 
@@ -42,8 +44,7 @@ public class InquiryBoardController {
 	}
 	*/
 	
-	// 1. 문의게시판 리스트 페이지 호출
-	
+	// 1. 문의게시판 리스트 페이지 이동
 	@GetMapping(value = "/inquiryBoardList")
 	public String inquiryBoardList(Model model) { 
 		logger.info("문의게시판 리스트 이동");
@@ -118,13 +119,28 @@ public class InquiryBoardController {
 		model.addAttribute("info", dto);
 		
 		// 사진 가져오기
-		InquiryBoardDTO photo = service.photo(board_no);
+		ArrayList<PhotoDTO> photo = service.photo(board_no);
 		logger.info("사진 : {}",photo);
 		model.addAttribute("photo",photo);
 		
 		
+		
+		// 댓글
+		ArrayList<ReplyDTO> ibcom = service.inquiryboardcoment(board_no);
+		logger.info("문의 댓글 : "+board_no);
+		model.addAttribute("ibcomList", ibcom);
+		logger.info("문의 댓글 목록 요청 : "+ibcom);
+		
+		model.addAttribute("loginId", session.getAttribute("loginId"));
+		
+		model.addAttribute("admin", session.getAttribute("loginId"));
+		
 		return "inquiryBoard/inquiryBoardDetail";
+		
 	}
+	
+	
+	
 	
 	// 4. 문의게시판 수정페이지 요청
 	@GetMapping(value = "/inquiryUpdateForm")
@@ -136,6 +152,9 @@ public class InquiryBoardController {
 		
 		return service.inquiryUpdateForm(model, board_no);
 	}
+	
+	
+	
 	
 	// 4-1. 문의게시판 수정하기
 	@PostMapping(value = "/inquiryUpdate")

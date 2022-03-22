@@ -37,7 +37,7 @@ public interface InquiryBoardDAO {
 
 	HashMap<String, String> inquiryBoarddetail(String board_no); //
 
-	InquiryBoardDTO photo(String board_no);
+	ArrayList<PhotoDTO> photo(String board_no);
 
 	void ibcoment(ReplyDTO dto); // 댓글 등록
 

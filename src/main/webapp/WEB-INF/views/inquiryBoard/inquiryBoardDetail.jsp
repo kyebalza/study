@@ -7,31 +7,32 @@
  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
  <style>
  
- table, th, td{
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding : 5px 10px;	
-}
+	 table, th, td{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding : 5px 10px;	
+	}
+	
+	th {
+		background-color: yellowgreen;
+	}
+	
+	td {
+		text-align: center;
+	}
+	
+	textarea {
+		width: 100%;
+		height: 150px;
+		resize: none;
+	}
+	
+	.none2{
+		border-left:1px solid #ffffff;
+		border-right:1px solid #ffffff;
+		text-alian: center;
+	}
 
-th {
-	background-color: yellowgreen;
-}
-
-td {
-	text-align: center;
-}
-
-textarea {
-	width: 100%;
-	height: 150px;
-	resize: none;
-}
-
-.none2{
-	border-left:1px solid #ffffff;
-	border-right:1px solid #ffffff;
-	text-alian: center;
-}
 
  
  </style>
@@ -56,22 +57,35 @@ textarea {
 			<th style="color:white;" rowspan="2">내용</th>
 			<td colspan="4">${info.content}</td>
 		</tr>
+		
+		<c:if test="${photo.size()>0}">
 		<tr>
-			<td colspan="4"><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
+			<td colspan="4">
+			<c:forEach items="${photo}" var="photo">
+			<img src="/photo/${photo.new_filename}" width="400px" height="400px"/>
+			</c:forEach>
+			</td>
 		</tr>
+		</c:if>
+		
 	</table>
 	
 	<img class="bHit" src="/bank/resources/img/bHit.png"> ${info.bHit}
-	
+	<br/>
 	<br/>
 	<input type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
 	<input type="button" onclick="del()" value="삭제"/>			
 	<input type="button" onclick="location.href='./inquiryBoardList?currpage=1'" value="목록"/>
 	
 	
+	
 	<br/><br/>
 	
+	  
+	<%@ include file="ibComent.jsp" %>
 	
+	
+	<!--  
 	<table>
 		<thead>
 			<tr>
@@ -87,6 +101,7 @@ textarea {
 	</tbody>
 	
 	</table>
+	-->
 	
 	
 	

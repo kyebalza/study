@@ -24,6 +24,7 @@ import com.quiz.bank.dao.InquiryBoardDAO;
 import com.quiz.bank.dao.TodoListDAO;
 import com.quiz.bank.dao.UserDAO;
 import com.quiz.bank.dto.InquiryBoardDTO;
+import com.quiz.bank.dto.PhotoDTO;
 import com.quiz.bank.dto.ReplyDTO;
 
 @Service
@@ -174,7 +175,7 @@ public class InquiryBoardService {
 	}
 	
 	
-	public InquiryBoardDTO photo(String board_no) {
+	public ArrayList<PhotoDTO> photo(String board_no) {
 		return dao.photo(board_no);
 	}
 
@@ -187,7 +188,7 @@ public class InquiryBoardService {
 	public String inquiryUpdateForm(Model model, String board_no) {
 		
 		InquiryBoardDTO dto = dao.inquirydetail(board_no);
-		InquiryBoardDTO photo = dao.photo(board_no);
+		ArrayList<PhotoDTO> photo = dao.photo(board_no);
 		
 		logger.info("title : "+dto.getTitle());
 		logger.info("photo : {}",photo);
@@ -247,7 +248,6 @@ public class InquiryBoardService {
 	// 문의게시판 댓글 불러오기
 	public ArrayList<ReplyDTO> inquiryboardcoment(String board_no){
 		ArrayList<ReplyDTO> coment = dao.inquiryboardcoment(board_no);
-		
 		return coment;
 		
 	}

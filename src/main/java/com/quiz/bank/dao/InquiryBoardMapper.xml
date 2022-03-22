@@ -91,15 +91,15 @@
 	</delete>
 	
 	
-	<!-- 문의게시판 댓글 보여주기 -->
+	<!-- 문의게시판 댓글 조회 -->
 	<select id="inquiryboardcoment" resultType="com.quiz.bank.dto.ReplyDTO">
 		SELECT * FROM reply where board_no = #{param1} and board_name ='inquiry_board' and del_flag = 0
 	</select>
 
-	<!-- 문의게시판 댓글 작성하기 -->
+	<!-- 문의게시판 댓글 작성 -->
 	<insert id="ibcoment" useGeneratedKeys="true" keyProperty="reply_no" keyColumn="com.quiz.bank.dto.ReplyDTO" parameterType="com.quiz.bank.dto.ReplyDTO">
 	INSERT INTO reply (board_name, board_no, user_id, reply_content)
-		VALUES ('inquiry_board', #{board_name},#{board_no},#{user_id},#{reply_content})
+		VALUES ('inquiry_board',#{board_no},#{user_id},#{reply_content})
 	</insert>
 	
 	

@@ -24,6 +24,7 @@ import com.quiz.bank.dao.InquiryBoardDAO;
 import com.quiz.bank.dao.TodoListDAO;
 import com.quiz.bank.dao.UserDAO;
 import com.quiz.bank.dto.InquiryBoardDTO;
+import com.quiz.bank.dto.ReplyDTO;
 
 @Service
 public class InquiryBoardService {
@@ -173,6 +174,15 @@ public class InquiryBoardService {
 	}
 	
 	
+	public InquiryBoardDTO photo(String board_no) {
+		return dao.photo(board_no);
+	}
+
+
+
+	
+	
+
 	// 문의게시판 수정페이지 요청
 	public String inquiryUpdateForm(Model model, String board_no) {
 		
@@ -185,7 +195,7 @@ public class InquiryBoardService {
 		model.addAttribute("dto", dto);
 		model.addAttribute("photo", photo);
 		
-		return "inquiryUpdateForm";
+		return "inquiryBoard/inquiryUpdateForm";
 	}
 
 
@@ -193,10 +203,10 @@ public class InquiryBoardService {
 	public String inquiryUpdate(HashMap<String, String> params, MultipartFile uploadFile) {
 		logger.info("문의게시판 수정 요청 : {}",params);
 		int board_no = Integer.parseInt(params.get("board_no"));
-		String page = "inquiryBoardDetail?board_no="+board_no;
+		String page = "redirect:/inquiryBoardDetail?board_no="+board_no;
 		
 		if (dao.inquiryUpdate(params)>0) {
-			page = "inquiryBoardDetail?board_no=\"+board_no="+board_no;
+			page = "redirect:/inquiryBoardDetail?board_no="+board_no;
 			saveFile(board_no, uploadFile); // 파일저장 처리
 			
 		}
@@ -217,17 +227,34 @@ public class InquiryBoardService {
 
 
 
-
-	public ArrayList<HashMap<String, String>> reply_call(String board_no) {
-
-		return null;
-	}
-
-
-	public void reply_write(HashMap<String, String> reply) {
-		// TODO Auto-generated method stub
+	// 댓글 등록 기능
+	public void ibcoment(HttpSession session, HashMap<String, String> params) {
+		
+		ReplyDTO dto = new ReplyDTO();
+		String user_id = (String) session.getAttribute("loginId");
+		
+		dto.setUser_id(user_id);
+		dto.setBoard_no(Integer.parseInt(params.get("board_no")));
+		dto.setReply_content(params.get("reply_content"));
+		
+		// 댓글 등록
+		dao.ibcoment(dto);
+		logger.info("문의게시판 댓글 등록 서비스 확인");
 		
 	}
+	
+	
+	// 문의게시판 댓글 불러오기
+	public ArrayList<ReplyDTO> inquiryboardcoment(String board_no){
+		ArrayList<ReplyDTO> coment = dao.inquiryboardcoment(board_no);
+		
+		return coment;
+		
+	}
+
+
+
+
 
 
 

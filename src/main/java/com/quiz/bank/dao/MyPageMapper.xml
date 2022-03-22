@@ -7,4 +7,16 @@
 <mapper namespace="com.quiz.bank.dao.MyPageDAO">
 
 
+	<select id="reply_call" resultType="hashmap">
+		
+	</select>
+	
+	
+	<select id="reply_write" parameterType="hashmap">
+		INSERT INTO reply (board_name, board_no, user_id, reply_content, )
+		VALUES (#{board_name},#{board_no},#{user_id},#{reply_content})
+	</select>
+
+
+
 </mapper>

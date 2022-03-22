@@ -2,61 +2,81 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="resources/css/common.css">
-	<style>
-		table{
-			border: 2px solid green;
-		}
-		tr,td,th{
-			border: 1px solid green;
-		}
-		input.button{
-			text-align: center;
-		}
-	</style>
+ <meta charset="UTF-8">
+ <title>Insert title here</title>
+ <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+ <style>
+ 
+ 	iframe{
+		width: 100%;
+		height: 210px;
+		border-style: none;
+	}
+	textarea {
+	    width: 1255px;
+	    height: 450px;
+	    resize: none;
+	}
+	table{
+	   	margin-left: auto;
+	   	margin-right: auto;
+    }
+
+ 	.category{
+ 		width:150px;
+ 		height:50px;
+ 	}
+ 	.title{
+ 		width: 1099px;
+ 		height:50px;
+ 	}  
+ 
+ 
+ </style>
 </head>
 <body>
-	<form action="inquiryUpdate" method="post"  enctype="multipart/form-data">
-		<table>
+ 
+	<form action="inquiryUpdate" method="post" enctype="multipart/form-data">
+		<table> 
 			<tr>
-				<th>제목</th>
 				<td>
-	            	<input type="hidden" name="board_no" value="${dto.board_no}"/>
-	            	<input type="text" name="title" value="${dto.title }"/>
-			   </td>
+					<select onclick="boardcate" name="board_cate_no">
+						<c:forEach items="${inquiry_cate}" var="inquiry_cate"> 
+		               		<option value="${inquiry_cate.board_cate_no}">${inquiry_cate.board_cate}</option>
+		               	</c:forEach>
+            		</select>
+            		<input type="hidden" name="board_no" value="${dto.board_no}"/>
+            		<input class="title" type="text" placeholder="제목을 입력하세요" name="title" value="${dto.title}"/>
+				</td>
 			</tr>
 			<tr>
-				<th>작성자</th>
-				<td>
-	            	<input type="text" name="user_id" value="${dto.user_id }"/>
-			   </td>
+				<td><textarea placeholder="내용을 입력하세요 " name="content">${dto.content}</textarea></td>
 			</tr>
+
 			<tr>
-			   <th>작성일자</th>
-			   <td>
-	            	<input type="text" name="user_id" value="${dto.reg_date}"/>
-			   </td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td><input name="content" value="${dto.content}"/></td>
-			</tr>
-			<tr>
-				<th>첨부파일</th>
-				<td><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
+				<td><input type="file" name="uploadFile"/></td>
+				<!-- 현재 업로드된 파일 삭제 -->
+				<c:forEach items="${uploadFile}">
+					<img src="/photo/${photo.new_filename}"/>
+				</c:forEach>
 			</tr>
 		</table>
-		<br/>
-		<input type="file" name="uploadFile"/>
-		<br/>
-		<input type="button" onclick="location.href='list'" value="취소"/>
-		<input type="submit" value="등록"/>
+		
+		<input type="button" onclick="location.href='inquiryBoardDetail?board_no=${dto.board_no}'" value="취소"/>
+		<input type="submit" value="저장"/>
 	</form>
+  	
 </body>
 <script>
-	
+	function photodel() {
+		var $delphoto = $('.delphoto');
+		
+		for (var i = 0; i <$delphoto.length; i++) {
+			console.log($delphoto[i].id);
+		}
+		
+		
+	}
+
 </script>
 </html>

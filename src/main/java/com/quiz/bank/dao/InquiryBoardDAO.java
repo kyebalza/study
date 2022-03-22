@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.bank.dto.InquiryBoardDTO;
+import com.quiz.bank.dto.PhotoDTO;
+import com.quiz.bank.dto.ReplyDTO;
 
 public interface InquiryBoardDAO {
 
@@ -36,6 +38,10 @@ public interface InquiryBoardDAO {
 	HashMap<String, String> inquiryBoarddetail(String board_no); //
 
 	InquiryBoardDTO photo(String board_no);
+
+	void ibcoment(ReplyDTO dto); // 댓글 등록
+
+	ArrayList<ReplyDTO> inquiryboardcoment(String board_no); // 댓글 불러오기
 	
 
 	

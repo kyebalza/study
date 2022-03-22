@@ -145,7 +145,16 @@ public class StudyBoardController {
 		//좋아요 수
 		int countlike = service.countlike(board_no);
 		model.addAttribute("countlike", countlike);
+		
+		//댓글
+		ArrayList<StudyBoardDTO> sbcom = service.studycoment(board_no);
+		logger.info("댓글 : "+board_no);
+		model.addAttribute("sbcomList",sbcom);
+		logger.info("댓글목록 요청 : "+sbcom);
+		
+		
 		return "studyBoard/detail";
+		
 	}
 	
 	/*공부 게시글 수정 페이지*/
@@ -235,7 +244,25 @@ public class StudyBoardController {
 		return service.studyReport(params);
 	}
 	
-	
+	//댓글 작성
+		@RequestMapping(value="/studyBoard/sbcoment", method = RequestMethod.POST)
+		public String sbcoment(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
+			logger.info("댓글 등록 요청" + session +" / "+ params);
+			service.sbcoment(session, params);
+			String user_id = params.get("user_id");
+			
+			return "redirect:/studyBoard/detail?board_no="+params.get("board_no");
+					
+		}
+		
+		/*댓글삭제*/
+		@RequestMapping(value = "/studyBoard/studycomdelete", method = RequestMethod.GET)
+		public String studycomdelete(Model model, @RequestParam String reply_no) {
+			logger.info("댓글삭제 요청 : {}", reply_no);
+			//service.delete(reply_no);
+			
+			return "redirect:/studyBoard/detail/";
+		}
 	
 	
 	

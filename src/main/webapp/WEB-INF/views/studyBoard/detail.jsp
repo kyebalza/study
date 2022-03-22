@@ -8,9 +8,12 @@
 	<style>
 		table{
 			border: 2px solid green;
+			width: 70%;
 		}
 		tr,td,th{
 			border: 1px solid green;
+			padding: 10px;
+			margin: 5px;
 		}
 		input.button{
 			text-align: center;
@@ -22,10 +25,24 @@
 			
 		}
 		textarea {
-	width: 100%;
-	height: 150px;
-	resize: none;
-}
+			width: 70%;
+			height: 150px;
+			resize: none;
+		}
+		a{
+			float:right;
+		}
+		.sbcom_reply_create{
+			float:right;
+		}
+		img.like,img.bHit,img.report{
+			width:31;
+			height:31;
+		}
+		.like,.bHit,.report{
+		
+		}
+	
 	</style>
 </head>
 <body>
@@ -47,24 +64,19 @@
 					<p>${Qinfo.quiz_content}</p>
 					<!-- 문제보기 -->
 					<div class="quiz_option">
-						<p class="option_num">보기1</p>
-						<input id="option1" class="option" value="${Qinfo.option1}"/>
+						<p class="option_num">보기1 : ${Qinfo.option1}</p>
 					</div>
 					<div class="quiz_option">
-						<p class="option_num">보기2</p>
-						<input id="option2" class="option" value="${Qinfo.option2}"/>
+						<p class="option_num">보기2 : ${Qinfo.option2}</p>
 					</div>
 					<div class="quiz_option">
-						<p class="option_num">보기3</p>
-						<input id="option3" class="option" value="${Qinfo.option3}"/>
+						<p class="option_num">보기3 : ${Qinfo.option3}</p>
 					</div>
 					<div class="quiz_option">
-						<p class="option_num">보기4</p>
-						<input id="option4" class="option" value="${Qinfo.option4}"/>
+						<p class="option_num">보기4 : ${Qinfo.option4}</p>
 					</div>
 					<div class="quiz_option">
-						<p class="option_num">보기5</p>
-						<input id="option5" class="option" value="${Qinfo.option5}"/>
+						<p class="option_num">보기5 : ${Qinfo.option5}</p>
 					</div>
 				</div>
 			</td>
@@ -78,75 +90,64 @@
 			<td colspan="3"><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
 		</tr>
 	</table>
-	<input id="board_name" type="hidden" value="${info.board_name}"/>
-	<c:choose>
-		<c:when test="${like.board_no != null && like.user_id == loginId}">
-			<img class="like" src="/bank/resources/img/like.png" alt="좋아요">
-		</c:when>
-		
-		<c:otherwise> 
-			<img class="like" src="/bank/resources/img/unlike.png" alt="빈 좋아요">
-		</c:otherwise> 
-	</c:choose>
-	<input id="board_no" type="hidden" value="${info.board_no}"></input>
-	<p class="like">${countlike}</p>
-	<p><img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수">(${info.bHit})</p>&nbsp;&nbsp;
+	<div class="like">
+		<input id="board_name" type="hidden" value="${info.board_name}"/>
+		<c:choose>
+			<c:when test="${like.board_no != null && like.user_id == loginId}">
+				<img class="like" src="/bank/resources/img/like.png" alt="좋아요">
+			</c:when>
+			
+			<c:otherwise> 
+				<img class="like" src="/bank/resources/img/unlike.png" alt="빈 좋아요">
+			</c:otherwise> 
+		</c:choose>
+		<input id="board_no" type="hidden" value="${info.board_no}"></input>
+		<p class="like">${countlike}</p>
+	</div>
+	<p class="bHit"><img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수">(${info.bHit})</p>&nbsp;&nbsp;
 	<img class="report" src="/bank/resources/img/report.png" alt="신고하기">
 	<input type="button" onclick="location.href='./list'" value="목록"/>
 	<input type="button" onclick="location.href='./updateForm?board_no=${info.board_no}'" value="수정"/>
 	<input type="button" onclick="del()" value="삭제"/>
 	
 	<hr/>
-	<!-- 댓글 -->
-	</br>
-	<div id="">
-		<span id="loginId"> ${loginId} </span>
-		<div id="">
-			<form action="" id="" method="POST">
-				<input type="hidden" name="" value="${loginId}">
-				<%-- <input type="hidden" name="" value="${loginId}">
-				<input type="hidden" name="" value="${loginId}">
-				<input type="hidden" name="" value="${loginId}"> --%>
-				<textarea id="" name="com_cont" placeholder="댓글을 입력하세요"></textarea>
-				<input type="button" id="" value="등록" />
-			</form>
-		</div>
-		<div>
-			<%-- <c:forEach items="" var="">
-				
-			</c:forEach> --%>
-		</div>
-	</div>
+	<%@ include file="sbComent.jsp" %>
+	<!-- <%@ include file="../righter.jsp" %> -->
 </body>
 <script>
 
 //신고하기
 $('.report').click(function(){
-	console.log('신고하기');
-	var report = prompt("신고 사유를 입력해주세요.","");
-	console.log(report);
-	
-	var board_name = $('#board_name').val();
-	var board_no = $('#board_no').val();
-	var reported_user = '${info.user_id}';
-	
-	console.log(report,'+',board_name,'+',board_no,'+',reported_user);
-	
-	var params = {'report':report, 'board_name':board_name,'board_no':board_no,'reported_user':reported_user};
-	
-	$.ajax({
-		type:'POST',
-		url:'studyReport',
-		data:params,
-		dataType:'JSON',
-		success:function(result){
-			console.log('신고등록 완료',result);
-		},
-		error:function(e){
-			console.log('서버에 문제가 발생하였습니다.',e);
-		}
-	});//ajax괄호끝
-	
+	//console.log('신고하기');
+	if('${loginId}' == null){
+		alert("로그인이 필요한 서비스 입니다.");
+		location.href='/loginPage';
+	}else{
+		
+		var report = prompt("신고 사유를 입력해주세요.","");
+		console.log(report);
+		
+		var board_name = $('#board_name').val();
+		var board_no = $('#board_no').val();
+		var reported_user = '${info.user_id}';
+		
+		console.log(report,'+',board_name,'+',board_no,'+',reported_user);
+		
+		var params = {'report':report, 'board_name':board_name,'board_no':board_no,'reported_user':reported_user};
+		
+		$.ajax({
+			type:'POST',
+			url:'studyReport',
+			data:params,
+			dataType:'JSON',
+			success:function(result){
+				console.log('신고등록 완료',result);
+			},
+			error:function(e){
+				console.log('서버에 문제가 발생하였습니다.',e);
+			}
+		});//ajax괄호끝
+	}
 });//신고하기 괄호끝
 
 //글 삭제

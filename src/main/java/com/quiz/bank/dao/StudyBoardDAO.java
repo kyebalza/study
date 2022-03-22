@@ -62,6 +62,10 @@ int studyReport(HashMap<String, String> params);
 
 StudyBoardDTO studyQuiz(String board_no);
 
+void sbcoment(StudyBoardDTO sbdto);
+
+ArrayList<StudyBoardDTO> studycoment(String board_no);
+
 
 
 

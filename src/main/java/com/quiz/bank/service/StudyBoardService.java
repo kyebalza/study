@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -221,6 +223,29 @@ public class StudyBoardService {
 	public StudyBoardDTO studyQuiz(String board_no) {
 		logger.info("상세보기 문제 가져오기 : {}", board_no);
 		return dao.studyQuiz(board_no);
+	}
+
+	//댓글등록 기능
+	public void sbcoment(HttpSession session, HashMap<String, String> params) {
+		
+		StudyBoardDTO sbdto = new StudyBoardDTO();
+		String user_id = (String) session.getAttribute("loginId");
+		
+		sbdto.setUser_id(user_id);
+		sbdto.setBoard_no(Integer.parseInt(params.get("board_no")));
+		sbdto.setReply_content(params.get("reply_content"));
+		
+		//댓글등록
+		dao.sbcoment(sbdto);
+		logger.info("댓글등록 서비스 확인");
+		
+	}
+	
+	//댓글불러오기
+	public ArrayList<StudyBoardDTO> studycoment(String board_no) {
+		logger.info("댓글 불러오기 서비스");
+		ArrayList<StudyBoardDTO> coment = dao.studycoment(board_no);
+		return coment;
 	}
 
 

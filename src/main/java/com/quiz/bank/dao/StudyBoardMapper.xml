@@ -78,7 +78,8 @@
 	
 	<!-- 게시글 상세보기 -->
 	<select id="detail" resultType="StudyBoard">
-		select board_no,title,user_id,reg_date,bHit,content,board_name,quiz_no from study_board inner join board_category using (board_cate_no) WHERE board_no=#{param1}
+		select board_no,title,user_id,reg_date,bHit,content,board_name,quiz_no from study_board inner join board_category using (board_cate_no) 
+			WHERE board_no=#{param1} AND board_name = 'study_board'
 	</select>
 	
 	<!-- 상세보기 문제불러오기 -->
@@ -153,8 +154,21 @@
  		INSERT INTO report_board (board_name,board_no,reported_user,report_user,report_reason)
  			VALUES (#{board_name},#{board_no},#{reported_user},#{report_user},#{report})
  	</insert>
- 
- 
+ 	
+ 	<!-- 댓글조회 -->
+ 	<select id="studycoment" resultType="StudyBoard">
+ 		SELECT * FROM reply WHERE board_no = #{board_no} and board_name ='study_board' and del_flag = 0
+ 	</select>
+ 	
+ 	<!-- 댓글등록 -->
+ 	<insert id="sbcoment" 
+ 	useGeneratedKeys="true" 
+ 	keyProperty="reply_no" 
+ 	keyColumn="StudyBoard"
+ 	parameterType="StudyBoard">
+ 		INSERT INTO reply (board_name, board_no, user_id, reply_content)
+ 			VALUES('study_board', #{board_no}, #{user_id}, #{reply_content})
+ 	</insert>
  
  
  

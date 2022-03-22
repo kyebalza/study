@@ -5,6 +5,9 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<style>
 		#r_controller{/*라이터 접었다폈다 버튼*/
 			
@@ -22,13 +25,17 @@
 			margin:60px 0px 0px 0px;
 		}
 		a:link{/*클릭전 링크가 걸려 있는 상태*/
-                color: white;/*글자색상*/
-                text-decoration: none;/*링크의 밑줄 등...*/
-            }
+             color: white;/*글자색상*/
+             text-decoration: none;/*링크의 밑줄 등...*/
+         }
         a:visited{/*클릭하여 이미 링크를 방문한 상태*/
-                color:white;
-                text-decoration: none;
-            }
+             color:white;
+             text-decoration: none;
+         }
+         div{
+         	float:block;
+         }
+            
 	</style>
 </head>
 <body>
@@ -42,9 +49,16 @@
 			<a href="#" id="mypage">마이페이지</a><br/><br/>
 			<a href="#" id="alarm">내 알림</a>
 		</div>
+		<div id="todoList">
+			<input type="text" id="datepicker"/>
+			<input type="text" id="newTodo"/>
+			<input type="button" onclick="newTodo()"/>
+		</div>
 	</div>
 </body>
 <script>
-
+	function newTodo(){
+		console.log('투두리스트 등록');
+	};
 </script>
 </html>

@@ -168,9 +168,9 @@ public class FreeBoardService {
 	}
 
 	//자유 게시글 좋아요 여부 확인
-	public String likecheck(String loginId, String board_no, String board_name) {
+	public int likecheck(String user_id, String board_no) {
 		logger.info("좋아요 유무 확인 서비스");
-		String likecheck = fbdao.likecheck(loginId,board_no,board_name);
+		int likecheck = fbdao.likecheck(user_id,board_no);
 		return likecheck;
 	}
 
@@ -193,6 +193,8 @@ public class FreeBoardService {
 		logger.info("좋아요 수 카운트 서비스");
 		return fbdao.CountLike(board_no);
 	}
+	
+	
 
 	//댓글 등록 기능
 	public void fbcoment(HttpSession session, HashMap<String, String> params) {
@@ -216,5 +218,26 @@ public class FreeBoardService {
 		ArrayList<FreeBoardDTO> coment = fbdao.freeboardcoment(board_no);
 		return coment;
 	}
+
+	//댓글 삭제
+	public void fbcomdel(String reply_no) {
+		logger.info("댓글 삭제 서비스");
+		fbdao.fbcomdel(reply_no);
+		
+	}
+
+	//게시글 신고
+	public String freeBaordSingo(HashMap<String, String> params) {
+		logger.info("게시글 신고 서비스 : "+params);
+		fbdao.freeBoardSingo(params);
+		
+		String board_no = params.get("board_no");
+		
+		return "redirect:/freeBoardDetail?board_no="+board_no;
+	}
+
+
+
+
 
 }

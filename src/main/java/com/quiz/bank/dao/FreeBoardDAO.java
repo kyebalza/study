@@ -31,7 +31,7 @@ public interface FreeBoardDAO {
 
 	int freeUpdate(HashMap<String, String> params);
 
-	String likecheck(String loginId, String board_no, String board_name);
+	int likecheck(String user_id, String board_no);
 
 	int fbDownlike(String loginId, String board_no, String board_name);
 
@@ -42,6 +42,13 @@ public interface FreeBoardDAO {
 	void fbcoment(FreeBoardDTO fbdto);
 
 	ArrayList<FreeBoardDTO> freeboardcoment(String board_no);
+
+	void fbcomdel(String reply_no);
+
+	void freeBoardSingo(HashMap<String, String> params);
+
+
+
 
 	
 

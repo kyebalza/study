@@ -84,6 +84,9 @@ public class FreeBoardController {
 	public String freeBoardDetail(Model model, @RequestParam String board_no, HttpSession session) {
 		logger.info("자유게시판 상세보기 요청 : {}", board_no);
 
+		String user_id = (String) session.getAttribute("loginId");
+		
+		
 		//내용
 		FreeBoardDTO fbdto = fbservice.freeBoardDetail(board_no);
 		logger.info("dto : {}", fbdto.getBoard_no());
@@ -98,6 +101,11 @@ public class FreeBoardController {
 		int CountLike = fbservice.CountLike(board_no);
 		logger.info("좋아요 갯수 : "+CountLike);
 		model.addAttribute("like", CountLike);
+		
+		//좋아요 조회
+		int like2 = fbservice.likecheck(user_id,board_no);
+		logger.info("좋아요 여부확인 : {}", like2);
+		model.addAttribute("likecheck", like2);
 		
 		//댓글
 		ArrayList<FreeBoardDTO> fbcom = fbservice.freeboardcoment(board_no);
@@ -183,12 +191,12 @@ public class FreeBoardController {
 		logger.info("로그인아이디/게시글번호 : {},{}",loginId,board_no);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
+		String user_id = loginId;
 		/*현재 id 좋아요 여부 확인*/
-		String like2 = fbservice.likecheck(loginId,board_no,board_name);
+		int like2 = fbservice.likecheck(user_id,board_no);
 		logger.info("좋아요 여부확인 : {}",like2);
 		
-		if(like2 != null) {//좋아요 취소
+		if(like2 != 0) {//좋아요 취소
 			int row2 = fbservice.fbDownlike(loginId,board_no,board_name);
 			map.put("row2", row2);
 		}else {
@@ -219,7 +227,27 @@ public class FreeBoardController {
 				
 	}
 	
-
+	//댓글 삭제
+	@RequestMapping(value="fbcomdel", method = RequestMethod.GET)
+	public String fbcomdel(Model model, @RequestParam String reply_no, @RequestParam String board_no, @RequestParam String user_id ) {
+		logger.info("댓글 삭제 요청 : "+reply_no);
+		fbservice.fbcomdel(reply_no);
+		
+		return "redirect:/freeBoardDetail?board_no="+board_no;
+				
+	}
+	
+	//게시글 신고
+	@RequestMapping(value="freeBoardSingo", method = RequestMethod.POST)
+	public String freeBoardSingo(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
+		
+		params.put("user_id", (String) session.getAttribute("loginId"));
+		logger.info("게시글 신고 요청 : "+params);
+		
+		return fbservice.freeBaordSingo(params);
+				
+	}
+	
 	
 	
 }

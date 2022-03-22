@@ -7,11 +7,9 @@ public class ReplyDTO {
 	private int board_no;
 	private String user_id;
 	private int ori_reply;
-	private Integer del_flag;
+	private int del_flag;
 	private String reply_content;
-	private Integer answer_select;
-	
-	
+	private int answer_select;
 	public int getReply_no() {
 		return reply_no;
 	}
@@ -42,10 +40,10 @@ public class ReplyDTO {
 	public void setOri_reply(int ori_reply) {
 		this.ori_reply = ori_reply;
 	}
-	public Integer getDel_flag() {
+	public int getDel_flag() {
 		return del_flag;
 	}
-	public void setDel_flag(Integer del_flag) {
+	public void setDel_flag(int del_flag) {
 		this.del_flag = del_flag;
 	}
 	public String getReply_content() {
@@ -54,12 +52,13 @@ public class ReplyDTO {
 	public void setReply_content(String reply_content) {
 		this.reply_content = reply_content;
 	}
-	public Integer getAnswer_select() {
+	public int getAnswer_select() {
 		return answer_select;
 	}
-	public void setAnswer_select(Integer answer_select) {
+	public void setAnswer_select(int answer_select) {
 		this.answer_select = answer_select;
-	} 
+	}
+	
 	
 	
 	

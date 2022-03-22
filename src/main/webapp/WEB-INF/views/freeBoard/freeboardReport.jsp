@@ -11,31 +11,34 @@
 	<div id="freeSingoPopup">
 			<form action="freeBoardSingo" method="POST" id="freesingoForm">
 				<table>
-					<tr>
-						<th id="SingoPopupHead">[신고하기]</th><td id="closebtn"><input type="button" value="X" onclick="freesingoPop()"/></td>
+					<tr >
+						<td id="SingoPopupHead">[신고하기]</td>
+						<td id="closebtn"> <input type="button" value="X" onclick="fbsingo()"/></td>
 					</tr>
 					<tr>
-						<td id="SingoUser">
+						<td id="SingoUser"  colspan="2">
 							작성자 : ${loginId}
-							<input type="hidden" value="${loginId}" name="dec_targetId"/>
-							<input type="hidden" value="${info.board_no }" name="dec_targetNum"/>
+							<input type="hidden" value="${loginId}" name="report_user"/>
+							<input type="hidden" value="${info.user_id }" name="reported_user"/>
+							<input type="hidden" value="${info.board_cate_no }" name="board_cate_no"/>
+							<input type="hidden" value="${info.board_no }" name="board_no"/>
+							<input type="hidden" value="${info.board_name }" name = "board_name"/>
 						</td>
 					</tr>
 					<tr>
-						<td id="SingoCont">내용 : ${info.content}</td>
+						<td id="SingoCont"  colspan="2">내용 : ${info.title}</td>
 					</tr>
 					<tr>
-						<td id="SingoSelect"> 신고항목
-							<select name ="user_state">
-								<option value="일단" >일단</option>
-								<option value="테스트" >테스트</option>
-								<option value="해볼게요" >해볼게요</option>
-								<option value="그렇습니다." >그렇습니다.</option>
+						<td id="SingoSelect"  colspan="2"> 신고항목 </br>
+								<input type='radio' name='report_reason' value='광고'/>광고 </br>
+								<input type='radio' name='report_reason' value='선정성'/>선정성 </br>
+								<input type='radio' name='report_reason' value='욕설'/>욕설 </br>
+								<input type='radio' name='report_reason' value='부적절한 내용'/>부적절한 내용 </br>
 							</select>
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td  colspan="2">
 							<input type="button" value="보내기" id="singoCom"/>
 						</td>
 					</tr>
@@ -46,7 +49,7 @@
 </body>
 <script>
 
-
+		$('#freeSingoPopup').hide();
 		
 		
 		$('#singoCom').click(function() {

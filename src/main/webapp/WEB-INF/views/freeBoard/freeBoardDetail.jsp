@@ -23,7 +23,11 @@ textarea {
  </style>
 </head>
 <body>
-
+		
+		
+	<%@ include file="freeboardReport.jsp" %>
+		
+		
 	<form id = "fbd" name="fbd">
 		<table>
 			<tr>
@@ -60,7 +64,7 @@ textarea {
 	</form>
 		<input type="hidden" value="${info.board_name}"/>
 		<c:choose>
-			<c:when test="${info.board_no != null && info.user_id == loginId}">
+			<c:when test="${likecheck == 1}">
 				<img class="like" src="/bank/resources/img/like.png" alt="좋아요"> ${like}
 			</c:when>
 			
@@ -70,7 +74,7 @@ textarea {
 		</c:choose>
 	<input type="hidden" value="${info.board_no}"/>
 	<p><img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수">(${info.bHit})</p>
-	<img class="boardreport" src="/bank/resources/img/report.png" alt="신고하기">
+	<img class="boardreport" src="/bank/resources/img/report.png" onclick="fbsingo()" alt="신고하기">
 	<input type="button" onclick="location.href='./freeUpdateForm?board_no=${info.board_no}'" value="수정"/>
 	<input type="button" onclick="del()" value="삭제"/>			
 	<input type="button" onclick="location.href='./freeBoardList?currpage=1'" value="목록"/>
@@ -142,35 +146,19 @@ textarea {
 
 	
 	//신고하기
-	$('.boardreport').click(function(e){
-		console.log("클릭");
+	function fbsingo(){
+		//console.log("아 왜 안열리냐고 (땡깡)");
 		
-		let url = "/freeBoard/freeboardReport";
+		/* let url = "/freeBoard/freeboardReport";
 		let popup = "width = 650px, height = 550px, top = 300px, left = 300px, scrollbars=no";
 		
-		window.open(url,"신고창",popup);
+		window.open(url,"신고창",popup); */
 		
+		$('#freeSingoPopup').toggle();
 		
-		
-	});
+	};
 	
-	
-	/* function fbReport() {
-		
-		//let url = "/freeBoard/freeboardReport";
-		//let popup = "width = 650px, height = 550px, top = 300px, left = 300px, scrollbars=no";
-		
-		window.open(url,"신고창",popup);
-		
-		var fbd = documont.fbd;
-		fbd.target = pop title;
-		fbd.action = "freeboardReport.jsp";
-		
-		fbd.submit();
-		
-	} */
 
-	
 
 </script>
 </html>

@@ -33,4 +33,10 @@ public class HomeController {
 		return "righter";
 	}
 	
+	@RequestMapping(value="/header")
+	public String header() {
+		return "header";
+	}
+	
+	
 }

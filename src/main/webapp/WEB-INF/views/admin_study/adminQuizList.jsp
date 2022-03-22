@@ -8,90 +8,194 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>  
 	<script src="resources/js/jquery.twbsPagination.js"></script>
-<!-- 	<link rel="stylesheet" href="resources/css/common.css" type="text/css"/> -->
+	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
 	<style>
+	body{
+		margin : 10px;
+	}
+	hr{
+		border : 1.5px solid gray;
+		margin : 10px 0px 10px 0px;
+	}
+	#pageTitle{
+		text-align : left;
+		width : 300px;
+	}
+	#pageTitle h3{
+		font-weight : bold;
+	}
+
+	#topDivs {
+		text-align : center;
+	}
+	
+	#searchBar select{
+		border-top : none;
+		border-left : none;
+		border-right : 1px solid gray;
+		border-bottom : 1px solid gray;
+		width : 100px;
+		border-radius : 5px;
+	}
+	#searchBar input[type="text"]{
+		border:none;
+		width : 300px;
+		border-bottom : 1px solid gray;
+		text-align : center;
+	}
+	
 	#searchBar h5{
 		font-size : 5px;
 		text-align : left;
 		margin : 0px;
 		color : gray;
 	}
+
 	table,th,td {
-	 border : 1px solid gray;
+	 border : 1px solid lightgray;
+	 border-left : none;
+	 border-right : none;
 	 border-collapse : collapse;
 	 font-size : 9px;
+	 height : 25px;
 		
 	}
 	.quiz_content a{
-		color : red;
-		width : 300px;
+		color : RoyalBlue;
+		width : 150px;
 		display : inline-block;
 		test-overflow : ellipsis;
 		overflow : hidden;
 		white-space:nowrap;
 		word-wrap : break-word;
 	}
+	input[value="복구"]{
+		color : skyblue;
+		border : none;
+	}
+	input[value="삭제"]{
+		color : pink;
+		border : none;
+	}
+	#quizList tr:nth-child(odd){
+		background-color :  #e6ffe6;
+		
+	}
+	#quizList tr:nth-child(odd) input{
+		background-color :  #e6ffe6;	
+	}
+	#quizList tr:nth-child(even){
+		background-color :  white;
+		
+	}
+	#quizList tr:nth-child(even) input{
+		background-color :  white;	
+	}
+	#topRegistTest{
+		text-align : right;
+	}
 	
+	#topRegistTest input{
+		background-color : white;
+		color : green;
+		font-weight : bold;
+		border : none;
+	}
+	#grid {
+		min-height : 1000px;
+		}
+		#mainPage{
+			padding-top : 50px;
+			padding-left : 10px;
+		}
+
+	hr{
+		border : 1px solid gray;
+		margin : 10px 0px 10px 0px;
+		width : 200px;
+	}			
 	</style>
 </head>
 <body>
+<iframe id="header" src="header">
+</iframe>
+<div id="grid">    
+    <div>
+		<iframe id="lefter" src="adminLefter"></iframe>			
+	</div>
+	<div id="mainPage">
+<div id="pageTitle">
+<h3>문제 관리
+</h3>
+<hr/>
+</div>
+
+<div id="topDivs">
 
 <div id="searchBar">
-<table>
-	<tr>
-		<th><h5>시험</h5><select id="test_cate_no"></select></th><!-- 시험 -->
-		<th><h5>연도</h5><select id="test_year"></select></th><!-- 년도 -->
-		<th><h5>회차</h5><select id="test_count"></select></th><!-- 회차 -->
-		<th><h5>과목</h5><select id="subject_cate_no"></select></th><!-- 과목 -->
-		<th><h5>세부과목</h5><select id="detailed_subject_cate_no"></select></th><!-- 세부과목 -->
-	</tr>
-	<tr>
-		<th colspan="4"><input type="text" id="quiz_content" placeholder="문제 내용을 입력해주세요"/></th>
-		<th><input type="button" value="신규문제등록" onclick="location.href='adminRegistTest'"/></th>
-	</tr>
-</table>
+		
+		<select id="test_cate_no"></select><!-- 시험 -->
+		<select id="test_year"></select><!-- 년도 -->
+		<select id="test_count"></select><!-- 회차 -->
+		<select id="subject_cate_no"></select><!-- 과목 -->
+		<select id="detailed_subject_cate_no"></select><!-- 세부과목 -->
+		<br/>
+		<input type="text" id="quiz_content" placeholder="문제 내용을 입력해주세요"/>
+		
 </div>
-<div>
+
+<div id='topRegistTest'>
+<input type="button" value="신규문제등록" onclick="location.href='adminRegistTest'"/>
+</div>
+
+</div>
+
+
+<div class="wrap">
 <table>
 	<thead>
 		<tr>
-			<th>문제ID</th>
-			<th>연도</th>
-			<th>월</th>
-			<th>회차</th>
-			<th>번호</th>
-			<th>시험</th>
-			<th>과목</th>
-			<th>세부과목</th>
-			<th>문제내용</th>
-			<th>문제해설</th>
-			<th>유형</th>
-			<th>배점</th>
-			<th>보기1</th>
-			<th>보기2</th>
-			<th>보기3</th>
-			<th>보기4</th>
-			<th>보기5</th>
-			<th>정답</th>
-			<th>삭제</th>
+			<th style="width : 50px">문제ID</th>
+			<th style="width : 50px">연도</th>
+			<th style="width : 30px">월</th>
+			<th style="width : 30px">회차</th>
+			<th style="width : 30px">번호</th>
+			<th style="width : 120px">시험</th>
+			<th style="width : 120px">과목</th>
+			<th style="width : 120px">세부과목</th>
+			<th style="width : 150px">문제내용</th>
+			<th style="width : 150px">문제해설</th>
+			<th style="width : 50px">유형</th>
+			<th style="width : 50px">배점</th>
+			<th style="width : 100px">보기1</th>
+			<th style="width : 100px">보기2</th>
+			<th style="width : 100px">보기3</th>
+			<th style="width : 100px">보기4</th>
+			<th style="width : 100px">보기5</th>
+			<th style="width : 80px">정답</th>
+			<th style="width : 50px">삭제</th>
 		</tr>
 	</thead>
 	<tbody id="quizList">
 	</tbody>
-	<tbody>
-	<tr>
-		<td colspan="19" id="paging">
+</table>
+</div>
+
+<div>
             <div class="container">                           
                <nav aria-label="Page navigation" style="text-align:center">
                   <ul class="pagination" id="pagination"></ul>
                </nav>               
             </div>
+</div>
+	<table id="pagination_tbody">
+	<tr>
+		<td colspan="19" id="paging">
 		</td>
 	</tr>	
-	</tbody>
-</table>
+	</table>
+	</div>
 </div>
-	
 </body>
 <script>
 var currPage = 1;
@@ -169,7 +273,7 @@ function search(page,cnt){
 function listDraw(list){
 	var txt = '';
 		list.forEach(function(item,idx){
-			console.log(item);
+			//console.log(item);
 			txt += '<tr>';
 			txt += '<td>'+item.quiz_no+'</td>';
 			txt += '<td>'+item.test_year+'</td>';
@@ -189,15 +293,60 @@ function listDraw(list){
 			txt += '<td>'+item.option4+'</td>';
 			txt += '<td>'+item.option5+'</td>';
 			txt += '<td>'+item.quiz_answer+'</td>';
-			txt += '<td>'+item.del_flag+'</td>';
+			if(item.del_flag){
+				txt += '<td><input type="button" class="'+item.quiz_no+'" onclick="updateQuizState(this)" value="복구"/></td>';				
+			} else {
+				txt += '<td><input type="button" class="'+item.quiz_no+'" onclick="updateQuizState(this)" value="삭제"/></td>';				
+			}
+			
 			txt += '</tr>';
 		});
 		$('#quizList').empty();
 		$('#quizList').append(txt);
 }
 
-
-
+function updateQuizState(e){
+	console.log(e.value);
+	console.log($(e));
+	var processing = false;
+	if(e.value== '삭제'){
+		if(confirm('해당 문제를 삭제처리 하겠습니까?')){
+			console.log(e.classList[0]);
+			processing = true;
+		};
+	} else {
+		if(confirm('해당 문제를 복구 하겠습니까?')){
+			console.log(e.classList[0]);
+			processing = true;
+		};
+	}
+	if(processing){
+		$.ajax({
+			url : 'updateQuizState',
+			type : 'get',
+			data : {'quiz_no':e.classList[0]},
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				if(e.value == '삭제'){
+					if(data.msg > 0){
+						alert('복구가 완료됬습니다.');						
+						$(e).val('복구');
+					}
+				} else {
+					if(data.msg > 0){
+						alert('삭제가 완료됬습니다.');
+						$(e).val('삭제');						
+					}
+				}
+			},
+			error : function(e){console.log(e);}
+		});
+		
+	}
+	
+	
+}
 
 
 test_time(new Date());

@@ -38,7 +38,7 @@ public class MailSend {
             msg.setRecipient(Message.RecipientType.TO, to);            
             msg.setSubject(title, "UTF-8");            
             msg.setText(content, "UTF-8");            
-            msg.setContent("<h1>helloworld</h1>","text/html");
+            //msg.setContent("<h1>helloworld</h1>","text/html");
             Transport.send(msg);
             
         } catch(AddressException ae) {            

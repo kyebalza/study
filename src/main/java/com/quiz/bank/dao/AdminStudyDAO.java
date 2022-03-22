@@ -118,6 +118,8 @@ public interface AdminStudyDAO {
 
 	HashMap<String, String> quiz_one_statistic(String quiz_no);
 
+	int updateQuizState(String quiz_no);
+
 
 
 }

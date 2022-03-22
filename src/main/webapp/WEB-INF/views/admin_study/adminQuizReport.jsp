@@ -9,6 +9,7 @@
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>  
 	<script src="resources/js/jquery.twbsPagination.js"></script>
 <!-- 	<link rel="stylesheet" href="resources/css/common.css" type="text/css"/> -->
+	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
 
 	<style>
 		table , th , td {
@@ -22,44 +23,66 @@
 			background-color : greenyellow;
 			border : lightgray;
 		}
-	
+		#mainPage{
+			padding-right : 200px;
+			padding-top : 50px;
+			padding-left : 10px;
+		}
+		
+
+		
+		}
+	hr{
+		border : 1px solid gray;
+		margin : 10px 0px 10px 0px;
+		width : 200px;
+	}			
 	</style>
 </head>
 <body>
-	<h3>문제 오류신고 관리</h3><hr/>
+<iframe id="header" src="header">
+</iframe>
+<div id="grid">
 	<div>
-	<select id="select">
-		<option value="all">전체 보기</option>
-		<option value="false">처리대기</option>
-		<option value="true">처리완료</option>
-	</select>
+		<iframe id="lefter" src="adminLefter"></iframe>			
 	</div>
-	<table>
-		<thead>
+	<div id="mainPage">
+		<h3>문제 오류신고 관리</h3><hr/>
+		<div>
+		<select id="select">
+			<option value="all">전체 보기</option>
+			<option value="false">처리대기</option>
+			<option value="true">처리완료</option>
+		</select>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<td>신고No.</td>
+					<td>문제ID</td>
+					<td>신고내용</td>
+					<td>신고한ID</td>
+					<td>처리상태</td>
+				</tr>
+			</thead>
+		
+			<tbody id="quiz_report_list">
+				
+			</tbody>
+			<tbody>
 			<tr>
-				<td>신고No.</td>
-				<td>문제ID</td>
-				<td>신고내용</td>
-				<td>신고한ID</td>
-				<td>처리상태</td>
-			</tr>
-		</thead>
-	
-		<tbody id="quiz_report_list">
-			
-		</tbody>
-		<tbody>
-		<tr>
-			<td colspan="19" id="paging">
-	            <div class="container">                           
-	               <nav aria-label="Page navigation" style="text-align:center">
-	                  <ul class="pagination" id="pagination"></ul>
-	               </nav>               
-	            </div>
-			</td>
-		</tr>	
-		</tbody>		
-	</table>
+				<td colspan="19" id="paging">
+		            <div class="container">                           
+		               <nav aria-label="Page navigation" style="text-align:center">
+		                  <ul class="pagination" id="pagination"></ul>
+		               </nav>               
+		            </div>
+				</td>
+			</tr>	
+			</tbody>		
+		</table>
+	</div>
+</div>
 </body>
 <script>
 

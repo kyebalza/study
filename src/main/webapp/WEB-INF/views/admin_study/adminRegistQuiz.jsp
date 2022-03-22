@@ -6,6 +6,7 @@
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
+	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
 	
         <style>
             table,th,td{
@@ -121,17 +122,29 @@
            #quiz_all_button{
            	text-align : right;
            }
+		#allDiv{
+			padding-right : 20px;
+			padding-top : 20px;
+			padding-left : 20px;
+		}
+
+	           
         </style>
     </head>
 
     <body>
+	<iframe id="header" src="header">
+	</iframe>
+	<div id="grid">    
+	    <div>
+			<iframe id="lefter" src="adminLefter"></iframe>			
+		</div>
     	<div id="allDiv">
 	    	<div id="quiz_header">
 		    	<h3>시험 문제 등록</h3>
 		    	<h4>
 		    		시험 : ${test_info.test_category_name }
-		    	</h4>
-		    	<h4>
+					&nbsp;&nbsp;&nbsp;
 		    		${test_info.test_year }년 
 		    		${test_info.test_month }월
 		    		${test_info.test_count } 회
@@ -156,6 +169,7 @@
 		<input type="button" id="QuizForm_plus" onclick="quizFormPlus()" value="추가"/>	
 	</div>
 	<!-- <input type="button" id="QuizForm_delete" onclick="quizFormDelete()" value="삭제"/> -->
+	</div>
 	</div>
     </body>
 <script>
@@ -324,6 +338,10 @@ $('#excelBtn').click(function(){
 
 
 $('#quiz_save').click(function(){
+	var testcomplete = false;
+	var quizcomplete = false;
+	
+	
 	var quiz_list = [];
 	var all_quiz_cnt = $('div .quiz_form').length;//문제 양식의 갯수를 센다. quizCnt는 문제 있을 수 있음
 	var test_obj = {};
@@ -336,7 +354,20 @@ $('#quiz_save').click(function(){
 	test_obj.test_pass_rate = "${test_info.test_pass_rate}";
 	test_obj.test_pass_criterion = "${test_info.test_pass_criterion}";
 	quiz_list.push(JSON.stringify(test_obj));
-	
+	if( test_obj.test_category == ''
+		||test_obj.test_year == ''
+		||test_obj.test_count == ''
+		||test_obj.test_time == ''
+		||test_obj.test_fullscore == ''
+		||test_obj.test_month == ''
+		||test_obj.test_pass_rate == ''
+		||test_obj.test_pass_criterion == ''		
+	) {
+		testcomplete = false;
+		} else{
+		testcomplete = true;
+	}
+
 	
 	for (var i = 0; i < all_quiz_cnt; i++) {
 		
@@ -349,11 +380,11 @@ $('#quiz_save').click(function(){
 		//var quiz_img;
 		obj.quiz_type = $('.quiz_type.'+class_num).val();
 		
-		obj.option1 = '';
-		obj.option2  = '';
-		obj.option3  = '';
-		obj.option4  = '';
-		obj.option5  = '';
+		obj.option1 = '없음';
+		obj.option2  = '없음';
+		obj.option3  = '없음';
+		obj.option4  = '없음';
+		obj.option5  = '없음';
 		for (var j = 1; j <= obj.quiz_type; j++) {
 			obj["option"+j] = $('.option'+j+'.'+class_num).val();
 		}
@@ -381,23 +412,55 @@ $('#quiz_save').click(function(){
 		
 		quiz_list.push(JSON.stringify(obj));
 		console.log(obj);
+		if(obj.quiz_index == ''
+			||obj.quiz_point == ''
+			||obj.quiz_subject == ''
+			||obj.quiz_detailed_subject == ''
+			||obj.quiz_type == ''
+			||obj.answer == ''
+			||obj.quiz_content == ''
+			||obj.quiz_explation == ''
+			||obj.answer == ''
+			||obj.option1 == ''
+			||obj.option2 == ''
+			||obj.option3 == ''
+			||obj.option4 == ''		
+			||obj.option5 == ''
+					
+		){
+			quizcomplete = false;
+		} else {
+			quizcomplete = true;
+		}
 	}
 	console.log(quiz_list);
 	console.log(JSON.stringify(quiz_list));
 	
 	console.log(test_obj);
-	$.ajax({
-		url : 'adminRegistTestAndQuiz',
-		type : 'get',
-		data : {
-			//"test_info":JSON.stringify(test_obj),
-			"params":quiz_list},
-		dataType : 'JSON',
-		success : function(data){
-			console.log(data.msg);
-		},
-		error : function(e){}
-	});
+	if(testcomplete == true && quizcomplete == true){
+		$.ajax({
+			url : 'adminRegistTestAndQuiz',
+			type : 'get',
+			data : {
+				//"test_info":JSON.stringify(test_obj),
+				"params":quiz_list},
+			dataType : 'JSON',
+			success : function(data){
+				console.log(data.msg);
+				alert('문제 등록이 완료되었습니다.');
+				location.href='adminQuizList';
+				
+			},
+			error : function(e){}
+		});
+	} else {
+		if(!testcomplete){
+			alert('시험 항목 중 미등록 사항이 있습니다.');
+		}
+		if(!quizcomplete){
+			alert('문제 항목 중 미등록 사항이 있습니다.');			
+		}
+	}
 });
 
 

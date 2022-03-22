@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+img{
+	height : 20px;
+	width : 20px;	
+}
+table,th,td {
+	border-collapse : collapse;
+	
+}
+
+th,td{
+	border-top : 1px solid gray;
+	border-left : none;
+	border-right : none;
+	border-bottom : 1px solid gray;
+	height : 60px;
+	
+	
+	
+}
+
+input[type="button"]{
+	background-color : white;
+	color : gray;
+	border : none;
+}
+
+
+
+#list_body tr:nth-child(odd){
+	background-color :  #e6ffe6;	
+	}
+
+#list_body tr:nth-child(even){
+	background-color :  white;
+	}
+	
+	
+#nowPage{
+	color : white;
+	background-color : LimeGreen; 
+	font-weight : bold;
+	border : none;
+	}	
+.onClk{
+	color : white;
+	background-color : LimeGreen; 
+	font-weight : bold;
+	border : none;
+	}
+	
+#all{
+	width: 800px;
+	/*height: 600px;*/
+	text-align: center;
+	top: 20px;	
+	margin : auto;
+		}	
+	
+.no{
+	width : 50px;
+}	
+	

@@ -7,16 +7,57 @@
 <mapper namespace="com.quiz.bank.dao.MyPageDAO">
 
 
-	<select id="reply_call" resultType="hashmap">
-		
-	</select>
-	
 	
 	<select id="reply_write" parameterType="hashmap">
 		INSERT INTO reply (board_name, board_no, user_id, reply_content, )
 		VALUES (#{board_name},#{board_no},#{user_id},#{reply_content})
 	</select>
 
+	<select id="noticeListCall" resultType="hashmap">
+	SELECT board_no,board_cate_no,user_content,notice_date FROM notice_board
+	WHERE user_id = #{param1}
+	</select>
+	
+	<select id="myPageStudyBoardListCall" resultType="hashmap">
+	SELECT * FROM study_board
+	LEFT JOIN board_category USING (board_cate_no)
+	LEFT JOIN study_board_like_cnt USING (board_no)
+	LEFT JOIN study_board_reply_cnt USING (board_no)
+	WHERE del_flag = 0 AND user_id = #{param1}
+	LIMIT #{param2} OFFSET #{param3}
+	</select>
+	<select id="myPagefreeBoardListCall" resultType="hashmap">
+	SELECT * FROM free_board
+	LEFT JOIN board_category bc USING (board_cate_no)
+	LEFT JOIN free_board_like_cnt USING (board_no)
+	LEFT JOIN free_board_reply_cnt USING (board_no)
+	WHERE del_flag = 0 AND user_id = #{param1}	
+	LIMIT #{param2} OFFSET #{param3}
+	</select>
 
-
+	<select id="myPageinquiryBoardListCall" resultType="hashmap">
+	SELECT * FROM inquiry_board
+	LEFT JOIN board_category USING (board_cate_no)
+	WHERE del_flag = 0 AND user_id = #{param1}
+	LIMIT #{param2} OFFSET #{param3}
+	</select>
+	
+	<select id="allCount" resultType="int">
+	SELECT count(*) FROM ${param1} WHERE user_id = #{param2}
+	</select>
+	
+	<select id="myPageStudyReplyListCall" resultType="hashmap">
+	SELECT board_no,reply_no,sbr.user_id,reply_content,answer_select,title,reg_date 
+	FROM study_board_reply sbr JOIN study_board sb USING (board_no) WHERE sbr.user_id = #{param1} 
+	AND sbr.del_flag = 0 AND sb.del_flag = 0
+	LIMIT #{param2} OFFSET #{param3}
+	</select>
+	<select id="myPagefreeReplyListCall" resultType="hashmap">
+	SELECT board_no,reply_no,fbr.user_id,reply_content,title,reg_date 
+	FROM free_board_reply fbr JOIN free_board fb USING (board_no) 
+	WHERE fbr.user_id = #{param1} AND fbr.del_flag = 0 AND fb.del_flag = 0
+	LIMIT #{param2} OFFSET #{param3}
+	</select>
+		
+	
 </mapper>

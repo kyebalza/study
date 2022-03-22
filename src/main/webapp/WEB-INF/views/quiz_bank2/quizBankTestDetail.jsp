@@ -137,7 +137,7 @@ function testCountListCall(e){
 				txt += item.test_year+'년 '+item.test_count+'회 '+test_cate;
 				txt += '</td>';
 				txt += '<td style="text-align : center;" ><input type="button" value="시험보기" onclick="testForm('+item.test_no+')"/></td>';
-				txt += '<td style="text-align : center;" ><input type="button" value="연습하기" onclick="testForm('+item.test_no+')"/></td>';
+				txt += '<td style="text-align : center;" ><input type="button" value="연습하기" onclick="practiceForm('+item.test_no+')"/></td>';
 
 			});
 			$('#listArea').empty();

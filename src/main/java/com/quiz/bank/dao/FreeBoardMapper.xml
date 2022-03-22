@@ -10,7 +10,7 @@
 	<select id="FBlistCall" resultType="com.quiz.bank.dto.FreeBoardDTO">
 		SELECT * FROM free_board JOIN board_category ON
 			free_board.board_cate_no = board_category.board_cate_no
-				WHERE del_flag = 0 LIMIT #{param1} OFFSET #{param2}
+				WHERE del_flag = 0 ORDER BY board_no DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<!-- 공부 게시판 페이징 관련 -->
@@ -140,8 +140,8 @@
 	</select>
 
 	<!-- 게시글 좋아요 여부 확인 -->
-	<select id="likecheck" resultType="String">
-		SELECT board_no FROM board_like WHERE user_id = #{param1} AND board_no =#{param2} AND board_name =#{param3}
+	<select id="likecheck" resultType="int">
+		SELECT count(board_no) FROM board_like WHERE user_id = #{param1} AND board_no =#{param2} AND board_name = 'free_board'
 	</select>
 
 	<!-- 좋아요 삭제  -->
@@ -159,6 +159,9 @@
 		SELECT count(*) FROM board_like where board_no = #{param1} and board_name = 'free_board'
 	</select>
 	
+
+
+
 	
 	<!-- 댓글 조회 -->
 	<select id="freeboardcoment" resultType="com.quiz.bank.dto.FreeBoardDTO">
@@ -167,7 +170,19 @@
 	
 	<!-- 댓글 등록 -->
 	<insert id="fbcoment" useGeneratedKeys="true" keyProperty="reply_no" keyColumn="com.quiz.bank.dto.FreeBoardDTO" parameterType="com.quiz.bank.dto.FreeBoardDTO">
-		INSERT INTO reply (board_name, board_no, user_id, reply_content) VALUES ('free_board', #{board_no}, #{user_id}, #{reply_content})
+		INSERT INTO reply (board_name, board_no, user_id, reply_content, ori_reply) VALUES ('free_board', #{board_no}, #{user_id}, #{reply_content}, #{ori_reply})
+	</insert>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="fbcomdel">
+		DELETE FROM reply WHERE reply_no = #{param1}
+	</delete>
+	
+	
+	<!-- 게시글 신고 -->
+	<insert id="freeBoardSingo">
+		INSERT INTO report_board (board_name, report_user, reported_user, report_reason, board_cate_no, board_no, report_state, reply_no) 
+			VALUES (#{board_name}, #{report_user}, #{reported_user}, #{report_reason}, #{board_cate_no}, #{board_no}, '0', '0')
 	</insert>
 	
 	

@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.tools.ant.util.StringUtils;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import com.quiz.bank.dao.QuizBankDAO;
 import com.quiz.bank.dto.QuizDTO;
 import com.quiz.bank.dto.QuizSolveDTO;
 import com.quiz.bank.dto.TestCategoryDTO;
+import com.quiz.bank.dto.TestResultDTO;
 
 @Service
 public class QuizBankService {
@@ -96,7 +99,7 @@ public class QuizBankService {
 				asd.put("percent", percent);
 				
 				per.add(asd);
-				logger.info("퀴즈넘버"+per);
+				//logger.info("퀴즈넘버"+per);
 				
 				
 			}
@@ -105,12 +108,11 @@ public class QuizBankService {
 		for(int i = 0; i <testList.size(); ++i) {
 			String comp_no = String.valueOf(testList.get(i).get("quiz_no"));
 			logger.info(comp_no);
-			//이게 문제!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			for(int i2 = 0; i2 <per.size(); ++i2) {
 				String comp_no2 = String.valueOf(per.get(i2).get("quiz_no"));
-				logger.info("컴프넘버2"+comp_no2);
+				//logger.info("컴프넘버2"+comp_no2);
 				if(comp_no.equals(comp_no2)) {
-					logger.info("값 담김");
+					//logger.info("값 담김");
 					testList.get(i).put("percent",String.valueOf(per.get(i2).get("percent")));
 				}
 			}
@@ -196,6 +198,51 @@ public class QuizBankService {
 		int row = dao.bookMark_Insert(loginId,quiz_no);
 		logger.info(" 입력된 건수 : {}",row);
 		return row;
+	}
+
+	//6. 체점하기
+	public HashMap<String, Object> testResult(ArrayList<String> params, String test_prac_flag, String loginId, String elapse_time, String test_no) {
+		QuizSolveDTO quizSolveDTO = new QuizSolveDTO();//타입변환
+		TestResultDTO testResultDTO = new TestResultDTO();//타입변환
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = 0;
+		int success2 = 0;
+		int score = 0;
+		
+		//개별문제풀이 테이블
+		for (int i = 0; i < params.size(); i++) {
+			JSONObject jObject = new JSONObject(params.get(i));//JSON Object로 받아오기
+			quizSolveDTO.setUser_id(loginId);//아이디
+			quizSolveDTO.setQuiz_no(Integer.parseInt(jObject.getString("quiz_no")));//문제식별번호
+			//정답여부
+			int quiz_answer  = Integer.parseInt(jObject.getString("quiz_answer"));
+			int my_answer  = Integer.parseInt(jObject.getString("my_answer"));
+			if(my_answer == quiz_answer) {
+				quizSolveDTO.setcorrect_wrong(true);
+				int first_quiz_point = Integer.parseInt(jObject.getString("quiz_point"));
+				logger.info("저음 점수 {}",first_quiz_point);
+				score += first_quiz_point;
+				logger.info("합쳐진 점수 {}",score);
+				map.put("result", 1);
+			}else {
+				quizSolveDTO.setcorrect_wrong(false);
+				map.put("result", 0);
+			}
+			quizSolveDTO.setTest_prac_flag(test_prac_flag);//시험/연습
+			//6-1. 개별 문제풀이 결과테이블
+			success = dao.quiz_solve(quizSolveDTO);
+			logger.info("개별문제풀이 업로드 성공여부 {}", success);
+		}
+		//6-2. 시험 결과 테이블
+		testResultDTO.setUser_id(loginId);
+		testResultDTO.setTest_no(Integer.parseInt(test_no));
+		testResultDTO.setElapse_time(elapse_time);
+		testResultDTO.setScore(score);
+		success2 = dao.test_result(testResultDTO);
+		logger.info("시험 결과 업로드 성공여부 {}", success2);
+		
+		
+		return map;
 	}
 
 	

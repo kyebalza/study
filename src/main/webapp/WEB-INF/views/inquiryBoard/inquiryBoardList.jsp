@@ -100,6 +100,7 @@
 
 	//검색
 	function SearchList(){
+		console.log("문의게시판 검색");
 		$.ajax({
 			type: 'GET',
 			url : 'InquirySearchBoardList',
@@ -146,6 +147,7 @@
 	
 	listCall(currPage,10);
 	
+	/*
 	function more(){
 		currPage++;
 		console.log('currPage',currPage);
@@ -155,6 +157,8 @@
 			listCall(currPage, 10);			
 		}
 	}
+	*/
+	
 	
 	function listCall(page, cnt){				
 		
@@ -189,23 +193,10 @@
 	// 리스트를 불러올 때 하단 생성
 	function listDraw(list){ 
 		console.log("리스트 호출 확인");
-		/* console.log(board_no,item); */
 		var content = '';	
 		list.forEach(function(item, board_no){
+			
 				var date = new Date(item.reg_date);
-				
-				
-				/*
-				<th>글번호</th>
-				<th>제목</th>
-				<th>카테고리</th>
-				<th>작성자</th>
-				<th>조회수</th>
-				<th>작성일자</th>
-				<th>답변여부</th>
-				*/
-				
-				
 				content+="<tr>"
 				content+="<td>"+item.board_no+"</td>"; // 글번호
 				content+="<td><a href='inquiryBoardDetail?board_no="+item.board_no+"'>"+item.title+"</a></td>"; // 제목

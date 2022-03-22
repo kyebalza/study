@@ -9,7 +9,7 @@
 
 	<!-- 문의게시판 리스트 호출 -->
 	<select id="inquirylist" resultType="com.quiz.bank.dto.InquiryBoardDTO">
-		SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no ORDER BY board_no DESC
+		SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no ORDER BY board_no DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<!-- 문의 게시판 페이징 관련 -->
@@ -61,7 +61,7 @@
 	
 	<!-- 문의게시판 상세보기 -->
 	<select id="inquirydetail" resultType="com.quiz.bank.dto.InquiryBoardDTO">
-		SELECT * FROM inquiry_board WHERE board_no = #{param1}
+		SELECT * FROM inquiry_board join board_category ON inquiry_board.board_cate_no = board_category.board_cate_no WHERE board_no = #{param1}
 	</select>
 	
 	<!-- 상세보기 파일 가져오기 -->
@@ -77,9 +77,11 @@
 	
 	<!-- 문의게시글 수정하기 -->
 	<update id="inquiryUpdate" parameterType="hashmap">
-		UPDATE study_board SET title = #{title}
-			,content = #{content}
+		UPDATE inquiry_board SET title = #{title} 
+			,content = #{content}, 
+			board_cate_no = #{board_cate_no} 
 			WHERE board_no = #{board_no}
+			
 	</update>
 	
 	
@@ -89,17 +91,16 @@
 	</delete>
 	
 	
-	<!-- 문의게시판 관리자 답변(댓글) 보여주기 -->
-	<select id="reply_call" resultType="hashmap">
-		SELECT * FROM reply WHERE board_no = #{param1}
-	
+	<!-- 문의게시판 댓글 조회 -->
+	<select id="inquiryboardcoment" resultType="com.quiz.bank.dto.ReplyDTO">
+		SELECT * FROM reply where board_no = #{param1} and board_name ='inquiry_board' and del_flag = 0
 	</select>
 
-	<!-- 문의게시판 관리자 답변(댓글) 작성하기 -->
-	<select id="reply_write" parameterType="hashmap">
-	INSERT INTO reply (user_id,board_no,reply_comment,reply_exposure) 
-	VALUES(#{user_id},#{board_no},#{reply_comment},'Y')
-	</select>
+	<!-- 문의게시판 댓글 작성 -->
+	<insert id="ibcoment" useGeneratedKeys="true" keyProperty="reply_no" keyColumn="com.quiz.bank.dto.ReplyDTO" parameterType="com.quiz.bank.dto.ReplyDTO">
+	INSERT INTO reply (board_name, board_no, user_id, reply_content)
+		VALUES ('inquiry_board',#{board_no},#{user_id},#{reply_content})
+	</insert>
 	
 	
 	

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.bank.dto.InquiryBoardDTO;
+import com.quiz.bank.dto.PhotoDTO;
+import com.quiz.bank.dto.ReplyDTO;
 import com.quiz.bank.dto.StudyBoardDTO;
 import com.quiz.bank.service.InquiryBoardService;
 
@@ -41,8 +44,7 @@ public class InquiryBoardController {
 	}
 	*/
 	
-	// 1. 문의게시판 리스트 페이지 호출
-	
+	// 1. 문의게시판 리스트 페이지 이동
 	@GetMapping(value = "/inquiryBoardList")
 	public String inquiryBoardList(Model model) { 
 		logger.info("문의게시판 리스트 이동");
@@ -54,6 +56,8 @@ public class InquiryBoardController {
 	@ResponseBody
 	@GetMapping(value = "/inquirylist")
 	public HashMap<String, Object> inquirylist(@RequestParam  String page, @RequestParam String cnt) {
+		
+		logger.info("문의게시판 게시물 리스트 요청");
 		logger.info("문의게시판 리스트 요청 : {} 페이지, {} 개 씩",page, cnt);
 		
 		int currPage = Integer.parseInt(page);
@@ -104,14 +108,55 @@ public class InquiryBoardController {
 	}
 	
 	
-	// 3. 문의게시판 수정페이지 요청
+	
+	// 3. 문의게시판 상세보기
+	@GetMapping(value = "/inquiryBoardDetail")
+	public String inquiryBoardDetail(Model model, @RequestParam String board_no, HttpSession session) {
+		logger.info("문의게시판 상세보기 요청 : {}", board_no);
+		
+		InquiryBoardDTO dto = service.inquirydetail(board_no);
+		logger.info("dto : {}",dto.getContent());
+		model.addAttribute("info", dto);
+		
+		// 사진 가져오기
+		ArrayList<PhotoDTO> photo = service.photo(board_no);
+		logger.info("사진 : {}",photo);
+		model.addAttribute("photo",photo);
+		
+		
+		
+		// 댓글
+		ArrayList<ReplyDTO> ibcom = service.inquiryboardcoment(board_no);
+		logger.info("문의 댓글 : "+board_no);
+		model.addAttribute("ibcomList", ibcom);
+		logger.info("문의 댓글 목록 요청 : "+ibcom);
+		
+		model.addAttribute("loginId", session.getAttribute("loginId"));
+		
+		model.addAttribute("admin", session.getAttribute("loginId"));
+		
+		return "inquiryBoard/inquiryBoardDetail";
+		
+	}
+	
+	
+	
+	
+	// 4. 문의게시판 수정페이지 요청
 	@GetMapping(value = "/inquiryUpdateForm")
 	public String inquiryUpdateForm(Model model, @RequestParam String board_no) {
 		logger.info("inquiryUpdateForm : {}",board_no);
+		
+		ArrayList<HashMap<String, String>> inquiry_cate = service.inquiryboard_cate();
+		model.addAttribute("inquiry_cate", inquiry_cate);
+		
 		return service.inquiryUpdateForm(model, board_no);
 	}
 	
-	// 3-1. 문의게시판 수정하기
+	
+	
+	
+	// 4-1. 문의게시판 수정하기
 	@PostMapping(value = "/inquiryUpdate")
 	public String update(Model model, @RequestParam HashMap<String, String> params
 			,MultipartFile uploadFile,HttpSession session) {
@@ -122,22 +167,8 @@ public class InquiryBoardController {
 	}
 	
 
-	// 4. 문의게시판 상세보기
-	@GetMapping(value = "/inquiryBoardDetail")
-	public String inquiryBoardDetail(Model model, @RequestParam String board_no, HttpSession session) {
-		logger.info("문의게시판 상세보기 요청 : {}", board_no);
-
-		InquiryBoardDTO dto = service.inquirydetail(board_no);
-		logger.info("dto : {}",dto.getContent());
-		model.addAttribute("info", dto);
-
-		return "inquiryBoard/inquiryBoardDetail";
-	}
-
 	
-	
-	
-	//6. 문의게시판 삭제
+	//5. 문의게시판 삭제
 	@GetMapping(value = "/inquirydelete")
 	public String inquirydelete(Model model, @RequestParam String board_no) {
 		logger.info("문의게시판 삭제 요청 : {}", board_no);
@@ -148,57 +179,20 @@ public class InquiryBoardController {
 	
 	
 	
-	// 관리자 댓글기능 관련
-	
-	@RequestMapping(value="/reply_call" , method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> reply_call(HttpSession session, @RequestParam String board_no) {
+	// 6. 댓글 작성(관리자 한정)
+	@PostMapping(value="ibcoment")
+	public String ibcoment(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
+		logger.info("문의게시판 댓글 등록 요청" + session + "/"+params);
+		service.ibcoment(session, params);
+		String user_id = params.get("user_id");
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-
-			logger.info("{} reply 리스트 불러오기",board_no);
-			ArrayList<HashMap<String, String>> list= service.reply_call(board_no);
-			
-			for (HashMap<String, String> list_date : list) {
-				logger.info("list date {}",String.valueOf(list_date.get("reply_date")));
-				
-
-				String dateYear = (String.valueOf(list_date.get("reply_date"))).substring(0, 4);
-				logger.info("dateYear {}",dateYear);
-
-				String dateMonth = (String.valueOf(list_date.get("reply_date"))).substring(5,7);
-				logger.info("dateMonth {}",dateMonth);
-
-				String dateDate = (String.valueOf(list_date.get("reply_date"))).substring(8,10);
-				logger.info("dateDate {}",dateDate);
-
-				String newDate = dateYear+"년 "+dateMonth+"월"+dateDate+"일";
-				list_date.put("reply_date", newDate);
-
-			}
-			
-			logger.info("list  {}",list);
-			map.put("list", list);
-			map.put("count", list.size());
-		return map;
+		return "redirect:/inquiryBoardDetail?board_no="+params.get("board_no");
+		
+		
 	}
 	
-	@RequestMapping(value="/reply_write" , method = RequestMethod.GET)
-	public @ResponseBody HashMap<String, Object> reply_write(HttpSession session, @RequestParam HashMap<String, String> reply) {
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		if(session.getAttribute("loginId") != null) {
-			
-			logger.info("{} 문의게시판 reply 등록하기",reply);
-			service.reply_write(reply);
-			map.put("msg", "success");
-			map.put("list",service.reply_call(reply.get("board_no")));
-		} else {
-			map.put("msg", "fail");
-		}
-		
-		return map;
-	}	
+	
+	
 	
 	
 	

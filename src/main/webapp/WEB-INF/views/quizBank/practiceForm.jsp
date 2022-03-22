@@ -288,9 +288,9 @@ $('.bookmark').click(function(){
             setTimeout(function postTime() {
                 clearTimeout(timerId);// 시간 멈추기
                 // 데이터 보내기 추가 할 것!!(데이터 전송 버튼 시작)
-                //location.href="testDetail?test_cate_no=${test_name.test_cate_no}";// 임시 페이지 이동(결과페이지로 연결할 것)
+                location.href="testDetail?test_cate_no=${test_name.test_cate_no}";// 임시 페이지 이동(결과페이지로 연결할 것)
                 alert('시험이 종료되었습니다');
-            }, 1*10*1000); // 10초 후 알림창
+            }, 100*60*1000); // 100분 후 알림창
         }
 
         // 시간(int)을 시, 분, 초 문자열로 변환

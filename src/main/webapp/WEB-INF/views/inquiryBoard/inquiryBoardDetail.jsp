@@ -7,31 +7,32 @@
  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
  <style>
  
- table, th, td{
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding : 5px 10px;	
-}
+	 table, th, td{
+		border: 1px solid black;
+		border-collapse: collapse;
+		padding : 5px 10px;	
+	}
+	
+	th {
+		background-color: yellowgreen;
+	}
+	
+	td {
+		text-align: center;
+	}
+	
+	textarea {
+		width: 100%;
+		height: 150px;
+		resize: none;
+	}
+	
+	.none2{
+		border-left:1px solid #ffffff;
+		border-right:1px solid #ffffff;
+		text-alian: center;
+	}
 
-th {
-	background-color: yellowgreen;
-}
-
-td {
-	text-align: center;
-}
-
-textarea {
-	width: 100%;
-	height: 150px;
-	resize: none;
-}
-
-.none2{
-	border-left:1px solid #ffffff;
-	border-right:1px solid #ffffff;
-	text-alian: center;
-}
 
  
  </style>
@@ -44,7 +45,7 @@ textarea {
 			<th style="color:white;">제목</th>
 			<td>${info.title}</td>
 			<th style="color:white;">카테고리</th>
-			<td>${info.board_cate_no}</td>
+			<td>${info.board_cate}</td>
 		</tr>
 		<tr>
 			<th style="color:white;">작성자</th>
@@ -53,26 +54,38 @@ textarea {
 			<td>${info.reg_date}</td>
 		</tr>
 		<tr>
-			<th style="color:white;">내용</th>
+			<th style="color:white;" rowspan="2">내용</th>
 			<td colspan="4">${info.content}</td>
 		</tr>
+		
+		<c:if test="${photo.size()>0}">
 		<tr>
-			<th style="color:white;">첨부파일</th>
-			<td colspan="4"><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
+			<td colspan="4">
+			<c:forEach items="${photo}" var="photo">
+			<img src="/photo/${photo.new_filename}" width="400px" height="400px"/>
+			</c:forEach>
+			</td>
 		</tr>
+		</c:if>
+		
 	</table>
 	
 	<img class="bHit" src="/bank/resources/img/bHit.png"> ${info.bHit}
-	
+	<br/>
 	<br/>
 	<input type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
 	<input type="button" onclick="del()" value="삭제"/>			
 	<input type="button" onclick="location.href='./inquiryBoardList?currpage=1'" value="목록"/>
 	
 	
+	
 	<br/><br/>
 	
+	  
+	<%@ include file="ibComent.jsp" %>
 	
+	
+	<!--  
 	<table>
 		<thead>
 			<tr>
@@ -88,7 +101,8 @@ textarea {
 	</tbody>
 	
 	</table>
-	</form>
+	-->
+	
 	
 	
 	
@@ -97,6 +111,7 @@ textarea {
 </body>
 <script>
 
+/*
 console.log("${sessionScope.loginId}");
 console.log($('#user_id').html());
 console.log("${sessionScope.admin}");
@@ -110,6 +125,7 @@ if("${sessionScope.admin}" != 'Y') {
 	$('.adminbutton').css('display','none');
 
 };
+*/
 
 
 
@@ -123,38 +139,8 @@ if("${sessionScope.admin}" != 'Y') {
 	}
 	
 	
-	var files = [];
 
-	<c:forEach items="${photos}" var="photo">
-	files.push("${photo}");
-	</c:forEach>
-
-	console.log(files);
-
-	if(files.length>0){//업로드된 파일이 있을 경우
-		
-		var content="";
-		
-		for(var i=0; i<files.length;i++){			
-			console.log("fileName : "+files[i]);//풀 파일명
-			//확장자만 추출(마지막에 있는 . 의 취를 찾아 substring 으로 잘라낸다.)
-			var ext = files[i].substring(files[i].lastIndexOf(".")+1);
-			console.log("ext : "+ext);
-			
-			content += '<a href="/photo/'+files[i]+'"/>'+files[i]+' 다운로드 <a>';
-			content += '<br/>';			
-		}
-		
-		$("#photos").html(content);
-		
-				
-	}else{		//업로드 된 파일이 없을 경우
-		$("#photos").html("<p>업로드 된 파일이 없습니다.</p>");
-	}
-	
-	
-
-
+/*
 	// 관리자 문의게시글 답변 기능
 	$.ajax({
 		type : 'GET',
@@ -230,6 +216,39 @@ if("${sessionScope.admin}" != 'Y') {
 				}
 			});		
 	}
+	
+	
+	
+	
+	var files = [];
+
+	<c:forEach items="${photos}" var="photo">
+	files.push("${photo}");
+	</c:forEach>
+
+	console.log(files);
+
+	if(files.length>0){//업로드된 파일이 있을 경우
+		
+		var content="";
+		
+		for(var i=0; i<files.length;i++){			
+			console.log("fileName : "+files[i]);//풀 파일명
+			//확장자만 추출(마지막에 있는 . 의 취를 찾아 substring 으로 잘라낸다.)
+			var ext = files[i].substring(files[i].lastIndexOf(".")+1);
+			console.log("ext : "+ext);
+			
+			content += '<a href="/photo/'+files[i]+'"/>'+files[i]+' 다운로드 <a>';
+			content += '<br/>';			
+		}
+		
+		$("#photos").html(content);
+		
+				
+	}else{		//업로드 된 파일이 없을 경우
+		$("#photos").html("<p>업로드 된 파일이 없습니다.</p>");
+	}
+	*/
 
 
 

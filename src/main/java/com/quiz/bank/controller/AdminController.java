@@ -39,6 +39,14 @@ public class AdminController {
 		return "login";
 	}
 	*/
+	//admin lefter
+	@RequestMapping(value="/adminLefter")
+	public String adminLefter(Model model) {
+		
+		return "admin/adminLefter";
+	}
+	
+	
 	//관리자 페이지 이동
 	@RequestMapping(value = "/adminPage", method = RequestMethod.GET)
 	public String loginPage(Model model) {

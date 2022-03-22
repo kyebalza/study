@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+		#grid {
+			display : grid;
+			grid-template-columns : 180px 1fr;
+		
+		}
+		
+		
+		#header{
+			width: 100%;
+			height: 180px;
+			/* border-style: none; */
+
+		}
+
+		#lefter{
+			width : 180px;
+			height : 100%;
+		}

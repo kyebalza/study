@@ -9,27 +9,37 @@
 	<!-- 아래 요 친구가 있어야지 페이징이 깨지지 않아요 -->
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="resources/js/jquery.twbsPagination.js"></script>
+	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
+
 	<style>
 		table,tr,th,td{
 			border:1px solid black;
 			border-collapse : collapse ;
 		}
+		#mainPage{
+			padding-right : 200px;
+			padding-top : 50px;
+			padding-left : 10px;
+		}
+		
+	hr{
+		border : 1px solid gray;
+		margin : 10px 0px 10px 0px;
+		width : 200px;
+	}	
+		#grid {
+		min-height : 1000px;
+		}			
 	</style>
 </head>
 <body>
-	<p onclick="location.href='adminPage'">관리자 페이지</p>
-	</br>
-	<p>게시물 관리 시스템</p>
-	<div>
-		<a target="_blank" id="L1" style="color: black; cursor:pointer;">공부 질문</a>
-		<a target="_blank" id="L2" style="color: black; cursor:pointer;">자유</a>
-		<a target="_blank" id="L3" style="color: black; cursor:pointer;">문의</a>
-	</div>
-	</br>
-	<p>공부 게시판 관리</p>
-	</br>
-	</br>
-	</br>
+	<iframe id="header" src="header">
+	</iframe>
+	<div id="grid">
+		<div>
+			<iframe id="lefter" src="adminLefter"></iframe>			
+		</div>
+		<div id="mainPage">
 	<div>
 		<form action="StudySearch" method="GET" name="StudySearch" autocomplete="off">
 			<select name ="SearchType">
@@ -55,9 +65,9 @@
 			</tr>
 		</thead>
 		
-<%-- 			<c:if test="${studyboardlist eq null || size == 0}">
+<!-- 			<c:if test="${studyboardlist eq null || size == 0}">
 			<tr><td colspan="7">해당 게시글은 존재하지 않습니다.</td></tr>
-			</c:if> --%>
+			</c:if> -->
 		
 		<tbody id = "studyboardlist">
  			
@@ -72,6 +82,8 @@
 				</td>
 			</tr>	
 	</table>
+	</div></div>
+	
 </body>
 <script>
 

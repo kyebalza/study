@@ -492,6 +492,13 @@ public class AdminStudyService {
 		return map;
 	}
 
+	public HashMap<String, Object> updateQuizState(String quiz_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = dao.updateQuizState(quiz_no);
+		map.put("msg", success);
+		return map;
+	}
+
 
 
 

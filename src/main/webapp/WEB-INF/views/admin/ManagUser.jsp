@@ -7,20 +7,39 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="resources/js/jquery.twbsPagination.js"></script>
+	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
 	<style>
+	iframe {
+		border : none;
+	}
 		table,tr,th,td{
 			border:1px solid black;
 			border-collapse : collapse ;
 		}
+		#grid {
+		min-height : 1000px;
+		}
+		#mainPage{
+			padding-right : 200px;
+			padding-top : 50px;
+			padding-left : 10px;
+		}
+		
+	hr{
+		border : 1px solid gray;
+		margin : 10px 0px 10px 0px;
+		width : 200px;
+	}			
 	</style>
 </head>
 <body>
-	<p onclick="location.href='adminPage'">관리자 페이지</p>
-	</br>
-	<p>회원 관리 시스템</p>
-	</br>
-	</br>
-	</br>
+	<iframe id="header" src="header">
+	</iframe>
+	<div id="grid">
+		<div>
+			<iframe id="lefter" src="adminLefter"></iframe>			
+		</div>
+		<div id="mainPage">
 	<div>
 		<form action="MemSearch" method="GET" name="MemSearch" autocomplete="off">
 			<select name ="SearchType">
@@ -58,6 +77,7 @@
 				</td>
 			</tr>	
 	</table>
+	</div></div>
 </body>
 <script>
 

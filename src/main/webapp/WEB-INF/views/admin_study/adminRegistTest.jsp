@@ -5,6 +5,8 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
+	
 	<style>
 		#registCategory select{
                 width : 300px;
@@ -62,12 +64,31 @@
             
             }
             
-            
+		#grid {
+		min-height : 1000px;
+		
+		
+		}
+		#mainPage{
+			padding-right : 200px;
+			padding-top : 50px;
+			padding-left : 10px;
+		}
+		
+
+		hr{
+			border : 1px solid gray;
+			margin : 10px 0px 10px 0px;
+			width : 300px;
+		}		            
 	</style>
 </head>
 <body>
-<div id="lefter"></div>
-    <div>
+<iframe id="header" src="header">
+</iframe>
+<div id="grid">
+	<div id="lefter"><iframe id="lefter" src="adminLefter"></iframe>		</div>
+    <div id="mainPage">
         <div id="registCategory">
             <h3>시험 과목 카테고리 관리</h3>
         <hr/><br/>
@@ -149,6 +170,7 @@
 
 
     </div>	
+</div>    
 </body>
 <script>
 var addCate = '';

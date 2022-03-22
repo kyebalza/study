@@ -331,7 +331,12 @@ public class AdminStudyController {
 	}
 	
 	
-	
+	@RequestMapping(value="updateQuizState")
+	@ResponseBody
+	public HashMap<String, Object> updateQuizState(@RequestParam String quiz_no){
+		
+		return service.updateQuizState(quiz_no);
+	}
 	
 	
 	//

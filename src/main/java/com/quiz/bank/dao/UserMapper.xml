@@ -47,7 +47,7 @@
 	</select>
 	
 	<update id="rePassword">
-	UPDATA user_info SET user_pw = #{param2} WHERE user_id = #{param1}
+	UPDATE user_info SET user_pw = #{param2} WHERE user_id = #{param1}
 	</update>
 	
 </mapper>

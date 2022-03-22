@@ -344,7 +344,9 @@
 	SELECT count(*) as allCnt,sum(correct_wrong) as rightCnt FROM quiz_solve WHERE quiz_no = #{param1}
 	</select>
 	
-	
+	<update id="updateQuizState">
+	UPDATE quiz SET del_flag = !del_flag WHERE quiz_no = #{param1}
+	</update>
 
 	
 	

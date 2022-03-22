@@ -22,7 +22,7 @@
 
 	<div>
 		<h1 id="stopwatch">
-            <!-- 지울것 : <input type="hidden" name="elapse_time"> -->
+             <input type="hidden" class="elapse_time">
         </h1>
 	</div>
 		<h3>시험페이지입니다.</h3>
@@ -44,7 +44,7 @@
 				<br/>
 				<div class="correct"><img src="resources/img/correct_circle.png"/></div>
 				<div class="wrong"><img src="resources/img/wrong_x.png"/></div>
-				<div class="quiz_titleArea"><input type="hidden" class="quiz_no.${test.quiz_index}" value="${test.quiz_no}"> ${test.quiz_index}번. ${test.quiz_content}</div>
+				<div class="quiz_titleArea"><input type="hidden" class="quiz_no ${test.quiz_index}" value="${test.quiz_no}"> ${test.quiz_index}번. ${test.quiz_content}</div>
 				<br/>
 				<div class="statisticArea">정답률 ${test.percent}%</div>
 				<br/>
@@ -86,16 +86,16 @@
 					    </c:otherwise>
 					</c:choose>
 				</div>
-				
+				<input type="hidden" class="quiz_answer ${test.quiz_index}" value="${test.quiz_answer}">
 				<div class="answerArea"><h3>정답 : ${test.quiz_answer}</h3></div>
 				<div class="explationArea"><h3>해설 : ${test.quiz_explation}</h3></div>
 			</div>
+			<input type="button" class="question" onclick="question()" value="질문하기"/>
+			<input type="button" class="error" onclick="error()" value="오류신고"/>
 		</c:forEach>
 			<input type="hidden" class="var" value="${i}">
 		<div id="bntArea">
 			<input type="button" class="result" onclick="result()" value="결과보기"/>
-			<input type="button" class="question" onclick="question()" value="질문하기"/>
-			<input type="button" class="error" onclick="error()" value="오류신고"/>
 		</div>
 </body>
 <script>
@@ -107,25 +107,26 @@ var quiz = {}; //quiz의 전역변수 선언
 var quiz_index = 0;// 
 var quiz_state = false;//
 var loginId = "${sessionScope.loginId}";
-var elapse_time = $(".stopwatch").val();
 quizState(quiz_state);//클래스 상태 바꾸기
 
 ///////////////////////////////////////////////////////////////
 //체점하기
-$('#result').click(function(){
+$('.result').click(function(){
 	quizState(quiz_state = !quiz_state);// 클래스 상태 바꾸기
 	var quiz_solve = [];//개별문제결과 테이블 저장
 	var all_quiz_cnt = $('div.quiz_form').length;//문제 양식의 갯수를 센다. quizCnt는 문제 있을 수 있음
+	console.log("all_quiz_cnt : "+all_quiz_cnt);
 	var obj = {};
 	
 	
 	for (var i = 0; i < all_quiz_cnt; i++) {
 		
-		var class_num = $('div#quiz_form')[i].classList[1];//클래스 번호	
-		obj.quiz_index = $('#quiz_index.'+class_num).val();//문제번호
-		obj.quiz_no = $('#quiz_no.'+class_num).val();//문제 식별번호
-		obj.quiz_point = $('#quiz_point.'+class_num).val();//배점
-		obj.quiz_type = $('#quiz_type.'+class_num).val();//문제유형
+		var class_num = $('div.quiz_form')[i].classList[1];//클래스 번호	
+		obj.quiz_index = $('.quiz_index.'+class_num).val();//문제번호
+		obj.quiz_no = $('.quiz_no.'+class_num).val();//문제 식별번호
+		obj.quiz_point = $('.quiz_point.'+class_num).val();//배점
+		obj.quiz_type = $('.quiz_type.'+class_num).val();//문제유형
+		obj.quiz_answer = $('.quiz_answer.'+class_num).val();//문제 정답
 		
 		///////////////////////////////////
 /*		없어도 되나??
@@ -150,7 +151,10 @@ $('#result').click(function(){
 				}
 			}			
 		}
-		obj.answer = answer;
+		if(answer == ''){
+			answer = "0";
+		}
+		obj.my_answer = answer;
 		//////////////////////////////////////
 		
 		quiz_solve.push(JSON.stringify(obj));//개별 문제 풀이 저장
@@ -159,7 +163,6 @@ $('#result').click(function(){
 	console.log(quiz_solve);
 	console.log(JSON.stringify(quiz_solve));
 	
-	console.log(test_obj);
 	$.ajax({
 		url : 'testResult',
 		type : 'get',
@@ -168,7 +171,7 @@ $('#result').click(function(){
 			"params":quiz_solve
 			,"test_prac_flag":"시험"			
 			,"loginId":loginId			
-			,"elapse_time":elapse_time			
+			//,"elapse_time":elapse_time			
 		},
 		dataType : 'JSON',
 		success : function(data){
@@ -262,13 +265,6 @@ $('.bookmark').click(function(){
 
 //////////////////////////////////////////////////////////////////
 //스톱워치
-		//현재 시간 value 로 보내기
-		function time(statusItem ) {
-		   var strText = $(statusItem).text();
-		
-		   // strText 에 담긴 문자열이 stopwatch의 value로 입력된다.
-		   $(".stopwatch").val(strText);
-		}
 
 		var timerId;
         var time = 0;
@@ -293,7 +289,7 @@ $('.bookmark').click(function(){
                 // 데이터 보내기 추가 할 것!!(데이터 전송 버튼 시작)
                 location.href="testDetail?test_cate_no=${test_name.test_cate_no}";// 임시 페이지 이동(결과페이지로 연결할 것)
                 alert('시험이 종료되었습니다');
-            }, 1*10*1000); // 10초 후 알림창
+            }, 100*60*1000); // 100분 후 알림창
         }
 
         // 시간(int)을 시, 분, 초 문자열로 변환

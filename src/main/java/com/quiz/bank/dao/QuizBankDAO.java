@@ -22,6 +22,12 @@ public interface QuizBankDAO {
 	//3.시험보기 페이지 및 시험문제 가져오기
 	ArrayList<HashMap<String, String>> testFrom(String test_no);
 	
+	//3-1. 통계 테스트
+	
+	ArrayList<HashMap<String, String>> quizRightCnt();// 정답
+	
+	ArrayList<HashMap<String, String>> quizAllCnt();// 전체
+
 	//4. 시험 검색기능 
 	ArrayList<TestCategoryDTO> search(HashMap<String, String> params);
 
@@ -39,11 +45,9 @@ public interface QuizBankDAO {
 
 	ArrayList<TestCategoryDTO> test2();
 
-	// 통계 테스트
-
-	ArrayList<HashMap<String, String>> quizRightCnt();// 정답
-
-	ArrayList<HashMap<String, String>> quizAllCnt();// 전체
+	
+	//6-1. 개별 문제풀이 결과테이블
+	int quiz_solve(QuizSolveDTO quizSolveDTO);
 
 
 }

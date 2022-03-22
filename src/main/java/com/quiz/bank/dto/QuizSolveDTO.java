@@ -14,7 +14,7 @@ public class QuizSolveDTO {
 	private int subject_cate_no;
 	private int test_cate_no;
 	private Date solve_date;
-	private boolean corrent_wrong;
+	private boolean correct_wrong;
 	private String test_prac_flag;
 	public int getSolve_no() {
 		return solve_no;
@@ -58,11 +58,11 @@ public class QuizSolveDTO {
 	public void setSolve_date(Date solve_date) {
 		this.solve_date = solve_date;
 	}
-	public boolean isCorrent_wrong() {
-		return corrent_wrong;
+	public boolean iscorrect_wrong() {
+		return correct_wrong;
 	}
-	public void setCorrent_wrong(boolean corrent_wrong) {
-		this.corrent_wrong = corrent_wrong;
+	public void setcorrect_wrong(boolean correct_wrong) {
+		this.correct_wrong = correct_wrong;
 	}
 	public String getTest_prac_flag() {
 		return test_prac_flag;

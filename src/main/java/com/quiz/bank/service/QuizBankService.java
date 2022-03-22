@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 
 import org.apache.tools.ant.util.StringUtils;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -198,9 +199,36 @@ public class QuizBankService {
 		return row;
 	}
 
-	public int testResult(ArrayList<String> params) {
-		// TODO Auto-generated method stub
-		return 0;
+	//6. 체점하기
+	public HashMap<String, Object> testResult(ArrayList<String> params, String test_prac_flag, String loginId, String elapse_time) {
+		QuizSolveDTO quizSolveDTO = new QuizSolveDTO();//타입변환
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = 0;
+		
+		//개별문제풀이 테이블
+		for (int i = 0; i < params.size(); i++) {
+			JSONObject jObject = new JSONObject(params.get(i));//JSON Object로 받아오기
+			quizSolveDTO.setUser_id(loginId);//아이디
+			quizSolveDTO.setQuiz_no(Integer.parseInt(jObject.getString("quiz_no")));//문제식별번호
+			//정답여부
+			int quiz_answer  = Integer.parseInt(jObject.getString("quiz_answer"));
+			int my_answer  = Integer.parseInt(jObject.getString("my_answer"));
+			if(my_answer == quiz_answer) {
+				quizSolveDTO.setcorrect_wrong(true);
+			}else {
+				quizSolveDTO.setcorrect_wrong(false);
+			}
+			quizSolveDTO.setTest_prac_flag(test_prac_flag);//시험/연습
+			//6-1. 개별 문제풀이 결과테이블
+			success = dao.quiz_solve(quizSolveDTO);
+			
+			
+			
+		}
+		
+		
+		
+		return map;
 	}
 
 	

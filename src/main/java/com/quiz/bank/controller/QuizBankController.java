@@ -94,10 +94,13 @@ public class QuizBankController {
 	//6. 체점하기(테스트 중)
 	@RequestMapping(value="testResult")
 	@ResponseBody
-	public HashMap<String, Object> testResult(@RequestParam(value="params[]") ArrayList <String> params){
+	public HashMap<String, Object> testResult(@RequestParam(value="params[]") ArrayList <String> params, String test_prac_flag, String loginId, String elapse_time){
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		int success = service.testResult(params);
+		HashMap<String, Object> success = service.testResult(params, test_prac_flag, loginId, elapse_time);
 		logger.info("{}",params);
+		logger.info("{}",test_prac_flag);
+		logger.info("{}",loginId);
+		//logger.info("{}",elapse_time);
 		map.put("msg", success);
 		return map;
 	}

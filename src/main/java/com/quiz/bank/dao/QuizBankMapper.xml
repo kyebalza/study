@@ -34,6 +34,15 @@
 			WHERE del_flag= 'false' AND test_no=#{param1}
 			ORDER BY quiz_index
 	</select>
+
+	<!-- 3-1. 문제통계 -->
+	<select id="quizAllCnt" resultType="hashmap">
+		SELECT quiz_no , count(quiz_no) as 'all' FROM quiz_solve  GROUP BY quiz_no
+	</select>
+	
+	<select id="quizRightCnt" resultType="hashmap">
+		SELECT quiz_no , count(quiz_no) as 'right' FROM quiz_solve  WHERE correct_wrong = TRUE GROUP BY quiz_no
+	</select>
 	
 	<!-- 4. 시험명 검색기능 -->
 	<select id="search" parameterType="hashmap" 
@@ -68,14 +77,16 @@
 	</select>
 
 
-	<!-- 문제통계 -->
-	<select id="quizAllCnt" resultType="hashmap">
-		SELECT quiz_no , count(quiz_no) as 'all' FROM quiz_solve  GROUP BY quiz_no
-	</select>
-	
-	<select id="quizRightCnt" resultType="hashmap">
-		SELECT quiz_no , count(quiz_no) as 'right' FROM quiz_solve  WHERE correct_wrong = TRUE GROUP BY quiz_no
-	</select>
 
+	<!-- 6-1. 개별 문제풀이 결과테이블 -->
+	<insert id="quiz_solve" parameterType="QuizSlove">
+		INSERT INTO quiz_solve(user_id, quiz_no, correct_wrong, test_prac_flag)
+			VALUES(#{user_id}, #{quiz_no}, #{correct_wrong}, #{test_prac_flag})
+	</insert>
+	<!-- 6-2. 시험 결과 테이블 -->
+	<insert id="test_result" parameterType="TestResult">
+		INSERT INTO test_result(user_id, test_no, elapse_time, score)
+			VALUES(#{user_id}, #{test_no}, #{elapse_time}, #{score})
+	</insert>
 
 </mapper>

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -190,6 +192,29 @@ public class FreeBoardService {
 	public int CountLike(String board_no) {
 		logger.info("좋아요 수 카운트 서비스");
 		return fbdao.CountLike(board_no);
+	}
+
+	//댓글 등록 기능
+	public void fbcoment(HttpSession session, HashMap<String, String> params) {
+		
+		FreeBoardDTO fbdto = new FreeBoardDTO();
+		String user_id = (String)session.getAttribute("loginId");
+		
+		fbdto.setUser_id(user_id);
+		fbdto.setBoard_no(Integer.parseInt(params.get("board_no")));
+		fbdto.setReply_content(params.get("reply_content"));
+		
+		//댓글 등록
+		fbdao.fbcoment(fbdto);
+//		int reply_no = fbdto.getReply_no();
+		logger.info("댓글 등록 서비스 확인");
+		
+	}
+
+	//댓글 불러오기
+	public ArrayList<FreeBoardDTO> freeboardcoment(String board_no) {
+		ArrayList<FreeBoardDTO> coment = fbdao.freeboardcoment(board_no);
+		return coment;
 	}
 
 }

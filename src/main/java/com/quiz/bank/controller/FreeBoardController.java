@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.bank.dto.FreeBoardDTO;
 import com.quiz.bank.dto.InquiryBoardDTO;
@@ -78,24 +81,52 @@ public class FreeBoardController {
 	
 	//자유게시판 상세보기
 	@RequestMapping(value = "/freeBoardDetail", method = RequestMethod.GET)
-	public String freeBoardDetail(Model model, @RequestParam String board_no) {
+	public String freeBoardDetail(Model model, @RequestParam String board_no, HttpSession session) {
 		logger.info("자유게시판 상세보기 요청 : {}", board_no);
 
+		//내용
 		FreeBoardDTO fbdto = fbservice.freeBoardDetail(board_no);
 		logger.info("dto : {}", fbdto.getBoard_no());
-
 		model.addAttribute("info", fbdto);
 		
+		//사진
 		ArrayList<PhotoDTO> fbphoto = fbservice.fbphoto(board_no);
 		logger.info("사진 : "+fbphoto);
 		model.addAttribute("fbphoto", fbphoto);
 
+		//좋아요
 		int CountLike = fbservice.CountLike(board_no);
 		logger.info("좋아요 갯수 : "+CountLike);
 		model.addAttribute("like", CountLike);
 		
+		//댓글
+		ArrayList<FreeBoardDTO> fbcom = fbservice.freeboardcoment(board_no);
+		logger.info("댓글 : "+board_no );
+		model.addAttribute("fbcomList",fbcom);
+		logger.info("댓글 목록 요청 : "+fbcom);
+		
+		model.addAttribute("loginId", session.getAttribute("loginId"));
+		
+		
 		return "freeBoard/freeBoardDetail";
 	}	
+	
+	//댓글
+	/*
+	 * @RequestMapping(value = "/freeboardcoment", method = RequestMethod.POST)
+	 * public String freeboardcoment(Model model, HttpSession session, @RequestParam
+	 * String board_no) {
+	 * 
+	 * logger.info("마이크 테스트"); model.addAttribute("loginId",
+	 * session.getAttribute("loginId")); ArrayList<FreeBoardDTO> fbdto =
+	 * fbservice.freeboardcoment(board_no); logger.info("댓글 목록 요청 : "+fbdto);
+	 * model.addAttribute("fbcomList",fbdto);
+	 * 
+	 * 
+	 * return "freeBoard/fbComent"; }
+	 */
+	
+	
 	
 	//자유게시판 삭제
 	@RequestMapping(value = "/freedelete", method = RequestMethod.GET)
@@ -170,6 +201,25 @@ public class FreeBoardController {
 	}	
 	
 	
+	//자유 게시판 신고 팝업창 출력
+	@RequestMapping(value = "freeboardReport")
+	public String freeboardReport (HttpServletRequest request, HttpServletResponse response, Model model) throws Exception{
+		
+		return "freeBoard/freeboardReport";
+	}
+	
+	//댓글 작성
+	@RequestMapping(value="fbcoment", method = RequestMethod.POST)
+	public String fbcoment(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
+		logger.info("댓글 등록 요청" + session +" / "+ params);
+		fbservice.fbcoment(session, params);
+		String user_id = params.get("user_id");
+		
+		return "redirect:/freeBoardDetail?board_no="+params.get("board_no");
+				
+	}
+	
+
 	
 	
 }

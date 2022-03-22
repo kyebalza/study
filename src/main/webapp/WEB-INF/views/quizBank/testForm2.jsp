@@ -27,11 +27,10 @@
 	</div>
 		<h3>시험페이지입니다.</h3>
 			<c:forEach items="${test}" var="test">
-			<!-- 지울 것 : <c:set var="i" value="${i+1}"/> -->
-			<div class="quiz_form ${test.quiz_index}">
-			<input type="hidden" class="quiz_index ${test.quiz_index}" value="${test.quiz_index}">
+			<c:set var="i" value="${i+1}"/>
+			<div class="문제${i}">
 				<hr/>
-					<!-- 지울 것 :  <input type="hidden" value="${test.quiz_no}"/> -->
+					<input type="hidden" value="${test.quiz_no}"/>
 					<c:choose>
 						<c:when test="${test.bookmark_quiz_no != null && test.user_id == loginId}">
 							<img class="bookmark" src="resources/img/별.png" alt="북마크">
@@ -44,48 +43,45 @@
 				<br/>
 				<div class="correct"><img src="resources/img/correct_circle.png"/></div>
 				<div class="wrong"><img src="resources/img/wrong_x.png"/></div>
-				<div class="quiz_titleArea"><input type="hidden" class="quiz_no.${test.quiz_index}" value="${test.quiz_no}"> ${test.quiz_index}번. ${test.quiz_content}</div>
+				<div class="quiz_titleArea">${test.quiz_index}번. ${test.quiz_content}</div>
 				<br/>
 				<div class="statisticArea">정답률 ${test.percent}%</div>
-				<br/>
-				<input type="hidden" class="quiz_point ${test.quiz_index}" value="${test.quiz_point}">
 				<br/>
 				<div class="imgArea">사진</div>
 				<br/>
 				<!-- 지울 것 :  <ul class="${test.quiz_no}+'${i}'"> -->
-				<div class="optArea">
-					<input type="hidden" class="quiz_type ${test.quiz_index}" value="${test.quiz_type}">
+				<ul>
 					<c:choose>
 						<c:when test="${test.quiz_type eq '1'}">
-							<p><input type="text" class="option1"/></p>
+							<li><input type="text"/></li>
 						</c:when>
 						<c:when test="${test.quiz_type eq '2'}">
-							<p><input type="checkbox" name="answer" value="1" class="option_yn1 ${test.quiz_index}">①${test.option1}</p>
-							<p><input type="checkbox" name="answer" value="2" class="option_yn2 ${test.quiz_index}">②${test.option2}</p>
+							<li><input type="checkbox" name="answer" value="1" class="quiz1">①${test.option1}</li>
+							<li><input type="checkbox" name="answer" value="2" class="quiz2">②${test.option2}</li>
 						</c:when>
 						<c:when test="${test.quiz_type eq '3'}">
-							<p><input type="checkbox" name="answer" value="1" class="option_yn1 ${test.quiz_index}">①${test.option1}</p>
-							<p><input type="checkbox" name="answer" value="2" class="option_yn2 ${test.quiz_index}">②${test.option2}</p>
-							<p><input type="checkbox" name="answer" value="3" class="option_yn3 ${test.quiz_index}">③${test.option3}</p>
+							<li><input type="checkbox" name="answer" value="1" class="quiz1">①${test.option1}</li>
+							<li><input type="checkbox" name="answer" value="2" class="quiz2">②${test.option2}</li>
+							<li><input type="checkbox" name="answer" value="3" class="quiz3">③${test.option3}</li>
 						</c:when>
 						<c:when test="${test.quiz_type eq '4'}">
-							<p><input type="checkbox" name="answer" value="1" class="option_yn1 ${test.quiz_index}">①${test.option1}</p>
-							<p><input type="checkbox" name="answer" value="2" class="option_yn2 ${test.quiz_index}">②${test.option2}</p>
-							<p><input type="checkbox" name="answer" value="3" class="option_yn3 ${test.quiz_index}">③${test.option3}</p>
-							<p><input type="checkbox" name="answer" value="4" class="option_yn4 ${test.quiz_index}">④${test.option4}</p>
+							<li><input type="checkbox" name="answer" value="1" class="quiz1">①${test.option1}</li>
+							<li><input type="checkbox" name="answer" value="2" class="quiz2">②${test.option2}</li>
+							<li><input type="checkbox" name="answer" value="3" class="quiz3">③${test.option3}</li>
+							<li><input type="checkbox" name="answer" value="4" class="quiz4">④${test.option4}</li>
 						</c:when>
 						<c:when test="${test.quiz_type eq '5'}">
-							<p><input type="checkbox" name="answer" value="1" class="option_yn1 ${test.quiz_index}">①${test.option1}</p>
-							<p><input type="checkbox" name="answer" value="2" class="option_yn2 ${test.quiz_index}">②${test.option2}</p>
-							<p><input type="checkbox" name="answer" value="3" class="option_yn3 ${test.quiz_index}">③${test.option3}</p>
-							<p><input type="checkbox" name="answer" value="4" class="option_yn4 ${test.quiz_index}">④${test.option4}</p>
-							<p><input type="checkbox" name="answer" value="5" class="option_yn5 ${test.quiz_index}"> ⑤${test.option5}</p>
+							<li><input type="checkbox" name="answer" value="1" class="quiz1">①${test.option1}</li>
+							<li><input type="checkbox" name="answer" value="2" class="quiz2">②${test.option2}</li>
+							<li><input type="checkbox" name="answer" value="3" class="quiz3">③${test.option3}</li>
+							<li><input type="checkbox" name="answer" value="4" class="quiz4">④${test.option4}</li>
+							<li><input type="checkbox" name="answer" value="5" class="quiz5"> ⑤${test.option5}</li>
 						</c:when>
 						<c:otherwise>
-					        <p><input type="hidden" name="answer" value="0"></p>
+					        <li><input type="hidden" name="answer" value="0"></li>
 					    </c:otherwise>
 					</c:choose>
-				</div>
+				</ul>
 				
 				<div class="answerArea"><h3>정답 : ${test.quiz_answer}</h3></div>
 				<div class="explationArea"><h3>해설 : ${test.quiz_explation}</h3></div>
@@ -99,86 +95,14 @@
 		</div>
 </body>
 <script>
-
-
-
 /////////////////////////////////////////////////////////
 var quiz = {}; //quiz의 전역변수 선언 
 var quiz_index = 0;// 
 var quiz_state = false;//
 var loginId = "${sessionScope.loginId}";
-var elapse_time = $(".stopwatch").val();
 quizState(quiz_state);//클래스 상태 바꾸기
-
-///////////////////////////////////////////////////////////////
-//체점하기
-$('#result').click(function(){
-	quizState(quiz_state = !quiz_state);// 클래스 상태 바꾸기
-	var quiz_solve = [];//개별문제결과 테이블 저장
-	var all_quiz_cnt = $('div.quiz_form').length;//문제 양식의 갯수를 센다. quizCnt는 문제 있을 수 있음
-	var obj = {};
-	
-	
-	for (var i = 0; i < all_quiz_cnt; i++) {
-		
-		var class_num = $('div#quiz_form')[i].classList[1];//클래스 번호	
-		obj.quiz_index = $('#quiz_index.'+class_num).val();//문제번호
-		obj.quiz_no = $('#quiz_no.'+class_num).val();//문제 식별번호
-		obj.quiz_point = $('#quiz_point.'+class_num).val();//배점
-		obj.quiz_type = $('#quiz_type.'+class_num).val();//문제유형
-		
-		///////////////////////////////////
-/*		없어도 되나??
-		obj.option1 = '';
-		obj.option2  = '';
-		obj.option3  = '';
-		obj.option4  = '';
-		obj.option5  = '';
-		for (var j = 1; j <= obj.quiz_type; j++) {
-			obj["option"+j] = $('.option'+j+'.'+class_num).val();
-		}
-*/		
-		/////////////////////////////////////////////////////////////////////////////////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!현재 여기까지 진행 $(e)[0].classList[1] 이게 뭐지????????
-		var answer = '';
-		//정답저장 : 주관식일때
-		if(obj.quiz_type == 1){
-			answer = obj.option1 = $('.option1.'+class_num).val();
-		} else {
-			for (var k = 1; k <= 5; k++) {
-				if($('.option_yn'+k+'.'+class_num+':checked').val() > 0){
-					answer += $('.option_yn'+k+'.'+class_num+':checked').val();							
-				}
-			}			
-		}
-		obj.answer = answer;
-		//////////////////////////////////////
-		
-		quiz_solve.push(JSON.stringify(obj));//개별 문제 풀이 저장
-		console.log(obj);
-	}
-	console.log(quiz_solve);
-	console.log(JSON.stringify(quiz_solve));
-	
-	console.log(test_obj);
-	$.ajax({
-		url : 'testResult',
-		type : 'get',
-		data : {
-			//"test_info":JSON.stringify(test_obj),
-			"params":quiz_solve
-			,"test_prac_flag":"시험"			
-			,"loginId":loginId			
-			,"elapse_time":elapse_time			
-		},
-		dataType : 'JSON',
-		success : function(data){
-			console.log(data.msg);
-		},
-		error : function(e){}
-	});
-});
-
-
+var dd = $(".var").val();
+console.log(dd);
 
 //////////////////////////////////////////////////////////////////////
 //버튼바꾸기

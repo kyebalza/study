@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.tools.ant.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +97,7 @@ public class QuizBankService {
 				asd.put("percent", percent);
 				
 				per.add(asd);
-				logger.info("퀴즈넘버"+per);
+				//logger.info("퀴즈넘버"+per);
 				
 				
 			}
@@ -105,12 +106,11 @@ public class QuizBankService {
 		for(int i = 0; i <testList.size(); ++i) {
 			String comp_no = String.valueOf(testList.get(i).get("quiz_no"));
 			logger.info(comp_no);
-			//이게 문제!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			for(int i2 = 0; i2 <per.size(); ++i2) {
 				String comp_no2 = String.valueOf(per.get(i2).get("quiz_no"));
-				logger.info("컴프넘버2"+comp_no2);
+				//logger.info("컴프넘버2"+comp_no2);
 				if(comp_no.equals(comp_no2)) {
-					logger.info("값 담김");
+					//logger.info("값 담김");
 					testList.get(i).put("percent",String.valueOf(per.get(i2).get("percent")));
 				}
 			}
@@ -196,6 +196,11 @@ public class QuizBankService {
 		int row = dao.bookMark_Insert(loginId,quiz_no);
 		logger.info(" 입력된 건수 : {}",row);
 		return row;
+	}
+
+	public int testResult(ArrayList<String> params) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	

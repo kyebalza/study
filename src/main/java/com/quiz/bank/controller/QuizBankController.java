@@ -1,5 +1,6 @@
 package com.quiz.bank.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -89,4 +90,15 @@ public class QuizBankController {
 		return map;
 	}
 	
+	////////////////////////////////////
+	//6. 체점하기(테스트 중)
+	@RequestMapping(value="testResult")
+	@ResponseBody
+	public HashMap<String, Object> testResult(@RequestParam(value="params[]") ArrayList <String> params){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int success = service.testResult(params);
+		logger.info("{}",params);
+		map.put("msg", success);
+		return map;
+	}
 }

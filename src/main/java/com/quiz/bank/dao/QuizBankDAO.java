@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.quiz.bank.dto.QuizDTO;
 import com.quiz.bank.dto.QuizSolveDTO;
 import com.quiz.bank.dto.TestCategoryDTO;
+import com.quiz.bank.dto.TestResultDTO;
 
 public interface QuizBankDAO {
 
@@ -48,6 +49,8 @@ public interface QuizBankDAO {
 	
 	//6-1. 개별 문제풀이 결과테이블
 	int quiz_solve(QuizSolveDTO quizSolveDTO);
+	//6-2. 시험 결과 테이블
+	int test_result(TestResultDTO testResultDTO);
 
 
 }

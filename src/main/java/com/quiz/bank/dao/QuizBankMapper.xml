@@ -83,5 +83,10 @@
 		INSERT INTO quiz_solve(user_id, quiz_no, correct_wrong, test_prac_flag)
 			VALUES(#{user_id}, #{quiz_no}, #{correct_wrong}, #{test_prac_flag})
 	</insert>
+	<!-- 6-2. 시험 결과 테이블 -->
+	<insert id="test_result" parameterType="TestResult">
+		INSERT INTO test_result(user_id, test_no, elapse_time, score)
+			VALUES(#{user_id}, #{test_no}, #{elapse_time}, #{score})
+	</insert>
 
 </mapper>

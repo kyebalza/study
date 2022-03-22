@@ -17,6 +17,7 @@ import com.quiz.bank.dao.QuizBankDAO;
 import com.quiz.bank.dto.QuizDTO;
 import com.quiz.bank.dto.QuizSolveDTO;
 import com.quiz.bank.dto.TestCategoryDTO;
+import com.quiz.bank.dto.TestResultDTO;
 
 @Service
 public class QuizBankService {
@@ -200,10 +201,13 @@ public class QuizBankService {
 	}
 
 	//6. 체점하기
-	public HashMap<String, Object> testResult(ArrayList<String> params, String test_prac_flag, String loginId, String elapse_time) {
+	public HashMap<String, Object> testResult(ArrayList<String> params, String test_prac_flag, String loginId, String elapse_time, String test_no) {
 		QuizSolveDTO quizSolveDTO = new QuizSolveDTO();//타입변환
+		TestResultDTO testResultDTO = new TestResultDTO();//타입변환
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int success = 0;
+		int success2 = 0;
+		int score = 0;
 		
 		//개별문제풀이 테이블
 		for (int i = 0; i < params.size(); i++) {
@@ -215,17 +219,27 @@ public class QuizBankService {
 			int my_answer  = Integer.parseInt(jObject.getString("my_answer"));
 			if(my_answer == quiz_answer) {
 				quizSolveDTO.setcorrect_wrong(true);
+				int first_quiz_point = Integer.parseInt(jObject.getString("quiz_point"));
+				logger.info("저음 점수 {}",first_quiz_point);
+				score += first_quiz_point;
+				logger.info("합쳐진 점수 {}",score);
+				map.put("result", 1);
 			}else {
 				quizSolveDTO.setcorrect_wrong(false);
+				map.put("result", 0);
 			}
 			quizSolveDTO.setTest_prac_flag(test_prac_flag);//시험/연습
 			//6-1. 개별 문제풀이 결과테이블
 			success = dao.quiz_solve(quizSolveDTO);
-			
-			
-			
+			logger.info("개별문제풀이 업로드 성공여부 {}", success);
 		}
-		
+		//6-2. 시험 결과 테이블
+		testResultDTO.setUser_id(loginId);
+		testResultDTO.setTest_no(Integer.parseInt(test_no));
+		testResultDTO.setElapse_time(elapse_time);
+		testResultDTO.setScore(score);
+		success2 = dao.test_result(testResultDTO);
+		logger.info("시험 결과 업로드 성공여부 {}", success2);
 		
 		
 		return map;

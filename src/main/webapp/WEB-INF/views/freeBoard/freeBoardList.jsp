@@ -121,6 +121,16 @@
 	
 	listCall(currPage,10);
 	
+	function more(){ //다음 페이지로 넘겼을 때
+		currPage++;
+		console.log('currPage',currPage);
+		if(currPage>totalPage){
+			$('button').attr('disabled',true);
+		}else{
+			listCall(currPage, 10);			
+		}
+	}
+
 	function listCall(page, cnt){
 		
 		$.ajax({

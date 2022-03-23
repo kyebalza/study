@@ -5,11 +5,19 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+		
+
 	<style>
-	table, th, td {
-		border-collapse: collapse;
-		padding : 5px 10px;  
+		#header{
+		width: 100%;
+		height: 100px;
+		/* border-style: none; */
+		overflow: hidden;
 	}
+	body{
+	margin : 0px;
+	}	
+
 	.alllogin{
 		width: 375px;
 		height: 300px;
@@ -67,6 +75,8 @@
 	</style>
 </head>
 <body>
+<iframe id="header" src="header"></iframe>
+
 <div class = "alllogin">
 <div class = "login">
 	<table>

@@ -24,9 +24,21 @@
 		#joinForm{
 			text-align: center;
 		}
+	#header{
+		width: 100%;
+		height: 100px;
+		/* border-style: none; */
+		overflow: hidden;
+	}
+	body{
+	margin : 0px;
+	}
 	</style>
 </head>
 <body>
+
+<iframe id="header" src="header"></iframe>
+
 	<div class="alljoin">
 		<form id="joinForm" action="join" method="post">
 			<table>

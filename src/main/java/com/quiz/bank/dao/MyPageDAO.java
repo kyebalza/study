@@ -27,5 +27,7 @@ public interface MyPageDAO {
 
 	ArrayList<HashMap<String, String>> myPagefreeReplyListCall(String loginId, int pagePerCnt, int offset);
 
+	ArrayList<HashMap<String, String>> myTestListCall(String loginId);
+
 
 }

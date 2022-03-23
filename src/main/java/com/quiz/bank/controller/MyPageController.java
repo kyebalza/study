@@ -84,6 +84,18 @@ public class MyPageController {
 		logger.info("map : {}",map);
 		return map;
 	}	
+	
+	
+	@RequestMapping(value="myTestListCall")
+	@ResponseBody
+	public HashMap<String, Object> myTestListCall(HttpSession session){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String loginId = (String) session.getAttribute("loginId");
+		map = service.myTestListCall(loginId);
+		
+		return map;
+	}
+	
 		
 	
 }

@@ -19,7 +19,6 @@
 		.quiz_form {
 			width: 900px;
 	    	height: auto;
-			border : 1px solid gray;
 			border-radius : 5px;
 			margin-left: auto; 
 			margin-right: auto;
@@ -49,7 +48,7 @@
 			left : 2%;
 	        z-index: 3;	
 		}
-		.worng,.wrong img{
+		.wrong,.wrong img{
 			width : 10px;
 	        height : 10px;
 			/*position: absolute;*/
@@ -66,16 +65,99 @@
 			width : 150px;
 			height : 150px;
 		}
+		.test_name{
+		    border: solid yellowgreen;
+		    text-align: center;
+		    background-color: yellowgreen;
+		    color: white;
+		}
+		.score{
+			margin: 40px;
+		    border: yellowgreen solid;
+		    text-align: center;
+		    background: yellowgreen;
+		    border-radius: 25px;
+		    height: 50px;
+		    padding: 20px;
+		    font-size: 35px;
+		    color: white;
+		}
+		.elapse_time{
+			text-align: center;
+		    font-size: 23px;
+		    color: red;
+		}
+		.answerArea{
+			border: solid greenyellow;
+		    text-align: center;
+		    background-color: greenyellow;
+		    border-radius: 9px;
+		    font-size: 20px;
+		}
+		.explationArea{
+			border: solid yellowgreen;
+		    text-align: center;
+		    background-color: yellowgreen;
+		    border-radius: 9px;
+		    font-size: 20px;
+		    margin-top: 15px;
+		    margin-bottom: 15px;
+		    padding: 20px;
+		    color: white;
+		}
+		.bntArea{
+			text-align: right;
+			margin-bottom: 15px;
+		}
+		.question{
+			background-color: #96d36f;
+		    border: #96d36f;
+		    padding: 10px;
+		    border-radius: 8px;
+		    cursor: pointer;
+		    color: white;
+		}
+		.error{
+			background-color: #ffac93;
+   			border: #ffac93;
+		    padding: 10px;
+		    border-radius: 8px;
+		    cursor: pointer;
+		    color: white;
+		}
+		.statisticArea{
+			text-align: right;
+		    color: #b9b9b9;
+		    font-size: 15px;
+		}
+		.quiz_titleArea{
+			font-size: 20px;
+    		font-weight: 600;
+		}
 	</style>
 </head>
 <body>
-	<div class="elapse_time">
-		${testResult.elapse_time}
+	<div class="test_name">
+		<h1>${test_info.test_year}년 ${test_info.test_count}회  ${test_info.test_cate} [결과]</h1>
 	</div>
-		<h3>결과페이지입니다.</h3>
+	<div class="score">
+		<c:choose>
+			<c:when test="${test_info.test_cate_pass <= testResult.score}">
+				합격 [ ${testResult.score}점 ]
+			</c:when>
+			<c:otherwise>
+				불합격 [ ${testResult.score}점 ]
+			</c:otherwise>
+		</c:choose>
+	</div>
+	<div class="elapse_time">
+		 소요시간 : ${testResult.elapse_time}
+	</div>
 			<c:forEach items="${test}" var="test">
 				<hr/>
+				<input type="hidden" value="${test.quiz_no}"/>
 			<div class="quiz_form ${test.quiz_index}">
+			
 				<c:choose>
 					<c:when test="${test.correct_wrong eq true}">
 						<div class="correct"><img src="resources/img/correct_circle.png"/></div>
@@ -85,6 +167,8 @@
 					</c:otherwise>
 				</c:choose>
 				<br/>
+				<input type="hidden" class="quiz_index ${test.quiz_index}" value="${test.quiz_index}">
+				<input type="hidden" value="${test.quiz_no}"/>
 				<c:choose>
 					<c:when test="${test.bookmark_quiz_no != null && test.user_id == loginId}">
 						<img class="bookmark" src="resources/img/별.png" alt="북마크">
@@ -94,14 +178,16 @@
 						<img class="bookmark" src="resources/img/빈별.png" alt="빈 북마크">
 					</c:otherwise> 
 				</c:choose>  
-				<div class="quiz_titleArea">${test.quiz_index}번. ${test.quiz_content}</div>
+				<div class="quiz_titleArea"><input type="hidden" class="quiz_no ${test.quiz_index}" value="${test.quiz_no}">${test.quiz_index}. ${test.quiz_content}</div>
 				<br/>
 				<c:if test="${test.percent != null}">
 					<div class="statisticArea">정답률 ${test.percent}%</div>
 				</c:if>
 				<br/>
 				<br/>
-				<div class="imgArea">사진</div>
+				<c:if test="${test.photo != null}">
+					<div class="imgArea"><img class="quiz_photo" src="/photo/${test.photo}" alt="quiz_img"/></div>
+				</c:if>
 				<br/>
 				<div class="optArea">
 					<c:choose>
@@ -135,11 +221,12 @@
 					    </c:otherwise>
 					</c:choose>
 				</div>
-				<div class="answerArea"><h3>정답 : ${test.quiz_answer}</h3></div>
-				<div class="explationArea"><h3>해설 : ${test.quiz_explation}</h3></div>
-			<div>
+				<div class="answerArea">정답 : ${test.quiz_answer}</div>
+				<div class="explationArea">해설 : ${test.quiz_explation}</div>
+			<div class="bntArea">
 				<input type="button" class="question" onclick="question()" value="질문하기"/>
-				<input type="button" class="error" onclick="error()" value="오류신고" name="${test.quiz_no}"/>
+				<input type="hidden" value="${test.quiz_no}"/>
+				<input type="button" class="error" onclick="error()" value="오류신고"/>
 			</div>
 			</div>
 		</c:forEach>
@@ -240,15 +327,18 @@ function question(){
 	openNewWindow.location.href='studyBoard/writeForm';
 }
 ///////////////////////////////////////////////////////////////////////////
-/*
+//오류신고
+$('.error').click(function(){
+ 	  quiz_no = $(this).prev().val();
+});
+      
 function error(){
+		console.log("문재 번호"+quiz_no);
 	if(loginId == null){
 		alert('로그인 서비스입니다.');
 	} else{
 		
 		var report_content = prompt('오류내용을 입력해주세요.');
-		var quiz_no = $(this).attr("name");
-		console.log(quiz_no);
 		
 		if(report_content  == ''){
 			alert('오류내용을 입력해 주세요');
@@ -258,7 +348,7 @@ function error(){
 			$.ajax({
 				url : 'quizErrorReport',
 				type : 'get',
-				data : {'report_content':report_content,'quiz_no':quiz_no ,'loginId':loginId,'answer':answer},
+				data : {'report_content':report_content,'quiz_no':quiz_no ,'loginId':loginId},
 				dataType : 'json',
 				success : function(data){
 					if(data.msg > 0){alert('오류신고가 접수되었습니다.');}
@@ -268,6 +358,6 @@ function error(){
 		}	
 	}
 }
-*/
+
 </script>
 </html>

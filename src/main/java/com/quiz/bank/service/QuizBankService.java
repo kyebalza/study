@@ -205,15 +205,27 @@ public class QuizBankService {
 			}
 		}
 
+		
+		//사진 가져오기 
+		ArrayList<HashMap<String, String>> quiz_Photo = dao.quiz_Photo();
+		//사진+ 통계 값 담기
 		for(int i = 0; i <testList.size(); ++i) {
 			String comp_no = String.valueOf(testList.get(i).get("quiz_no"));
 			logger.info(comp_no);
 			for(int i2 = 0; i2 <per.size(); ++i2) {
 				String comp_no2 = String.valueOf(per.get(i2).get("quiz_no"));
-				logger.info("컴프넘버2"+comp_no2);
+				logger.info("통계넘버"+comp_no2);
 				if(comp_no.equals(comp_no2)) {
-					logger.info("값 담김");
+					logger.info("통계 값 담김");
 					testList.get(i).put("percent",String.valueOf(per.get(i2).get("percent")));
+				}
+			}
+			for(int i3 = 0; i3 <quiz_Photo.size(); ++i3) {
+				String comp_no3 = String.valueOf(quiz_Photo.get(i3).get("board_no"));
+				logger.info("사진넘버"+comp_no3);
+				if(comp_no.equals(comp_no3)) {
+					logger.info("사진 값 담김");
+					testList.get(i).put("photo",String.valueOf(quiz_Photo.get(i3).get("new_filename")));
 				}
 			}
 		}
@@ -393,15 +405,27 @@ public class QuizBankService {
 			}
 		}
 
+
+		//사진 가져오기 
+		ArrayList<HashMap<String, String>> quiz_Photo = dao.quiz_Photo();
+		//사진+ 통계 값 담기
 		for(int i = 0; i <testList.size(); ++i) {
 			String comp_no = String.valueOf(testList.get(i).get("quiz_no"));
 			logger.info(comp_no);
 			for(int i2 = 0; i2 <per.size(); ++i2) {
 				String comp_no2 = String.valueOf(per.get(i2).get("quiz_no"));
-				logger.info("컴프넘버2"+comp_no2);
+				logger.info("통계넘버"+comp_no2);
 				if(comp_no.equals(comp_no2)) {
-					logger.info("값 담김");
+					logger.info("통계 값 담김");
 					testList.get(i).put("percent",String.valueOf(per.get(i2).get("percent")));
+				}
+			}
+			for(int i3 = 0; i3 <quiz_Photo.size(); ++i3) {
+				String comp_no3 = String.valueOf(quiz_Photo.get(i3).get("board_no"));
+				logger.info("사진넘버"+comp_no3);
+				if(comp_no.equals(comp_no3)) {
+					logger.info("사진 값 담김");
+					testList.get(i).put("photo",String.valueOf(quiz_Photo.get(i3).get("new_filename")));
 				}
 			}
 		}
@@ -456,7 +480,10 @@ public class QuizBankService {
 	public ModelAndView resultFrom(int test_result_no, String loginId) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("quizBank/resultForm");
-		ArrayList<HashMap<String, String>> testList = dao.resultFrom(test_result_no);//문제 리스트 + 결과
+		ArrayList<HashMap<String, String>> testList = dao.resultFrom(test_result_no);//9.문제 리스트 + 결과
+		
+		
+		
 		
 		//문제 통계내기
 		ArrayList<HashMap<String, String>> quizRightCntList = dao.quizRightCnt();//문제당 정답 횟수
@@ -487,26 +514,45 @@ public class QuizBankService {
 			}
 		}
 
+
+		//사진 가져오기 
+		ArrayList<HashMap<String, String>> quiz_Photo = dao.quiz_Photo();
+		//사진+ 통계 값 담기
 		for(int i = 0; i <testList.size(); ++i) {
 			String comp_no = String.valueOf(testList.get(i).get("quiz_no"));
 			logger.info(comp_no);
 			for(int i2 = 0; i2 <per.size(); ++i2) {
 				String comp_no2 = String.valueOf(per.get(i2).get("quiz_no"));
-				logger.info("컴프넘버2"+comp_no2);
+				logger.info("통계넘버"+comp_no2);
 				if(comp_no.equals(comp_no2)) {
-					logger.info("값 담김");
+					logger.info("통계 값 담김");
 					testList.get(i).put("percent",String.valueOf(per.get(i2).get("percent")));
 				}
 			}
+			for(int i3 = 0; i3 <quiz_Photo.size(); ++i3) {
+				String comp_no3 = String.valueOf(quiz_Photo.get(i3).get("board_no"));
+				logger.info("사진넘버"+comp_no3);
+				if(comp_no.equals(comp_no3)) {
+					logger.info("사진 값 담김");
+					testList.get(i).put("photo",String.valueOf(quiz_Photo.get(i3).get("new_filename")));
+				}
+			}
 		}
-
-		logger.info("회차별 시험문제 리스트 갯수 : {}", testList.size());
-		mav.addObject("test", testList);
 		
+		logger.info("회차별 시험문제 리스트 갯수 : {}",testList.size());
+		mav.addObject("test", testList);
 		//9-1.시험결과 가져오기
 		HashMap<String, String> testResult= dao.getTestResult(test_result_no);
 		mav.addObject("testResult", testResult);
 		
+		//9-2. 시험 기본 정보들 가져오기
+		String String_test_cate_no = String.valueOf(testList.get(1).get("test_cate_no"));//test_cate_no 가져오기
+		String String_test_no = String.valueOf(testList.get(1).get("test_no"));//test_no 가져오기
+		int test_cate_no = Integer.parseInt(String_test_cate_no);
+		int test_no = Integer.parseInt(String_test_no);
+		HashMap<String, String> test_info = dao.test_info(test_cate_no, test_no);
+		mav.addObject("test_info", test_info);
+
 		//로그인 아이디 확인
 		logger.info("로그인 아이디 : "+loginId);
 		mav.addObject("loginId", loginId);

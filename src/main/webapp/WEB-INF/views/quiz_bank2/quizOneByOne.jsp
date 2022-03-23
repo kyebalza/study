@@ -44,7 +44,7 @@
 		left : 2%;
         z-index: 3;	
 	}
-	#worng,#wrong img{
+	#wrong,#wrong img{
 		width : 10px;
         height : 10px;
 		position: absolute;

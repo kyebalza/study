@@ -16,6 +16,9 @@
 		/* border-style: none; */
 		overflow: hidden;
 	}
+	body{
+	margin : 0px;
+	}	
 	span{
 		padding-left : 300px;
 		font-size : 10px;
@@ -41,9 +44,7 @@
 		width : 150px;
 	}
 
-body{
-	margin : 0px;
-}	
+
 
 		
 	</style>
@@ -57,7 +58,7 @@ body{
 	<div id="mainPage">
 <div id="all">
 <div id="myPageHeader">
-	<input type="button" value="내 알림" onclick="location.href='myNotice'"/>
+<!-- 	<input type="button" value="내 알림" onclick="location.href='myNotice'"/> -->	
 	<input type="button" id="nowPage" value="내가 쓴 게시글" onclick="location.href='myBoard'"/>
 	<input type="button" value="내가 쓴 댓글" onclick="location.href='myReply'"/>
 	<input type="button" value="응시한 시험" onclick="location.href='myTest'"/>

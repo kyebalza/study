@@ -181,6 +181,17 @@ public class MyPageService {
 	}
 
 
+
+
+	public HashMap<String, Object> myTestListCall(String loginId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<HashMap<String, String>> myTestList = dao.myTestListCall(loginId);
+		map.put("myTestList", myTestList);
+		
+		return map;
+	}
+
+
 	
 
 }

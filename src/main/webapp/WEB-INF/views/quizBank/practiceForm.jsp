@@ -16,6 +16,56 @@
 		.view{
 			display : none;
 		}
+		.quiz_form {
+			width: 900px;
+	    	height: auto;
+			border : 1px solid gray;
+			border-radius : 5px;
+			margin-left: auto; 
+			margin-right: auto;
+		}
+	
+		.titleArea h2{
+			background-color : greenyellow;
+		
+		}
+		.bookMarkArea img{
+			width : 20px;
+			height : 20px;
+		}	
+		input[type="checkbox"]{
+			border-radius : 5px;
+		}
+		.imgArea img{
+		    width: 400px;
+	    	height: 300px;
+		}
+		.correct,.correct img{
+			width : 10px;
+	        height : 10px;
+			/*position: absolute;*/
+	
+			top : 5%;
+			left : 2%;
+	        z-index: 3;	
+		}
+		.wrong,.wrong img{
+			width : 10px;
+	        height : 10px;
+			/*position: absolute;*/
+	
+			top : 5%;
+			left : 2%;
+	        z-index: 3;	
+		}
+		.correct img{
+			width : 150px;
+			height : 150px;
+		}
+		.wrong img{
+			width : 150px;
+			height : 150px;
+		}
 	</style>
 </head>
 <body>
@@ -26,12 +76,12 @@
 	</div>
 		<h3>연습페이지입니다.</h3>
 			<c:forEach items="${test}" var="test">
+			<hr/>
 			<input type="hidden" class="test_no ${test.quiz_index}" value="${test.test_no}">
 			<!-- 지울 것 : <c:set var="i" value="${i+1}"/> -->
 			<div class="quiz_form ${test.quiz_index}">
 			<input type="hidden" class="quiz_index ${test.quiz_index}" value="${test.quiz_index}">
-				<hr/>
-					<!-- 지울 것 :  <input type="hidden" value="${test.quiz_no}"/> -->
+					<input type="hidden" value="${test.quiz_no}"/>
 					<c:choose>
 						<c:when test="${test.bookmark_quiz_no != null && test.user_id == loginId}">
 							<img class="bookmark" src="resources/img/별.png" alt="북마크">
@@ -42,8 +92,8 @@
 						</c:otherwise> 
 					</c:choose>  
 				<br/>
-				<div class="correct"><img src="resources/img/correct_circle.png"/></div>
-				<div class="wrong"><img src="resources/img/wrong_x.png"/></div>
+				<div class="correct" id="correct${test.quiz_index}"></div>
+				<div class="wrong" id="wrong${test.quiz_index}"></div>
 				<div class="quiz_titleArea"><input type="hidden" class="quiz_no ${test.quiz_index}" value="${test.quiz_no}"> ${test.quiz_index}번. ${test.quiz_content}</div>
 				<br/>
 				<c:if test="${test.percent != null}">
@@ -91,9 +141,11 @@
 				<input type="hidden" class="quiz_answer ${test.quiz_index}" value="${test.quiz_answer}">
 				<div class="answerArea"><h3>정답 : ${test.quiz_answer}</h3></div>
 				<div class="explationArea"><h3>해설 : ${test.quiz_explation}</h3></div>
+				<input type="button" class="question" onclick="question()" value="질문하기"/>
+				<input type="hidden" value="${test.quiz_no}"/>
+				<input type="button" class="error" onclick="error()" value="오류신고"/>
 			</div>
-			<input type="button" class="question" onclick="question()" value="질문하기"/>
-			<input type="button" class="error" onclick="error()" value="오류신고"/>
+			
 		</c:forEach>
 			<input type="hidden" class="var" value="${i}">
 		<div id="bntArea">
@@ -141,12 +193,22 @@ $('.result').click(function(){
 		} else {
 			for (var k = 1; k <= 5; k++) {
 				if($('.option_yn'+k+'.'+class_num+':checked').val() > 0){
-					answer += $('.option_yn'+k+'.'+class_num+':checked').val();							
+					answer += $('.option_yn'+k+'.'+class_num+':checked').val();
+					/////////////////////////////////////////////////////////////
+					var grading = $('.option_yn'+k+'.'+class_num+':checked').val();
+					var correct = $('.quiz_answer.'+class_num).val();
+					if(grading == correct){
+						console.log("정답입니다"+k);
+						$('#correct'+class_num).html('<img src="resources/img/correct_circle.png"/>');
+					}else{
+						$('#wrong'+class_num).html('<img src="resources/img/wrong_x.png"/>');
+					}
 				}
 			}			
 		}
 		if(answer == ''){
 			answer = "0";
+			$('#wrong'+class_num).html('<img src="resources/img/wrong_x.png"/>');
 		}
 		obj.my_answer = answer;
 		//////////////////////////////////////
@@ -193,8 +255,8 @@ function quizState (quiz_state_bool){
 		$('.result').removeClass('view');
 		$('.question').addClass('view');
 		$('.error').addClass('view');
-		$('.correct').addClass('view');
-		$('.wrong').addClass('view');
+/* 		$('.correct').addClass('view');
+		$('.wrong').addClass('view'); */
 		$('.answerArea').addClass('view');
 		$('.explationArea').addClass('view');
 	}
@@ -309,6 +371,45 @@ $('.bookmark').click(function(){
 
             return String(hour).padStart(2, '0') + ":" + String(min).padStart(2, '0') + ":" + String(sec).padStart(2, '0');
         }
+///////////////////////////////////////////////////////////////////////////
+      //문제 질문하기
+      function question(){
+      	var openNewWindow = window.open("about:blank");
+      	openNewWindow.location.href='studyBoard/writeForm';
+      }
+/////////////////////////////////////////////////////////////////////////
+//오류신고
+$('.error').click(function(){
+ 	  quiz_no = $(this).prev().val();
+});
+      
+function error(){
+		console.log("문재 번호"+quiz_no);
+	if(loginId == null){
+		alert('로그인 서비스입니다.');
+	} else{
+		
+		var report_content = prompt('오류내용을 입력해주세요.');
+		
+		if(report_content  == ''){
+			alert('오류내용을 입력해 주세요');
+		} else if(report_content == null){
+			alert('취소했습니다.');
+		} 	else {
+			$.ajax({
+				url : 'quizErrorReport',
+				type : 'get',
+				data : {'report_content':report_content,'quiz_no':quiz_no ,'loginId':loginId},
+				dataType : 'json',
+				success : function(data){
+					if(data.msg > 0){alert('오류신고가 접수되었습니다.');}
+				},
+				error : function(e){console.log(e);}
+			});	
+		}	
+	}
+}
+      
 
 </script>
 </html>

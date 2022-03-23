@@ -16,6 +16,56 @@
 		.view{
 			display : none;
 		}
+		.quiz_form {
+			width: 900px;
+	    	height: auto;
+			border : 1px solid gray;
+			border-radius : 5px;
+			margin-left: auto; 
+			margin-right: auto;
+		}
+	
+		.titleArea h2{
+			background-color : greenyellow;
+		
+		}
+		.bookMarkArea img{
+			width : 20px;
+			height : 20px;
+		}	
+		input[type="checkbox"]{
+			border-radius : 5px;
+		}
+		.imgArea img{
+		    width: 400px;
+	    	height: 300px;
+		}
+		.correct,.correct img{
+			width : 10px;
+	        height : 10px;
+			/*position: absolute;*/
+	
+			top : 5%;
+			left : 2%;
+	        z-index: 3;	
+		}
+		.worng,.wrong img{
+			width : 10px;
+	        height : 10px;
+			/*position: absolute;*/
+	
+			top : 5%;
+			left : 2%;
+	        z-index: 3;	
+		}
+		.correct img{
+			width : 150px;
+			height : 150px;
+		}
+		.wrong img{
+			width : 150px;
+			height : 150px;
+		}
 	</style>
 </head>
 <body>
@@ -24,27 +74,31 @@
 	</div>
 		<h3>결과페이지입니다.</h3>
 			<c:forEach items="${test}" var="test">
-			<div class="quiz_form ${test.quiz_index}">
 				<hr/>
-					<c:choose>
-						<c:when test="${test.bookmark_quiz_no != null && test.user_id == loginId}">
-							<img class="bookmark" src="resources/img/별.png" alt="북마크">
-						</c:when>
-						
-						<c:otherwise> 
-							<img class="bookmark" src="resources/img/빈별.png" alt="빈 북마크">
-						</c:otherwise> 
-					</c:choose>  
+			<div class="quiz_form ${test.quiz_index}">
+				<c:choose>
+					<c:when test="${test.correct_wrong eq true}">
+						<div class="correct"><img src="resources/img/correct_circle.png"/></div>
+					</c:when>
+					<c:otherwise>
+						<div class="wrong"><img src="resources/img/wrong_x.png"/></div>
+					</c:otherwise>
+				</c:choose>
 				<br/>
-				<c:when test="${test.correct_wrong eq'1' }">
-					<div class="correct"><img src="resources/img/correct_circle.png"/></div>
-				</c:when>
-				<c:otherwise>
-					<div class="wrong"><img src="resources/img/wrong_x.png"/></div>
-				</c:otherwise>
+				<c:choose>
+					<c:when test="${test.bookmark_quiz_no != null && test.user_id == loginId}">
+						<img class="bookmark" src="resources/img/별.png" alt="북마크">
+					</c:when>
+					
+					<c:otherwise> 
+						<img class="bookmark" src="resources/img/빈별.png" alt="빈 북마크">
+					</c:otherwise> 
+				</c:choose>  
 				<div class="quiz_titleArea">${test.quiz_index}번. ${test.quiz_content}</div>
 				<br/>
-				<div class="statisticArea">정답률 ${test.percent}%</div>
+				<c:if test="${test.percent != null}">
+					<div class="statisticArea">정답률 ${test.percent}%</div>
+				</c:if>
 				<br/>
 				<br/>
 				<div class="imgArea">사진</div>
@@ -83,9 +137,11 @@
 				</div>
 				<div class="answerArea"><h3>정답 : ${test.quiz_answer}</h3></div>
 				<div class="explationArea"><h3>해설 : ${test.quiz_explation}</h3></div>
+			<div>
+				<input type="button" class="question" onclick="question()" value="질문하기"/>
+				<input type="button" class="error" onclick="error()" value="오류신고" name="${test.quiz_no}"/>
 			</div>
-			<input type="button" class="question" onclick="question()" value="질문하기"/>
-			<input type="button" class="error" onclick="error()" value="오류신고"/>
+			</div>
 		</c:forEach>
 </body>
 <script>
@@ -177,5 +233,41 @@ $('.bookmark').click(function(){
 
 	}
 });
+///////////////////////////////////////////////////////////////////////////
+//문제 질문하기
+function question(){
+	var openNewWindow = window.open("about:blank");
+	openNewWindow.location.href='studyBoard/writeForm';
+}
+///////////////////////////////////////////////////////////////////////////
+/*
+function error(){
+	if(loginId == null){
+		alert('로그인 서비스입니다.');
+	} else{
+		
+		var report_content = prompt('오류내용을 입력해주세요.');
+		var quiz_no = $(this).attr("name");
+		console.log(quiz_no);
+		
+		if(report_content  == ''){
+			alert('오류내용을 입력해 주세요');
+		} else if(report_content == null){
+			alert('취소했습니다.');
+		} 	else {
+			$.ajax({
+				url : 'quizErrorReport',
+				type : 'get',
+				data : {'report_content':report_content,'quiz_no':quiz_no ,'loginId':loginId,'answer':answer},
+				dataType : 'json',
+				success : function(data){
+					if(data.msg > 0){alert('오류신고가 접수되었습니다.');}
+				},
+				error : function(e){console.log(e);}
+			});	
+		}	
+	}
+}
+*/
 </script>
 </html>

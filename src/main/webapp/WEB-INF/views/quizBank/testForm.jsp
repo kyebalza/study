@@ -46,7 +46,9 @@
 				<div class="wrong"><img src="resources/img/wrong_x.png"/></div>
 				<div class="quiz_titleArea"><input type="hidden" class="quiz_no ${test.quiz_index}" value="${test.quiz_no}"> ${test.quiz_index}번. ${test.quiz_content}</div>
 				<br/>
-				<div class="statisticArea">정답률 ${test.percent}%</div>
+				<c:if test="${test.percent != null}">
+					<div class="statisticArea">정답률 ${test.percent}%</div>
+				</c:if>
 				<br/>
 				<input type="hidden" class="quiz_point ${test.quiz_index}" value="${test.quiz_point}">
 				<br/>

@@ -10,21 +10,62 @@
 	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
 
 	<style>
-	#grid {
+		#grid {
 		min-height : 1000px;
-
-		}
-	#mainPage{
-		padding-right : 200px;
-		padding-top : 50px;
-		padding-left : 10px;
+		
+		
+		}	
+			#mainPage{
+			padding-right : 200px;
+			padding-top : 10px;
+			padding-left : 10px;
 		}
 		
 	hr{
 		border : 1px solid gray;
 		margin : 10px 0px 10px 0px;
 		width : 200px;
-	}	
+	}
+	#ManageDePostList tr:nth-child(odd){
+		background-color :  #e6ffe6;
+		
+	}
+	#ManageDePostList tr:nth-child(odd) input{
+		background-color :  #e6ffe6;	
+	}
+	#ManageDePostList tr:nth-child(even){
+		background-color :  white;
+		
+	}
+	#ManageDePostList tr:nth-child(even) input{
+		background-color :  white;	
+	}
+	input[value="처리완료"]{
+		border : none;
+		color : skyblue;
+	}
+	input[value="처리대기"]{
+		border : none;
+		color : Tomato;	
+	}
+	td,th{
+		height : 20px;
+		font-size : 10px;
+	}
+		tr{
+		height : 30px;
+	}
+	#pageTitle{
+		text-align : left;
+		width : 300px;
+	}
+	#pageTitle h3{
+		font-weight : bold;
+	}
+	#mainPage{
+		width :500px;
+		margin-left : 10px;
+	}		
 	</style>
 </head>
 <body>
@@ -35,6 +76,10 @@
 			<iframe id="lefter" src="adminLefter"></iframe>			
 		</div>
 		<div id="mainPage">
+			<div id="pageTitle">
+		<h3>신고 댓글</h3>
+		<hr/>
+		</div>	
 	<div>
 		<form action="ManagDeComentSearch" method="GET" name="ManagDeComentSearch" autocomplete="off">
 			<select name ="SearchType">

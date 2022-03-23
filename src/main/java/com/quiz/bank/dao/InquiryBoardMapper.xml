@@ -102,7 +102,9 @@
 		VALUES ('inquiry_board',#{board_no},#{user_id},#{reply_content})
 	</insert>
 	
-	
+	<update id="inquiryBoardAnswer">
+	UPDATE inquiry_board SET answer = !answer WHERE board_no = #{param1}
+	</update>
 	
 	
 

@@ -53,87 +53,171 @@ public class QuizBankService {
 		return mav;
 	}
 
+//	//3.시험보기 페이지 및 시험문제 가져오기
+//	public ModelAndView testFroml(String test_no, String loginId) {
+//		ModelAndView mav = new ModelAndView();
+//		mav.setViewName("quizBank/testForm");
+//		//ArrayList<QuizDTO> dto = dao.testFrom(test_no);
+//		ArrayList<HashMap<String, String>> testList = dao.testFrom(test_no);//문제 리스트 담기
+//		
+//		//문제 통계내기 -> 계속 계산하는 과정에서 오류가 생김
+//		ArrayList<HashMap<String, String>> quizRightCnt = dao.quizRightCnt();//문제당 정답 횟수
+//		ArrayList<HashMap<String, String>> quizAllCnt = dao.quizAllCnt();//문제당 전체 풀이 횟수 
+//		logger.info("정답 사이즈 : "+ quizRightCnt);
+//		logger.info("전체사이즈 : "+quizAllCnt);
+//		ArrayList<HashMap<String, String>> per = new ArrayList<HashMap<String,String>>();
+//		if(quizRightCnt.size()==quizAllCnt.size()) {
+//			for (int i = 0; i <quizRightCnt.size(); ++i) {
+//				
+//				
+//				logger.info("정답값 {}",quizRightCnt.get(i).get("right"));
+//				logger.info("전체값 {}",quizAllCnt.get(i).get("all"));
+//				///////////////////////
+//				String right = String.valueOf(quizRightCnt.get(i).get("right"));
+//				String all = String.valueOf(quizAllCnt.get(i).get("all"));
+//				logger.info("{},{}",right,all);
+//				int intRight = Integer.parseInt(right); 
+//				int intAll = Integer.parseInt(all);
+//				logger.info("intR : {}, intA : {}",intRight,intAll);
+//				logger.info("intR / intA : {}",100*intRight/intAll);
+//				int percent2 = 100*intRight/intAll;
+//				logger.info("나누기 캐스팅 : {}", percent2);
+//				String percent = Integer.toString(percent2);
+////				long percente = intRight / intAll;
+////				logger.info("long percente : {}",percente);
+////				int ex = intRight % intAll;
+////				logger.info("int ex : {}",ex);
+//				
+//				
+//
+////				int percent2 = (int)(Integer.parseInt(quizRightCnt.get(i).get("count(quiz_no)")) / Integer.parseInt(quizAllCnt.get(i).get("count(quiz_no)"))*100);
+////				logger.info("캐스트 값 {}", percent2);
+////				String percent = Integer.toString(percent2);
+//				String quiz_no = String.valueOf(quizRightCnt.get(i).get("quiz_no"));
+//				HashMap<String, String> asd =new HashMap<String, String>();
+//				asd.put("quiz_no", quiz_no);
+//				asd.put("percent", percent);
+//				
+//				per.add(asd);
+//				//logger.info("퀴즈넘버"+per);
+//				
+//				
+//			}
+//		}
+//		//방법1 : 
+//		for(int i = 0; i <testList.size(); ++i) {
+//			String comp_no = String.valueOf(testList.get(i).get("quiz_no"));
+//			logger.info(comp_no);
+//			for(int i2 = 0; i2 <per.size(); ++i2) {
+//				String comp_no2 = String.valueOf(per.get(i2).get("quiz_no"));
+//				logger.info("컴프넘버2"+comp_no2);
+//				if(comp_no.equals(comp_no2)) {
+//					logger.info("값 담김");
+//					testList.get(i).put("percent",String.valueOf(per.get(i2).get("percent")));
+//				}
+//			}
+//		}
+//		
+//		
+//		
+//		
+//		
+////		방법2: 향상된 for 문		
+////		for(HashMap<String, String> testUnitMap : testList) {
+////			String comp_no = testUnitMap.get("quiz_no");
+////			for(int i2 = 0; i2 <per.size(); ++i2) {
+////				String comp_no2 = per.get(i2).get("quiz_no");
+////				if(comp_no.equals(comp_no2)) {
+////					testUnitMap.put("test",per.get(i2).get("percent"));
+////				}
+////			}
+////		}
+//		
+//		
+//		
+//		logger.info("회차별 시험문제 리스트 갯수 : {}", testList.size());
+//		mav.addObject("test", testList);
+//		
+//		//로그인 아이디 확인
+//		logger.info("로그인 아이디 : "+loginId);
+//		mav.addObject("loginId", loginId);
+//		
+//
+//		
+//		
+//		
+//		
+//		/////////////////////////////////////////////////////////////
+//		//test
+////		ArrayList<TestCategoryDTO> all = dao.test();
+////		ArrayList<TestCategoryDTO> part = dao.test2();
+////		float all2 = all.size();
+////		float part2 = part.size();
+////		
+////		float per2 = (all2/part2)*100;
+////		int per = (int) ((all2/part2)*100);
+////		logger.info("모든 사이즈" +all2+"일부 사이즈"+ part2);
+////		logger.info("나누기 결과값"+per);
+////		logger.info("나누기 결과값2"+per2);
+////		
+//		////////////////////////////////////////////////////////////
+//		//시험 문제별 정답률 통계
+//		//ArrayList<QuizSolveDTO> 
+//		return mav;
+//	}
+
 	//3.시험보기 페이지 및 시험문제 가져오기
 	public ModelAndView testFroml(String test_no, String loginId) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("quizBank/testForm");
-		//ArrayList<QuizDTO> dto = dao.testFrom(test_no);
 		ArrayList<HashMap<String, String>> testList = dao.testFrom(test_no);//문제 리스트 담기
 		
-		//문제 통계내기 -> 계속 계산하는 과정에서 오류가 생김
-		ArrayList<HashMap<String, String>> quizRightCnt = dao.quizRightCnt();//문제당 정답 횟수
-		ArrayList<HashMap<String, String>> quizAllCnt = dao.quizAllCnt();//문제당 전체 풀이 횟수 
-		logger.info("정답 사이즈 : "+ quizRightCnt);
-		logger.info("전체사이즈 : "+quizAllCnt);
+		//문제 통계내기
+		ArrayList<HashMap<String, String>> quizRightCntList = dao.quizRightCnt();//문제당 정답 횟수
+		ArrayList<HashMap<String, String>> quizAllCntList = dao.quizAllCnt();//문제당 전체 풀이 횟수 
+		logger.info("정답 사이즈 : "+ quizRightCntList);
+		logger.info("전체사이즈 : "+quizAllCntList);
 		ArrayList<HashMap<String, String>> per = new ArrayList<HashMap<String,String>>();
-		if(quizRightCnt.size()==quizAllCnt.size()) {
-			for (int i = 0; i <quizRightCnt.size(); ++i) {
-				
-				
-				logger.info("정답값 {}",quizRightCnt.get(i).get("right"));
-				logger.info("전체값 {}",quizAllCnt.get(i).get("all"));
-				///////////////////////
-				String right = String.valueOf(quizRightCnt.get(i).get("right"));
-				String all = String.valueOf(quizAllCnt.get(i).get("all"));
-				logger.info("{},{}",right,all);
-				int intRight = Integer.parseInt(right); 
-				int intAll = Integer.parseInt(all);
-				logger.info("intR : {}, intA : {}",intRight,intAll);
-				logger.info("intR / intA : {}",100*intRight/intAll);
-				int percent2 = 100*intRight/intAll;
-				logger.info("나누기 캐스팅 : {}", percent2);
-				String percent = Integer.toString(percent2);
-//				long percente = intRight / intAll;
-//				logger.info("long percente : {}",percente);
-//				int ex = intRight % intAll;
-//				logger.info("int ex : {}",ex);
-				
-				
-
-//				int percent2 = (int)(Integer.parseInt(quizRightCnt.get(i).get("count(quiz_no)")) / Integer.parseInt(quizAllCnt.get(i).get("count(quiz_no)"))*100);
-//				logger.info("캐스트 값 {}", percent2);
-//				String percent = Integer.toString(percent2);
-				String quiz_no = String.valueOf(quizRightCnt.get(i).get("quiz_no"));
-				HashMap<String, String> asd =new HashMap<String, String>();
-				asd.put("quiz_no", quiz_no);
-				asd.put("percent", percent);
-				
-				per.add(asd);
-				//logger.info("퀴즈넘버"+per);
-				
-				
+		for (HashMap<String, String> quizAllCnt : quizAllCntList) {
+			for (HashMap<String, String> quizRightCnt : quizRightCntList) {
+				if(quizAllCnt.get("quiz_no") == quizRightCnt.get("quiz_no")) {
+					logger.info("valueof 전 : {}",quizAllCnt.get("all"));
+					logger.info("valueof 전 : {}",quizRightCnt.get("right"));
+					logger.info("valueof 후 : {}",String.valueOf(quizAllCnt.get("all")));
+					logger.info("valueof 후 : {}",String.valueOf(quizRightCnt.get("right")));
+					String right = String.valueOf(quizRightCnt.get("right"));
+					String all = String.valueOf(quizAllCnt.get("all"));
+					
+					int intRight = Integer.parseInt(right); 
+					int intAll = Integer.parseInt(all);
+					
+					int percent2 = 100*intRight/intAll;
+					
+					String percent = Integer.toString(percent2);
+					String quiz_no = String.valueOf(quizRightCnt.get("quiz_no"));
+					
+					HashMap<String, String> asd =new HashMap<String, String>();
+					asd.put("quiz_no", quiz_no);
+					asd.put("percent", percent);
+					
+					per.add(asd);
+				}
 			}
 		}
-		//방법1 : 
+
 		for(int i = 0; i <testList.size(); ++i) {
 			String comp_no = String.valueOf(testList.get(i).get("quiz_no"));
 			logger.info(comp_no);
 			for(int i2 = 0; i2 <per.size(); ++i2) {
 				String comp_no2 = String.valueOf(per.get(i2).get("quiz_no"));
-				//logger.info("컴프넘버2"+comp_no2);
+				logger.info("컴프넘버2"+comp_no2);
 				if(comp_no.equals(comp_no2)) {
-					//logger.info("값 담김");
+					logger.info("값 담김");
 					testList.get(i).put("percent",String.valueOf(per.get(i2).get("percent")));
 				}
 			}
 		}
-		
-		
-		
-		
-		
-//		방법2: 향상된 for 문		
-//		for(HashMap<String, String> testUnitMap : testList) {
-//			String comp_no = testUnitMap.get("quiz_no");
-//			for(int i2 = 0; i2 <per.size(); ++i2) {
-//				String comp_no2 = per.get(i2).get("quiz_no");
-//				if(comp_no.equals(comp_no2)) {
-//					testUnitMap.put("test",per.get(i2).get("percent"));
-//				}
-//			}
-//		}
-		
-		
+
 		
 		logger.info("회차별 시험문제 리스트 갯수 : {}", testList.size());
 		mav.addObject("test", testList);
@@ -141,28 +225,7 @@ public class QuizBankService {
 		//로그인 아이디 확인
 		logger.info("로그인 아이디 : "+loginId);
 		mav.addObject("loginId", loginId);
-		
 
-		
-		
-		
-		
-		/////////////////////////////////////////////////////////////
-		//test
-//		ArrayList<TestCategoryDTO> all = dao.test();
-//		ArrayList<TestCategoryDTO> part = dao.test2();
-//		float all2 = all.size();
-//		float part2 = part.size();
-//		
-//		float per2 = (all2/part2)*100;
-//		int per = (int) ((all2/part2)*100);
-//		logger.info("모든 사이즈" +all2+"일부 사이즈"+ part2);
-//		logger.info("나누기 결과값"+per);
-//		logger.info("나누기 결과값2"+per2);
-//		
-		////////////////////////////////////////////////////////////
-		//시험 문제별 정답률 통계
-		//ArrayList<QuizSolveDTO> 
 		return mav;
 	}
 
@@ -301,47 +364,43 @@ public class QuizBankService {
 		mav.setViewName("quizBank/practiceForm");
 		ArrayList<HashMap<String, String>> testList = dao.testFrom(test_no);//문제 리스트 담기
 		
-		ArrayList<HashMap<String, String>> quizRightCnt = dao.quizRightCnt();//문제당 정답 횟수
-		ArrayList<HashMap<String, String>> quizAllCnt = dao.quizAllCnt();//문제당 전체 풀이 횟수 
-		logger.info("정답 사이즈 : "+ quizRightCnt);
-		logger.info("전체사이즈 : "+quizAllCnt);
+		//문제 통계내기
+		ArrayList<HashMap<String, String>> quizRightCntList = dao.quizRightCnt();//문제당 정답 횟수
+		ArrayList<HashMap<String, String>> quizAllCntList = dao.quizAllCnt();//문제당 전체 풀이 횟수 
+		logger.info("정답 사이즈 : "+ quizRightCntList);
+		logger.info("전체사이즈 : "+quizAllCntList);
 		ArrayList<HashMap<String, String>> per = new ArrayList<HashMap<String,String>>();
-		if(quizRightCnt.size()==quizAllCnt.size()) {
-			for (int i = 0; i <quizRightCnt.size(); ++i) {
-				
-				
-				logger.info("정답값 {}",quizRightCnt.get(i).get("right"));
-				logger.info("전체값 {}",quizAllCnt.get(i).get("all"));
-				///////////////////////
-				String right = String.valueOf(quizRightCnt.get(i).get("right"));
-				String all = String.valueOf(quizAllCnt.get(i).get("all"));
-				logger.info("{},{}",right,all);
-				int intRight = Integer.parseInt(right); 
-				int intAll = Integer.parseInt(all);
-				logger.info("intR : {}, intA : {}",intRight,intAll);
-				logger.info("intR / intA : {}",100*intRight/intAll);
-				int percent2 = 100*intRight/intAll;
-				logger.info("나누기 캐스팅 : {}", percent2);
-				String percent = Integer.toString(percent2);
-
-				String quiz_no = String.valueOf(quizRightCnt.get(i).get("quiz_no"));
-				HashMap<String, String> asd =new HashMap<String, String>();
-				asd.put("quiz_no", quiz_no);
-				asd.put("percent", percent);
-				
-				per.add(asd);
-
+		for (HashMap<String, String> quizAllCnt : quizAllCntList) {
+			for (HashMap<String, String> quizRightCnt : quizRightCntList) {
+				if(quizAllCnt.get("quiz_no") == quizRightCnt.get("quiz_no")) {
+					String right = String.valueOf(quizRightCnt.get("right"));
+					String all = String.valueOf(quizAllCnt.get("all"));
+					
+					int intRight = Integer.parseInt(right); 
+					int intAll = Integer.parseInt(all);
+					
+					int percent2 = 100*intRight/intAll;
+					
+					String percent = Integer.toString(percent2);
+					String quiz_no = String.valueOf(quizRightCnt.get("quiz_no"));
+					
+					HashMap<String, String> asd =new HashMap<String, String>();
+					asd.put("quiz_no", quiz_no);
+					asd.put("percent", percent);
+					
+					per.add(asd);
+				}
 			}
 		}
-		
+
 		for(int i = 0; i <testList.size(); ++i) {
 			String comp_no = String.valueOf(testList.get(i).get("quiz_no"));
 			logger.info(comp_no);
 			for(int i2 = 0; i2 <per.size(); ++i2) {
 				String comp_no2 = String.valueOf(per.get(i2).get("quiz_no"));
-				//logger.info("컴프넘버2"+comp_no2);
+				logger.info("컴프넘버2"+comp_no2);
 				if(comp_no.equals(comp_no2)) {
-					//logger.info("값 담김");
+					logger.info("값 담김");
 					testList.get(i).put("percent",String.valueOf(per.get(i2).get("percent")));
 				}
 			}
@@ -400,47 +459,42 @@ public class QuizBankService {
 		ArrayList<HashMap<String, String>> testList = dao.resultFrom(test_result_no);//문제 리스트 + 결과
 		
 		//문제 통계내기
-		ArrayList<HashMap<String, String>> quizRightCnt = dao.quizRightCnt();//문제당 정답 횟수
-		ArrayList<HashMap<String, String>> quizAllCnt = dao.quizAllCnt();//문제당 전체 풀이 횟수 
-		logger.info("정답 사이즈 : "+ quizRightCnt);
-		logger.info("전체사이즈 : "+quizAllCnt);
+		ArrayList<HashMap<String, String>> quizRightCntList = dao.quizRightCnt();//문제당 정답 횟수
+		ArrayList<HashMap<String, String>> quizAllCntList = dao.quizAllCnt();//문제당 전체 풀이 횟수 
+		logger.info("정답 사이즈 : "+ quizRightCntList);
+		logger.info("전체사이즈 : "+quizAllCntList);
 		ArrayList<HashMap<String, String>> per = new ArrayList<HashMap<String,String>>();
-		if(quizRightCnt.size()==quizAllCnt.size()) {
-			for (int i = 0; i <quizRightCnt.size(); ++i) {
-				
-				
-				logger.info("정답값 {}",quizRightCnt.get(i).get("right"));
-				logger.info("전체값 {}",quizAllCnt.get(i).get("all"));
-				///////////////////////
-				String right = String.valueOf(quizRightCnt.get(i).get("right"));
-				String all = String.valueOf(quizAllCnt.get(i).get("all"));
-				logger.info("{},{}",right,all);
-				int intRight = Integer.parseInt(right); 
-				int intAll = Integer.parseInt(all);
-				logger.info("intR : {}, intA : {}",intRight,intAll);
-				logger.info("intR / intA : {}",100*intRight/intAll);
-				int percent2 = 100*intRight/intAll;
-				logger.info("나누기 캐스팅 : {}", percent2);
-				String percent = Integer.toString(percent2);
-
-				String quiz_no = String.valueOf(quizRightCnt.get(i).get("quiz_no"));
-				HashMap<String, String> asd =new HashMap<String, String>();
-				asd.put("quiz_no", quiz_no);
-				asd.put("percent", percent);
-				
-				per.add(asd);
-
+		for (HashMap<String, String> quizAllCnt : quizAllCntList) {
+			for (HashMap<String, String> quizRightCnt : quizRightCntList) {
+				if(quizAllCnt.get("quiz_no") == quizRightCnt.get("quiz_no")) {
+					String right = String.valueOf(quizRightCnt.get("right"));
+					String all = String.valueOf(quizAllCnt.get("all"));
+					
+					int intRight = Integer.parseInt(right); 
+					int intAll = Integer.parseInt(all);
+					
+					int percent2 = 100*intRight/intAll;
+					
+					String percent = Integer.toString(percent2);
+					String quiz_no = String.valueOf(quizRightCnt.get("quiz_no"));
+					
+					HashMap<String, String> asd =new HashMap<String, String>();
+					asd.put("quiz_no", quiz_no);
+					asd.put("percent", percent);
+					
+					per.add(asd);
+				}
 			}
 		}
-		//방법1 : 
+
 		for(int i = 0; i <testList.size(); ++i) {
 			String comp_no = String.valueOf(testList.get(i).get("quiz_no"));
 			logger.info(comp_no);
 			for(int i2 = 0; i2 <per.size(); ++i2) {
 				String comp_no2 = String.valueOf(per.get(i2).get("quiz_no"));
-				//logger.info("컴프넘버2"+comp_no2);
+				logger.info("컴프넘버2"+comp_no2);
 				if(comp_no.equals(comp_no2)) {
-					//logger.info("값 담김");
+					logger.info("값 담김");
 					testList.get(i).put("percent",String.valueOf(per.get(i2).get("percent")));
 				}
 			}

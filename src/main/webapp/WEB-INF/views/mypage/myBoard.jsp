@@ -16,6 +16,15 @@
 		/* border-style: none; */
 		overflow: hidden;
 	}
+	span{
+		padding-left : 300px;
+		font-size : 10px;
+	}
+	img{
+		height : 10px;
+		width : 10px;
+	}
+	
 	.no{
 		width : 80px;
 	}	
@@ -34,8 +43,8 @@
 
 body{
 	margin : 0px;
-		
 }	
+
 		
 	</style>
 </head>
@@ -47,14 +56,14 @@ body{
 
 	<div id="mainPage">
 <div id="all">
-<div>
+<div id="myPageHeader">
 	<input type="button" value="내 알림" onclick="location.href='myNotice'"/>
 	<input type="button" id="nowPage" value="내가 쓴 게시글" onclick="location.href='myBoard'"/>
 	<input type="button" value="내가 쓴 댓글" onclick="location.href='myReply'"/>
 	<input type="button" value="응시한 시험" onclick="location.href='myTest'"/>
 	<input type="button" value="회원정보" onclick="location.href='myInfo'"/>
+
 </div>
-<hr/>
 <div id="boardBtn">
 	<input type="button" id="studyBoardBtn" value="공부게시판"/>
 	<input type="button" id="freeBoardBtn" value="자유게시판"/>
@@ -143,7 +152,7 @@ function studyBoardListCall(list){
 				txt += '<tr>';
 				txt += '<td class="no">'+item.board_no+'</td>';
 				txt += '<td class="cate">'+item.board_cate+'</td>';
-				txt += '<td class="title"><a href="studyBoard/detail?board_no='+item.board_no+'">'+item.title+'</a><img src="#"/>'+item.like_cnt+'<img src="resources/img/like.png"/>'+item.reply_cnt+'</td>';
+				txt += '<td class="title"><a href="studyBoard/detail?board_no='+item.board_no+'">'+item.title+'</a><br/><span><img src="resources/img/reply.png"/>'+item.like_cnt+'<img src="resources/img/like.png"/>'+item.reply_cnt+'</span></td>';
 				txt += '<td class="bhit">'+item.bHit+'</td>';
 				txt += '<td class="date">'+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+'</td>';
 				txt += '</tr>';
@@ -169,7 +178,7 @@ function freeBoardListCall(data){
 				txt += '<tr>';
 				txt += '<td>'+item.board_no+'</td>';
 				txt += '<td>'+item.board_cate+'</td>';
-				txt += '<td ><a href="freeBoardDetail?board_no='+item.board_no+'">'+item.title+'</a><img src="#"/>'+item.like_cnt+'<img src="resources/img/like.png"/>'+item.reply_cnt+'</td>';
+				txt += '<td ><a href="freeBoardDetail?board_no='+item.board_no+'">'+item.title+'</a><br/><span><img src="resources/img/reply.png"/>'+item.like_cnt+'<img src="resources/img/like.png"/>'+item.reply_cnt+'</span></td>';
 				txt += '<td>'+item.bHit+'</td>';
 				txt += '<td>'+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+'</td>';
 				txt += '</tr>';
@@ -194,7 +203,7 @@ function inquiryBoardListCall(data){
 				txt += '<tr>';
 				txt += '<td>'+item.board_no+'</td>';
 				txt += '<td>'+item.board_cate+'</td>';
-				txt += '<td><a href="inquiryBoardDetail?board_no='+item.board_no+'">'+item.title+'</a><img src="#"/>'+item.like_cnt+'<img src="resources/img/like.png"/>'+item.reply_cnt+'</td>';
+				txt += '<td><a href="inquiryBoardDetail?board_no='+item.board_no+'">'+item.title+'</a><br/><span><img src="resources/img/reply.png"/>'+item.like_cnt+'<img src="resources/img/like.png"/>'+item.reply_cnt+'</span></td>';
 				txt += '<td>'+item.bHit+'</td>';
 				txt += '<td>'+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+'</td>';
 				txt += '</tr>';

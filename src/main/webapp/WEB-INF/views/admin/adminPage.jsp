@@ -8,6 +8,10 @@
 	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
 	
 	<style>
+	body{
+		margin : 0;
+	
+	}
 		#mainPage div{
 			width : 300px;
 			height : 300px;

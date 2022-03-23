@@ -104,7 +104,7 @@
 			url : 'InquirySearchBoardList',
 			data : $("form[name=InquiryBoardSearch]").serialize(),
 			success : function(result){
-				console.log("확인");
+				console.log(result);
 				//테이블 초기화
 				$('#inquirylist').empty();
 				if(result.length>=1){

@@ -240,6 +240,7 @@ public class InquiryBoardService {
 		
 		// 댓글 등록
 		dao.ibcoment(dto);
+		dao.inquiryBoardAnswer(dto.getBoard_no());
 		logger.info("문의게시판 댓글 등록 서비스 확인");
 		
 	}

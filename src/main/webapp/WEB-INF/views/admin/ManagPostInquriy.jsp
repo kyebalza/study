@@ -12,10 +12,49 @@
 	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
 
 	<style>
-		table,tr,th,td{
-			border:1px solid black;
-			border-collapse : collapse ;
-		}
+	#Inquiryboardlist tr:nth-child(odd){
+		background-color :  #e6ffe6;
+		
+	}
+	#Inquiryboardlist tr:nth-child(odd) input{
+		background-color :  #e6ffe6;	
+	}
+	#Inquiryboardlist tr:nth-child(even){
+		background-color :  white;
+		
+	}
+	#Inquiryboardlist tr:nth-child(even) input{
+		background-color :  white;	
+	}	
+	#pageTitle h3{
+		font-weight : bold;
+	}
+	select{
+		border-top : none;
+		border-left : none;
+		border-right : 1px solid gray;
+		border-bottom : 1px solid gray;
+		width : 130px;
+		border-radius : 5px;
+	}
+	input[type="text"]{
+		border-left : none;
+		border-top : none;
+		border-right : none;
+		border-bottom : 1px solid black;
+	}
+	input[type="button"]{
+		background-color : transparent;
+		border : none;
+	}
+	
+	input[value="복구"]{
+		color : skyblue;
+	}
+	input[value="삭제"]{
+		color : Tomato;
+	}	
+
 		#grid {
 		min-height : 1000px;
 		}
@@ -40,6 +79,10 @@
 			<iframe id="lefter" src="adminLefter"></iframe>			
 		</div>
 		<div id="mainPage">
+		<div id="pageTitle">
+		<h3>문의게시글 관리</h3>
+		<hr/>
+		</div>			
 	<div>
 		<form action="InquirySearch" method="GET" name="InquirySearch" autocomplete="off">
 			<select name ="SearchType">
@@ -64,11 +107,7 @@
 				<th>삭제</th>
 			</tr>
 		</thead>
-		
-			<c:if test="${Inquiryboardlist eq null || size == 0}">
-			<tr><td colspan="7">해당 게시글은 존재하지 않습니다.</td></tr>
-			</c:if>
-		
+
 		<tbody id = "Inquiryboardlist">
  			
 		</tbody>

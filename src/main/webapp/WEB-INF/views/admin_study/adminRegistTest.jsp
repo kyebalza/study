@@ -8,6 +8,10 @@
 	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
 	
 	<style>
+	body{
+		margin : 0px;
+	}
+	
 		#registCategory select{
                 width : 300px;
                 height : 30px;
@@ -71,8 +75,8 @@
 		}
 		#mainPage{
 			padding-right : 200px;
-			padding-top : 50px;
-			padding-left : 50px;
+			padding-top : 5px;
+			padding-left : 10px;
 		}
 		
 

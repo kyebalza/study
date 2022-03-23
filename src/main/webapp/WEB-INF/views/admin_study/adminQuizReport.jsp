@@ -12,13 +12,29 @@
 	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
 
 	<style>
+	#pageTitle{
+		text-align : left;
+		width : 300px;
+	}
+	#pageTitle h3{
+		font-weight : bold;
+	}
+	#mainPage{
+		width :500px;
+		margin-left : 10px;
+	}	
+	hr{
+		border : 1px solid gray;
+		margin : 10px 0px 10px 0px;
+		width : 200px;
+	}		
+	
 	tr{
 		height : 30px;
 	}
-	
-		#quiz_report_list table 
-		,#quiz_report_list th 
-		,#quiz_report_list td {
+	#quiz_report_list table 
+	,#quiz_report_list th 
+	,#quiz_report_list td {
 		border-bottom : 1px solid gray;
 		border-left : none;
 		border-right : none;
@@ -54,10 +70,7 @@
 	}
 
 	
-	#mainPage{
 
-		width : 250px;
-	}
 
 	#grid {
 		min-height : 1000px;
@@ -70,20 +83,27 @@
 		margin : 10px 0px 10px 0px;
 		width : 200px;
 	}
-	#no{
-		width : 20px;
+	.no{
+		width : 15px;
 
 	}
-	#quizId{
-		width : 20px;
+	.quiz_no{
+		width : 15px;
 	}
-	#quizContent {width : 100px;}
-	#reportId { width: 50px;}
-	#state{width : 50px;}
+	.content {
+		width : 50px;
+	}
+	.user{
+		width: 20px;
+	}
+	.state{
+		width : 15px;
+		}
 	
 	thead{
 		text-align : center;
 	}
+
 	
 	</style>
 </head>
@@ -94,23 +114,26 @@
 	<div>
 		<iframe id="lefter" src="adminLefter"></iframe>			
 	</div>
-	<div id="mainPage">
-		<h3>문제 오류신고 관리</h3><hr/>
-		<div>
+<div id="mainPage">
+		<div id="pageTitle">
+		<h3>문제 오류신고 관리</h3>
+		<hr/>
+		</div>	
+		<span style="width : 100px;">
 		<select id="select">
 			<option value="all">전체 보기</option>
 			<option value="false">처리대기</option>
 			<option value="true">처리완료</option>
 		</select>
-		</div>
+		</span>
 		<table>
 			<thead>
 				<tr>
-					<td id="no">신고No.</td>
-					<td id="quizId">문제ID</td>
-					<td id="quizContent" style="width : 100px">신고내용</td>
-					<td id="reportId">신고한ID</td>
-					<td id="state">처리상태</td>
+					<td class="no">신고No.</td>
+					<td class="quiz_no">문제ID</td>
+					<td class="content">신고내용</td>
+					<td class="user">신고한ID</td>
+					<td class="state">처리상태</td>
 				</tr>
 			</thead>
 		
@@ -120,7 +143,7 @@
 			<tbody id="pagingTbody">
 			<tr>
 				<td colspan="19" id="paging">
-		            <div class="container">                           
+		            <div class="container" style="width:700px;">                           
 		               <nav aria-label="Page navigation" style="text-align:center">
 		                  <ul class="pagination" id="pagination"></ul>
 		               </nav>               
@@ -188,14 +211,14 @@ function listDraw(list){
 		list.forEach(function(item,idx){
 			//console.log(item);
 			txt += '<tr>';
-			txt += '<td>'+item.quiz_report_no+'</td>';
-			txt += '<td><a href="#" onclick="adminUpdateQuizForm('+item.quiz_no+')">'+item.quiz_no+'</a></td>';
-			txt += '<td>'+item.report_content+'</td>';
-			txt += '<td>'+item.user_id+'</td>';
+			txt += '<td class="no">'+item.quiz_report_no+'</td>';
+			txt += '<td class="quiz_no"><a href="#" onclick="adminUpdateQuizForm('+item.quiz_no+')">'+item.quiz_no+'</a></td>';
+			txt += '<td class="content">'+item.report_content+'</td>';
+			txt += '<td class="user">'+item.user_id+'</td>';
 			if(item.compl_flag){
 				txt += '<td>처리완료</td>';				
 			} else{
-				txt += '<td><input type="button" onclick="adminQuizReportComplete('+item.quiz_report_no+')" value="처리대기"/></td>';				
+				txt += '<td class="state"><input type="button" onclick="adminQuizReportComplete('+item.quiz_report_no+')" value="처리대기"/></td>';				
 			}
 			txt += '</tr>';
 		});

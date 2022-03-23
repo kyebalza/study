@@ -35,14 +35,14 @@ body{
 <iframe id="header" src="header"></iframe>
 
 <div id="all">
-<div>
+<div id="myPageHeader">
 	<input type="button"value="내 알림" onclick="location.href='myNotice'"/>
 	<input type="button" value="내가 쓴 게시글" onclick="location.href='myBoard'"/>
 	<input type="button" value="내가 쓴 댓글" onclick="location.href='myReply'"/>
 	<input type="button" value="응시한 시험" onclick="location.href='myTest'"/>
 	<input type="button" id="nowPage" value="회원정보" onclick="location.href='myInfo'"/>
 </div>
-<hr/>
+
 	
 		<form id="joinForm" action="join" method="post">
 			<table style="margin-left: auto; margin-right: auto;">

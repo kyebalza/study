@@ -17,7 +17,7 @@
 		}	
 			#mainPage{
 			padding-right : 200px;
-			padding-top : 50px;
+			padding-top : 10px;
 			padding-left : 10px;
 		}
 		
@@ -25,7 +25,44 @@
 		border : 1px solid gray;
 		margin : 10px 0px 10px 0px;
 		width : 200px;
-	}		
+	}
+	#ManageDePostList tr:nth-child(odd){
+		background-color :  #e6ffe6;
+		
+	}
+	#ManageDePostList tr:nth-child(odd) input{
+		background-color :  #e6ffe6;	
+	}
+	#ManageDePostList tr:nth-child(even){
+		background-color :  white;
+		
+	}
+	#ManageDePostList tr:nth-child(even) input{
+		background-color :  white;	
+	}
+	input[value="처리완료"]{
+		border : none;
+		color : skyblue;
+	}
+	input[value="처리대기"]{
+		border : none;
+		color : Tomato;	
+	}
+	td,th{
+		height : 20px;
+		font-size : 10px;
+	}
+		tr{
+		height : 30px;
+	}
+	#pageTitle{
+		text-align : left;
+		width : 300px;
+	}
+	#pageTitle h3{
+		font-weight : bold;
+	}	
+	
 	</style>
 </head>
 <body>
@@ -36,10 +73,14 @@
 			<iframe id="lefter" src="adminLefter"></iframe>			
 		</div>
 		<div id="mainPage">
+
+			<div id="pageTitle">
+		<h3>신고 게시글</h3>
+		<hr/>
+		</div>			
 	<div>
 		<form action="ManagDePostSearch" method="GET" name="ManagDePostSearch" autocomplete="off">
 			<select name ="SearchType">
-				<option selected>출력 내용 선택</option>
 				<option value="all">전체보기</option>
 				<option value="ProcessWait">처리대기</option>
 				<option value="ProcessCom">처리완료</option>

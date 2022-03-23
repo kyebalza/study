@@ -38,8 +38,10 @@ input[type="button"]{
 	
 	
 #nowPage{
+	/*
 	color : white;
-	background-color : LimeGreen; 
+	*/
+	color : LimeGreen; 
 	font-weight : bold;
 	border : none;
 	}	
@@ -61,3 +63,11 @@ input[type="button"]{
 .no{
 	width : 50px;
 }	
+
+
+#myPageHeader{
+	margin :10px;
+	padding : 10px;
+	
+	
+}

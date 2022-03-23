@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
 	<style>
 	body{
-		margin : 10px;
+		margin : 0px;
 	}
 	hr{
 		border : 1.5px solid gray;
@@ -74,7 +74,7 @@
 		border : none;
 	}
 	input[value="삭제"]{
-		color : pink;
+		color : Tomato;
 		border : none;
 	}
 	#quizList tr:nth-child(odd){
@@ -92,7 +92,7 @@
 		background-color :  white;	
 	}
 	#topRegistTest{
-		text-align : right;
+		text-align : left;
 	}
 	
 	#topRegistTest input{
@@ -105,7 +105,7 @@
 		min-height : 1000px;
 		}
 		#mainPage{
-			padding-top : 50px;
+			padding-top : 5px;
 			padding-left : 10px;
 		}
 
@@ -125,8 +125,7 @@
 	</div>
 	<div id="mainPage">
 <div id="pageTitle">
-<h3>문제 관리
-</h3>
+<h3>문제 관리</h3>
 <hr/>
 </div>
 
@@ -330,12 +329,12 @@ function updateQuizState(e){
 				console.log(data);
 				if(e.value == '삭제'){
 					if(data.msg > 0){
-						alert('복구가 완료됬습니다.');						
+						alert('삭제가 완료됬습니다.');						
 						$(e).val('복구');
 					}
 				} else {
 					if(data.msg > 0){
-						alert('삭제가 완료됬습니다.');
+						alert('복구가 완료됬습니다.');
 						$(e).val('삭제');						
 					}
 				}

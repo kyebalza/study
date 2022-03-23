@@ -42,6 +42,8 @@ public interface InquiryBoardDAO {
 	void ibcoment(ReplyDTO dto); // 댓글 등록
 
 	ArrayList<ReplyDTO> inquiryboardcoment(String board_no); // 댓글 불러오기
+
+	void inquiryBoardAnswer(int board_no);
 	
 
 	

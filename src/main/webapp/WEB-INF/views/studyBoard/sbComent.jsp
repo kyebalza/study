@@ -53,21 +53,16 @@
 									<span>
 						<!-- 댓글 좋아요 -->			
 										<input id="board_no" type="hidden" value="${info.board_no}"></input>
-										
-																				
 										<c:choose>
 											<img class="relike" src="/bank/resources/img/like.png" alt="좋아요">
 										<c:when test="${sbcomList.likeYN == 1}">
-												<img class="relike ${sbcomList.reply_no}" src="/bank/resources/img/like.png" alt="좋아요">										
-
+											<img class="relike ${sbcomList.reply_no}" src="/bank/resources/img/like.png" alt="좋아요">										
 										</c:when>
 
 										<c:otherwise> 
 											<img class="relike ${sbcomList.reply_no}" src="/bank/resources/img/unlike.png" alt="빈 좋아요">
 										</c:otherwise> 
-
 										</c:choose>
-										
 									</span>
 									<div class="sbcom_coment">
 										<span>${sbcomList.reply_content}</span>

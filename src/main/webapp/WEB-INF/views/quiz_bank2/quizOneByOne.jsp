@@ -10,6 +10,11 @@
 	<style>
 	#all {
 		width : 500px;
+		height : 500px;
+		border : 1px solid gray;
+		border-radius : 5px;
+		margin-left: auto; 
+		margin-right: auto;
 	}
 	
 	#titleArea h2{

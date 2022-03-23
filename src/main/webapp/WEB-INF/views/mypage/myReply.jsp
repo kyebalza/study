@@ -10,9 +10,36 @@
 	<script src="resources/js/jquery.twbsPagination.js"></script>
 	<link rel="stylesheet" href="resources/css/myPage.css"/>
 	<style>
+			#header{
+			width: 100%;
+			height: 100px;
+			/* border-style: none; */
+			overflow: hidden;
+		}
+		.title{
+			width : 500px;
+		}
+		.date{
+			width : 100px;
+		}
+		td{
+			text-align : left;
+		}
+		th{
+			text-align : center;
+		}
+		td.title{
+			padding-left : 30px;
+		}	
+body{
+	margin : 0px;
+		
+}		
 	</style>
 </head>
 <body>
+<iframe id="header" src="header"></iframe>
+
 <div id="all">
 <div>
 	<input type="button" value="내 알림" onclick="location.href='myNotice'"/>
@@ -26,12 +53,17 @@
 	<input type="button" id="studyReplyBtn" value="공부게시판"/>
 	<input type="button" id="freeReplyBtn" value="자유게시판"/>
 </div>		
-<table>
-	<thead id="list_head"></thead>
+<table style="text-align : center;margin-left: auto; margin-right: auto;">
+	<thead id="list_head">
+		<tr>
+			<th class="title">제목</th>
+			<th class="date">날짜</th>
+		</tr>
+	</thead>
 	<tbody id="list_body"></tbody>
 </table>
 <div>
-            <div class="container">                           
+            <div class="container" style="width : 500px;text-align : center;margin-left: auto; margin-right: auto;">                           
                <nav aria-label="Page navigation" style="text-align:center">
                   <ul class="pagination" id="pagination"></ul>
                </nav>               
@@ -103,7 +135,7 @@ function studyReplyListCall(list){
 			list.forEach(function(item,idx){
 				var date = new Date(item.reg_date);
 				txt += '<tr>';
-				txt += '<td><a href="studyBoard/detail?board_no='+item.board_no+'"><h5>'+item.title+'</h5>'+item.reply_content;
+				txt += '<td class="title"><a href="studyBoard/detail?board_no='+item.board_no+'"><h5>'+item.title+'</h5> ↳'+item.reply_content;
 				if(item.answer_select){
 					txt += '<span>[채택답변]</span>'
 				}
@@ -112,10 +144,11 @@ function studyReplyListCall(list){
 				txt += '<td>'+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+'</td>';
 				txt += '</tr>';
 			});
-			var txt_head = '<tr><td>제목</td><td>날짜</td></tr>';
+			/*
+			var txt_head = '<tr><td style="width : 300px;">제목</td><td>날짜</td></tr>';
 			$('#list_head').empty();
 			$('#list_head').append(txt_head);
-			
+			*/
 			$('#list_body').empty();
 			$('#list_body').append(txt);
 }
@@ -125,15 +158,16 @@ function freeReplyListCall(data){
 			data.forEach(function(item,idx){
 				var date = new Date(item.reg_date);
 				txt += '<tr>';
-				txt += '<td><a href="freeBoardDetail?board_no='+item.board_no+'"><h5>'+item.title+'</h5>'+item.reply_content+'</a>';
+				txt += '<td class="title"><a href="freeBoardDetail?board_no='+item.board_no+'"><h5>'+item.title+'</h5> ↳'+item.reply_content+'</a>';
 				txt += '</td>';
 				txt += '<td>'+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+'</td>';
 				txt += '</tr>';
 			});
+			/*
 			var txt_head = '<tr><td>제목</td><td>날짜</td></tr>';
 			$('#list_head').empty();
 			$('#list_head').append(txt_head);
-			
+			*/
 			$('#list_body').empty();
 			$('#list_body').append(txt);
 }

@@ -7,9 +7,22 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<link rel="stylesheet" href="resources/css/myPage.css"/>
 	<style>
+		#header{
+		width: 100%;
+		height: 100px;
+			/* border-style: none; */
+		overflow: hidden;
+		}
+body{
+	margin : 0px;
+		
+}
+		
 	</style>
 </head>
 <body>
+<iframe id="header" src="header"></iframe>
+
 <div id="all">
 <div>
 	<input type="button" value="내 알림" onclick="location.href='myNotice'"/>
@@ -22,7 +35,7 @@
 
 
 <div>
-<input type="button" value="전체삭제"/>
+
 </div>
 
 

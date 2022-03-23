@@ -7,8 +7,12 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<link rel="stylesheet" href="resources/css/myPage.css"/>
 	<style>
+body{
+	margin : 0px;
+		
+}	
 		table, th, td{
-			
+			border : none;
 			border-collapse: collapse;
 			padding: 5px;
 		}
@@ -19,9 +23,17 @@
 		#joinForm{
 			text-align: center;
 		}
+		#header{
+			width: 100%;
+			height: 100px;
+			/* border-style: none; */
+			overflow: hidden;
+		}	
 	</style>
 </head>
 <body>
+<iframe id="header" src="header"></iframe>
+
 <div id="all">
 <div>
 	<input type="button"value="내 알림" onclick="location.href='myNotice'"/>
@@ -33,7 +45,7 @@
 <hr/>
 	
 		<form id="joinForm" action="join" method="post">
-			<table>
+			<table style="margin-left: auto; margin-right: auto;">
 				<tr>
 					<th>아이디</th>
 					<td>

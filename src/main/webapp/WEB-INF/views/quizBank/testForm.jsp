@@ -168,8 +168,12 @@ $('.result').click(function(){
 		},
 		dataType : 'JSON',
 		success : function(data){
-			console.log(data.msg);
+			//console.log(data.msg);
 			clearTimeout(timerId);//시간멈추기
+			console.log(data.test_result_no);
+			//var test_result_no = JSON.stringify(data.msg.test_result_no);
+			//console.log(test_result_no);
+			window.location.href='resultFrom?test_result_no='+data.test_result_no;
 //			for (var i = 0; i < data.size(); i++) {
 //				if(data.result[i] == 1){
 //					$('#correct').removeClass('view');

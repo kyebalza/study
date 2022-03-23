@@ -53,15 +53,21 @@
 									<span>
 						<!-- 댓글 좋아요 -->			
 										<input id="board_no" type="hidden" value="${info.board_no}"></input>
-										<c:choose>
-										<c:when test="${relike2.reply_no != null && relike2.user_id == loginId}">
-											<img class="relike" src="/bank/resources/img/like.png" alt="좋아요">
-										</c:when>
 										
+																				
+										<c:choose>
+											<img class="relike" src="/bank/resources/img/like.png" alt="좋아요">
+										<c:when test="${sbcomList.likeYN == 1}">
+												<img class="relike ${sbcomList.reply_no}" src="/bank/resources/img/like.png" alt="좋아요">										
+
+										</c:when>
+
 										<c:otherwise> 
-											<img class="relike" src="/bank/resources/img/unlike.png" alt="빈 좋아요">
+											<img class="relike ${sbcomList.reply_no}" src="/bank/resources/img/unlike.png" alt="빈 좋아요">
 										</c:otherwise> 
+
 										</c:choose>
+										
 									</span>
 									<div class="sbcom_coment">
 										<span>${sbcomList.reply_content}</span>
@@ -120,13 +126,13 @@
 	
 	//댓글 좋아요
 	$('.relike').click(function(){
-		//console.log("좋아요");
+		console.log($(this)[0].classList[1]);
 		if('${loginId}' == ''){
 			alert('로그인이 필요한 서비스 입니다.');
 		}else{
 			var loginId = '${loginId}';
-			var board_no = $(this).prev().val();
-			var reply_no = $('#reply_no').val();
+			var board_no = $('#board_no').val();
+			var reply_no = $(this)[0].classList[1];
 			console.log('댓글 좋아요',loginId,board_no,reply_no);
 			
 			var param = {'loginId':loginId,'reply_no':reply_no,'board_no':board_no};

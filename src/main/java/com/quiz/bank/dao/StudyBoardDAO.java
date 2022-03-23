@@ -64,7 +64,7 @@ StudyBoardDTO studyQuiz(String board_no);
 
 void sbcoment(StudyBoardDTO sbdto);
 
-ArrayList<StudyBoardDTO> studycoment(String board_no);
+ArrayList<HashMap<String, String>> studycoment(String board_no);
 
 void sbcomdel(String reply_no);
 
@@ -73,6 +73,8 @@ String relike2(String loginId, String board_no, String reply_no);
 int relike_del(String loginId, String board_no, String reply_no);
 
 int reuplike(String loginId, String board_no, String reply_no);
+
+int doIHaveReLike(String board_no, String loginId, String reply_no);
 
 
 

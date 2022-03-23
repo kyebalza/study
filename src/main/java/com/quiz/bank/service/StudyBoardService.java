@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.omg.CORBA.portable.ValueOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -242,9 +243,23 @@ public class StudyBoardService {
 	}
 	
 	//댓글불러오기
-	public ArrayList<StudyBoardDTO> studycoment(String board_no) {
+	public ArrayList<HashMap<String, String>> studycoment(String board_no, String loginId) {
 		logger.info("댓글 불러오기 서비스");
-		ArrayList<StudyBoardDTO> coment = dao.studycoment(board_no);
+		ArrayList<HashMap<String, String>> coment = dao.studycoment(board_no);
+		for (HashMap<String, String> comenUnit : coment) {
+			//logger.info("ori_comenUnit : {}",comenUnit);
+			//logger.info("board_no {} loginId {}",board_no,loginId);
+			//logger.info("reply_no {}",String.valueOf(comenUnit.get("reply_no")));
+			
+			int likeCnt = dao.doIHaveReLike(board_no,loginId,String.valueOf(comenUnit.get("reply_no")));
+			comenUnit.put("likeYN", String.valueOf(likeCnt));
+			//logger.info("new_comenUnit : {}",comenUnit);
+		}
+		
+		
+		
+		
+		
 		return coment;
 	}
 

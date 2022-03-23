@@ -7,13 +7,23 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<link rel="stylesheet" href="resources/css/myPage.css"/>
 	<style>
+			#header{
+			width: 100%;
+			height: 100px;
+			/* border-style: none; */
+			overflow: hidden;
+		}	
 	
-	
-	
+body{
+	margin : 0px;
+		
+}	
 	
 	</style>
 </head>
 <body>
+<iframe id="header" src="header"></iframe>
+
 <div id="all">
 <div>
 	<input type="button" id="nowPage" value="내 알림" onclick="location.href='myNotice'"/>
@@ -24,12 +34,12 @@
 </div>
 <hr/>
 <div>
-<table>
+<table style="text-align : center;margin-left: auto; margin-right: auto;">
 	<thead>
 		<tr>
-			<th style="width : 300px;">알림내용</th>
-			<th style="width : 100px;">날짜</th>
-			<th style="width : 50px;">삭제</th>
+			<th style="width : 500px;">알림내용</th>
+			<th style="width : 150px;">날짜</th>
+			<th style="width : 100px;">삭제</th>
 		</tr>
 	</thead>
 	<tbody id="noticeList">

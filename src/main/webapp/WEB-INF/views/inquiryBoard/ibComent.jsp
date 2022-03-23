@@ -11,6 +11,8 @@
 <br/>
 댓글
 <hr/>
+
+	<c:if test="${sessionScope.loginId eq 'admin'}">
 	<div id="ibcoment_wep">
 		<span id="loginId"> ${loginId} </span>
 		<div id="ibinput_wep">
@@ -23,6 +25,8 @@
 			</form>
 		</div>
 	</div>
+	</c:if>
+	
 	
 	<div>
 		<c:forEach items="${ibcomList}" var="ibcomList">
@@ -67,6 +71,7 @@
 		$('#ibcom_button').attr('display','none');
 	};
 	*/
+	
 
 
 	//댓글 전송 버튼

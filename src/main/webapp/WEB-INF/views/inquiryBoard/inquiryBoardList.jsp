@@ -43,16 +43,14 @@
 		<form action="InquiryBoardSearch" method="GET" name="InquiryBoardSearch" autocomplete="off">
 		
 			<select name = "ICateGoryType">
-				<option selected>카테고리 선택</option>
-				<option value="all">전체</option>
+				<option value="all" selected>전체</option>
 				<option value="account">계정문의</option>
 				<option value="use">이용문의</option>
 			</select>
 		
 		
 			<select name ="SearchType">
-				<option selected>검색 내용 선택</option>
-				<option value="all">전체</option>
+				<option value="all" selected>전체</option>
 				<option value="tit">제목</option>
 				<option value="user">작성자</option>
 			</select>

@@ -186,6 +186,7 @@ public class InquiryBoardController {
 		service.ibcoment(session, params);
 		String user_id = params.get("user_id");
 		
+		
 		return "redirect:/inquiryBoardDetail?board_no="+params.get("board_no");
 		
 		

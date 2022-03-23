@@ -36,12 +36,14 @@
 						</c:otherwise> 
 					</c:choose>  
 				<br/>
-				<c:when test="${test.correct_wrong eq'1' }">
-					<div class="correct"><img src="resources/img/correct_circle.png"/></div>
-				</c:when>
-				<c:otherwise>
-					<div class="wrong"><img src="resources/img/wrong_x.png"/></div>
-				</c:otherwise>
+				<c:choose>
+					<c:when test="${test.correct_wrong eq true}">
+						<div class="correct"><img src="resources/img/correct_circle.png"/></div>
+					</c:when>
+					<c:otherwise>
+						<div class="wrong"><img src="resources/img/wrong_x.png"/></div>
+					</c:otherwise>
+				</c:choose>
 				<div class="quiz_titleArea">${test.quiz_index}번. ${test.quiz_content}</div>
 				<br/>
 				<div class="statisticArea">정답률 ${test.percent}%</div>

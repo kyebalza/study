@@ -46,13 +46,19 @@ public interface QuizBankDAO {
 //	int test_result(TestResultDTO testResultDTO);
 	
 	//6-1. 시험 결과 테이블(test_result_no) 받아오기
-	void test_result2(TestResultDTO testResultDTO);
+	void test_result(TestResultDTO testResultDTO);
 
 	//6-2. 개별 문제풀이 결과테이블
 	int quiz_solve(QuizSolveDTO quizSolveDTO);
 
 	//6-3. 시험 결과테이블에서 score 업데이트
 	int test_result_scoreUpdate(int score, int test_result_no);
+
+	//9. 결과페이지 이동
+	ArrayList<HashMap<String, String>> resultFrom(int test_result_no);
+	
+	//9-1. 시험결과 가져오기
+	HashMap<String, String> getTestResult(int test_result_no);
 
 
 }

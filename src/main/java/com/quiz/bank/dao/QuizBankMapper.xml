@@ -76,7 +76,7 @@
 -->
 
 	<!-- 6-1. 시험 결과 테이블(test_result_no) 받아오기 -->
-	<insert id="test_result2" parameterType="TestResult" useGeneratedKeys="true" keyProperty="test_result_no" keyColumn="test_result_no">
+	<insert id="test_result" parameterType="TestResult" useGeneratedKeys="true" keyProperty="test_result_no" keyColumn="test_result_no">
 		INSERT INTO test_result(user_id, test_no, elapse_time, score)
 			VALUES(#{user_id}, #{test_no}, #{elapse_time}, #{score})
 	</insert>
@@ -89,6 +89,16 @@
 	
 	<!-- 6-3. 시험 결과테이블에서 score 업데이트 -->
 	<update id="test_result_scoreUpdate" parameterType="int">
-		UPDATE test_result SET score = #{param1} WHERE test_result_no = #{param2};
+		UPDATE test_result SET score = #{param1} WHERE test_result_no = #{param2}
 	</update>
+	
+	<!-- 9. 결과가져오기 -->
+	<select id="resultFrom" resultType="hashmap">
+		select * from quiz inner join quiz_solve using (quiz_no) where test_prac_flag = #{param1}
+	</select>
+	
+	<!-- 9-1.시험결과 가져오기 -->
+	<select id="getTestResult" resultType="hashmap">
+		select * from test_result where test_result_no= #{param1}
+	</select>
 </mapper>

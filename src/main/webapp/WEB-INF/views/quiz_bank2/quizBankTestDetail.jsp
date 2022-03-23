@@ -6,6 +6,15 @@
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<style>
+		#header{
+			width: 100%;
+			height: 100px;
+			/* border-style: none; */
+			overflow: hidden;
+		}	
+		body {
+			margin : 0px;
+		}	
 		table, th, td{
 			border-top : 1px solid white;
 			border-bottom : 1px solid white;
@@ -81,11 +90,13 @@
 			width : 450px;
 			text-align : right;
 		}
+		
 	</style>
 </head>
 <body>
-<h3>${test_category.test_cate}</h3>
-<div id="all">
+<iframe id="header" src="header"></iframe>
+<div id="all"  style="margin-left: auto; margin-right: auto;">
+<h3 style="text-align : center">${test_category.test_cate}</h3>
  <div class="quizPage">
 	<input type="button" id="countListBtn" class="" value="회차별 문제풀기" onclick="testCountListCall(this)"/>
 	<input type="button" id="subjectListBtn" class="" value="과목별 문제풀기" onclick="subjectListCall(this)"/>
@@ -238,7 +249,7 @@ function bookmarkListCall(){
 function detailView(e){
 	console.log(e);
 	console.log($('tr.'+e.classList[0]));
-	$('tr.'+e.classList[0]).slideToggle('slow');
+	$('tr.'+e.classList[0]).toggle(100,function(){});
 	if(e.value == '▼'){
 		$(e).val('▲');				
 		//$('tr.'+e.classList[0]).css('display','');

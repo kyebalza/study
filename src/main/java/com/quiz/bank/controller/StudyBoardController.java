@@ -147,7 +147,7 @@ public class StudyBoardController {
 		model.addAttribute("countlike", countlike);
 		
 		//댓글
-		ArrayList<StudyBoardDTO> sbcom = service.studycoment(board_no);
+		ArrayList<HashMap<String, String>> sbcom = service.studycoment(board_no,loginId);
 		logger.info("댓글 : "+board_no);
 		model.addAttribute("sbcomList",sbcom);
 		logger.info("댓글목록 요청 : "+sbcom);

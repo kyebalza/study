@@ -14,6 +14,7 @@
     	border : 1px solid gray;
         text-align: center;
         border-radius: 8px;
+        width : 300px;
     }
 	h5{
     	margin : 1px;

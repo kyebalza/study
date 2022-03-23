@@ -12,31 +12,79 @@
 	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
 
 	<style>
-		table , th , td {
-		border : 1px solid gray;
+	tr{
+		height : 30px;
+	}
+	
+		#quiz_report_list table 
+		,#quiz_report_list th 
+		,#quiz_report_list td {
+		border-bottom : 1px solid gray;
+		border-left : none;
+		border-right : none;
+		
 		border-collapse : collapse;
 		text-align : center;
 		font-size : 10px;
 		}
+
+	input[value="처리대기"]{
+		background-color : white;
+		color : pink;
+		border : none;
+	}
+	#quiz_report_list tr:nth-child(odd){
+		background-color :  #e6ffe6;
 		
-		input[type="button"]{
-			background-color : greenyellow;
-			border : lightgray;
-		}
-		#mainPage{
-			padding-right : 200px;
-			padding-top : 50px;
-			padding-left : 10px;
-		}
+	}
+	#quiz_report_list tr:nth-child(odd) input{
+		background-color :  #e6ffe6;	
+	}
+	#quiz_report_list tr:nth-child(even){
+		background-color :  white;
 		
+	}
+	#quiz_report_list tr:nth-child(even) input{
+		background-color :  white;	
+	}
+	#pagingTbody{
+		background-color : white;
+		border : none;
+	
+	}
+
+	
+	#mainPage{
+
+		width : 250px;
+	}
+
+	#grid {
+		min-height : 1000px;
+		}		
 
 		
 		}
 	hr{
-		border : 1px solid gray;
+		border : 2px solid gray;
 		margin : 10px 0px 10px 0px;
 		width : 200px;
-	}			
+	}
+	#no{
+		width : 20px;
+
+	}
+	#quizId{
+		width : 20px;
+	}
+	#quizContent {width : 100px;}
+	#reportId { width: 50px;}
+	#state{width : 50px;}
+	
+	thead{
+		text-align : center;
+	}
+	
 	</style>
 </head>
 <body>
@@ -58,18 +106,18 @@
 		<table>
 			<thead>
 				<tr>
-					<td>신고No.</td>
-					<td>문제ID</td>
-					<td>신고내용</td>
-					<td>신고한ID</td>
-					<td>처리상태</td>
+					<td id="no">신고No.</td>
+					<td id="quizId">문제ID</td>
+					<td id="quizContent" style="width : 100px">신고내용</td>
+					<td id="reportId">신고한ID</td>
+					<td id="state">처리상태</td>
 				</tr>
 			</thead>
 		
 			<tbody id="quiz_report_list">
 				
 			</tbody>
-			<tbody>
+			<tbody id="pagingTbody">
 			<tr>
 				<td colspan="19" id="paging">
 		            <div class="container">                           

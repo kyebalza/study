@@ -10,9 +10,42 @@
 	<script src="resources/js/jquery.twbsPagination.js"></script>
 		<link rel="stylesheet" href="resources/css/myPage.css"/>
 	<style>
+	#header{
+		width: 100%;
+		height: 100px;
+		/* border-style: none; */
+		overflow: hidden;
+	}
+	.no{
+		width : 80px;
+	}	
+	.cate{
+		width : 100px;
+	}
+	.title{
+		width : 500px;
+	}
+	.bhit{
+		width : 100px;
+	}
+	.date{
+		width : 150px;
+	}
+
+body{
+	margin : 0px;
+		
+}	
+		
 	</style>
 </head>
 <body>
+<iframe id="header" src="header"></iframe>
+
+
+
+
+	<div id="mainPage">
 <div id="all">
 <div>
 	<input type="button" value="내 알림" onclick="location.href='myNotice'"/>
@@ -27,18 +60,20 @@
 	<input type="button" id="freeBoardBtn" value="자유게시판"/>
 	<input type="button" id="inquiryBoardBtn" value="문의게시판"/>		
 </div>		
-<table>
+<table style="text-align : center;margin-left: auto; margin-right: auto;">
 	<thead id="list_head"></thead>
 	<tbody id="list_body"></tbody>
 </table>
+	<div class="container" style="width : 500px;text-align : center;margin-left: auto; margin-right: auto;">                           
+		<nav aria-label="Page navigation" style="text-align:center">
+	    	<ul class="pagination" id="pagination"></ul>
+		</nav>               
+	</div>
+
 <div>
-            <div class="container">                           
-               <nav aria-label="Page navigation" style="text-align:center">
-                  <ul class="pagination" id="pagination"></ul>
-               </nav>               
-            </div>
 </div>		
-</div>		
+</div>	
+</div>	
 </body>
 <script>
 var currPage = 1;
@@ -106,11 +141,11 @@ function studyBoardListCall(list){
 			list.forEach(function(item,idx){
 				var date = new Date(item.reg_date);
 				txt += '<tr>';
-				txt += '<td>'+item.board_no+'</td>';
-				txt += '<td>'+item.board_cate+'</td>';
-				txt += '<td><a href="studyBoard/detail?board_no='+item.board_no+'">'+item.title+'</a><img src="#"/>'+item.like_cnt+'<img src="resources/img/like.png"/>'+item.reply_cnt+'</td>';
-				txt += '<td>'+item.bHit+'</td>';
-				txt += '<td>'+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+'</td>';
+				txt += '<td class="no">'+item.board_no+'</td>';
+				txt += '<td class="cate">'+item.board_cate+'</td>';
+				txt += '<td class="title"><a href="studyBoard/detail?board_no='+item.board_no+'">'+item.title+'</a><img src="#"/>'+item.like_cnt+'<img src="resources/img/like.png"/>'+item.reply_cnt+'</td>';
+				txt += '<td class="bhit">'+item.bHit+'</td>';
+				txt += '<td class="date">'+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+'</td>';
 				txt += '</tr>';
 			});
 			var txt_head = '<tr><td class="no">번호</td>'
@@ -141,7 +176,7 @@ function freeBoardListCall(data){
 			});
 			var txt_head = '<tr><td class="no">번호</td>'
 			+'<td class="cate">카테고리</td>'
-			+'<td class="subject">게시글 제목</td>'
+			+'<td class="title">게시글 제목</td>'
 			+'<td class="bhit">조회수</td>'
 			+'<td class="date">날짜</td></tr>';
 	
@@ -166,7 +201,7 @@ function inquiryBoardListCall(data){
 			});
 			var txt_head = '<tr><td class="no">번호</td>'
 				+'<td class="cate">카테고리</td>'
-				+'<td class="subject">게시글 제목</td>'
+				+'<td class="title">게시글 제목</td>'
 				+'<td class="bhit">조회수</td>'
 				+'<td class="date">날짜</td></tr>';
 				

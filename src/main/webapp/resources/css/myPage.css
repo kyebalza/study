@@ -10,7 +10,7 @@ table,th,td {
 }
 
 th,td{
-	border-top : 1px solid gray;
+	border-top : none;
 	border-left : none;
 	border-right : none;
 	border-bottom : 1px solid gray;
@@ -61,4 +61,3 @@ input[type="button"]{
 .no{
 	width : 50px;
 }	
-	

@@ -5,18 +5,24 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-	<style></style>
+	<link rel="stylesheet" href="resources/css/header.css"/>
+	
+	<style>
+	#righter_div{
+		position : absolute;
+		border : 3px solid red;
+		top:20%;
+		left:80%;
+	
+	}
+	</style>
 </head>
 <body>
-	<!-- <input type="button" value="로그인페이지" onclick="location.href='loginPage'"/> -->
-	<a href="loginPage">로그인페이지</a>
-	<a href="adminPage">관리자페이지</a>
-	<a href="quizBankList">문제은행</a>
-	<a href="studyBoard/list">공부게시판</a>
-	<a href="inquiryBoardList">문의게시판</a>
-	<a href="freeBoardList">자유게시판</a>
-	<a href="myNotice">마이페이지</a>
-	<input type = "button" value = "로그아웃" onclick = "location.href='logout'"/>
+<iframe id="header" src="header">
+</iframe>
+<div id="righter_div">
+<iframe id="righter"></iframe>
+</div>
 </body>
 <script></script>
 </html>

@@ -72,7 +72,7 @@
 		#mainPage{
 			padding-right : 200px;
 			padding-top : 50px;
-			padding-left : 10px;
+			padding-left : 50px;
 		}
 		
 

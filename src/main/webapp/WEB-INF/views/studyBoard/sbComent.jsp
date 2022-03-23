@@ -39,53 +39,38 @@
 						<td>
 								<div class = "sbcom_list">
 									<span class="sbcom_user_id"> ${sbcomList.user_id} </span>
-									<input type="hidden" value = "${sbcomList.reply_no}"/>
+									<input id="reply_no" type="hidden" value = "${sbcomList.reply_no}"/>
 									<span class = "sbcom_a">
+						<!-- 댓글 삭제 -->
 										<c:if test="${loginId == sbcomList.user_id}">
 											<a class="sbcom_del" href="./sbcomdel?reply_no=${sbcomList.reply_no}&board_no=${sbcomList.board_no}&user_id=${sbcomList.user_id}">삭제</a>
 										</c:if>
+						<!-- 댓글 신고 -->
 										<c:if test="${loginId != sbcomList.user_id}">
 											<a id="sbcoreport" href="#" onclick="SBsingoPop()">신고</a>
 										</c:if>
 									</span>
 									<span>
-										<%-- <c:choose>
-											<c:when test="${fbcomList.board_no != null && fbcomList.user_id == loginId}">
-												<img class="relike" src="/bank/resources/img/like.png" alt="좋아요"> ${like}
-											</c:when>
-											
-											<c:otherwise> 
-												<img class="relike" src="/bank/resources/img/unlike.png" alt="빈 좋아요"> ${like}
-											</c:otherwise> 
-										</c:choose> --%>
+						<!-- 댓글 좋아요 -->			
+										<input id="board_no" type="hidden" value="${info.board_no}"></input>
+										<c:choose>
+										<c:when test="${like.reply_no != null && like.user_id == loginId}">
+											<img class="relike" src="/bank/resources/img/like.png" alt="좋아요">
+										</c:when>
+										
+										<c:otherwise> 
+											<img class="relike" src="/bank/resources/img/unlike.png" alt="빈 좋아요">
+										</c:otherwise> 
+										</c:choose>
 									</span>
 									<div class="sbcom_coment">
 										<span>${sbcomList.reply_content}</span>
 									</div>
+						<!-- 댓글 채택 -->			
 									<c:if test="${loginId != sbcomList.user_id}">
-										<input class="sbcom_reply_create" type="button" value="채택">
+											<a id ="selectCom" href="./selectCom?reply_no=${sbcomList.reply_no}&board_no=${sbcomList.board_no}&user_id=${sbcomList.user_id}">채택</a>
 									</c:if>
 								</div>
-							<%-- <c:if test="${fbcomList.ori_reply eq 1}">
-								<div class="fbcom_list" id="rereple">
-									<input type="hidden" value="${fbcomList.reply_no}"/>
-									<span class="fbcom_reply_a">
-										<c:if test="${loginId eq fbcomList.reply_no}">
-										<a class="fbcom_del" href="">삭제</a>
-										</c:if>
-										<c:if test="${loginId ne fbcomList.user_id}">
-										<a href="#" onclick="singoPop()">신고</a>
-										</c:if>
-									</span>
-									
-									<div class="fbcom_coment">
-										<span>${fbcomList.reply_content}</span>
-									</div>
-									<c:if test="${loginId ne fbcomList.user_id }">
-										<input class="fbcom_reply_create" type="button" value="답글">
-									</c:if>
-								</div>
-							</c:if> --%>
 						</td>
 					</tr>
 				</table>
@@ -127,12 +112,55 @@
 		console.log('댓글신고');
 		if('${loginId}' == null){
 			alert("로그인이 필요한 서비스 입니다.");
-			location.href='/loginPage';
 		}else{
 			var report = prompt("신고 사유를 입력해주세요.","");
 			console.log(report);
 		}
 	});
+	
+	//댓글 좋아요
+	$('.relike').click(function(){
+		//console.log("좋아요");
+		if('${loginId}' == ''){
+			alert('로그인이 필요한 서비스 입니다.');
+		}else{
+			var loginId = '${loginId}';
+			var board_no = $(this).prev().val();
+			var reply_no = $('#reply_no').val();
+			console.log('댓글 좋아요',loginId,board_no,reply_no);
+			
+			var param = {'loginId':loginId,'reply_no':reply_no,'board_no':board_no};
+			
+			var thissrc = $(this).attr('src');
+			
+			if(thissrc == '/bank/resources/img/unlike.png'){
+				$(this).attr('src','/bank/resources/img/like.png');
+			}else{
+				$(this).attr('src','/bank/resources/img/unlike.png');
+			}
+			
+			$.ajax({
+				type:'POST',
+				url:'relike',
+				data:param,
+				dataType:'JSON',
+				success:function(data){
+					if(data.success==1){
+						console.log('댓글 좋아요 추가');
+					}
+					if(data.row2 == 1){
+						console.log('댓글 좋아요 취소');
+					}
+				},
+				error:function(e){
+					console.log(e);
+					alert('서버에 문제가 발생했습니다.');
+				}
+			});//ajax괄호끝
+			
+		}//else괄호끝
+		
+	});//좋아요 괄호끝	
 	
 </script>
 </html>

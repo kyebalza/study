@@ -175,9 +175,21 @@
  		DELETE FROM reply WHERE reply_no = #{param1}
  	</delete>
  
+ 	<!-- 댓글 좋아요 여부 확인 -->
+ 	<select id="relike2" resultType="String">
+ 		SELECT board_no, reply_no FROM board_like WHERE user_id = #{param1} AND board_no =#{param2} AND reply_no =#{param3} AND board_name = 'study_board'
+ 	</select>
  
- 
- 
+ 	<!-- 게시글 좋아요 삭제-->
+ 	<delete id="relike_del">
+ 		DELETE FROM board_like WHERE user_id = #{param1} AND board_no =#{param2} AND reply_no=#{param3} AND board_name = 'study_board'
+ 	</delete>
+ 	
+ 	<!-- 게시글 좋아요 -->
+ 	<insert id="reuplike">
+ 		INSERT INTO board_like(user_id,board_no,reply_no,board_name)
+ 			VALUES (#{param1}, #{param2}, #{param3}, 'study_board')
+ 	</insert> 
  
  
  

@@ -234,7 +234,7 @@ public class StudyBoardController {
 		return service.quizselect(params);
 	}
 	
-	/*신고하기*/
+	/*글 신고하기*/
 	@ResponseBody
 	@RequestMapping(value = "/studyBoard/studyReport", method = RequestMethod.POST)
 	public HashMap<String, Object> studyReport(@RequestParam HashMap<String, String> params, HttpSession session ) {
@@ -276,7 +276,31 @@ public class StudyBoardController {
 			return "redirect:/studyBoard/detail?board="+board_no;
 		}
 	
-	
+		/*댓글좋아요*/
+		@ResponseBody
+		@RequestMapping(value = "/studyBoard/relike", method = RequestMethod.POST)
+		public  HashMap<String, Object> relike(@RequestParam String loginId
+				, @RequestParam String board_no,@RequestParam String reply_no) {
+			
+			logger.info(reply_no,"댓글 좋아요 요청");
+			logger.info("로그인아이디/게시글번호 : {},{}",loginId,board_no);
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			/*현재 id 좋아요 여부 확인*/
+			String relike2 = service.relike2(loginId,board_no,reply_no);
+			logger.info("좋아요 여부확인 : {}",relike2);
+			
+			if(relike2 != null) {//좋아요 취소
+				int row2 = service.relike_del(loginId,board_no,reply_no);
+				map.put("row2", row2);
+			}else {
+				int row = service.reuplike(loginId,board_no,reply_no);
+				map.put("success", row);
+			}
+			
+			return map;
+		}
 	
 	
 }

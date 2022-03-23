@@ -253,6 +253,25 @@ public class StudyBoardService {
 		dao.sbcomdel(reply_no);
 		
 	}
+	
+	//댓글 좋아요 여부
+	public String relike2(String loginId, String board_no, String reply_no) {
+		String relike2 = dao.relike2(loginId,board_no,reply_no);
+		return relike2;
+	}
+	
+	//댓글 좋아요 삭제
+	public int relike_del(String loginId, String board_no, String reply_no) {
+		logger.info("댓글 좋아요 취소 서비스");
+		return dao.relike_del(loginId,board_no,reply_no);
+	}
+	
+	//댓글 좋아요 등록
+	public int reuplike(String loginId, String board_no, String reply_no) {
+		int row = dao.reuplike(loginId,board_no,reply_no);
+		logger.info("좋아요 등록 서비스 : {}",row);
+		return row;
+	}
 
 
 	

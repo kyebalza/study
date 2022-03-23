@@ -167,8 +167,8 @@
  	keyProperty="reply_no" 
  	keyColumn="StudyBoard"
  	parameterType="StudyBoard">
- 		INSERT INTO reply (board_name, board_no, user_id, reply_content)
- 			VALUES('study_board', #{board_no}, #{user_id}, #{reply_content})
+ 		INSERT INTO reply (board_name, board_no, user_id, reply_content, ori_reply)
+ 			VALUES('study_board', #{board_no}, #{user_id}, #{reply_content},0)
  	</insert>
  
  	<!-- 댓글 삭제 -->
@@ -188,7 +188,8 @@
  	
  	<!-- 게시글 좋아요 -->
  	<insert id="reuplike">
- 		INSERT INTO board_like(user_id,board_no,reply_no,board_name)
+ 		INSERT I
+ 		NTO board_like(user_id,board_no,reply_no,board_name)
  			VALUES (#{param1}, #{param2}, #{param3}, 'study_board')
  	</insert> 
  
@@ -197,6 +198,11 @@
  	<select id="doIHaveReLike" resultType="int">
  	select count(*) FROM board_like WHERE board_no = #{param1} AND user_id = #{param2} AND reply_no = #{param3} AND board_name = 'study_board'
  	</select>
- 
+ 	
+ 	<!-- 댓글 신고하기 -->
+ 	<insert id="sbcomreport" parameterType="hashmap">
+ 		INSERT INTO report_board (reply_no,board_name,board_no,reported_user,report_user,report_reason)
+ 			VALUES (#{reply_no},'study_board,#{board_no},#{reported_user},#{report_user},#{report})
+ 	</insert>
  
 </mapper>

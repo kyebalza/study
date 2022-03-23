@@ -76,6 +76,8 @@ int reuplike(String loginId, String board_no, String reply_no);
 
 int doIHaveReLike(String board_no, String loginId, String reply_no);
 
+int sbcomreport(HashMap<String, String> params);
+
 
 
 

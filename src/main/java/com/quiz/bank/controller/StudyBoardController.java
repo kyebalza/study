@@ -269,14 +269,14 @@ public class StudyBoardController {
 		}
 	
 		/*댓글신고*/
-		@RequestMapping(value = "/studyBoard/sbcoreport", method = RequestMethod.GET)
-		public String sbcoreport(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
-			params.put("user_id", (String) session.getAttribute("loginId"));
-			logger.info("댓글삭제 요청 : {}", params);
-			String board_no = params.get("board_no");
-			logger.info(board_no);
+		@RequestMapping(value = "/studyBoard/sbcomreport", method = RequestMethod.POST)
+		public HashMap<String, Object> sbcomreport(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
+			logger.info("댓글 신고하기 요청 : {}",params);
+			String user_id = (String) session.getAttribute("loginId");
+			params.put("report_user", user_id);
+			return service.sbcomreport(params);
 			
-			return "redirect:/studyBoard/detail?board="+board_no;
+			//return "redirect:/studyBoard/detail?board_no="+board_no;
 		}
 	
 		/*댓글좋아요*/

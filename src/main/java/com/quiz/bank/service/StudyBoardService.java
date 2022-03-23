@@ -289,6 +289,15 @@ public class StudyBoardService {
 		return row;
 	}
 
+	public HashMap<String, Object> sbcomreport(HashMap<String, String> params) {
+		logger.info("공부게시판 신고 서비스 : {}",params);
+		int success = dao.sbcomreport(params);
+	
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("msg", success);
+		return map;
+	}
+
 
 	
 

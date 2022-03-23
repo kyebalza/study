@@ -129,7 +129,7 @@ $('.report').click(function(){
 		
 		var board_name = $('#board_name').val();
 		var board_no = $('#board_no').val();
-		var reported_user = '${info.user_id}';
+		var reported_user = '${info.user_id}';//글 작성자
 		
 		console.log(report,'+',board_name,'+',board_no,'+',reported_user);
 		
@@ -167,8 +167,8 @@ function del(){
 		}else{
 			
 			var loginId = '${loginId}';
-			var board_name = $(this).prev().val();
-			var board_no = $(this).next().val();
+			var board_name = $('#board_name').val();
+			var board_no = $('#board_no').val();
 			
 			console.log("로그인 아이디 : "+loginId);
 			console.log("게시판 : "+board_name);

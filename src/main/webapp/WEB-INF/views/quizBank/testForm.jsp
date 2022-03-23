@@ -31,7 +31,7 @@
 			<div class="quiz_form ${test.quiz_index}">
 			<input type="hidden" class="quiz_index ${test.quiz_index}" value="${test.quiz_index}">
 				<hr/>
-					<!-- 지울 것 :  <input type="hidden" value="${test.quiz_no}"/> -->
+					<input type="hidden" value="${test.quiz_no}"/>
 					<c:choose>
 						<c:when test="${test.bookmark_quiz_no != null && test.user_id == loginId}">
 							<img class="bookmark" src="resources/img/별.png" alt="북마크">

@@ -6,7 +6,7 @@
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<style>
-		.bookmark{
+				.bookmark{
 			width: 30px;
 			height: 30px;
 			cursor: pointer;
@@ -16,15 +16,129 @@
 		.view{
 			display : none;
 		}
+		.quiz_form {
+			width: 900px;
+	    	height: auto;
+			border-radius : 5px;
+			margin-left: auto; 
+			margin-right: auto;
+		}
+	
+		.titleArea h2{
+			background-color : greenyellow;
+		
+		}
+		.bookMarkArea img{
+			width : 20px;
+			height : 20px;
+		}	
+		input[type="checkbox"]{
+			border-radius : 5px;
+		}
+		.imgArea img{
+		    width: 400px;
+	    	height: 300px;
+		}
+		.correct,.correct img{
+			width : 10px;
+	        height : 10px;
+			/*position: absolute;*/
+	
+			top : 5%;
+			left : 2%;
+	        z-index: 3;	
+		}
+		.wrong,.wrong img{
+			width : 10px;
+	        height : 10px;
+			/*position: absolute;*/
+	
+			top : 5%;
+			left : 2%;
+	        z-index: 3;	
+		}
+		.correct img{
+			width : 150px;
+			height : 150px;
+		}
+		.wrong img{
+			width : 150px;
+			height : 150px;
+		}
+		.test_name{
+		    border: solid yellowgreen;
+		    text-align: center;
+		    background-color: yellowgreen;
+		    color: white;
+		}
+		.score{
+			margin: 40px;
+		    border: yellowgreen solid;
+		    text-align: center;
+		    background: yellowgreen;
+		    border-radius: 25px;
+		    height: 50px;
+		    padding: 20px;
+		    font-size: 35px;
+		    color: white;
+		}
+		.elapse_time{
+			text-align: center;
+		    font-size: 23px;
+		    color: red;
+		}
+		.answerArea{
+			border: solid greenyellow;
+		    text-align: center;
+		    background-color: greenyellow;
+		    border-radius: 9px;
+		    font-size: 20px;
+		}
+		.explationArea{
+			border: solid yellowgreen;
+		    text-align: center;
+		    background-color: yellowgreen;
+		    border-radius: 9px;
+		    font-size: 20px;
+		    margin-top: 15px;
+		    margin-bottom: 15px;
+		    padding: 20px;
+		    color: white;
+		}
+		#bntArea{
+			text-align: right;
+			margin-bottom: 15px;
+		}
+		.result{
+			background-color: #96d36f;
+		    border: #96d36f;
+		    padding: 10px;
+		    border-radius: 8px;
+		    cursor: pointer;
+		    color: white;
+		}
+		.statisticArea{
+			text-align: right;
+		    color: #b9b9b9;
+		    font-size: 15px;
+		}
+		.quiz_titleArea{
+			font-size: 20px;
+    		font-weight: 600;
+		}
+		#stopwatch{
+			text-align: right;
+			padding-right: 50px;
+		}
 	</style>
 </head>
 <body>
-	<div>
+	<div class="test_name">
+		<div class="test_name2">정보처리기사</div>
 		<h1 id="stopwatch">
              <input type="hidden" class="elapse_time">
         </h1>
 	</div>
-		<h3>시험페이지입니다.</h3>
 			<c:forEach items="${test}" var="test">
 			<input type="hidden" class="test_no ${test.quiz_index}" value="${test.test_no}">
 			<!-- 지울 것 : <c:set var="i" value="${i+1}"/> -->

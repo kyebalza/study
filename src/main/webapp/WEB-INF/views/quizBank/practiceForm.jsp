@@ -142,6 +142,7 @@
 				<div class="answerArea"><h3>정답 : ${test.quiz_answer}</h3></div>
 				<div class="explationArea"><h3>해설 : ${test.quiz_explation}</h3></div>
 				<input type="button" class="question" onclick="question()" value="질문하기"/>
+				<input type="hidden" value="${test.quiz_no}"/>
 				<input type="button" class="error" onclick="error()" value="오류신고"/>
 			</div>
 			
@@ -207,6 +208,7 @@ $('.result').click(function(){
 		}
 		if(answer == ''){
 			answer = "0";
+			$('#wrong'+class_num).html('<img src="resources/img/wrong_x.png"/>');
 		}
 		obj.my_answer = answer;
 		//////////////////////////////////////
@@ -375,36 +377,39 @@ $('.bookmark').click(function(){
       	var openNewWindow = window.open("about:blank");
       	openNewWindow.location.href='studyBoard/writeForm';
       }
-      ///////////////////////////////////////////////////////////////////////////
-      /*
-      function error(){
-      	if(loginId == null){
-      		alert('로그인 서비스입니다.');
-      	} else{
-      		
-      		var report_content = prompt('오류내용을 입력해주세요.');
-      		var quiz_no = $(this).attr("name");
-      		console.log(quiz_no);
-      		
-      		if(report_content  == ''){
-      			alert('오류내용을 입력해 주세요');
-      		} else if(report_content == null){
-      			alert('취소했습니다.');
-      		} 	else {
-      			$.ajax({
-      				url : 'quizErrorReport',
-      				type : 'get',
-      				data : {'report_content':report_content,'quiz_no':quiz_no ,'loginId':loginId,'answer':answer},
-      				dataType : 'json',
-      				success : function(data){
-      					if(data.msg > 0){alert('오류신고가 접수되었습니다.');}
-      				},
-      				error : function(e){console.log(e);}
-      			});	
-      		}	
-      	}
-      }
-      */
+/////////////////////////////////////////////////////////////////////////
+//오류신고
+$('.error').click(function(){
+ 	  quiz_no = $(this).prev().val();
+});
+      
+function error(){
+		console.log("문재 번호"+quiz_no);
+	if(loginId == null){
+		alert('로그인 서비스입니다.');
+	} else{
+		
+		var report_content = prompt('오류내용을 입력해주세요.');
+		
+		if(report_content  == ''){
+			alert('오류내용을 입력해 주세요');
+		} else if(report_content == null){
+			alert('취소했습니다.');
+		} 	else {
+			$.ajax({
+				url : 'quizErrorReport',
+				type : 'get',
+				data : {'report_content':report_content,'quiz_no':quiz_no ,'loginId':loginId},
+				dataType : 'json',
+				success : function(data){
+					if(data.msg > 0){alert('오류신고가 접수되었습니다.');}
+				},
+				error : function(e){console.log(e);}
+			});	
+		}	
+	}
+}
+      
 
 </script>
 </html>

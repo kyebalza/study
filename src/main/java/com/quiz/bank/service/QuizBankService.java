@@ -539,6 +539,8 @@ public class QuizBankService {
 			}
 		}
 		
+		logger.info("회차별 시험문제 리스트 갯수 : {}",testList.size());
+		mav.addObject("test", testList);
 		//9-1.시험결과 가져오기
 		HashMap<String, String> testResult= dao.getTestResult(test_result_no);
 		mav.addObject("testResult", testResult);

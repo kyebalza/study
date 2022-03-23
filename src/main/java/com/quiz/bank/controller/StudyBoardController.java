@@ -256,14 +256,25 @@ public class StudyBoardController {
 		}
 		
 		/*댓글삭제*/
-		@RequestMapping(value = "/studyBoard/studycomdelete", method = RequestMethod.GET)
-		public String studycomdelete(Model model, @RequestParam String reply_no) {
-			logger.info("댓글삭제 요청 : {}", reply_no);
-			//service.delete(reply_no);
+		@RequestMapping(value = "/studyBoard/sbcomdel", method = RequestMethod.GET)
+		public String sbcomdel(Model model, @RequestParam String reply_no, @RequestParam String board_no, @RequestParam String user_id ) {
 			
-			return "redirect:/studyBoard/detail/";
+			logger.info("댓글삭제 요청 : {},{}", reply_no,board_no);
+			service.sbcomdel(reply_no);
+			
+			return "redirect:/studyBoard/detail?board_no="+board_no;
 		}
 	
+		/*댓글신고*/
+		@RequestMapping(value = "/studyBoard/sbcoreport", method = RequestMethod.GET)
+		public String sbcoreport(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
+			params.put("user_id", (String) session.getAttribute("loginId"));
+			logger.info("댓글삭제 요청 : {}", params);
+			String board_no = params.get("board_no");
+			logger.info(board_no);
+			
+			return "redirect:/studyBoard/detail?board="+board_no;
+		}
 	
 	
 	

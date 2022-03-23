@@ -248,6 +248,12 @@ public class StudyBoardService {
 		return coment;
 	}
 
+	public void sbcomdel(String reply_no) {
+		logger.info("댓글 삭제 서비스");
+		dao.sbcomdel(reply_no);
+		
+	}
+
 
 	
 

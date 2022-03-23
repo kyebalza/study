@@ -170,8 +170,10 @@
  			VALUES('study_board', #{board_no}, #{user_id}, #{reply_content})
  	</insert>
  
- 
- 
+ 	<!-- 댓글 삭제 -->
+ 	<delete id="sbcomdel">
+ 		DELETE FROM reply WHERE reply_no = #{param1}
+ 	</delete>
  
  
  

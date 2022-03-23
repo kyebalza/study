@@ -37,18 +37,15 @@
 				<table>
 					<tr>
 						<td>
-							<c:if test="${sbcomList.ori_reply == 0}">
 								<div class = "sbcom_list">
 									<span class="sbcom_user_id"> ${sbcomList.user_id} </span>
-									
 									<input type="hidden" value = "${sbcomList.reply_no}"/>
 									<span class = "sbcom_a">
 										<c:if test="${loginId == sbcomList.user_id}">
-											<a class="sbcom_del">삭제</a>
-											<input class="sbcom_reply_create" type="button" value="답글">
+											<a class="sbcom_del" href="./sbcomdel?reply_no=${sbcomList.reply_no}&board_no=${sbcomList.board_no}&user_id=${sbcomList.user_id}">삭제</a>
 										</c:if>
 										<c:if test="${loginId != sbcomList.user_id}">
-											<a href="#" onclick="singoPop()">신고</a>
+											<a id="sbcoreport" href="#" onclick="SBsingoPop()">신고</a>
 										</c:if>
 									</span>
 									<span>
@@ -66,10 +63,9 @@
 										<span>${sbcomList.reply_content}</span>
 									</div>
 									<c:if test="${loginId != sbcomList.user_id}">
-										<input class="sbcom_reply_create" type="button" value="답글">
+										<input class="sbcom_reply_create" type="button" value="채택">
 									</c:if>
 								</div>
-							</c:if>
 							<%-- <c:if test="${fbcomList.ori_reply eq 1}">
 								<div class="fbcom_list" id="rereple">
 									<input type="hidden" value="${fbcomList.reply_no}"/>
@@ -92,21 +88,6 @@
 							</c:if> --%>
 						</td>
 					</tr>
-					
-					<%-- <tr class="fbcom_reply_box">
-						<td>
-							<div class="fbinput_reply_wep">
-								<form action="fbcoment" method="POST">
-									<input type="hidden" name="loginId" value="${loginId}">
-									<input type="hidden" name="" value="${info.user_id}">
-									<input type="hidden" name="" value="${info.board_no}">
-									<textarea id="" name="com_cont" placeholder="댓글을 입력하세요"></textarea>
-									<input type="button" id="fbcom_button" value="등록" />
-									<input class="reply_close" type="button"  value="X" />
-								</form>
-							</div>
-						</td>
-					</tr> --%>
 				</table>
 			</c:forEach>
 		</div>
@@ -139,6 +120,19 @@
 			location.href='./studycomdelete?reply_no=${info.reply_no}';
 		}
 	})
+	
+	
+	//댓글신고
+	$('#sbcoreport').click(function(){
+		console.log('댓글신고');
+		if('${loginId}' == null){
+			alert("로그인이 필요한 서비스 입니다.");
+			location.href='/loginPage';
+		}else{
+			var report = prompt("신고 사유를 입력해주세요.","");
+			console.log(report);
+		}
+	});
 	
 </script>
 </html>

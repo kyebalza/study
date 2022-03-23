@@ -66,6 +66,8 @@ void sbcoment(StudyBoardDTO sbdto);
 
 ArrayList<StudyBoardDTO> studycoment(String board_no);
 
+void sbcomdel(String reply_no);
+
 
 
 

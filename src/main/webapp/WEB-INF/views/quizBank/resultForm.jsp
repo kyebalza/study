@@ -36,7 +36,7 @@
 						</c:otherwise> 
 					</c:choose>  
 				<br/>
-				<c:when test="${test.correct_wrong eq'q' }">
+				<c:when test="${test.correct_wrong eq'1' }">
 					<div class="correct"><img src="resources/img/correct_circle.png"/></div>
 				</c:when>
 				<c:otherwise>

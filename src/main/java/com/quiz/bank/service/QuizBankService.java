@@ -396,7 +396,7 @@ public class QuizBankService {
 	//9. 결과페이지 이동
 	public ModelAndView resultFrom(int test_result_no, String loginId) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("quizBank/resultFrom");
+		mav.setViewName("quizBank/resultForm");
 		ArrayList<HashMap<String, String>> testList = dao.resultFrom(test_result_no);//문제 리스트 + 결과
 		
 		//문제 통계내기

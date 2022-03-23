@@ -24,7 +24,7 @@
              <input type="hidden" class="elapse_time">
         </h1>
 	</div>
-		<h3>시험페이지입니다.</h3>
+		<h3>연습페이지입니다.</h3>
 			<c:forEach items="${test}" var="test">
 			<input type="hidden" class="test_no ${test.quiz_index}" value="${test.test_no}">
 			<!-- 지울 것 : <c:set var="i" value="${i+1}"/> -->
@@ -156,12 +156,11 @@ $('.result').click(function(){
 	console.log(JSON.stringify(quiz_solve));
 	
 	$.ajax({
-		url : 'testResult',
+		url : 'practiceResult',
 		type : 'get',
 		data : {
-			//"test_info":JSON.stringify(test_obj),
 			"params":quiz_solve
-			,"test_prac_flag":"시험"			
+			,"test_prac_flag":"연습"			
 			,"loginId":loginId			
 			,"test_no":test_no			
 			,"elapse_time":elapse_time			
@@ -170,13 +169,6 @@ $('.result').click(function(){
 		success : function(data){
 			console.log(data.msg);
 			clearTimeout(timerId);//시간멈추기
-//			for (var i = 0; i < data.size(); i++) {
-//				if(data.result[i] == 1){
-//					$('#correct').removeClass('view');
-//				} else if(data.result[i] == 0){
-//					$('#wrong').removeClass('view');
-//				}				
-//			}
 		},
 		error : function(e){}
 	});
@@ -281,17 +273,31 @@ $('.bookmark').click(function(){
             stopwatch.innerText = timeData;// HTML에 변환한 시간 넣어주기
         }
 
-        //시계 시작 -> 3초 후 페이지 이동
-        window.onload = function startClock() {
-            printTime();
-            timerId = setTimeout(startClock, 1000);
-            setTimeout(function postTime() {
-                clearTimeout(timerId);// 시간 멈추기
-                // 데이터 보내기 추가 할 것!!(데이터 전송 버튼 시작)
-                location.href="testDetail?test_cate_no=${test_name.test_cate_no}";// 임시 페이지 이동(결과페이지로 연결할 것)
-                alert('시험이 종료되었습니다');
-            }, 100*60*1000); // 100분 후 알림창
+        test_timer(1*5); // <-- test_time(분) * 60  넣으세요
+        var timeOut;
+        function test_timer(test_time){
+	        window.onload = function startClock(){
+	        	printTime();
+	        	timeId = setTimeout(startClock,1000);
+		        var time2 = setInterval(function(){
+		            if(time == test_time ){
+		                clearInterval(timeId);
+		            }
+		            },test_time*1000);
+	        	}
+	        
+		        timeOut = setTimeout(function(){
+		       	alert('시험이 시간이 종료되었습니다.');
+		       	//$('.result').click();//연습하기에서는 종료X
+				clearTimeout(timeOut);//시험이 종료되었습니다 알림창 없애기
+				},test_time*1000);        	
         }
+        
+        //결과보기 버튼 눌렀을때 , 
+		function result(){
+			clearInterval(timeId);//시계멈추기
+		}
+        
 
         // 시간(int)을 시, 분, 초 문자열로 변환
         function getTimeFormatString(time) {

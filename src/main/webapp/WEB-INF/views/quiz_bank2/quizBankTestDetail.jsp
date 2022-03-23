@@ -146,6 +146,12 @@ function testCountListCall(e){
 		error : function(e){console.log(e)}		
 	});
 }
+
+function practiceForm(test_no){
+	location.href='practiceForm?test_no='+test_no;
+	
+}
+
 function subjectListCall(){
 	$($('.quizPage input[type="button"]')[0]).removeClass('onClk');
 	$($('.quizPage input[type="button"]')[1]).addClass('onClk');

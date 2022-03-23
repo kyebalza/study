@@ -40,17 +40,19 @@ public interface QuizBankDAO {
 	
 	//5-3. 북마크 추가
 	int bookMark_Insert(String loginId, String quiz_no);
-	
-	//////////////////////////////////////////////////////////////////////////////
-	ArrayList<TestCategoryDTO> test();
-
-	ArrayList<TestCategoryDTO> test2();
 
 	
-	//6-1. 개별 문제풀이 결과테이블
+//	//6-1. 시험 결과 테이블
+//	int test_result(TestResultDTO testResultDTO);
+	
+	//6-1. 시험 결과 테이블(test_result_no) 받아오기
+	void test_result2(TestResultDTO testResultDTO);
+
+	//6-2. 개별 문제풀이 결과테이블
 	int quiz_solve(QuizSolveDTO quizSolveDTO);
-	//6-2. 시험 결과 테이블
-	int test_result(TestResultDTO testResultDTO);
+
+	//6-3. 시험 결과테이블에서 score 업데이트
+	int test_result_scoreUpdate(int score, int test_result_no);
 
 
 }

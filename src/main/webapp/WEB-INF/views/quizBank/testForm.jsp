@@ -282,6 +282,7 @@ $('.bookmark').click(function(){
         }
 
         //시계 시작 -> 3초 후 페이지 이동
+        /*
         window.onload = function startClock() {
             printTime();
             timerId = setTimeout(startClock, 1000);
@@ -292,6 +293,33 @@ $('.bookmark').click(function(){
                 alert('시험이 종료되었습니다');
             }, 1*10*1000); // 10초 후 알림창
         }
+        
+        */
+        test_timer(1*60); // <-- test_time(분) * 60  넣으세요
+        var timeOut;
+        function test_timer(test_time){
+	        window.onload = function startClock(){
+	        	printTime();
+	        	timeId = setTimeout(startClock,1000);
+		        var time2 = setInterval(function(){
+		            if(time == test_time ){
+		                clearInterval(timeId);
+		            }
+		            },test_time*1000);
+	        	}
+	        
+		        timeOut = setTimeout(function(){
+		       	alert('시험이 종료되었습니다.');
+		       	$('.result').click();
+				},test_time*1000);        	
+        }
+        
+        //결과보기 버튼 눌렀을때 , 
+		function result(){
+			clearInterval(timeId);//시계멈추기
+			clearTimeout(timeOut);//시험이 종료되었습니다 알림창 없애기
+		}
+        
 
         // 시간(int)을 시, 분, 초 문자열로 변환
         function getTimeFormatString(time) {

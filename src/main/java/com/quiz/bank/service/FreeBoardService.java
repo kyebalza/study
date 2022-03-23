@@ -227,13 +227,68 @@ public class FreeBoardService {
 	}
 
 	//게시글 신고
-	public String freeBaordSingo(HashMap<String, String> params) {
+	public String fbReport(HashMap<String, String> params) {
 		logger.info("게시글 신고 서비스 : "+params);
-		fbdao.freeBoardSingo(params);
+		fbdao.fbReport(params);
 		
 		String board_no = params.get("board_no");
 		
 		return "redirect:/freeBoardDetail?board_no="+board_no;
+	}
+
+	//댓글 페이징 요청
+	public HashMap<String, Object> FBClistCall(int currPage, int pagePerCnt, String board_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		//어디서 부터 보여줄 것인가.
+		int offset = ((currPage-1)*pagePerCnt-1) >=0 ?
+				((currPage-1)*pagePerCnt-1) : 0;
+		logger.info("offset : "+offset);
+		
+		int totalCount = fbdao.FbCallCount(board_no); //테이블 모든 글의 총 갯수
+		//만들 수 있는 페이지의 수 (전체 갯수 / 보여줄 수)
+		int range = totalCount%pagePerCnt > 0 ? 
+				 (totalCount/pagePerCnt)+1 : (totalCount/pagePerCnt);
+		 logger.info("총 갯수 : {}",totalCount);
+		 logger.info("만들 수 있는 총 페이지 : {}",range);
+		 
+		 map.put("totalCount", totalCount);
+		 map.put("pages", range);
+		 map.put("list", fbdao.FBClistCall(pagePerCnt, offset, board_no));
+		
+		return map;
+	}
+
+	//댓글 신고 요청
+	public HashMap<String, Object> fbcomReport(HashMap<String, String> params) {
+		logger.info("자유 댓글 신고 서비스 : "+params);
+		int success = fbdao.fbcomReport(params);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("msg", success);
+		
+		logger.info("댓글 신고 확인 : "+map);
+		
+		return map;
+	}
+
+	//댓글 좋아요 유무
+	public String fbcrelike2(String loginId, String board_no, String reply_no) {
+		String fbcrelike2 = fbdao.fbcrelike2(loginId,board_no,reply_no);
+		logger.info("댓글 좋아요 유무 : "+fbcrelike2);
+		return fbcrelike2;
+	}
+
+	//댓글 좋아요 해제
+	public int fbcrelike_del(String loginId, String board_no, String reply_no) {
+		logger.info("댓글 좋아요 해제 서비스");
+		return fbdao.fbcrelike_del(loginId,board_no,reply_no);
+	}
+
+	//댓글 좋아요
+	public int fbcreuplike(String loginId, String board_no, String reply_no) {
+		logger.info("댓글 좋아요 서비스");
+		return fbdao.fbcreuplike(loginId,board_no,reply_no);
 	}
 
 

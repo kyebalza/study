@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.quiz.bank.dto.FreeBoardDTO;
 import com.quiz.bank.dto.PhotoDTO;
+import com.quiz.bank.dto.ReplyDTO;
 
 public interface FreeBoardDAO {
 
@@ -45,7 +46,19 @@ public interface FreeBoardDAO {
 
 	void fbcomdel(String reply_no);
 
-	void freeBoardSingo(HashMap<String, String> params);
+	void fbReport(HashMap<String, String> params);
+
+	int FbCallCount(String board_no);
+
+	ArrayList<ReplyDTO> FBClistCall(int pagePerCnt, int offset, String board_no);
+
+	int fbcomReport(HashMap<String, String> params);
+
+	String fbcrelike2(String loginId, String board_no, String reply_no);
+
+	int fbcrelike_del(String loginId, String board_no, String reply_no);
+
+	int fbcreuplike(String loginId, String board_no, String reply_no);
 
 
 

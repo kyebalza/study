@@ -48,14 +48,29 @@ public class FreeBoardController {
 	@ResponseBody
 	@RequestMapping(value = "/FBlistCall", method = RequestMethod.GET)
 	public HashMap<String, Object> FBlistCall(@RequestParam  String page, @RequestParam String cnt) {
-		logger.info("공부 질문 게시물 리스트 요청");
-		logger.info("리스트 요청 : {} 페이지, {} 개 씩",page, cnt);
+		logger.info("자유 게시판 페이징 요청");
+		logger.info("자유 게시판 페이징 요청 : {} 페이지, {} 개 씩",page, cnt);
 		
 		int currPage = Integer.parseInt(page);
 		int pagePerCnt = Integer.parseInt(cnt);
 		
 		return fbservice.FBlistCall(currPage,pagePerCnt);
 	}
+	
+	//댓글 페이징
+	@ResponseBody
+	@RequestMapping(value = "/FBClistCall", method = RequestMethod.GET)
+	public HashMap<String, Object> FBClistCall(@RequestParam String page, @RequestParam String cnt, @RequestParam String board_no) {
+		logger.info("댓글 페이징 요청");
+		logger.info("댓글 페이징 요청 : {} 페이지, {} 개 씩",page, cnt);
+		logger.info("로딩 중인 게시글 번호 : "+board_no);
+		
+		int currPage = Integer.parseInt(page);
+		int pagePerCnt = Integer.parseInt(cnt);
+		
+		return fbservice.FBClistCall(currPage,pagePerCnt,board_no);
+	}
+	
 	
 	//문의게시판 작성하기 페이지 요청
 	@RequestMapping(value="/freewriteForm", method = RequestMethod.GET) 
@@ -108,10 +123,10 @@ public class FreeBoardController {
 		model.addAttribute("likecheck", like2);
 		
 		//댓글
-		ArrayList<FreeBoardDTO> fbcom = fbservice.freeboardcoment(board_no);
-		logger.info("댓글 : "+board_no );
-		model.addAttribute("fbcomList",fbcom);
-		logger.info("댓글 목록 요청 : "+fbcom);
+//		ArrayList<FreeBoardDTO> fbcom = fbservice.freeboardcoment(board_no);
+//		logger.info("댓글 : "+board_no );
+//		model.addAttribute("fbcomList",fbcom);
+//		logger.info("댓글 목록 요청 : "+fbcom);
 		
 		model.addAttribute("loginId", session.getAttribute("loginId"));
 		
@@ -210,11 +225,13 @@ public class FreeBoardController {
 	
 	
 	//자유 게시판 신고 팝업창 출력
-	@RequestMapping(value = "freeboardReport")
-	public String freeboardReport (HttpServletRequest request, HttpServletResponse response, Model model) throws Exception{
-		
-		return "freeBoard/freeboardReport";
-	}
+	/*
+	 * @RequestMapping(value = "freeboardReport") public String freeboardReport
+	 * (HttpServletRequest request, HttpServletResponse response, Model model)
+	 * throws Exception{
+	 * 
+	 * return "freeBoard/freeboardReport"; }
+	 */
 	
 	//댓글 작성
 	@RequestMapping(value="fbcoment", method = RequestMethod.POST)
@@ -238,15 +255,52 @@ public class FreeBoardController {
 	}
 	
 	//게시글 신고
-	@RequestMapping(value="freeBoardSingo", method = RequestMethod.POST)
-	public String freeBoardSingo(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
-		
-		params.put("user_id", (String) session.getAttribute("loginId"));
+	@RequestMapping(value="fbReport", method = RequestMethod.POST)
+	public String fbReport(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
+		String user_id = (String) session.getAttribute("loginId");
+		params.put("report_user", user_id);
 		logger.info("게시글 신고 요청 : "+params);
 		
-		return fbservice.freeBaordSingo(params);
+		return fbservice.fbReport(params);
 				
 	}
+	
+	//댓글 신고
+	@ResponseBody
+	@RequestMapping(value = "/fbcomReport", method = RequestMethod.POST)
+	public HashMap<String, Object> fbcomReport(@RequestParam HashMap<String, String> params, HttpSession session ) {
+		logger.info("공부게시판 신고하기 요청 : {}",params);
+		String user_id = (String) session.getAttribute("loginId");
+		params.put("report_user", user_id);
+		return fbservice.fbcomReport(params);
+	}
+	
+	
+	//댓글 좋아요
+	@ResponseBody
+	@RequestMapping(value = "fbcrelike", method = RequestMethod.POST)
+	public  HashMap<String, Object> fbcrelike(@RequestParam String loginId
+			, @RequestParam String board_no,@RequestParam String reply_no) {
+		
+		logger.info(reply_no,"댓글 좋아요 요청");
+		logger.info("로그인아이디/게시글번호 : {},{}",loginId,board_no);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		/*현재 id 좋아요 여부 확인*/
+		String relike2 = fbservice.fbcrelike2(loginId,board_no,reply_no);
+		logger.info("좋아요 여부확인 : {}",relike2);
+		
+		if(relike2 != null) {//좋아요 취소
+			int row2 = fbservice.fbcrelike_del(loginId,board_no,reply_no);
+			map.put("row2", row2);
+		}else {
+			int row = fbservice.fbcreuplike(loginId,board_no,reply_no);
+			map.put("success", row);
+		}
+		
+		return map;
+	}	
 	
 	
 	

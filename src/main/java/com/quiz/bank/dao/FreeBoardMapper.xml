@@ -15,7 +15,18 @@
 	
 	<!-- 공부 게시판 페이징 관련 -->
 	<select id="FballCount" resultType="int">
-		SELECT COUNT (board_no) FROM free_board
+		SELECT COUNT (board_no) FROM free_board WHERE del_flag = 0
+	</select>
+
+	<!-- 댓글 페이징 호출 쿼리 -->
+	<select id="FBClistCall" resultType="com.quiz.bank.dto.ReplyDTO">
+		SELECT * FROM reply WHERE del_flag = 0 AND board_name = 'free_board' AND board_no = #{param3}
+			ORDER BY reply_no DESC LIMIT #{param1} OFFSET #{param2}
+	</select>
+
+	<!-- 댓글 페이징 관련 -->
+	<select id="FbCallCount" resultType="int">
+		SELECT COUNT (reply_no) FROM reply WHERE del_flag = 0 AND board_no = #{board_no}
 	</select>
 
 	<!-- 자유게시판 세부 카테고리 호출 -->
@@ -56,9 +67,9 @@
 
 	<!-- 자유게시판 삭제하기 -->
 	<!-- 어 자유게시판 delete 가 아니라 del_flag 1로 만드는건데 낼 가서 수정하기 -->
-	<delete id="freedelete">
+	<update id="freedelete">
 		UPDATE free_board SET del_flag = del_flag+1 WHERE board_no = #{param1}
-	</delete>
+	</update>
 	
 	<!-- 자유게시판 수정 -->
 	<update id="freeUpdate" parameterType="hashmap">
@@ -85,58 +96,6 @@
 				</when>	
 			</choose>	
 		</if>
-		<!-- <if test="FBSearchType != null and FBSearchType.equals('testim')">
-			<choose>
-				<when test="SearchType != null and SearchType.equals('all') ">
-					WHERE del_flag = 0 AND board_cate_no = '8' AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
-				</when>
-				<when test="SearchType != null and SearchType.equals('tit') ">
-					WHERE del_flag = 0 AND board_cate_no = '8' AND title LIKE CONCAT ('%',#{keyword},'%')
-				</when>
-				<when test="SearchType != null and SearchType.equals('user') ">
-					WHERE del_flag = 0 AND board_cate_no = '8' AND user_id LIKE CONCAT ('%',#{keyword},'%')
-				</when>	
-			</choose>	
-		</if>
-		<if test="FBSearchType != null and FBSearchType.equals('worry')">
-			<choose>
-				<when test="SearchType != null and SearchType.equals('all') ">
-					WHERE del_flag = 0 AND board_cate_no = '9' AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
-				</when>
-				<when test="SearchType != null and SearchType.equals('tit') ">
-					WHERE del_flag = 0 AND board_cate_no = '9' AND title LIKE CONCAT ('%',#{keyword},'%')
-				</when>
-				<when test="SearchType != null and SearchType.equals('user') ">
-					WHERE del_flag = 0 AND board_cate_no = '9' AND user_id LIKE CONCAT ('%',#{keyword},'%')
-				</when>	
-			</choose>	
-		</if>
-		<if test="FBSearchType != null and FBSearchType.equals('cert')">
-			<choose>
-				<when test="SearchType != null and SearchType.equals('all') ">
-					WHERE del_flag = 0 AND board_cate_no = '10' AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
-				</when>
-				<when test="SearchType != null and SearchType.equals('tit') ">
-					WHERE del_flag = 0 AND board_cate_no = '10' AND title LIKE CONCAT ('%',#{keyword},'%')
-				</when>
-				<when test="SearchType != null and SearchType.equals('user') ">
-					WHERE del_flag = 0 AND board_cate_no = '10' AND user_id LIKE CONCAT ('%',#{keyword},'%')
-				</when>	
-			</choose>	
-		</if>
-		<if test="FBSearchType != null and FBSearchType.equals('jock')">
-			<choose>
-				<when test="SearchType != null and SearchType.equals('all') ">
-					WHERE del_flag = 0 AND board_cate_no = '11' AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
-				</when>
-				<when test="SearchType != null and SearchType.equals('tit') ">
-					WHERE del_flag = 0 AND board_cate_no = '11' AND title LIKE CONCAT ('%',#{keyword},'%')
-				</when>
-				<when test="SearchType != null and SearchType.equals('user') ">
-					WHERE del_flag = 0 AND board_cate_no = '11' AND user_id LIKE CONCAT ('%',#{keyword},'%')
-				</when>	
-			</choose>	
-		</if> -->
 	</select>
 
 	<!-- 게시글 좋아요 여부 확인 -->
@@ -151,7 +110,7 @@
 
 	<!-- 좋아요 추가 -->
 	<insert id="fbUplike">
-		INSERT INTO board_like(user_id,board_no,board_name) VALUES (#{param1}, #{param2}, #{param3})
+		INSERT INTO board_like(user_id,board_no,board_name,reply_no) VALUES (#{param1}, #{param2}, #{param3},'0')
 	</insert>
 	
 	<!-- 좋아요 수 확인 -->
@@ -174,16 +133,38 @@
 	</insert>
 	
 	<!-- 댓글 삭제 -->
-	<delete id="fbcomdel">
-		DELETE FROM reply WHERE reply_no = #{param1}
-	</delete>
+	<update id="fbcomdel">
+		UPDATE reply SET del_flag = del_flag+1 WHERE reply_no = #{param1}
+	</update>
 	
 	
 	<!-- 게시글 신고 -->
-	<insert id="freeBoardSingo">
-		INSERT INTO report_board (board_name, report_user, reported_user, report_reason, board_cate_no, board_no, report_state, reply_no) 
-			VALUES (#{board_name}, #{report_user}, #{reported_user}, #{report_reason}, #{board_cate_no}, #{board_no}, '0', '0')
+ 	<insert id="fbReport" parameterType="hashmap">
+ 		INSERT INTO report_board (board_name,board_no,reported_user,report_user,report_reason, report_state, reply_no,board_cate_no)
+ 			VALUES (#{board_name},#{board_no},#{reported_user},#{report_user},#{report}, '0', '0',#{board_cate_no})
+ 	</insert>
+	
+	<!-- 댓글 신고 -->
+	<insert id="fbcomReport" parameterType="hashMap">
+		INSERT INTO report_board (board_name, report_user, reported_user, report_reason, board_cate_no, board_no, reply_no, report_state) 
+			VALUES (#{board_name}, #{report_user}, #{reported_user}, #{report_reason}, #{board_cate_no}, #{board_no}, #{reply_no}, '0')
 	</insert>
+	
+	<!-- 댓글 좋아요 여부 확인 -->
+	<select id="fbcrelike2" resultType="String">
+		SELECT board_no, reply_no FROM board_like WHERE user_id = #{param1}AND board_no =#{param2} AND reply_no =#{param3} AND board_name = 'free_board'
+	</select>
+	
+	<!-- 댓글 좋아요 -->
+	<insert id="fbcreuplike">
+		INSERT INTO board_like(user_id,board_no,reply_no,board_name)
+ 			VALUES (#{param1}, #{param2}, #{param3}, 'free_board')
+	</insert>
+	
+	<!-- 댓글 좋아요 삭제 -->
+ 	<delete id="fbcrelike_del">
+ 		DELETE FROM board_like WHERE user_id = #{param1} AND board_no =#{param2} AND reply_no=#{param3} AND board_name = 'free_board'
+ 	</delete>
 	
 	
 </mapper>

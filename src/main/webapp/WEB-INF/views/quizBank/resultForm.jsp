@@ -69,10 +69,22 @@
 	</style>
 </head>
 <body>
+	<div class="test_name">
+		<h1>${test_info.test_year}년 ${test_info.test_count}회  ${test_info.test_cate} [결과]</h1>
+	</div>
+	<div class="score">
+		<c:choose>
+			<c:when test="${test_info.test_cate_pass <= testResult.score}">
+				합격 [ ${testResult.score}점 ]
+			</c:when>
+			<c:otherwise>
+				불합격 [ ${testResult.score}점 ]
+			</c:otherwise>
+		</c:choose>
+	</div>
 	<div class="elapse_time">
 		${testResult.elapse_time}
 	</div>
-		<h3>결과페이지입니다.</h3>
 			<c:forEach items="${test}" var="test">
 				<hr/>
 			<div class="quiz_form ${test.quiz_index}">
@@ -101,7 +113,9 @@
 				</c:if>
 				<br/>
 				<br/>
-				<div class="imgArea">사진</div>
+				<c:if test="${test.photo != null}">
+					<div class="imgArea"><img class="quiz_photo" src="/photo/${test.photo}" alt="quiz_img"/></div>
+				</c:if>
 				<br/>
 				<div class="optArea">
 					<c:choose>

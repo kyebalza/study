@@ -44,6 +44,10 @@
 		SELECT quiz_no , count(quiz_no) as 'right' FROM quiz_solve  WHERE correct_wrong = TRUE GROUP BY quiz_no
 	</select>
 	
+	<select id="quiz_Photo" resultType="hashmap">
+		SELECT new_filename, board_no FROM photo WHERE board_name = 'quiz'
+	</select>
+	
 	<!-- 4. 시험명 검색기능 -->
 	<select id="search" parameterType="hashmap" 
 		resultType="TestCategory">
@@ -100,5 +104,16 @@
 	<!-- 9-1.시험결과 가져오기 -->
 	<select id="getTestResult" resultType="hashmap">
 		select * from test_result where test_result_no= #{param1}
+	</select>
+	
+	<!-- 9-2. 시험 기본 정보들 가져오기 -->
+	<select id="test_info" resultType="hashmap">
+		SELECT tl.test_cate_no, tl.test_no, tl.test_year, tl.test_month, tl.test_count , tl.test_passrate, tl.test_time, tl.test_fullscore , tl.del_flag  AS test_list_del, tl.pass_criterion,
+			 tc.test_cate, tc.del_flag AS test_cate_del, tc.pass_criterion AS test_cate_pass,
+			 sc.subject_cate , sc.del_flag AS subject_cate_del, sc.pass_criterion AS subject_category_pass 
+			 FROM test_list tl 
+			 INNER JOIN test_category tc USING (test_cate_no) 
+			 INNER JOIN subject_category sc USING (test_cate_no) 
+			 WHERE test_cate_no= #{param1} AND test_no= #{param2} LIMIT 1
 	</select>
 </mapper>

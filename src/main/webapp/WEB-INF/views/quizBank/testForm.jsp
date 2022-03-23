@@ -52,7 +52,9 @@
 				<br/>
 				<input type="hidden" class="quiz_point ${test.quiz_index}" value="${test.quiz_point}">
 				<br/>
-				<div class="imgArea">사진</div>
+				<c:if test="${test.photo != null}">
+					<div class="imgArea"><img class="quiz_photo" src="/photo/${test.photo}" alt="quiz_img"/></div>
+				</c:if>
 				<br/>
 				<!-- 지울 것 :  <ul class="${test.quiz_no}+'${i}'"> -->
 				<div class="optArea">

@@ -16,11 +16,15 @@
 		a{
 			text-decoration:none;
 		}
+		.relike{
+			width:31;
+			height:31;
+		}
 	</style>
 </head>
 <body>
-</br>
-</br>
+<br/>
+<br/>
 	<div id="sbcoment_wep">
 		<span id="loginId"> ${loginId} </span>
 		<div id="sbinput_wep">
@@ -54,7 +58,6 @@
 						<!-- 댓글 좋아요 -->			
 										<input id="board_no" type="hidden" value="${info.board_no}"></input>
 										<c:choose>
-											<img class="relike" src="/bank/resources/img/like.png" alt="좋아요">
 										<c:when test="${sbcomList.likeYN == 1}">
 											<img class="relike ${sbcomList.reply_no}" src="/bank/resources/img/like.png" alt="좋아요">										
 										</c:when>
@@ -68,7 +71,7 @@
 										<span>${sbcomList.reply_content}</span>
 									</div>
 						<!-- 댓글 채택 -->			
-									<c:if test="${loginId != sbcomList.user_id}">
+									<c:if test="${loginId != info.user_id}">
 											<a id ="selectCom" onclick="selectCom()">채택</a>
 									</c:if>
 								</div>
@@ -86,6 +89,7 @@
 		//console.log('댓글');
 		if ('${loginId}' == '') {
 			alert("로그인이 필요한 서비스 입니다.");
+			location.href="./loginPage";
 		}else if ($('#com_content').val() == ""){
 			alert("내용을 입력해주세요.");
 		}else{
@@ -98,6 +102,7 @@
 	var board_no = "${info.board_no}";
 	var user_id = "${info.user_id}";
 	
+	//댓글 삭제
 	$('.sbcom_del').click(function () {
 		console.log('댓글삭제 요청 : ');
 		var yn = confirm("이 댓글을 삭제 하시겠습니까?");
@@ -107,17 +112,6 @@
 		}
 	})
 	
-	
-	//댓글신고
-	$('#sbcoreport').click(function(){
-		console.log('댓글신고');
-		if('${loginId}' == null){
-			alert("로그인이 필요한 서비스 입니다.");
-		}else{
-			var report = prompt("신고 사유를 입력해주세요.","");
-			console.log(report);
-		}
-	});
 	
 	//댓글 좋아요
 	$('.relike').click(function(){
@@ -162,6 +156,8 @@
 		}//else괄호끝
 		
 	});//좋아요 괄호끝	
+	
+	
 	
 </script>
 </html>

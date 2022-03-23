@@ -165,6 +165,7 @@ public class StudyBoardService {
 		map.put("totalCount", totalCount);
 		map.put("pages", range);
 		map.put("list", dao.listCall(pagePerCnt, offset));
+		
 		return map;
 	}
 

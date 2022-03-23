@@ -15,36 +15,44 @@
 			text-align: center;
 			padding : 10px;
 		}
-		tr,td,th{
+		th{
+			height: 50px;
+			background-color:green;
 			border: 1px solid green;
 			text-align: center;
+			padding: 10px;
+			margin:5px;
+			color:white;
 			
 		}
-		input.button{
+		tr,td{
+			border: 1px solid green;
 			text-align: center;
-			background-color : green;
-			color: white;
+			padding: 10px;
+			margin:5px;
+			
 		}
-		button{
-			text-align: center;
+		.search{/*카테고리 검색, 글쓰기버튼*/
 			background-color : green;
-			color: white;
+			color:white;
+			boarder:1px solid green;
+			float:none;
 		}
 	</style>
 </head>
 <body>
-	<button class="button" onclick="location.href='writeForm'">글쓰기</button>
+	<button class="search" onclick="location.href='writeForm'">글쓰기</button>
 	
 	<!-- 카테고리 검색 -->
 	<form action="studyboardSearch" method="GET" name="studyboardSearch" autocomplete="off">
-			<select name ="SearchType">
-				<option selected>검색 내용 선택</option>
+			<select class="search" name ="SearchType">
+				<option selected>전체</option>
 				<option value="all">전체</option>
 				<option value="title">제목</option>
 				<option value="user">작성자</option>
 			</select>
 			<input type="text" name="Keyword"/>
-			<input type="button" value="검색" onclick="studySearch()"/>
+			<input class="search" type="button" value="검색" onclick="studySearch()"/>
 		</form>
 		<!-- 카테고리 검색 -->
 		
@@ -171,7 +179,7 @@
 				content += '<tr>';
 				content += '<td>'+item.board_no+'</td>';
 				content += '<td><a href="detail?board_no='+item.board_no+'">'+item.title+'</a></td>';
-				content += '<td>'+item.board_cate_no+'</td>';
+				content += '<td>'+item.board_cate+'</td>';
 				content += '<td>'+item.user_id+'</td>';
 				content += "<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
 				content += '</tr>';

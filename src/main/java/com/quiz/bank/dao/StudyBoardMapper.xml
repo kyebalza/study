@@ -14,8 +14,9 @@
 	
 	<!-- 공부게시판 페이징 -->
 	<select id="listCall" resultType="StudyBoard">
-		SELECT board_no, title, board_cate_no, user_id, reg_date FROM study_board ORDER BY board_no DESC
-			LIMIT #{param1} OFFSET #{param2}
+		SELECT * FROM study_board JOIN board_category
+			ON study_board.board_cate_no = board_category.board_cate_no
+			 WHERE del_flag = 0 ORDER BY board_no DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<select id="allCount" resultType="int">

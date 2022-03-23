@@ -5,7 +5,6 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="resources/css/common.css">
 	<style>
 		table{
 			border: 2px solid green;
@@ -41,7 +40,26 @@
 			<tr>
 				<th>문제</th>
 				<td>
-					<input type="text" name="quiz"/>
+					<!-- 문제 -->
+					<div id="quiz">
+					<p>${Qinfo.quiz_content}</p>
+					<!-- 보기 -->
+					<div class="quiz_option">
+						<p class="option_num">보기1 : ${Qinfo.option1}</p>
+					</div>
+					<div class="quiz_option">
+						<p class="option_num">보기2 : ${Qinfo.option2}</p>
+					</div>
+					<div class="quiz_option">
+						<p class="option_num">보기3 : ${Qinfo.option3}</p>
+					</div>
+					<div class="quiz_option">
+						<p class="option_num">보기4 : ${Qinfo.option4}</p>
+					</div>
+					<div class="quiz_option">
+						<p class="option_num">보기5 : ${Qinfo.option5}</p>
+					</div>
+				</div>
 				</td>
 			</tr>
 			<tr>

@@ -161,6 +161,9 @@ public class StudyBoardController {
 	@RequestMapping(value = "/studyBoard/updateForm", method = RequestMethod.GET)
 	public String updateForm(Model model, @RequestParam String board_no) {
 		logger.info("updateForm : {}",board_no);
+		//문제가져오기
+		StudyBoardDTO qdto = service.studyQuiz(board_no);
+		model.addAttribute("Qinfo", qdto);
 		//페이지 이동은 꼭 Controller에서만 하는 건 아니다.
 		return service.updateForm(model, board_no);
 	}

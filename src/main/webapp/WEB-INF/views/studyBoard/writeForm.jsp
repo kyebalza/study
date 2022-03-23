@@ -11,8 +11,22 @@
 			text-align: center;
 			padding : 10px;
 		}
-		tr,td,th{
+		th{
+			height: 50px;
+			background-color:green;
 			border: 1px solid green;
+			text-align: center;
+			padding: 10px;
+			margin:5px;
+			color:white;
+			
+		}
+		tr,td{
+			border: 1px solid green;
+			text-align: center;
+			padding: 10px;
+			margin:5px;
+			
 		}
 		input.button{
 			text-align: center;
@@ -62,17 +76,26 @@
 					<hr/>
 					<textarea id="quiz_content" style="width: 596px; height: 102px;"></textarea><!-- 문제내용 -->
 					
-					<!-- 보기옵션 -->
-					<p class="option_num">보기1</p>
-					<input id="option1" class="option"/>
-					<p class="option_num">보기2</p>
-					<input id="option2" class="option"/>
-					<p class="option_num">보기3</p>
-					<input id="option3" class="option"/>
-					<p class="option_num">보기4</p>
-					<input id="option4" class="option"/>
-					<p class="option_num">보기5</p>
-					<input id="option5" class="option"/>
+					<!-- 문제 -->
+					<div id="quiz">
+					<p>${Qinfo.quiz_content}</p>
+					<!-- 보기 -->
+					<div class="quiz_option">
+						<p class="option_num">보기1 : ${Qinfo.option1}</p>
+					</div>
+					<div class="quiz_option">
+						<p class="option_num">보기2 : ${Qinfo.option2}</p>
+					</div>
+					<div class="quiz_option">
+						<p class="option_num">보기3 : ${Qinfo.option3}</p>
+					</div>
+					<div class="quiz_option">
+						<p class="option_num">보기4 : ${Qinfo.option4}</p>
+					</div>
+					<div class="quiz_option">
+						<p class="option_num">보기5 : ${Qinfo.option5}</p>
+					</div>
+				</div>
 				</td>
 			</tr>
 			<tr>

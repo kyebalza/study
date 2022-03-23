@@ -50,7 +50,7 @@
 			<a href="adminPage" target="_parent">관리자페이지</a>
 		</c:if>
 		<c:if test="${admin == '회원' }">
-			<a href="myNotice" target="_parent">마이페이지</a>
+			<a href="myBoard" target="_parent">마이페이지</a>
 		</c:if>
 	</div>
 </div>

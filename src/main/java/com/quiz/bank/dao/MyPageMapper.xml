@@ -59,5 +59,11 @@
 	LIMIT #{param2} OFFSET #{param3}
 	</select>
 		
+	<select id="myTestListCall" resultType="HashMap">
+	SELECT * FROM test_result
+	INNER JOIN test_list tl USING (test_no)
+	INNER JOIN test_category tc USING (test_cate_no)
+	WHERE user_id = #{param1}	
+	</select>
 	
 </mapper>

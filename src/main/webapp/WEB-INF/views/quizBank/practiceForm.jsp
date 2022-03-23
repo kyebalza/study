@@ -92,8 +92,8 @@
 						</c:otherwise> 
 					</c:choose>  
 				<br/>
-				<div class="correct" id="correct ${test.quiz_index}"></div>
-				<div class="wrong" id="wrong ${test.quiz_index}"></div>
+				<div class="correct" id="correct${test.quiz_index}"></div>
+				<div class="wrong" id="wrong${test.quiz_index}"></div>
 				<div class="quiz_titleArea"><input type="hidden" class="quiz_no ${test.quiz_index}" value="${test.quiz_no}"> ${test.quiz_index}번. ${test.quiz_content}</div>
 				<br/>
 				<c:if test="${test.percent != null}">
@@ -198,9 +198,9 @@ $('.result').click(function(){
 					var correct = $('.quiz_answer.'+class_num).val();
 					if(grading == correct){
 						console.log("정답입니다"+k);
-						$('#correct.'+class_num).html('<img src="resources/img/correct_circle.png"/>');
+						$('#correct'+class_num).html('<img src="resources/img/correct_circle.png"/>');
 					}else{
-						$('#wrong.'+class_num).html('<img src="resources/img/wrong_x.png"/>');
+						$('#wrong'+class_num).html('<img src="resources/img/wrong_x.png"/>');
 					}
 				}
 			}			
@@ -253,8 +253,8 @@ function quizState (quiz_state_bool){
 		$('.result').removeClass('view');
 		$('.question').addClass('view');
 		$('.error').addClass('view');
-		$('.correct').addClass('view');
-		$('.wrong').addClass('view');
+/* 		$('.correct').addClass('view');
+		$('.wrong').addClass('view'); */
 		$('.answerArea').addClass('view');
 		$('.explationArea').addClass('view');
 	}

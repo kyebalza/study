@@ -64,9 +64,21 @@
 		width : 85px;
 		font-size : 4px;
 	}
+	#header{
+		width: 100%;
+		height: 100px;
+		/* border-style: none; */
+		overflow: hidden;
+	}
+	body{
+	margin : 0px;
+	}	
 	</style>
 </head>
 <body>
+<iframe id="header" src="header"></iframe>
+
+
 <div class = "alllogin">
 <div class = "login">
 	<table>

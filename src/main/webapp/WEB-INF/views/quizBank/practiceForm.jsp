@@ -369,6 +369,42 @@ $('.bookmark').click(function(){
 
             return String(hour).padStart(2, '0') + ":" + String(min).padStart(2, '0') + ":" + String(sec).padStart(2, '0');
         }
+///////////////////////////////////////////////////////////////////////////
+      //문제 질문하기
+      function question(){
+      	var openNewWindow = window.open("about:blank");
+      	openNewWindow.location.href='studyBoard/writeForm';
+      }
+      ///////////////////////////////////////////////////////////////////////////
+      /*
+      function error(){
+      	if(loginId == null){
+      		alert('로그인 서비스입니다.');
+      	} else{
+      		
+      		var report_content = prompt('오류내용을 입력해주세요.');
+      		var quiz_no = $(this).attr("name");
+      		console.log(quiz_no);
+      		
+      		if(report_content  == ''){
+      			alert('오류내용을 입력해 주세요');
+      		} else if(report_content == null){
+      			alert('취소했습니다.');
+      		} 	else {
+      			$.ajax({
+      				url : 'quizErrorReport',
+      				type : 'get',
+      				data : {'report_content':report_content,'quiz_no':quiz_no ,'loginId':loginId,'answer':answer},
+      				dataType : 'json',
+      				success : function(data){
+      					if(data.msg > 0){alert('오류신고가 접수되었습니다.');}
+      				},
+      				error : function(e){console.log(e);}
+      			});	
+      		}	
+      	}
+      }
+      */
 
 </script>
 </html>

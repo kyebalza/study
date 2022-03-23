@@ -54,7 +54,7 @@
 						<!-- 댓글 좋아요 -->			
 										<input id="board_no" type="hidden" value="${info.board_no}"></input>
 										<c:choose>
-										<c:when test="${like.reply_no != null && like.user_id == loginId}">
+										<c:when test="${relike2.reply_no != null && relike2.user_id == loginId}">
 											<img class="relike" src="/bank/resources/img/like.png" alt="좋아요">
 										</c:when>
 										
@@ -68,7 +68,7 @@
 									</div>
 						<!-- 댓글 채택 -->			
 									<c:if test="${loginId != sbcomList.user_id}">
-											<a id ="selectCom" href="./selectCom?reply_no=${sbcomList.reply_no}&board_no=${sbcomList.board_no}&user_id=${sbcomList.user_id}">채택</a>
+											<a id ="selectCom" onclick="selectCom()">채택</a>
 									</c:if>
 								</div>
 						</td>

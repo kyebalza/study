@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -237,7 +238,7 @@ public class FreeBoardService {
 	}
 
 	//댓글 페이징 요청
-	public HashMap<String, Object> FBClistCall(int currPage, int pagePerCnt, String board_no) {
+	public HashMap<String, Object> FBClistCall(int currPage, int pagePerCnt, String board_no, String user_id) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		//어디서 부터 보여줄 것인가.
@@ -252,13 +253,33 @@ public class FreeBoardService {
 		 logger.info("총 갯수 : {}",totalCount);
 		 logger.info("만들 수 있는 총 페이지 : {}",range);
 		 
+		 ArrayList<HashMap<String, String>> list = fbdao.FBClistCall(pagePerCnt, offset, board_no);
+		 
+		 for(HashMap<String, String> fbcomUnit : list ) {
+			 
+				int fblikeCnt = fbdao.fbdoIHaveReLike(board_no,user_id,String.valueOf(fbcomUnit.get("reply_no")));
+				fbcomUnit.put("likeYN", String.valueOf(fblikeCnt));
+			}
+		 
 		 map.put("totalCount", totalCount);
 		 map.put("pages", range);
-		 map.put("list", fbdao.FBClistCall(pagePerCnt, offset, board_no));
+		 map.put("list", list);
 		
 		return map;
 	}
 
+	//하.. 일단 해보는거야 (댓글)
+	/*
+	 * public ArrayList<HashMap<String, String>> freecoment(String board_no, String
+	 * user_id) { logger.info("댓글 불러오기 서비스");
+	 * 
+	 * ArrayList<HashMap<String, String>> fbcom = fbdao.freecoment(board_no);
+	 * for(HashMap<String, String> fbcomUnit : fbcom ) { int fblikeCnt =
+	 * fbdao.fbdoIHaveReLike(board_no,user_id,String.valueOf(fbcomUnit.get(
+	 * "reply_no"))); fbcomUnit.put("likeYN", String.valueOf(fblikeCnt)); } return
+	 * fbcom; }
+	 */
+	
 	//댓글 신고 요청
 	public HashMap<String, Object> fbcomReport(HashMap<String, String> params) {
 		logger.info("자유 댓글 신고 서비스 : "+params);
@@ -290,6 +311,7 @@ public class FreeBoardService {
 		logger.info("댓글 좋아요 서비스");
 		return fbdao.fbcreuplike(loginId,board_no,reply_no);
 	}
+
 
 
 

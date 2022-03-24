@@ -19,7 +19,7 @@
 	</select>
 
 	<!-- 댓글 페이징 호출 쿼리 -->
-	<select id="FBClistCall" resultType="com.quiz.bank.dto.ReplyDTO">
+	<select id="FBClistCall" resultType="HashMap">
 		SELECT * FROM reply WHERE del_flag = 0 AND board_name = 'free_board' AND board_no = #{param3}
 			ORDER BY reply_no DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
@@ -166,5 +166,15 @@
  		DELETE FROM board_like WHERE user_id = #{param1} AND board_no =#{param2} AND reply_no=#{param3} AND board_name = 'free_board'
  	</delete>
 	
+	
+	<!-- 댓글 좋아요 확인 -->
+	<select id="fbdoIHaveReLike" resultType="int">
+	 	select count(*) FROM board_like WHERE board_no = #{param1} AND user_id = #{param2} AND reply_no = #{param3} AND board_name = 'free_board'
+	</select>
+	
+	<!-- 댓글 조회 -->
+	<select id="freecoment" resultType="HashMap">
+		SELECT * FROM reply WHERE board_no =#{board_no} AND board_name = 'free_board' AND del_flag = '0'
+	</select>
 	
 </mapper>

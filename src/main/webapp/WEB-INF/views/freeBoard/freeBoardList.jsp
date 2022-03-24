@@ -8,12 +8,14 @@
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script> 
 	<!-- 아래 요 친구가 있어야지 페이징이 깨지지 않아요 -->
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="resources/css/header.css"/>
 	<script src="resources/js/jquery.twbsPagination.js"></script>
 	<style>
 		table{
 			border: 2px solid green;
 			text-align: center;
 			padding : 10px;
+			margin : auto;
 		}
 		tr,td,th{
 			border: 1px solid green;
@@ -27,56 +29,78 @@
 		}
 		button{
 			text-align: center;
-			background-color : green;
+			position: relative;
+			background-color : #6AA84F;
 			color: white;
+			border: none;
+			margin: auto;
+			width: 100px;
+			height: 
+			
+		}
+		.FreeSearch{
+			 float: right;
+			 left : 40%;
+		}
+		.flall{
+			position: absolute;
+			/* background: blue; */
+			min-width : 1150px;
+			left: 20%;
 		}
 	</style>
 </head>
 <body>
-	<button class="button" onclick="location.href='freewriteForm'">글쓰기</button>
-	
-	<!-- 카테고리 검색 -->
-	<form action="FreeboardSearch" method="GET" name="FreeboardSearch" autocomplete="off">
-			<select	name = "FBSearchType">
-				<option value="fball" selected>전체</option>
-				<option value="testim">시험 정보</option>
-				<option value="worry">고민 상담</option>
-				<option value="cert">자격증</option>
-				<option value="jock">잡담</option>
-			</select>
+	<%@ include file="../header.jsp" %>
+	</br></br></br></br></br>
+	<div class="flall">
+		<div>
+			<button class="button" onclick="location.href='freewriteForm'">글쓰기</button>
 			
-			<select name ="SearchType">
-				<option value="all" selected>전체</option>
-				<option value="tit">제목</option>
-				<option value="user">작성자</option>
-			</select>
-			<input type="text" name="Keyword"/>
-			<input type="button" value="검색" onclick="fbSearchList()"/>
-		</form>
-		<!-- 카테고리 검색 -->
-		
-	<!-- 게시판 리스트 -->
-	<table>
-		<thead>
-		<tr>
-			<th>글번호</th>
-			<th>제목</th>
-			<th>카테고리</th>
-			<th>작성자</th>
-			<th>작성일자</th>
-		</tr>
-		</thead>
-		<tbody id="Fboardlist"></tbody>
-		<tr>
-			<td colspan="5" id="paging">
-				<div class="container">
-					<nav aria-label="Page navigation" style="text-align:center">
-						<ul class="pagenation" id="pagination"></ul>
-					</nav>
-				</div>
-			</td>
-		</tr>
-	</table>
+			<!-- 카테고리 검색 -->
+				<form class = "FreeSearch" action="FreeboardSearch" method="GET" name="FreeboardSearch" autocomplete="off">
+					<select	name = "FBSearchType">
+						<option value="fball" selected>전체</option>
+						<option value="testim">시험 정보</option>
+						<option value="worry">고민 상담</option>
+						<option value="cert">자격증</option>
+						<option value="jock">잡담</option>
+					</select>
+					
+					<select name ="SearchType">
+						<option value="all" selected>전체</option>
+						<option value="tit">제목</option>
+						<option value="user">작성자</option>
+					</select>
+					<input type="text" name="Keyword"/>
+					<input type="button" value="검색" onclick="fbSearchList()"/>
+				</form>
+		</div>	
+			<!-- 카테고리 검색 -->
+			
+		<!-- 게시판 리스트 -->
+		<table>
+			<thead>
+			<tr>
+				<th>글번호</th>
+				<th>제목</th>
+				<th>카테고리</th>
+				<th>작성자</th>
+				<th>작성일자</th>
+			</tr>
+			</thead>
+			<tbody id="Fboardlist"></tbody>
+			<tr>
+				<td colspan="5" id="paging">
+					<div class="container">
+						<nav aria-label="Page navigation" style="text-align:center">
+							<ul class="pagenation" id="pagination"></ul>
+						</nav>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
 </body>
 <script>
 
@@ -89,10 +113,11 @@
 			url:'FreeSearch',
 			data: $("form[name=FreeboardSearch]").serialize(),
 			success : function(result){
-				console.log("확인");
+				console.log(result);
 				//테이블 초기화
 				$('#Fboardlist').empty();
-				if(result.length>0){
+				
+				if(result.length>=1){
 					var str = '';
 					result.forEach(function(item){
 						var date = new Date(item.reg_date);
@@ -104,9 +129,9 @@
 						str += "<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
 						str += '</tr>';
 						
-						$('#Fboardlist').append(str);
 					
 					})
+						$('#Fboardlist').append(str);
 				}
 			}
 		});

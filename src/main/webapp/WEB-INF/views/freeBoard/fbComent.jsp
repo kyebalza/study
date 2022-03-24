@@ -153,23 +153,24 @@
 			content += '<tr>';
 			content += '<td>';
 			content += '<div class = "fbcom_list">';
-			content += '<span id="fbcuser_id" value='+item.user_id+'>'+item.user_id+'</span>';
-			content += '<input type="hidden" class = "reply_no" value = '+item.reply_no+'   />';
+			content += '<input type="hidden" class="fbcuser_id '+item.reply_no+'" value='+item.user_id+'    />';
+			content += '<span>'+item.user_id+'</span>';
+			content += '<input type="hidden" class="reply_no '+item.reply_no+'" value='+item.reply_no+'   />';
 			content += '<span class = "fbcom_a">';
 			
 				if (loginId == item.user_id) {
 					content += '<a class="fbcom_del" href="./fbcomdel?reply_no='+item.reply_no+'&board_no='+item.board_no+'&user_id='+item.user_id+'">삭제</a>';
 				}else{
-					content += '<a href="#" class="fbComReport" onClick="ComSin('+item.reply_no+','+item.user_id+')">신고</a>';
+					content += '<a href="#" class="fbComReport '+item.reply_no+'">신고</a>';
 				}
 			
 			content += '</span>';
 			content += '<span>';
-			
-				if (item.user_id == loginId) {
-					content += '<img class="relike" src="/bank/resources/img/like.png" alt="좋아요">';
+			console.log(item.likeYN);
+				if (item.likeYN > 0) {
+					content += '<img class="relike  '+item.reply_no+'" src="/bank/resources/img/like.png" alt="좋아요">';
 				}else{
-					content += '<img class="relike" src="/bank/resources/img/unlike.png" alt="빈 좋아요">';
+					content += '<img class="relike  '+item.reply_no+'" src="/bank/resources/img/unlike.png" alt="빈 좋아요">';
 				}
 			
 			content += '</span>';
@@ -190,8 +191,8 @@
 	}
 	
 	
-	function ComSin(e) {
-		console.log("클릭한 댓글 번호 : "+e);
+	$(document).on("click",".fbComReport",function() {
+		console.log(this.classList[1]);
 		
 		if ('${loginId}' == null) {
 			alert ('로그인이 필요한 서비스 입니다.');
@@ -201,8 +202,14 @@
 			
 			var board_name = $('#board_name').val();
 			var board_no = $('#board_no').val();
-			var reported_user = $('#fbcuser_id').val(); //값을 못가져옴
-			//var reply_no = e;
+			
+			
+			
+			var reported_user = $('.fbcuser_id.'+this.classList[1]).val(); //값을 못가져옴
+			var reply_no = this.classList[1];
+			
+			
+			
 			var board_cate_no = $('#board_cate_no').val();
 			
 			console.log(reported_user);
@@ -211,7 +218,7 @@
 			var params = {'board_name':board_name ,'board_no':board_no ,'reported_user':reported_user, 'reply_no':reply_no ,'board_cate_no':board_cate_no ,'report_reason':report_reason}
 			
 			console.log(params);
-			
+
 			/* $.ajax({
 				type:'POST',
 				url:'fbcomReport',
@@ -228,11 +235,14 @@
 			
 		}
 		
-	}
+	});
 	
 	
 
 	
+	
+	
+	//댓글 좋아요
 	$(document).on("click",".relike",function(){
 		console.log($(this)[0].classList[1]);
 		if('${loginId}' == ''){
@@ -240,7 +250,7 @@
 		}else{
 			var loginId = '${loginId}';
 			var board_no = $('#board_no').val();
-			var reply_no = $('.reply_no').val();
+			var reply_no = $(this)[0].classList[1];
 			console.log('댓글 좋아요',loginId,board_no,reply_no);
 			
 			var param = {'loginId':loginId,'reply_no':reply_no,'board_no':board_no};

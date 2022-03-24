@@ -60,7 +60,7 @@ public class FreeBoardController {
 	//댓글 페이징
 	@ResponseBody
 	@RequestMapping(value = "/FBClistCall", method = RequestMethod.GET)
-	public HashMap<String, Object> FBClistCall(@RequestParam String page, @RequestParam String cnt, @RequestParam String board_no) {
+	public HashMap<String, Object> FBClistCall(@RequestParam String page, @RequestParam String cnt, @RequestParam String board_no, HttpSession session) {
 		logger.info("댓글 페이징 요청");
 		logger.info("댓글 페이징 요청 : {} 페이지, {} 개 씩",page, cnt);
 		logger.info("로딩 중인 게시글 번호 : "+board_no);
@@ -68,7 +68,10 @@ public class FreeBoardController {
 		int currPage = Integer.parseInt(page);
 		int pagePerCnt = Integer.parseInt(cnt);
 		
-		return fbservice.FBClistCall(currPage,pagePerCnt,board_no);
+		String user_id = (String) session.getAttribute("loginId");
+		
+		
+		return fbservice.FBClistCall(currPage,pagePerCnt,board_no,user_id);
 	}
 	
 	
@@ -117,15 +120,17 @@ public class FreeBoardController {
 		logger.info("좋아요 갯수 : "+CountLike);
 		model.addAttribute("like", CountLike);
 		
+		
+		
 		//좋아요 조회
 		int like2 = fbservice.likecheck(user_id,board_no);
 		logger.info("좋아요 여부확인 : {}", like2);
 		model.addAttribute("likecheck", like2);
 		
 		//댓글
-//		ArrayList<FreeBoardDTO> fbcom = fbservice.freeboardcoment(board_no);
-//		logger.info("댓글 : "+board_no );
-//		model.addAttribute("fbcomList",fbcom);
+//		ArrayList<HashMap<String, String>> fbcom = fbservice.freecoment(board_no,user_id);
+//		logger.info("댓글 : "+board_no);
+//		model.addAttribute("frcomList", fbcom);
 //		logger.info("댓글 목록 요청 : "+fbcom);
 		
 		model.addAttribute("loginId", session.getAttribute("loginId"));

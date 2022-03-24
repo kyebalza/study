@@ -50,7 +50,7 @@ public interface FreeBoardDAO {
 
 	int FbCallCount(String board_no);
 
-	ArrayList<ReplyDTO> FBClistCall(int pagePerCnt, int offset, String board_no);
+	ArrayList<HashMap<String, String>> FBClistCall(int pagePerCnt, int offset, String board_no);
 
 	int fbcomReport(HashMap<String, String> params);
 
@@ -59,6 +59,10 @@ public interface FreeBoardDAO {
 	int fbcrelike_del(String loginId, String board_no, String reply_no);
 
 	int fbcreuplike(String loginId, String board_no, String reply_no);
+
+	ArrayList<HashMap<String, String>> freecoment(String board_no);
+
+	int fbdoIHaveReLike(String board_no, String user_id, String reply_no);
 
 
 

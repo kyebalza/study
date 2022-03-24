@@ -5,6 +5,8 @@
  <meta charset="UTF-8">
  <title>Insert title here</title>
  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+ <link rel="stylesheet" href="resources/css/header.css"/>
+ 
  <style>
  
  table, th, td{
@@ -23,7 +25,9 @@ textarea {
  </style>
 </head>
 <body>
-
+	<%@ include file="../header.jsp" %>
+	
+	
 	<form id = "fbd" name="fbd">
 		<table>
 			<tr>

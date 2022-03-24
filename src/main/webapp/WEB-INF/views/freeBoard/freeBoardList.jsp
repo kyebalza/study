@@ -11,16 +11,18 @@
 	<link rel="stylesheet" href="resources/css/header.css"/>
 	<script src="resources/js/jquery.twbsPagination.js"></script>
 	<style>
-		table{
+		.List{
+			min-width : 1170px;
 			border: 2px solid #6AA84F;
 			text-align: center;
 			padding : 10px;
 			margin : auto;
+			
 		}
-		tr,td,th{
+		.List tr,td,th{
 			border: 1px solid #6AA84F;
 			text-align: center;
-			
+			padding: 5px;
 		}
 		input.button{
 			text-align: center;
@@ -56,7 +58,17 @@
 			height: 30px;	
 			border-radius: 9px;
 			text-align: center;
+			background: #6AA84F;
+			color: white;
 		}
+		
+		.select option{
+			background: white;
+			color: black;
+			border: 1px solid #6AA84F;
+			border-radius: 9px;
+		}
+		
 	</style>
 </head>
 <body>
@@ -104,8 +116,8 @@
 			<!-- 카테고리 검색 -->
 			
 		<!-- 게시판 리스트 -->
-		<table>
-			<thead>
+		<table class="List">
+			<thead style="background: #6AA84F; color:white;">
 			<tr>
 				<th>글번호</th>
 				<th>제목</th>
@@ -115,16 +127,18 @@
 			</tr>
 			</thead>
 			<tbody id="Fboardlist"></tbody>
-			<tr>
-				<td colspan="5" id="paging">
-					<div class="container">
-						<nav aria-label="Page navigation" style="text-align:center">
-							<ul class="pagenation" id="pagination"></ul>
-						</nav>
-					</div>
-				</td>
-			</tr>
 		</table>
+			<table class="paging" style="border: none;">
+				<tr style="border: none;">
+					<td colspan="5" id="paging" style="border: none;">
+						<div class="container">
+							<nav aria-label="Page navigation" style="text-align:center">
+								<ul class="pagenation" id="pagination"></ul>
+							</nav>
+						</div>
+					</td>
+				</tr>
+			</table>
 	</div>
 	
 		<%@ include file="../footer.jsp" %>

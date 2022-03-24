@@ -9,80 +9,104 @@
  
  <style>
  
- table, th, td{
-	border: 1px solid black;
-	border-collapse: collapse;
-	padding : 5px 10px;	
-}
+	 table, td{
+		border: 1px solid #6AA84F;
+		border-collapse: collapse;
+		padding : 5px 10px;
+	}
+	
+	textarea {
+		width: 100%;
+		height: 150px;
+		resize: none;
+	}
 
-textarea {
-	width: 100%;
-	height: 150px;
-	resize: none;
-}
-
+	.fbdall{
+		position: absolute;
+		/* background: blue; */
+		min-width : 1150px;
+		left: 20%;
+	}
+	
+	.detail{
+		min-width : 1170px;
+		border: 2px solid #6AA84F;
+		padding : 15px;
+		margin : auto;
+		
+	}
+	
+	th{
+		text-align: center;
+		width: 100px;
+		background-color: #6AA84F;
+		color: white;
+		
+	}
+	
  
  </style>
 </head>
 <body>
 	<%@ include file="../header.jsp" %>
-	
-	
-	<form id = "fbd" name="fbd">
-		<table>
-			<tr>
-				<th >제목</th>
-				<td>${info.title}</td>
-			</tr>
-			<tr>
-				<th>카테고리</th>
-				<td>
-					<input type="hidden" id="board_cate_no" value="${info.board_cate_no }" id="board_cate_no"/>
-					${info.board_cate}
-				</td>
-			</tr>
-			<tr>
-				<th>작성자</th>
-				<td id="user_id">${info.user_id}</td>
-			</tr>
-			<tr>
-				<th>작성일자</th>
-				<td>${info.reg_date}</td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td>${info.content}</td>
-			</tr>
-			<c:if test="${fbphoto.size()>0}">
-			<tr>
-				<th>사진</th>
-				<td>
-					<c:forEach items="${fbphoto}" var="fbphoto">
-						<img src="/photo/${fbphoto.new_filename}" width="250px"/><br/><br/>
-					</c:forEach>
-				</td>
-			</tr>
-			</c:if>
-		</table>
-	</form>
-		<input type="hidden" id="board_name" value="${info.board_name}"/>
-		<c:choose>
-			<c:when test="${likecheck == 1}">
-				<img class="like" src="/bank/resources/img/like.png" alt="좋아요"> ${like}
-			</c:when>
-			
-			<c:otherwise> 
-				<img class="like" src="/bank/resources/img/unlike.png" alt="빈 좋아요"> ${like}
-			</c:otherwise> 
-		</c:choose>
-	<input type="hidden" id="board_no" value="${info.board_no}"/>
-	<p><img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수">(${info.bHit})</p>
-	<img class="boardreport" src="/bank/resources/img/report.png"  alt="신고하기">
-	<input type="button" onclick="location.href='./freeUpdateForm?board_no=${info.board_no}'" value="수정"/>
-	<input type="button" onclick="del()" value="삭제"/>			
-	<input type="button" onclick="location.href='./freeBoardList?currpage=1'" value="목록"/>
-	
-	<%@ include file="fbComent.jsp" %>
+		</br></br></br></br></br>
+	<div class=fbdall>
+		<form id = "fbd" name="fbd">
+			<table class="detail">
+				<tr>
+					<th style="text-align:center; padding : 15px;" >제목</th>
+					<td>${info.title}</td>
+				
+					<th style="text-align:center" >카테고리</th>
+					<td>
+						<input type="hidden" id="board_cate_no" value="${info.board_cate_no }" id="board_cate_no"/>
+						${info.board_cate}
+					</td>
+				</tr>
+				<tr>
+					<th style="text-align:center; padding : 15px;" >작성자</th>
+					<td id="user_id">${info.user_id}</td>
+					<th  style="text-align:center">작성일자</th>
+					<td>${info.reg_date}</td>
+				</tr>
+				<tr>
+					<th rowspan="2" style="width: 25px; text-align:center; padding : 15px;">내용</th>
+					<td colspan="4">${info.content}</td>
+				</tr>
+				<c:if test="${fbphoto.size()>0}">
+				<tr>
+					
+					<td colspan="4" style="width: 25px; text-align:center;">
+						<c:forEach items="${fbphoto}" var="fbphoto">
+							<img src="/photo/${fbphoto.new_filename}" width="250px"/><br/><br/>
+						</c:forEach>
+					</td>
+				</tr>
+				</c:if>
+			</table>
+		</form>
+			<div style="float: right;">
+				<input type="hidden" id="board_name" value="${info.board_name}"/>
+					<c:choose>
+						<c:when test="${likecheck == 1}">
+							<img class="like" src="/bank/resources/img/like.png" alt="좋아요"> ${like}
+						</c:when>
+						
+						<c:otherwise> 
+							<img class="like" src="/bank/resources/img/unlike.png" alt="빈 좋아요"> ${like}
+						</c:otherwise> 
+					</c:choose>
+				<input type="hidden" id="board_no" value="${info.board_no}"/>
+				<img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수">(${info.bHit})
+				<img class="boardreport" src="/bank/resources/img/report.png"  alt="신고하기">
+			</div>
+			<div style="margin: auto;">
+				<input type="button" onclick="location.href='./freeUpdateForm?board_no=${info.board_no}'" value="수정"/>
+				<input type="button" onclick="del()" value="삭제"/>			
+				<input type="button" onclick="location.href='./freeBoardList?currpage=1'" value="목록"/>
+			</div>
+		<%@ include file="fbComent.jsp" %>
+	</div>
 	
 </body>
 <script>

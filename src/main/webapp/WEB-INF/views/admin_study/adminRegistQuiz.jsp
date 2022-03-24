@@ -368,6 +368,8 @@ $('#quiz_save').click(function(){
 	}
 
 	
+
+	
 	for (var i = 0; i < all_quiz_cnt; i++) {
 		
 		var obj = {};
@@ -431,8 +433,15 @@ $('#quiz_save').click(function(){
 		}else {
 			quizcomplete = true;
 		}
-		
-		
+		if(obj.quiz_subject == 'none'){
+			testcomplete = false;
+			alert('과목 미선택 :'+obj.quiz_index+'번');
+			
+		}		
+		if(obj.quiz_detailed_subject == 'none'){
+			testcomplete = false;	
+			alert('세부과목 미선택 :'+obj.quiz_index+'번');
+		}	
 		
 	}
 	console.log(quiz_list);

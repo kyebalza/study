@@ -151,7 +151,7 @@
  	</select>
  
  	<!-- 공부게시판 신고하기 -->
- 	<insert id="studyReport" parameterType="hashmap">
+ 	<insert id="studyReport" parameterType="HashMap">
  		INSERT INTO report_board (board_name,board_no,reported_user,report_user,report_reason)
  			VALUES (#{board_name},#{board_no},#{reported_user},#{report_user},#{report})
  	</insert>
@@ -188,21 +188,30 @@
  	
  	<!-- 게시글 좋아요 -->
  	<insert id="reuplike">
- 		INSERT I
- 		NTO board_like(user_id,board_no,reply_no,board_name)
+ 		INSERT INTO board_like(user_id,board_no,reply_no,board_name)
  			VALUES (#{param1}, #{param2}, #{param3}, 'study_board')
  	</insert> 
  
+ 	<!-- 댓글 페이징 호출 쿼리 -->
+	<select id="SBClistCall" resultType="HashMap">
+		SELECT * FROM reply WHERE del_flag = 0 AND board_name = 'study_board' AND board_no = #{param3}
+			ORDER BY reply_no DESC LIMIT #{param1} OFFSET #{param2}
+	</select>
+
+	<!-- 댓글 페이징 관련 -->
+	<select id="sbCallCount" resultType="int">
+		SELECT COUNT (reply_no) FROM reply WHERE del_flag = 0 AND board_no = #{board_no}
+	</select>
  
- 
+ 	<!-- 댓글 좋아요? -->
  	<select id="doIHaveReLike" resultType="int">
  	select count(*) FROM board_like WHERE board_no = #{param1} AND user_id = #{param2} AND reply_no = #{param3} AND board_name = 'study_board'
  	</select>
  	
  	<!-- 댓글 신고하기 -->
- 	<insert id="sbcomreport" parameterType="hashmap">
+ 	<insert id="sbcomreport" parameterType="HashMap">
  		INSERT INTO report_board (reply_no,board_name,board_no,reported_user,report_user,report_reason)
- 			VALUES (#{reply_no},'study_board,#{board_no},#{reported_user},#{report_user},#{report})
+ 		 VALUES (#{reply_no},#{board_name} #{board_no},#{reported_user},#{report_user},#{report_reason})
  	</insert>
  
 </mapper>

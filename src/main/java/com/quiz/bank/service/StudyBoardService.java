@@ -244,6 +244,7 @@ public class StudyBoardService {
 	}
 	
 	//댓글불러오기
+	
 	public ArrayList<HashMap<String, String>> studycoment(String board_no, String loginId) {
 		logger.info("댓글 불러오기 서비스");
 		ArrayList<HashMap<String, String>> coment = dao.studycoment(board_no);
@@ -256,10 +257,6 @@ public class StudyBoardService {
 			comenUnit.put("likeYN", String.valueOf(likeCnt));
 			//logger.info("new_comenUnit : {}",comenUnit);
 		}
-		
-		
-		
-		
 		
 		return coment;
 	}
@@ -296,6 +293,40 @@ public class StudyBoardService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("msg", success);
 		return map;
+	}
+	
+	//댓글 페이징
+	public HashMap<String, Object> SBClistCall(int currPage, int pagePerCnt, String board_no, String loginId) {
+				HashMap<String, Object> map = new HashMap<String, Object>();
+		
+				//어디서 부터 보여줄 것인가.
+				int offset = ((currPage-1)*pagePerCnt-1) >=0 ?
+						((currPage-1)*pagePerCnt-1) : 0;
+				logger.info("offset : "+offset);
+				
+				int totalCount = dao.sbCallCount(board_no); //테이블 모든 글의 총 갯수
+				//만들 수 있는 페이지의 수 (전체 갯수 / 보여줄 수)
+				int range = totalCount%pagePerCnt > 0 ? 
+						 (totalCount/pagePerCnt)+1 : (totalCount/pagePerCnt);
+				 logger.info("총 갯수 : {}",totalCount);
+				 logger.info("만들 수 있는 총 페이지 : {}",range);
+				 
+				 ArrayList<HashMap<String, String>> list = dao.SBClistCall(pagePerCnt, offset, board_no);
+				 for (HashMap<String, String> comenUnit : list) {
+						//logger.info("ori_comenUnit : {}",comenUnit);
+						//logger.info("board_no {} loginId {}",board_no,loginId);
+						//logger.info("reply_no {}",String.valueOf(comenUnit.get("reply_no")));
+						
+						int likeCnt = dao.doIHaveReLike(board_no,loginId,String.valueOf(comenUnit.get("reply_no")));
+						comenUnit.put("likeYN", String.valueOf(likeCnt));
+						//logger.info("new_comenUnit : {}",comenUnit);
+					}
+				 logger.info("list : {}",list);
+				 map.put("totalCount", totalCount);
+				 map.put("pages", range);
+				 map.put("list", list);
+				
+				return map;
 	}
 
 

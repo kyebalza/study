@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.quiz.bank.dto.ReplyDTO;
 import com.quiz.bank.dto.StudyBoardDTO;
 import com.quiz.bank.dto.UserDTO;
 
@@ -77,6 +78,10 @@ int reuplike(String loginId, String board_no, String reply_no);
 int doIHaveReLike(String board_no, String loginId, String reply_no);
 
 int sbcomreport(HashMap<String, String> params);
+
+int sbCallCount(String board_no);
+
+ArrayList<HashMap<String, String>> SBClistCall(int pagePerCnt, int offset, String board_no);
 
 
 

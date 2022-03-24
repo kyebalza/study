@@ -147,10 +147,10 @@ public class StudyBoardController {
 		model.addAttribute("countlike", countlike);
 		
 		//댓글
-		ArrayList<HashMap<String, String>> sbcom = service.studycoment(board_no,loginId);
-		logger.info("댓글 : "+board_no);
-		model.addAttribute("sbcomList",sbcom);
-		logger.info("댓글목록 요청 : "+sbcom);
+//		ArrayList<HashMap<String, String>> sbcom = service.studycoment(board_no,loginId);
+//		logger.info("댓글 : "+board_no);
+//		model.addAttribute("sbcomList",sbcom);
+//		logger.info("댓글목록 요청 : "+sbcom);
 		
 		
 		return "studyBoard/detail";
@@ -303,6 +303,21 @@ public class StudyBoardController {
 			}
 			
 			return map;
+		}
+		
+		//댓글 페이징
+		@ResponseBody
+		@RequestMapping(value = "/studyBoard/SBClistCall", method = RequestMethod.GET)
+		public HashMap<String, Object> SBClistCall(@RequestParam String page, @RequestParam String cnt, @RequestParam String board_no
+				,HttpSession session) {
+			logger.info("댓글 페이징 요청");
+			logger.info("댓글 페이징 요청 : {} 페이지, {} 개 씩",page, cnt);
+			logger.info("로딩 중인 게시글 번호 : "+board_no);
+			String loginId = (String) session.getAttribute("loginId");
+			int currPage = Integer.parseInt(page);
+			int pagePerCnt = Integer.parseInt(cnt);
+			
+			return service.SBClistCall(currPage,pagePerCnt,board_no,loginId);
 		}
 	
 	

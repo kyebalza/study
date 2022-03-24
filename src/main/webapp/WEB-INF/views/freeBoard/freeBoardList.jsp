@@ -12,19 +12,19 @@
 	<script src="resources/js/jquery.twbsPagination.js"></script>
 	<style>
 		table{
-			border: 2px solid green;
+			border: 2px solid #6AA84F;
 			text-align: center;
 			padding : 10px;
 			margin : auto;
 		}
 		tr,td,th{
-			border: 1px solid green;
+			border: 1px solid #6AA84F;
 			text-align: center;
 			
 		}
 		input.button{
 			text-align: center;
-			background-color : green;
+			background-color : #6AA84F;
 			color: white;
 		}
 		button{
@@ -35,7 +35,8 @@
 			border: none;
 			margin: auto;
 			width: 100px;
-			height: 
+			height: 30px;
+			border-radius: 11px;
 			
 		}
 		.FreeSearch{
@@ -48,6 +49,14 @@
 			min-width : 1150px;
 			left: 20%;
 		}
+		.select{
+			border: 1px solid #6AA84F;
+			width: 100px;
+			margin: 5px;
+			height: 30px;	
+			border-radius: 9px;
+			text-align: center;
+		}
 	</style>
 </head>
 <body>
@@ -59,7 +68,7 @@
 			
 			<!-- 카테고리 검색 -->
 				<form class = "FreeSearch" action="FreeboardSearch" method="GET" name="FreeboardSearch" autocomplete="off">
-					<select	name = "FBSearchType">
+					<select	name = "FBSearchType" class="select">
 						<option value="fball" selected>전체</option>
 						<option value="testim">시험 정보</option>
 						<option value="worry">고민 상담</option>
@@ -67,13 +76,29 @@
 						<option value="jock">잡담</option>
 					</select>
 					
-					<select name ="SearchType">
+					<select name ="SearchType" class="select">
 						<option value="all" selected>전체</option>
 						<option value="tit">제목</option>
 						<option value="user">작성자</option>
 					</select>
-					<input type="text" name="Keyword"/>
-					<input type="button" value="검색" onclick="fbSearchList()"/>
+					<input type="text" name="Keyword" placeholder="검색할 내용을 입력해주세요." style="
+						width: 230px;
+						height: 30px;
+						border-radius: 9px;
+						border: 1px solid #6AA84F;
+						text-align: center;
+					"/>
+					<input type="button" value="검색" onclick="fbSearchList()" 
+					
+					style="
+						background-color : #6AA84F;
+						color: white;
+						border: none;
+						margin: auto;
+						width: 100px;
+						height: 30px;
+						border-radius: 11px;
+					"/>
 				</form>
 		</div>	
 			<!-- 카테고리 검색 -->
@@ -101,6 +126,9 @@
 			</tr>
 		</table>
 	</div>
+	
+		<%@ include file="../footer.jsp" %>
+	
 </body>
 <script>
 

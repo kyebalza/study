@@ -8,22 +8,35 @@
 	
 	<style>
 	body{
-		background-color : #4caf50;
+		background-color : white;
+		border-right : 1px solid black;
+		border-top : 1px solid black;
+		
 	}
 	ul,li{
 		padding : 0;
-		font-weight : bold;
 	}
 	a,h3 {
-		color : white;
+		color : black;
 		text-decoration : none;
-	
 	}
+	.bold{
+	
+		font-weight : bold;
+	}
+	
+	div{
+		
+	}
+	#all{
+		padding-top : 20px;
+	}
+	
 	
 	</style>
 </head>
 <body>
-		<div>
+		<div id="all">
 		<h3>시험관리</h3>
 			<ul>
 				<li><a href="adminRegistTest" target="_parent">-시험 및 문제 등록</a></li>
@@ -54,6 +67,11 @@ $('li').click(function(){
 	$(this).children('a')[0].click();
 	
 });
+var link = document.referrer.split("/");; 
+console.log(link);
+var nowPage = link[link.length-1];
+$('a[href="'+nowPage+'"]').addClass('bold');
+
 
 </script>
 </html>

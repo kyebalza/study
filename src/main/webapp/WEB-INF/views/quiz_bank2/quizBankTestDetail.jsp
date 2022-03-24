@@ -56,7 +56,7 @@
 			font-weight : bold;
 		}	
 			
-		img{
+		#listArea img{
 			width : 20px;
 			height : 20px;
 		}
@@ -83,7 +83,7 @@
 		table{
 			width : 480px;
 		}
-		#all{
+		#all2{
 			width : 500px;
 		}
 		#listBtnArea{
@@ -95,7 +95,7 @@
 </head>
 <body>
 <%@ include file="../header.jsp" %>
-<div id="all"  style="margin-left: auto; margin-right: auto;">
+<div id="all2"  style="margin-left: auto; margin-right: auto;">
 <h3 style="text-align : center">${test_category.test_cate}</h3>
  <div class="quizPage">
 	<input type="button" id="countListBtn" class="" value="회차별 문제풀기" onclick="testCountListCall(this)"/>

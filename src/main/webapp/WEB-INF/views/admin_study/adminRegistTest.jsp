@@ -91,7 +91,7 @@
 <%@ include file="../header.jsp" %>
 <div id="grid">
 	<div id="lefter"><iframe id="lefter" src="adminLefter"></iframe>		</div>
-    <div id="mainPage">
+    <div id="mainPage" style="margin-left : auto;margin-right : auto;">
         <div id="registCategory">
             <h3>시험 과목 카테고리 관리</h3>
         <hr/><br/>

@@ -360,7 +360,7 @@ $('.result').click(function(){
 	
 	$.ajax({
 		url : 'testResult',
-		type : 'get',
+		type : 'post',
 		data : {
 			//"test_info":JSON.stringify(test_obj),
 			"params":quiz_solve

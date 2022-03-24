@@ -114,7 +114,7 @@
             .quiz_type{
             	width : 215px;
             }
-			img{
+			#allDiv img{
 				width : 250px;
 				height : 200px;
 			
@@ -138,7 +138,7 @@
 	    <div>
 			<iframe id="lefter" src="adminLefter"></iframe>			
 		</div>
-    	<div id="allDiv">
+    	<div id="allDiv"  style="margin-left : auto;margin-right : auto;">
 	    	<div id="quiz_header">
 		    	<h3>시험 문제 등록</h3>
 		    	<h4>
@@ -428,9 +428,12 @@ $('#quiz_save').click(function(){
 					
 		){
 			quizcomplete = false;
-		} else {
+		}else {
 			quizcomplete = true;
 		}
+		
+		
+		
 	}
 	console.log(quiz_list);
 	console.log(JSON.stringify(quiz_list));

@@ -72,13 +72,12 @@
 	</style>
 </head>
 <body>
-	<iframe id="header" src="header">
-	</iframe>
+<%@ include file="../header.jsp" %>
 	<div id="grid">
 		<div>
 			<iframe id="lefter" src="adminLefter"></iframe>			
 		</div>
-		<div id="mainPage">
+		<div id="mainPage" style="margin-left : auto;margin-right : auto;">
 		<div id="pageTitle">
 		<h3>문의게시글 관리</h3>
 		<hr/>
@@ -232,7 +231,7 @@
 				content+="<td>"+item.board_cate+"</td>";
 				content+="<td>"+item.user_id+"</td>";
 				content+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
-				
+				var str = '';
 				if (item.answer == false) {
 					str+="<td><div>대기</div></td>";
 				}else{

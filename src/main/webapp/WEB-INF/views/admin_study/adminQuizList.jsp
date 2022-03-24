@@ -118,7 +118,7 @@
 </head>
 <body>
 <%@ include file="../header.jsp" %>
-</iframe>
+
 <div id="grid">    
     <div>
 		<iframe id="lefter" src="adminLefter"></iframe>			

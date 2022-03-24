@@ -77,6 +77,20 @@ public interface AdminDAO {
 
 	void ManagDeComUpdate(String board_no, String inputOut);
 
+	HashMap<String, String> quizReport();
+
+	HashMap<String, String> reportBoard();
+
+	HashMap<String, String> reportBoardReply();
+
+	int studyBoardNew();
+
+	int freeBoardNew();
+
+	int inqBoardNew();
+
+	ArrayList<HashMap<String, String>> userState();
+
 	
 
 

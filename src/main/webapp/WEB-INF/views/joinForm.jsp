@@ -36,9 +36,7 @@
 	</style>
 </head>
 <body>
-
-<iframe id="header" src="header"></iframe>
-
+<%@ include file="./header.jsp" %>
 	<div class="alljoin">
 		<form id="joinForm" action="join" method="post">
 			<table>

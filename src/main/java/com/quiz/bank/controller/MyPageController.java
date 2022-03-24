@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.bank.service.MyPageService;
 
@@ -41,11 +42,21 @@ public class MyPageController {
 		return "mypage/myTest";
 	}
 	@RequestMapping(value="myInfo")
-	public String myInfo(Model model) {
+	public String myInfo(Model model, HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		HashMap<String, String> map = service.CallUserInfo(loginId);
+		model.addAttribute("userInfo",map);
+		
 		return "mypage/myInfo";
 	}
 	
-	
+	@RequestMapping(value="updateUser")
+	public ModelAndView updateUser(@RequestParam HashMap<String, String> params) {
+		ModelAndView mav = new ModelAndView("redirect:/myInfo");
+		int success = service.updateUser(params);
+		
+		return mav;
+	}
 
 		
 	@RequestMapping(value="myPageBoardListCall")

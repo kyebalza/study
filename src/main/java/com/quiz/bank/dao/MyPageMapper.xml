@@ -66,4 +66,17 @@
 	WHERE user_id = #{param1}	
 	</select>
 	
+	<select id="CallUserInfo" resultType="HashMap">
+	SELECT * FROM user_info WHERE user_id = #{param1}
+	</select>
+	<update id="updateUser_nullPw" parameterType="HashMap">
+	UPDATE user_info SET user_name = #{user_name},user_email = #{user_email}
+	WHERE user_id = #{user_id}
+	</update>
+	
+	<update id="updateUser" parameterType="HashMap">
+	UPDATE user_info SET user_name = #{user_name},user_email = #{user_email},user_pw = #{user_pw}
+	WHERE user_id = #{user_id}
+	</update>
+	
 </mapper>

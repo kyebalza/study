@@ -31,7 +31,12 @@
 		border : 1px solid gray;
 		margin : 10px 0px 10px 0px;
 		width : 200px;
-	}		
+	}	
+	p{
+		padding-left : 10px;
+	
+	}
+		
 	</style>
 </head>
 <body>
@@ -45,28 +50,27 @@
 			<div>
 				<h3>문제오류신고 미처리건</h3>
 				<hr/>
-				<p>5/235</p>
+				<p>${quizReport.unCompl } / ${quizReport.total } 건</p>
 			</div>
 			<div>
 				<h3>신고 미처리건</h3>
 				<hr/>
-				<p>게시글</p>
-				<p>댓글</p>
+				<p>게시글 ${reportBoard.unCompl } / ${reportBoard.total }</p>
+				<p>댓글 ${reportBoardReply.unCompl } / ${reportBoardReply.total }</p>
 			</div>
 			<div>
 				<h3>금일 신규 게시글</h3>
 				<hr/>
-				<p>공부</p>
-				<p>자유</p>
-				<p>문의</p>
+				<p>공부 ${studyBoardNew }</p>
+				<p>자유 ${freeBoardNew }</p>
+				<p>문의 ${inqBoardNew }</p>
 			</div>
 			<div>
 				<h3>회원현황</h3>
 				<hr/>
-				<p>정상</p>
-				<p>탈퇴</p>
-				<p>휴면</p>
-				<p>정지</p>						
+				<c:forEach items="${userState }" var="state">
+				<p>${state.user_state }  ${state.cnt } 명</p>				
+				</c:forEach>
 			</div>
 		</div>
 	</div>		

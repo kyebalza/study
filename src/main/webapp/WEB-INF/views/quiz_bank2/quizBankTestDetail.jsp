@@ -94,7 +94,7 @@
 	</style>
 </head>
 <body>
-<iframe id="header" src="header"></iframe>
+<%@ include file="../header.jsp" %>
 <div id="all"  style="margin-left: auto; margin-right: auto;">
 <h3 style="text-align : center">${test_category.test_cate}</h3>
  <div class="quizPage">

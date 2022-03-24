@@ -29,5 +29,11 @@ public interface MyPageDAO {
 
 	ArrayList<HashMap<String, String>> myTestListCall(String loginId);
 
+	HashMap<String, String> CallUserInfo(String loginId);
+
+	int updateUser_nullPw(HashMap<String, String> params);
+
+	int updateUser(HashMap<String, String> params);
+
 
 }

@@ -8,21 +8,10 @@
 	<link rel="stylesheet" href="resources/css/header.css"/>
 	
 	<style>
-	#righter_div{
-		position : absolute;
-		border : 3px solid red;
-		top:20%;
-		left:80%;
-	
-	}
 	</style>
 </head>
 <body>
-<iframe id="header" src="header">
-</iframe>
-<div id="righter_div">
-<iframe id="righter"></iframe>
-</div>
+<%@ include file="./header.jsp" %>
 </body>
 <script></script>
 </html>

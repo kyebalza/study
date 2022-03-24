@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.quiz.bank.dao.MyPageDAO;
@@ -189,6 +190,31 @@ public class MyPageService {
 		map.put("myTestList", myTestList);
 		
 		return map;
+	}
+
+
+
+
+	public HashMap<String, String> CallUserInfo(String loginId) {
+		return dao.CallUserInfo(loginId);
+	}
+
+
+
+
+	public int updateUser(HashMap<String, String> params) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		int success= 0;
+		if(params.get("user_pw").equals("")) {
+			success = dao.updateUser_nullPw(params);
+		} else {
+			String pw = params.get("user_pw");
+			logger.info("plain pw : "+ pw);
+			String encPw = encoder.encode(pw);
+			params.put("user_pw", encPw);
+			success = dao.updateUser(params);
+		}
+		return success;
 	}
 
 

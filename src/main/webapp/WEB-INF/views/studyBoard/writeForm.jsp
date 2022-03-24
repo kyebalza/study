@@ -7,14 +7,14 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<style>
 		table{
-			border: 2px solid green;
+			border: 2px solid #6AA84F;
 			text-align: center;
 			padding : 10px;
 		}
 		th{
 			height: 50px;
-			background-color:green;
-			border: 1px solid green;
+			background-color:#6AA84F;
+			border: 1px solid #6AA84F;
 			text-align: center;
 			padding: 10px;
 			margin:5px;
@@ -22,7 +22,7 @@
 			
 		}
 		tr,td{
-			border: 1px solid green;
+			border: 1px solid #6AA84F;
 			text-align: center;
 			padding: 10px;
 			margin:5px;
@@ -33,9 +33,39 @@
 		}
 		input.quiz_content{
 		}
+		select{
+			background-color: #6AA84F;
+			color: white;
+			border-radius: 9px;
+			height: 30px;
+			text-align: center;
+		}
+		input{
+			border-radius: 9px;
+			height: 30px;
+			text-align: center;
+		}
+		textarea{
+			resize: none;
+		}
+		.option_num{
+			text-align: left;
+			font-size: 10px;
+		}
+		#sbWriteFormAll{
+			padding: 10%,30%;
+			margin: 10px;
+		}
+		#file{
+		
+		}
+		
 	</style>
 </head>
 <body>
+	<%@ include file="../header.jsp" %>
+	<br/>
+	<div id="sbWriteFormAll">
 	<form action="write" method="post"  enctype="multipart/form-data">
 		<table>
 			<tr>
@@ -72,7 +102,7 @@
 							<option value="${quiz_no.quiz_index}">${quiz_no.quiz_index}</option>
 						</c:forEach>
 					</select>
-					<input type="button" onclick="quiz()" value="문제불러오기"/>
+					<input id="quizcall" type="button" onclick="quiz()" value="문제불러오기"/>
 					<hr/>
 					<textarea id="quiz_content" style="width: 596px; height: 102px;"></textarea><!-- 문제내용 -->
 					
@@ -109,13 +139,15 @@
 			<tr>
 				<th>이미지</th>
 				<td>
-					<input type="file" name="uploadFile"/><!-- 파일첨부 -->
+					<input id="file" type="file" name="uploadFile"/><!-- 파일첨부 -->
 				</td>
 			</tr>
 		</table>
 		<input type="button" onclick="location.href='list'" value="취소"/>
 		<input type="submit" value="등록"/>
 	</form>
+	</div>
+	<%@ include file="../footer.jsp" %>
 </body>
 <script>
 	

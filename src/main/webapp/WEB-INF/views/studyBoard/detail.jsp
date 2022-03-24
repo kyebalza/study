@@ -5,13 +5,14 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+	<link rel="stylesheet" href="resources/css/header.css"/>
 	<style>
 		table{
-			border: 2px solid green;
+			border: 2px solid #6AA84F;
 			width: 70%;
 		}
 		tr,td,th{
-			border: 1px solid green;
+			border: 1px solid #6AA84F;
 			padding: 10px;
 			margin: 5px;
 		}
@@ -46,6 +47,7 @@
 	</style>
 </head>
 <body>
+	<%@ include file="../header.jsp" %>
 	<table>
 		<tr>
 			<th>제목</th>
@@ -112,7 +114,8 @@
 	
 	<hr/>
 	<%@ include file="sbComent.jsp" %>
-	<%-- <%@ include file="../righter.jsp" %>  --%>
+	<br/>
+	<%@ include file="../footer.jsp" %>
 </body>
 <script>
 

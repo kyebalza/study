@@ -11,14 +11,14 @@
 	<script src="/bank/resources/js/jquery.twbsPagination.js"></script>
 	<style>
 		table{
-			border: 2px solid green;
+			border: 2px solid #6AA84F;
 			text-align: center;
 			padding : 10px;
 		}
 		th{
 			height: 50px;
-			background-color:green;
-			border: 1px solid green;
+			background-color:#6AA84F;
+			border: 1px solid #6AA84F;
 			text-align: center;
 			padding: 10px;
 			margin:5px;
@@ -26,58 +26,81 @@
 			
 		}
 		tr,td{
-			border: 1px solid green;
+			border: 1px solid #6AA84F;
 			text-align: center;
 			padding: 10px;
 			margin:5px;
 			
 		}
-		.search{/*카테고리 검색, 글쓰기버튼*/
-			background-color : green;
+		#search_con{/*카테고리 검색내용 입력*/
 			color:white;
 			boarder:1px solid green;
 			float:none;
+			width: 230px;
+			height: 30px;
+			border-radius: 9px;
+			border: 1px solid #6AA84F;
+			text-align: center;
 		}
+		.search{/*카테고리 검색, 글쓰기버튼*/
+			background-color : #6AA84F;
+			color:white;
+			boarder:1px solid #6AA84F;
+			float:none;
+			height: 30px;
+			border-radius: 9px;
+			border: 1px solid #6AA84F;
+			text-align: center;
+		}
+		#sbListAll{
+			padding: 10%,30%;
+		}
+		
 	</style>
 </head>
-<body>
-	<button class="search" onclick="location.href='writeForm'">글쓰기</button>
-	
-	<!-- 카테고리 검색 -->
-	<form action="studyboardSearch" method="GET" name="studyboardSearch" autocomplete="off">
-			<select class="search" name ="SearchType">
-				<option selected>전체</option>
-				<option value="all">전체</option>
-				<option value="title">제목</option>
-				<option value="user">작성자</option>
-			</select>
-			<input type="text" name="Keyword"/>
-			<input class="search" type="button" value="검색" onclick="studySearch()"/>
-		</form>
-		<!-- 카테고리 검색 -->
+<body >
+	<%@ include file="../header.jsp" %>
+	<br/>
+	<div id="sbListAll">
+		<button class="search" onclick="location.href='writeForm'">글쓰기</button>
 		
-	<!-- 게시판 리스트 -->
-	<table>
-		<thead>
-		<tr>
-			<th>글번호</th>
-			<th>제목</th>
-			<th>카테고리</th>
-			<th>작성자</th>
-			<th>작성일자</th>
-		</tr>
-		</thead>
-		<tbody id="boardlist"></tbody>
-		<tr>
-			<td colspan="5" id="paging">
-				<div class="container">
-					<nav aria-label="Page navigation" style="text-align:center">
-						<ul class="pagenation" id="pagination"></ul>
-					</nav>
-				</div>
-			</td>
-		</tr>
-	</table>
+		<!-- 카테고리 검색 -->
+		<form action="studyboardSearch" method="GET" name="studyboardSearch" autocomplete="off">
+				<select class="search" name ="SearchType">
+					<option selected>전체</option>
+					<option value="all">전체</option>
+					<option value="title">제목</option>
+					<option value="user">작성자</option>
+				</select>
+				<input  id="search_con" type="text" name="Keyword" placeholder="검색할 내용을 입력해주세요"/>
+				<input class="search" type="button" value="검색" onclick="studySearch()"/>
+			</form>
+			<!-- 카테고리 검색 -->
+			
+		<!-- 게시판 리스트 -->
+		<table>
+			<thead>
+			<tr>
+				<th>글번호</th>
+				<th>제목</th>
+				<th>카테고리</th>
+				<th>작성자</th>
+				<th>작성일자</th>
+			</tr>
+			</thead>
+			<tbody id="boardlist"></tbody>
+			<tr>
+				<td colspan="5" id="paging">
+					<div class="container">
+						<nav aria-label="Page navigation" style="text-align:center">
+							<ul class="pagenation" id="pagination"></ul>
+						</nav>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<%@ include file="../footer.jsp" %>
 </body>
 <script>
 

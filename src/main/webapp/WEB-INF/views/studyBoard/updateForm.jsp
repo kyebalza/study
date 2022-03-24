@@ -7,10 +7,10 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<style>
 		table{
-			border: 2px solid green;
+			border: 2px solid #6AA84F;
 		}
 		tr,td,th{
-			border: 1px solid green;
+			border: 1px solid #6AA84F;
 		}
 		input.button{
 			text-align: center;
@@ -18,6 +18,7 @@
 	</style>
 </head>
 <body>
+	<%@ include file="../header.jsp" %>
 	<form action="update" method="post"  enctype="multipart/form-data">
 		<table>
 			<tr>
@@ -79,6 +80,7 @@
 		<input type="button" onclick="location.href='list'" value="취소"/>
 		<input type="submit" value="등록"/>
 	</form>
+	<%@ include file="../footer.jsp" %>
 </body>
 <script>
 	

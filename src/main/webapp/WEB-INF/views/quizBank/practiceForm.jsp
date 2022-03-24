@@ -68,8 +68,8 @@
 		}
 		
 		
-		
-			.option_yn1 {
+	/*문제 보기 css*/	
+	.option_yn1 {
 	    display:none;
 	}
 	.option_yn1 + label {

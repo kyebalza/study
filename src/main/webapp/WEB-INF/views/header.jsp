@@ -4,11 +4,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script> -->
 	<style>
 	#all{
-		
-	
+		height : 100px;
+		min-width : 1000px;
 	
 	}
 	#all div{

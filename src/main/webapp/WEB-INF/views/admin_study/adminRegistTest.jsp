@@ -88,8 +88,7 @@
 	</style>
 </head>
 <body>
-<iframe id="header" src="header">
-</iframe>
+<%@ include file="../header.jsp" %>
 <div id="grid">
 	<div id="lefter"><iframe id="lefter" src="adminLefter"></iframe>		</div>
     <div id="mainPage">

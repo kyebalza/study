@@ -5,11 +5,46 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
+	
 	<style>
+	table,th,td{
+		padding : 10px;
+	}
+	
+	iframe {
+		border : none;
+	}
+
+		#grid {
+		min-height : 1000px;
+		}
+		#mainPage{
+			padding-right : 200px;
+			padding-top : 50px;
+			padding-left : 10px;
+		}
 		
+	hr{
+		border : 1px solid gray;
+		margin : 10px 0px 10px 0px;
+		width : 200px;
+	}	
+	#all {
+    height: 100px;
+    min-width: 1150px;
+}		
 	</style>
 </head>
 <body>
+<%@ include file="../header.jsp" %>
+	<div id="grid">
+		<div>
+			<iframe id="lefter" src="adminLefter"></iframe>			
+		</div>
+		<div id="mainPage">
+		
+
 	<form action="adminUserUpdate" method="POST">
 		<table>
 			<tr>
@@ -17,10 +52,6 @@
 				<td>
 					${info.user_id}
 				</td>
-			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td>${info.user_pw}</td>
 			</tr>
 			<tr>
 				<th>이름</th>
@@ -58,6 +89,7 @@
 		<input type="button" onclick="submit()" value="저장"/>
 		<input type="button" onclick="location.href='./ManagUser'" value="목록"/>
 	</form>
+	</div></div>
 </body>
 <script>
 	

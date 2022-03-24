@@ -257,7 +257,27 @@
 	</update>		
 	
 	
-	
+	<select id="quizReport" resultType="HashMap">
+	SELECT count(compl_flag) AS total ,sum(compl_flag=0) AS unCompl FROM quiz_report qr
+	</select>
+	<select id="reportBoard" resultType="HashMap">
+	SELECT count(report_state) AS total, sum(report_state=0) AS unCompl FROM report_board rb WHERE reply_no = 0
+	</select>
+	<select id="reportBoardReply" resultType="HashMap">
+	SELECT count(report_state) AS total, sum(report_state=0) AS unCompl FROM report_board rb WHERE reply_no != 0
+	</select>
+	<select id="studyBoardNew" resultType="int">
+	SELECT count(*) FROM study_board WHERE DATE(reg_date) = date(now())
+	</select>
+	<select id="freeBoardNew" resultType="int">
+	SELECT count(*) FROM free_board WHERE DATE(reg_date) = date(now())
+	</select>
+	<select id="inqBoardNew" resultType="int">
+	SELECT count(*) FROM inquiry_board WHERE DATE(reg_date) = date(now())
+	</select>
+	<select id="userState" resultType="HashMap">
+	SELECT user_state,count(*) AS cnt  FROM user_info GROUP BY user_state
+	</select>
 	
 	
 	

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.bank.dto.FreeBoardDTO;
 import com.quiz.bank.dto.InquiryBoardDTO;
@@ -49,10 +50,11 @@ public class AdminController {
 	
 	//관리자 페이지 이동
 	@RequestMapping(value = "/adminPage", method = RequestMethod.GET)
-	public String loginPage(Model model) {
+	public ModelAndView adminPage() {
+		
 		logger.info("관리자페이지 이동");
+		return adservice.adminMainCount();
 
-		return "admin/adminPage";
 	}
 	
 	//공부 게시판 관리 페이지 이동

@@ -35,6 +35,7 @@
 	</style>
 </head>
 <body>
+<jsp:include page="../header.jsp"></jsp:include>
 <h3>문제은행페이지입니다</h3>
 	
 	<form action="search" method="get">

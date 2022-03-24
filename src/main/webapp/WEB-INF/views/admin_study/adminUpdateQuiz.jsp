@@ -5,6 +5,8 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
+	
 	<style>
 	table,th,td{
     	border-collapse: separate;    
@@ -60,7 +62,7 @@
     .quiz_type{
     	width : 215px;
     }
-	img{
+	.mainPage img{
 		width : 250px;
 		height : 200px;
 	}    
@@ -70,11 +72,25 @@
         border-radius: 5px;
         border : 1px solid gray;
     }			
+   		#grid {
+		min-height : 1000px;
+		
+		
+		}
+		#mainPage{
+			padding-right : 200px;
+			padding-top : 5px;
+			padding-left : 10px;
+		} 
+    
     
 	</style>
 </head>
 <body>
-	<div class="">
+<%@ include file="../header.jsp" %>
+<div id="grid">
+	<div id="lefter"><iframe id="lefter" src="adminLefter"></iframe>		</div>
+	<div class="mainPage">
 	<table>
 	<tr>
 
@@ -119,11 +135,11 @@
 		</td>
 	</tr>
 	</table>
-	</div>
-	<div>
 	<input type="button" value="목록" onclick="toList()"/>
 	</div>
-
+	<div>
+	</div>
+</div>
 
 	
 </body>

@@ -133,8 +133,7 @@
     </head>
 
     <body>
-	<iframe id="header" src="header">
-	</iframe>
+<%@ include file="../header.jsp" %>
 	<div id="grid">    
 	    <div>
 			<iframe id="lefter" src="adminLefter"></iframe>			
@@ -440,7 +439,7 @@ $('#quiz_save').click(function(){
 	if(testcomplete == true && quizcomplete == true){
 		$.ajax({
 			url : 'adminRegistTestAndQuiz',
-			type : 'get',
+			type : 'post',
 			data : {
 				//"test_info":JSON.stringify(test_obj),
 				"params":quiz_list},

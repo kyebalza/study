@@ -9,16 +9,17 @@
 	
 	<style>
 	#all {
-		width : 500px;
-		height : 500px;
+		width : 600px;
+		min-height : 500px;
+		padding : 5px;
 		border : 1px solid gray;
 		border-radius : 5px;
 		margin-left: auto; 
 		margin-right: auto;
 	}
 	
-	#titleArea h2{
-		background-color : greenyellow;
+	#titleArea h4{
+
 	
 	}
 	#bookMarkArea img{
@@ -40,8 +41,8 @@
         height : 10px;
 		position: absolute;
 
-		top : 5%;
-		left : 2%;
+		top : 4%;
+		left : 23%;
         z-index: 3;	
 	}
 	#wrong,#wrong img{
@@ -49,8 +50,8 @@
         height : 10px;
 		position: absolute;
 
-		top : 5%;
-		left : 2%;
+		top : 4%;
+		left : 23%;
         z-index: 3;	
 	}
 	#correct img{
@@ -60,6 +61,63 @@
 	#wrong img{
 		width : 150px;
 		height : 150px;
+	}
+	#bntArea{
+		text-align : right;
+	}
+	input[type="button"]{
+		border-radius : 5px;
+		color : white;
+		border : none;
+		height : 30px;
+	}
+	#titleArea{
+		background-color : LimeGreen;
+		color : white;
+		font-size : 15px;
+		text-align : center;
+	}
+	#answerArea{
+		background-color : GreenYellow;
+		border-radius : 5px;
+		text-align : center;
+		margin-left : auto;
+		margin-right : auto;
+		width : 550px;
+	
+		
+		
+	}
+	#explationArea{
+		background-color : LimeGreen;
+		color : white;
+		font-size : 15px;
+		text-align : center;
+		margin-left : auto;
+		margin-right : auto;
+		width : 550px;
+	
+		
+	}
+	#skip{
+		background-color : Tomato;
+	}
+	#result{
+		background-color : CornflowerBlue;
+
+	}
+	#question{
+		background-color : MediumSpringGreen;
+
+	}
+	#error{
+		background-color : Tomato;
+	}	
+	#next{
+		background-color : CornflowerBlue;
+	}		
+	h4{
+		margin : 10px;
 	}
 	</style>
 </head>
@@ -74,6 +132,7 @@
 <div id="imgArea"></div>
 <div id="optArea"></div>
 <div id="answerArea"></div>
+
 <div id="explationArea"></div>
 <div id="bntArea">
 <input type="button" id="skip" onclick="skip()" value="건너뛰기"/>
@@ -231,7 +290,7 @@ function quiz_call(quiz_no){
 		success : function(data){
 			quiz = data.quiz;
 			console.log(data);
-			$('#titleArea').html('<h2>'+quiz.test_cate+'>'+quiz.subject_cate+'>'+quiz.detailed_subject_cate+'</h2>');
+			$('#titleArea').html('<h4>'+quiz.test_cate+'>'+quiz.subject_cate+'>'+quiz.detailed_subject_cate+'</h4>');
 			if(data.book == '1'){
 				$('#bookMarkArea').html('<img src="resources/img/별.png" class="bookmark '+quiz.quiz_no+'" onclick="bookMarkChange('+quiz.quiz_no+')"/>');
 			} 
@@ -269,8 +328,8 @@ function quiz_call(quiz_no){
 				ans = quiz.quiz_answer;
 			}
 			
-			$('#answerArea').html('<h3>정답 : '+ans+' 번</h3>');
-			$('#explationArea').html('<h3>해설 : '+quiz.quiz_explation+'</h3>')
+			$('#answerArea').html('<h4>정답 : '+ans+' 번</h4>');
+			$('#explationArea').html('<h4>해설 : '+quiz.quiz_explation+'</h4>')
 			
 			
 		},

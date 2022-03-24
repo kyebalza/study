@@ -10,53 +10,89 @@
  	<!-- 아래 요 친구가 있어야지 페이징이 깨지지 않아요 -->
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="resources/js/jquery.twbsPagination.js"></script>
+	<link rel="stylesheet" href="resources/css/header.css"/>
  
  <style>
+
  	table{
- 		border: 2px solid green;
+ 		margin-left: auto;
+	   	margin-right: auto;
+ 		min-width: 1300px;
+	   	max-width: 1166px;
 		text-align: center;
 	}
-	tr,td,th{
+	
+	table,tr,td,th{
 		border: 1px solid green;
 	}
+	
 	input.button{
 		text-align: center;
 	}
 	
 	th{
-		background-color: yellowgreen;
+		background-color: #6AA84F;
 		text-align: center;
 	}
 	
 	button{
+		position: relative;
 		text-align: center;
-		background-color : yellowgreen;
+		background-color : #6AA84F;
 		color: white;
+		border: none;
 	}
+	
+	.search {
+		background-color: #6AA84F;
+		color: white;
+		border: 1px solid green;
+		
+	}
+	
+	
+	iframe{
+		width: 100%;
+		height: 210px;
+		border-style: none;
+	} 
+	
+	
+	
+
+	
+
+
 		
  </style>
 </head>
 <body>
 
-	<button onclick="location.href='inquiryWriteForm'">글쓰기</button>
+	
+	<%@ include file="../header.jsp" %>
+	 
+
+	
 	<div>
+		
 		<form action="InquiryBoardSearch" method="GET" name="InquiryBoardSearch" autocomplete="off">
 		
-			<select name = "ICateGoryType">
+		<button class="iwritebutton" onclick="location.href='inquiryWriteForm'">글쓰기</button>
+			
+			<select class="search" name = "ICateGoryType">
 				<option value="all" selected>전체</option>
 				<option value="account">계정문의</option>
 				<option value="use">이용문의</option>
 			</select>
-		
-		
-			<select name ="SearchType">
+	
+			<select class="search" name ="SearchType">
 				<option value="all" selected>전체</option>
 				<option value="tit">제목</option>
 				<option value="user">작성자</option>
 			</select>
 			
 			<input type="text" name="Keyword"/>
-			<input type="button" value="검색" id="btnSearch" onclick="SearchList()"/>
+			<input class="search" type="button" value="검색" id="btnSearch" onclick="SearchList()"/>
 		</form>
 	</div>
 
@@ -93,6 +129,10 @@
 				</td>
 			</tr>	
 	</table>
+	
+
+	
+	
 </body>
 <script>
 

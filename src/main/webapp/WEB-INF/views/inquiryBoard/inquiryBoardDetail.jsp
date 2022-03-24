@@ -5,39 +5,60 @@
  <meta charset="UTF-8">
  <title>Insert title here</title>
  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+ <link rel="stylesheet" href="resources/css/header.css"/>
+ 
  <style>
  
-	 table, th, td{
+ 
+ 
+	table, td{
 		border: 1px solid black;
 		border-collapse: collapse;
 		padding : 5px 10px;	
+		width: 1000px;
+		height: 10%;
+	}
+	
+	table {
+		margin-left: auto;
+	   	margin-right: auto;
+	   	min-width: 1296px;
+	   	min-width: 1166px;
 	}
 	
 	th {
-		background-color: yellowgreen;
+		border: 1px solid black;
+		background-color: #6AA84F;
+		width: 500px;
 	}
 	
 	td {
+		text-align: left;
+	}
+	
+	
+	.cate, .date {
 		text-align: center;
 	}
 	
-	textarea {
-		width: 100%;
-		height: 150px;
-		resize: none;
-	}
 	
-	.none2{
-		border-left:1px solid #ffffff;
-		border-right:1px solid #ffffff;
-		text-alian: center;
-	}
-
+	
+	
 
  
  </style>
 </head>
 <body>
+
+
+	<jsp:include page="/WEB-INF/views/header.jsp"/>
+
+	
+	
+	
+	<br/>
+	<br/>
+	<br/>
 
 	
 	<table>
@@ -45,13 +66,14 @@
 			<th style="color:white;">제목</th>
 			<td>${info.title}</td>
 			<th style="color:white;">카테고리</th>
-			<td>${info.board_cate}</td>
+			<td class="cate">${info.board_cate}</td>
 		</tr>
+		
 		<tr>
 			<th style="color:white;">작성자</th>
 			<td id="user_id">${info.user_id}</td>
 			<th style="color:white;">작성일자</th>
-			<td>${info.reg_date}</td>
+			<td class="date">${info.reg_date}</td>
 		</tr>
 		<tr>
 			<th style="color:white;" rowspan="2">내용</th>
@@ -70,7 +92,7 @@
 		
 	</table>
 	
-	<img class="bHit" src="/bank/resources/img/bHit.png"> ${info.bHit}
+	<img src="/bank/resources/img/bHit.png">${info.bHit} 
 	<br/>
 	<br/>
 	<input type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
@@ -83,6 +105,7 @@
 	
 	  
 	<%@ include file="ibComent.jsp" %>
+	
 	
 	
 	<!--  

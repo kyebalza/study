@@ -191,7 +191,7 @@ public class AdminStudyController {
 	
 	
 	
-	@RequestMapping(value="adminRegistTestAndQuiz")
+	@RequestMapping(value="adminRegistTestAndQuiz", method=RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> adminRegistTestAndQuiz(@RequestParam(value="params[]") ArrayList <String> params){
 		HashMap<String, Object> map = new HashMap<String, Object>();

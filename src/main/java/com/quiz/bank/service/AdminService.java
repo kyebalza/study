@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.quiz.bank.dao.AdminDAO;
 import com.quiz.bank.dao.TodoListDAO;
@@ -306,6 +308,45 @@ public class AdminService {
 	public List<ReprotDTO> ManagDeComentSearch(ReprotDTO rdto) {
 		logger.info("신고 댓글 검색 서비스 도착");
 		return addao.ManagDeComentSearch(rdto);
+	}
+
+
+
+	public ModelAndView adminMainCount() {
+		ModelAndView mav = new ModelAndView("admin/adminPage");
+		//1.문제 오류신고 미처리건
+		HashMap<String, String> quizReport = addao.quizReport(); 
+		
+		
+		mav.addObject("quizReport", quizReport);
+		logger.info("{}",quizReport);
+		//2.신고 미처리건
+		HashMap<String, String> reportBoard = addao.reportBoard();
+		HashMap<String, String> reportBoardReply = addao.reportBoardReply();
+		mav.addObject("reportBoard", reportBoard);
+		mav.addObject("reportBoardReply", reportBoardReply);
+		logger.info("{}",reportBoard);
+		logger.info("{}",reportBoardReply);
+		//3.금일 신규 게시글
+		int studyBoardNew = addao.studyBoardNew();
+		int freeBoardNew = addao.freeBoardNew();
+		int inqBoardNew = addao.inqBoardNew();
+		mav.addObject("studyBoardNew", studyBoardNew);
+		mav.addObject("freeBoardNew", freeBoardNew);
+		mav.addObject("inqBoardNew", inqBoardNew);
+		logger.info("{}",studyBoardNew);
+		logger.info("{}",freeBoardNew);
+		logger.info("{}",inqBoardNew);
+		//4.회원현황
+		ArrayList<HashMap<String, String>> userState = addao.userState();
+		mav.addObject("userState", userState);
+		logger.info("{}",userState);
+		
+		return mav;
+		
+		
+		
+		
 	}
 
 

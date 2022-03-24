@@ -66,6 +66,93 @@
 			width : 150px;
 			height : 150px;
 		}
+		
+		
+		
+			.option_yn1 {
+	    display:none;
+	}
+	.option_yn1 + label {
+		display: inline-block;
+		background: url("resources/img/1번.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 	width: 22px; 
+	 	height: 22px; 
+	 	cursor:pointer; 
+	 	margin-right: 9px;
+	 }
+	 .option_yn1:checked + label {
+	 	background: url("resources/img/정답체크.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 }
+	.option_yn2{
+		display: none!important;
+	}
+	.option_yn2 + label {
+		display: inline-block;
+		background: url("resources/img/2번.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 	width: 22px; 
+	 	height: 22px; 
+	 	cursor:pointer; 
+	 	margin-right: 9px;
+	 }
+	 .option_yn2:checked + label {
+	 	background: url("resources/img/정답체크.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 }
+	.option_yn3{
+		display: none!important;
+	}
+	.option_yn3 + label {
+		display: inline-block;
+		background: url("resources/img/3번.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 	width: 22px; 
+	 	height: 22px; 
+	 	cursor:pointer; 
+	 	margin-right: 9px;
+	 }
+	 .option_yn3:checked + label {
+	 	background: url("resources/img/정답체크.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 }
+	.option_yn4{
+		display: none!important;
+	}
+	.option_yn4 + label {
+		display: inline-block;
+		background: url("resources/img/4번.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 	width: 22px; 
+	 	height: 22px; 
+	 	cursor:pointer; 
+	 	margin-right: 9px;
+	 }
+	 .option_yn4:checked + label {
+	 	background: url("resources/img/정답체크.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 }
+	.option_yn5{
+		display: none!important;
+	}
+	
+	.option_yn5 + label {
+		display: inline-block;
+		background: url("resources/img/5번.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 	width: 22px; 
+	 	height: 22px; 
+	 	cursor:pointer; 
+	 	margin-right: 9px;
+	 }
+	 .option_yn5:checked + label {
+	 	background: url("resources/img/정답체크.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 }
+		
+		
+		
 	</style>
 </head>
 <body>
@@ -112,26 +199,26 @@
 							<p><input type="text" class="option1"/></p>
 						</c:when>
 						<c:when test="${test.quiz_type eq '2'}">
-							<p><input type="checkbox" name="answer" value="1" class="option_yn1 ${test.quiz_index}">①${test.option1}</p>
-							<p><input type="checkbox" name="answer" value="2" class="option_yn2 ${test.quiz_index}">②${test.option2}</p>
+							<p><input type="checkbox" name="answer" value="1" class="option_yn1 ${test.quiz_index}" id="option_yn1 ${test.quiz_index}"><label for="option_yn1 ${test.quiz_index}"></label>${test.option1}</p>
+							<p><input type="checkbox" name="answer" value="2" class="option_yn2 ${test.quiz_index}" id="option_yn2 ${test.quiz_index}"><label for="option_yn2 ${test.quiz_index}"></label>${test.option2}</p>
 						</c:when>
 						<c:when test="${test.quiz_type eq '3'}">
-							<p><input type="checkbox" name="answer" value="1" class="option_yn1 ${test.quiz_index}">①${test.option1}</p>
-							<p><input type="checkbox" name="answer" value="2" class="option_yn2 ${test.quiz_index}">②${test.option2}</p>
-							<p><input type="checkbox" name="answer" value="3" class="option_yn3 ${test.quiz_index}">③${test.option3}</p>
+							<p><input type="checkbox" name="answer" value="1" class="option_yn1 ${test.quiz_index}" id="option_yn1 ${test.quiz_index}"><label for="option_yn1 ${test.quiz_index}"></label>${test.option1}</p>
+							<p><input type="checkbox" name="answer" value="2" class="option_yn2 ${test.quiz_index}" id="option_yn2 ${test.quiz_index}"><label for="option_yn2 ${test.quiz_index}"></label>${test.option2}</p>
+							<p><input type="checkbox" name="answer" value="3" class="option_yn3 ${test.quiz_index}" id="option_yn3 ${test.quiz_index}"><label for="option_yn3 ${test.quiz_index}"></label>${test.option3}</p>
 						</c:when>
 						<c:when test="${test.quiz_type eq '4'}">
-							<p><input type="checkbox" name="answer" value="1" class="option_yn1 ${test.quiz_index}">①${test.option1}</p>
-							<p><input type="checkbox" name="answer" value="2" class="option_yn2 ${test.quiz_index}">②${test.option2}</p>
-							<p><input type="checkbox" name="answer" value="3" class="option_yn3 ${test.quiz_index}">③${test.option3}</p>
-							<p><input type="checkbox" name="answer" value="4" class="option_yn4 ${test.quiz_index}">④${test.option4}</p>
+							<p><input type="checkbox" name="answer" value="1" class="option_yn1 ${test.quiz_index}" id="option_yn1 ${test.quiz_index}"><label for="option_yn1 ${test.quiz_index}"></label>${test.option1}</p>
+							<p><input type="checkbox" name="answer" value="2" class="option_yn2 ${test.quiz_index}" id="option_yn2 ${test.quiz_index}"><label for="option_yn2 ${test.quiz_index}"></label>${test.option2}</p>
+							<p><input type="checkbox" name="answer" value="3" class="option_yn3 ${test.quiz_index}" id="option_yn3 ${test.quiz_index}"><label for="option_yn3 ${test.quiz_index}"></label>${test.option3}</p>
+							<p><input type="checkbox" name="answer" value="4" class="option_yn4 ${test.quiz_index}" id="option_yn4 ${test.quiz_index}"><label for="option_yn4 ${test.quiz_index}"></label>${test.option4}</p>
 						</c:when>
 						<c:when test="${test.quiz_type eq '5'}">
-							<p><input type="checkbox" name="answer" value="1" class="option_yn1 ${test.quiz_index}">①${test.option1}</p>
-							<p><input type="checkbox" name="answer" value="2" class="option_yn2 ${test.quiz_index}">②${test.option2}</p>
-							<p><input type="checkbox" name="answer" value="3" class="option_yn3 ${test.quiz_index}">③${test.option3}</p>
-							<p><input type="checkbox" name="answer" value="4" class="option_yn4 ${test.quiz_index}">④${test.option4}</p>
-							<p><input type="checkbox" name="answer" value="5" class="option_yn5 ${test.quiz_index}"> ⑤${test.option5}</p>
+							<p><input type="checkbox" name="answer" value="1" class="option_yn1 ${test.quiz_index}" id="option_yn1 ${test.quiz_index}"><label for="option_yn1 ${test.quiz_index}"></label>${test.option1}</p>
+							<p><input type="checkbox" name="answer" value="2" class="option_yn2 ${test.quiz_index}" id="option_yn2 ${test.quiz_index}"><label for="option_yn2 ${test.quiz_index}"></label>${test.option2}</p>
+							<p><input type="checkbox" name="answer" value="3" class="option_yn3 ${test.quiz_index}" id="option_yn3 ${test.quiz_index}"><label for="option_yn3 ${test.quiz_index}"></label>${test.option3}</p>
+							<p><input type="checkbox" name="answer" value="4" class="option_yn4 ${test.quiz_index}" id="option_yn4 ${test.quiz_index}"><label for="option_yn4 ${test.quiz_index}"></label>${test.option4}</p>
+							<p><input type="checkbox" name="answer" value="5" class="option_yn5 ${test.quiz_index}" id="option_yn5 ${test.quiz_index}"><label for="option_yn5 ${test.quiz_index}"></label>${test.option5}</p>
 						</c:when>
 						<c:otherwise>
 					        <p><input type="hidden" name="answer" value="0"></p>

@@ -26,19 +26,23 @@
 		color : gray;
 	
 	}
-
+	.header_main_logo{
+		width: 30%;
+	}
+	.header_center_cate{
+		width: 10%;
+		    
+	}
 	</style>
 </head>
 <body>
 <div id="all">
-	<img src="resources/img/Logo.png" onclick="parent.location.href='./'"/>
-	<div></div>
-	<div><a href="quizBankList" target="_parent">문제은행</a></div>
-	<div><a href="studyBoard/list" target="_parent">공부게시판</a></div>
-	<div><a href="freeBoardList" target="_parent">자유게시판</a></div>
-	<div><a href="inquiryBoardList" target="_parent">문의게시판</a></div>
-	<div></div>
-	<div style="width : 100px; text-align : center;">
+	<div class="header_main_logo" style="width : 20%;"><img src="resources/img/Logo.png" onclick="parent.location.href='./'" style="margin-left: 35%;"/></div>
+	<div class="header_center_cate" style="width : 13%;"><a href="quizBankList" target="_parent">문제은행</a></div>
+	<div class="header_center_cate" style="width : 13%;"><a href="studyBoard/list" target="_parent">공부게시판</a></div>
+	<div class="header_center_cate" style="width : 13%;"><a href="freeBoardList" target="_parent">자유게시판</a></div>
+	<div class="header_center_cate" style="width : 13%;"><a href="inquiryBoardList" target="_parent">문의게시판</a></div>
+	<div style="width : 25%; text-align : center;">
 		<c:if test="${loginId eq null }">
 			<a href="loginPage" target="_parent">로그인</a>
 		</c:if>

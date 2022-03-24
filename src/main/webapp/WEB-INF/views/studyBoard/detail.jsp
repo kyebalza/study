@@ -90,10 +90,10 @@
 			<td colspan="3"><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
 		</tr>
 	</table>
-	<div class="like">
+	<div>
 		<input id="board_name" type="hidden" value="${info.board_name}"/>
 		<c:choose>
-			<c:when test="${like.board_no != null && like.user_id == loginId}">
+			<c:when test="${like2 == 1}">
 				<img class="like" src="/bank/resources/img/like.png" alt="좋아요">
 			</c:when>
 			
@@ -112,7 +112,7 @@
 	
 	<hr/>
 	<%@ include file="sbComent.jsp" %>
-	<!-- <%@ include file="../righter.jsp" %> -->
+	<%-- <%@ include file="../righter.jsp" %>  --%>
 </body>
 <script>
 

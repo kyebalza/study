@@ -106,7 +106,7 @@ public class StudyBoardController {
 		return page;
 	}
 	
-	/*공부 게시판 글쓰기 - 도연*/
+	/*공부 게시판 글쓰기 - 도연  (get으로 보내면 url의 길이가 점점 길어지기때문에 post로 보낸다)*/
 	@RequestMapping(value = "/studyBoard/write", method = RequestMethod.POST)
 	public String write(Model model, @RequestParam HashMap<String, String>params,MultipartFile uploadFile,HttpSession session) {
 		logger.info("upload 파일요청 : {}", uploadFile);
@@ -138,20 +138,27 @@ public class StudyBoardController {
 		StudyBoardDTO photo = service.photo(board_no);
 		logger.info("사진 : {}",photo);
 		model.addAttribute("photo",photo);
-		//좋아요 가져오기
-		StudyBoardDTO like = service.like(board_no,loginId);
-		model.addAttribute("like",like);
-		logger.info("가져온 좋아요 : {}",like);
 		//좋아요 수
 		int countlike = service.countlike(board_no);
+		logger.info("좋아요 갯수 : "+countlike);
 		model.addAttribute("countlike", countlike);
+		
+		//좋아요 조회
+		int like2 = service.like2(loginId,board_no);
+		logger.info("좋아요 여부확인 : {}",like2);
+		model.addAttribute("like2",like2);
+		/*
+		ArrayList<StudyBoardDTO> like = service.like(board_no,loginId);
+		model.addAttribute("like",like);
+		logger.info("가져온 좋아요 : {}",like);
+		*/
 		
 		//댓글
 //		ArrayList<HashMap<String, String>> sbcom = service.studycoment(board_no,loginId);
-//		logger.info("댓글 : "+board_no);
-//		model.addAttribute("sbcomList",sbcom);
-//		logger.info("댓글목록 요청 : "+sbcom);
-		
+	//	logger.info("댓글 : "+board_no);
+		//model.addAttribute("sbcomList",sbcom);
+		//logger.info("댓글목록 요청 : "+sbcom);
+				
 		
 		return "studyBoard/detail";
 		
@@ -202,7 +209,7 @@ public class StudyBoardController {
 		return service.studySearch(SBdto);
 	}
 	
-	/*좋아요*/
+	/*게시판 좋아요*/
 	@ResponseBody
 	@RequestMapping(value = "/studyBoard/uplike", method = RequestMethod.POST)
 	public  HashMap<String, Object> uplike(@RequestParam String loginId
@@ -214,10 +221,10 @@ public class StudyBoardController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		/*현재 id 좋아요 여부 확인*/
-		String like2 = service.like2(loginId,board_no,board_name);
+		int like2 = service.like2(loginId,board_no);
 		logger.info("좋아요 여부확인 : {}",like2);
 		
-		if(like2 != null) {//좋아요 취소
+		if(like2 != 0) {//좋아요 취소
 			int row2 = service.like_del(loginId,board_no,board_name);
 			map.put("row2", row2);
 		}else {
@@ -247,12 +254,12 @@ public class StudyBoardController {
 		return service.studyReport(params);
 	}
 	
-	//댓글 작성
+		//댓글 작성
 		@RequestMapping(value="/studyBoard/sbcoment", method = RequestMethod.POST)
 		public String sbcoment(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
 			logger.info("댓글 등록 요청" + session +" / "+ params);
 			service.sbcoment(session, params);
-			String user_id = params.get("user_id");
+			//String user_id = params.get("user_id");
 			
 			return "redirect:/studyBoard/detail?board_no="+params.get("board_no");
 					
@@ -269,6 +276,7 @@ public class StudyBoardController {
 		}
 	
 		/*댓글신고*/
+		@ResponseBody
 		@RequestMapping(value = "/studyBoard/sbcomreport", method = RequestMethod.POST)
 		public HashMap<String, Object> sbcomreport(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
 			logger.info("댓글 신고하기 요청 : {}",params);

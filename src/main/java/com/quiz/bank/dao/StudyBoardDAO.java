@@ -47,13 +47,13 @@ List<StudyBoardDTO> studySearch(StudyBoardDTO sBdto);
 
 ArrayList<HashMap<String, String>> test_no();
 
-String like2(String loginId, String board_no, String board_name);
+int like2(String loginId, String board_no);
 
 int like_del(String loginId, String board_no, String board_name);
 
 int uplike(String loginId, String board_no, String board_name);
 
-StudyBoardDTO like(String board_no, String loginId);
+ArrayList<StudyBoardDTO> like(String board_no, String loginId);
 
 int countlike(String board_no);
 

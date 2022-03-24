@@ -52,7 +52,7 @@
 						</td>
 					</tr>
 				</table>
-			<!-- <c:forEach items="${sbcomList}" var="sbcomList">
+			<%-- <c:forEach items="${sbcomList}" var="sbcomList">
 				<table>
 					<tr>
 						<td>
@@ -90,7 +90,7 @@
 						</td>
 					</tr>
 				</table>
-			</c:forEach>-->
+			</c:forEach>--%>
 		</div>
 	</div>
 </body>
@@ -115,8 +115,10 @@
 			}
 		}
 		
+		var callFlag = 0;
+		
 		 function listCall(page, cnt){	
-			 
+			
 			$.ajax({
 				type:'GET',
 				url:'SBClistCall',
@@ -134,9 +136,14 @@
 						onPageClick: function(evt,page){//해당 페이지 번호를 클릭했을 때 일어날 일들
 							console.log(evt);//현재 일어나는 클릭 이벤트 관련 정보들
 							console.log(page);//몇 페이지를 클릭했는지에 대한 정보
-							listCall(page, 10);
+							if(callFlag != 0){//클릭이 있을때만 listCall 실행하도록 조건 걸어줌
+									listCall(page, 10);
+								}
+							
+							callFlag++;
 						}
 					});
+					
 				},
 				error:function(e){
 					console.log(e);

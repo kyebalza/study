@@ -180,8 +180,8 @@ public class StudyBoardService {
 	}
 	
 	//게시글 좋아요 여부 확인
-	public String like2(String loginId, String board_no, String board_name) {
-		String like2 = dao.like2(loginId,board_no,board_name);
+	public int like2(String loginId, String board_no) {
+		int like2 = dao.like2(loginId,board_no);
 		return like2;
 	}
 	
@@ -197,12 +197,14 @@ public class StudyBoardService {
 		logger.info("좋아요 등록 서비스 : {}",row);
 		return row;
 	}
-
-	public StudyBoardDTO like(String board_no, String loginId) {
+	
+	//게시글 좋아요
+	public ArrayList<StudyBoardDTO> like(String board_no, String loginId) {
 		logger.info("좋아요 가져오기");
 		return dao.like(board_no,loginId);
 	}
-
+	
+	//게시글 좋아요 수
 	public int countlike(String board_no) {
 		
 		return dao.countlike(board_no);
@@ -227,6 +229,8 @@ public class StudyBoardService {
 		return dao.studyQuiz(board_no);
 	}
 
+	
+	
 	//댓글등록 기능
 	public void sbcoment(HttpSession session, HashMap<String, String> params) {
 		

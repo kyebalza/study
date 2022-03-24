@@ -8,7 +8,7 @@
 	<style>
 	#all{
 		height : 100px;
-		min-width : 1000px;
+		min-width : 1150px;
 	
 	}
 	#all div{

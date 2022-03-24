@@ -6,43 +6,54 @@
 	<title>Insert title here</title>
 	<!-- <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script> -->
 	<style>
-	#all{
-		height : 100px;
+	#header_all{
+		height : 150px;
 		min-width : 1150px;
-	
+    	border-bottom: solid 10px #6AA84F;
 	}
-	#all div{
-		width : 150px;
+	#header_all div{
 		height : 10px;
-		margin-top : 35px;
 		text-align : center;
 		font-weight : bold;
 	}
-	#all div,#all img{
+	#header_all div,#header_all img{
 		float : left;
+		cursor: pointer;
 	}
-	a{
+	.header_center_cate a{
 		text-decoration: none;
 		color : gray;
-	
+		font-size: 25px;
 	}
+	.header_login a{
+		text-decoration: none;
+		color : gray;
+		font-size: 25px;
+	}
+	
 	.header_main_logo{
-		width: 30%;
+		width : 20%;
+	    margin-top: 35px;
 	}
 	.header_center_cate{
-		width: 10%;
-		    
+		width : 13%;
+	    margin-top: 48px;    
+	}
+	.header_login{
+		width : 25%; 
+		text-align : center;
+		margin-top: 48px;  
 	}
 	</style>
 </head>
 <body>
-<div id="all">
-	<div class="header_main_logo" style="width : 20%;"><img src="resources/img/Logo.png" onclick="parent.location.href='./'" style="margin-left: 35%;"/></div>
-	<div class="header_center_cate" style="width : 13%;"><a href="quizBankList" target="_parent">문제은행</a></div>
-	<div class="header_center_cate" style="width : 13%;"><a href="studyBoard/list" target="_parent">공부게시판</a></div>
-	<div class="header_center_cate" style="width : 13%;"><a href="freeBoardList" target="_parent">자유게시판</a></div>
-	<div class="header_center_cate" style="width : 13%;"><a href="inquiryBoardList" target="_parent">문의게시판</a></div>
-	<div style="width : 25%; text-align : center;">
+<div id="header_all">
+	<div class="header_main_logo"><img src="resources/img/Logo.png" onclick="parent.location.href='./'" style="margin-left: 35%;"/></div>
+	<div class="header_center_cate 1" ><a href="quizBankList" target="_parent">문제은행</a></div>
+	<div class="header_center_cate 2" ><a href="studyBoard/list" target="_parent">공부게시판</a></div>
+	<div class="header_center_cate 3" ><a href="freeBoardList" target="_parent">자유게시판</a></div>
+	<div class="header_center_cate 4" ><a href="inquiryBoardList" target="_parent">문의게시판</a></div>
+	<div class="header_login">
 		<c:if test="${loginId eq null }">
 			<a href="loginPage" target="_parent">로그인</a>
 		</c:if>

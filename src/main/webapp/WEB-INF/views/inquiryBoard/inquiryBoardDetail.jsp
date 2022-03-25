@@ -11,9 +11,10 @@
  
  
  
-	table, td{
+	table, tr, td, th{
 		border: 1px solid black;
 		border-collapse: collapse;
+		border-color: #6AA84F;
 		padding : 5px 10px;	
 		width: 1000px;
 		height: 10%;
@@ -26,14 +27,18 @@
 	   	min-width: 1166px;
 	}
 	
+	
 	th {
 		border: 1px solid black;
+		border-color: white;
 		background-color: #6AA84F;
 		width: 500px;
 	}
 	
 	td {
+		border-color: #6AA84F;
 		text-align: left;
+	
 	}
 	
 	
@@ -51,7 +56,7 @@
 <body>
 
 
-	<jsp:include page="/WEB-INF/views/header.jsp"/>
+	<%@ include file="../header.jsp" %>
 
 	
 	

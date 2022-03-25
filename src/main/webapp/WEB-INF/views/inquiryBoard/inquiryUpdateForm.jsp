@@ -5,13 +5,11 @@
  <meta charset="UTF-8">
  <title>Insert title here</title>
  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+ <link rel="stylesheet" href="resources/css/header.css"/>
+ 
  <style>
  
- 	iframe{
-		width: 100%;
-		height: 210px;
-		border-style: none;
-	}
+ 
 	textarea {
 	    width: 1255px;
 	    height: 450px;
@@ -35,7 +33,10 @@
  </style>
 </head>
 <body>
- 
+
+	<%@ include file="../header.jsp" %>
+
+	
 	<form action="inquiryUpdate" method="post" enctype="multipart/form-data">
 		<table> 
 			<tr>
@@ -65,6 +66,8 @@
 		<input type="button" onclick="location.href='inquiryBoardDetail?board_no=${dto.board_no}'" value="취소"/>
 		<input type="submit" value="저장"/>
 	</form>
+
+	
   	
 </body>
 <script>

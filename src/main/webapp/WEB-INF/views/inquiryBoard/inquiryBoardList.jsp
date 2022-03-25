@@ -20,11 +20,17 @@
  		min-width: 1300px;
 	   	max-width: 1166px;
 		text-align: center;
+		padding: 10px;
+		margin: auto;
+		
+		
 	}
 	
-	table,tr,td,th{
+	tr,th,td {
 		border: 1px solid green;
 	}
+	
+
 	
 	input.button{
 		text-align: center;
@@ -36,27 +42,37 @@
 	}
 	
 	button{
-		position: relative;
 		text-align: center;
+		position: relative;
 		background-color : #6AA84F;
 		color: white;
 		border: none;
+		margin: auto;
+		width: 100px;
+		height: 30px;
+		border-radius: 11px;
 	}
 	
-	.search {
-		background-color: #6AA84F;
-		color: white;
-		border: 1px solid green;
+	.InquirySearch {
+		float: right;
+		left : 40%;
 		
 	}
 	
 	
-	iframe{
-		width: 100%;
-		height: 210px;
-		border-style: none;
-	} 
+	.iall {
+		margin: right;
+	}
 	
+	.select{
+		border: 1px solid #6AA84F;
+		width: 100px;
+		margin: 5px;
+		height: 30px;	
+		border-radius: 9px;
+		text-align: center;
+	
+	}
 	
 	
 
@@ -72,29 +88,39 @@
 	<%@ include file="../header.jsp" %>
 	 
 
+	<br/>
 	
-	<div>
-		
-		<form action="InquiryBoardSearch" method="GET" name="InquiryBoardSearch" autocomplete="off">
-		
+
+	
 		<button class="iwritebutton" onclick="location.href='inquiryWriteForm'">글쓰기</button>
+		
+		<form class="InquirySearch" action="InquiryBoardSearch" method="GET" name="InquiryBoardSearch" autocomplete="off">
 			
-			<select class="search" name = "ICateGoryType">
-				<option value="all" selected>전체</option>
-				<option value="account">계정문의</option>
-				<option value="use">이용문의</option>
-			</select>
-	
-			<select class="search" name ="SearchType">
+			<select class="select" name ="SearchType">
 				<option value="all" selected>전체</option>
 				<option value="tit">제목</option>
 				<option value="user">작성자</option>
 			</select>
 			
-			<input type="text" name="Keyword"/>
-			<input class="search" type="button" value="검색" id="btnSearch" onclick="SearchList()"/>
+			<input type="text" name="Keyword" placeholder="검색할 내용을 입력해주세요." style="
+				width: 230px;
+				height: 30px;
+				border-radius: 9px;
+				border: 1px solid #6AA84F;
+				text-align: center;"
+			/>
+			<input type="button" value="검색" id="btnSearch" onclick="SearchList()"
+			
+			style="
+				background-color : #6AA84F;
+				color: white;
+				border: none;
+				margin: auto;
+				width: 100px;
+				height: 30px;
+				border-radius: 11px;
+			"/>
 		</form>
-	</div>
 
 	
 	<table>
@@ -129,6 +155,14 @@
 				</td>
 			</tr>	
 	</table>
+	
+
+	
+	
+	
+	
+	
+	<jsp:include page="../footer.jsp"></jsp:include>
 	
 
 	

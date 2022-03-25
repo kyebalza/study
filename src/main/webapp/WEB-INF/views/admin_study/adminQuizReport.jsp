@@ -108,12 +108,12 @@
 	</style>
 </head>
 <body>
-<%@ include file="../header.jsp" %>
+<%@ include file="../header.jsp" %><br/>
 <div id="grid">
 	<div>
 		<iframe id="lefter" src="adminLefter"></iframe>			
 	</div>
-<div id="mainPage">
+<div id="mainPage" style="margin-left : auto;margin-right : auto;">
 		<div id="pageTitle">
 		<h3>문제 오류신고 관리</h3>
 		<hr/>

@@ -66,13 +66,13 @@
 	</style>
 </head>
 <body>
-	<iframe id="header" src="header">
-	</iframe>
+<%@ include file="../header.jsp" %>
+<br/>
 	<div id="grid">
 		<div>
 			<iframe id="lefter" src="adminLefter"></iframe>			
 		</div>
-		<div id="mainPage">
+		<div id="mainPage" style="margin-left : auto;margin-right : auto;">
 
 			<div id="pageTitle">
 		<h3>신고 게시글</h3>

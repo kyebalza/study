@@ -39,19 +39,19 @@
 	#correct,#correct img{
 		width : 10px;
         height : 10px;
-		position: absolute;
+		position: relative;
 
 		top : 4%;
-		left : 23%;
+		left : 0%;
         z-index: 3;	
 	}
 	#wrong,#wrong img{
 		width : 10px;
         height : 10px;
-		position: absolute;
+		position: relative;
 
 		top : 4%;
-		left : 23%;
+		left : 0%;
         z-index: 3;	
 	}
 	#correct img{

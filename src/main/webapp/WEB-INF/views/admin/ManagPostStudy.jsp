@@ -79,13 +79,12 @@
 	</style>
 </head>
 <body>
-	<iframe id="header" src="header">
-	</iframe>
+<%@ include file="../header.jsp" %>
 	<div id="grid">
 		<div>
 			<iframe id="lefter" src="adminLefter"></iframe>			
 		</div>
-		<div id="mainPage">
+		<div id="mainPage" style="margin-left : auto;margin-right : auto;">
 		<div id="pageTitle">
 		<h3>공부질문 게시글 관리</h3>
 		<hr/>

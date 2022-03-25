@@ -62,20 +62,16 @@
 	#pageTitle h3{
 		font-weight : bold;
 	}
-	#mainPage{
-		width :500px;
-		margin-left : 10px;
-	}		
+	
 	</style>
 </head>
 <body>
-	<iframe id="header" src="header">
-	</iframe>
+<%@ include file="../header.jsp" %>
 	<div id="grid">
 		<div>
 			<iframe id="lefter" src="adminLefter"></iframe>			
 		</div>
-		<div id="mainPage">
+		<div id="mainPage" style="margin-left : auto;margin-right : auto;">
 			<div id="pageTitle">
 		<h3>신고 댓글</h3>
 		<hr/>

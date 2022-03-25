@@ -106,7 +106,7 @@ public class QuizBankController {
 		return service.testResult(params, test_prac_flag, loginId, elapse_time, test_no);
 	}
 	
-	//7.시험보기 페이지 및 시험문제 가져오기
+	//7.연습하기 페이지 및 시험문제 가져오기
 	@GetMapping(value="/practiceForm")
 	public ModelAndView practiceForm(@RequestParam String test_no, HttpSession session) {
 		logger.info("시험페이지 요청 : {}",test_no);
@@ -115,7 +115,7 @@ public class QuizBankController {
 		return service.practiceForm(test_no, loginId);
 	}
 	
-	//8. 체점하기(시험)
+	//8. 체점하기(연습)
 	@RequestMapping(value="practiceResult")
 	@ResponseBody
 	public HashMap<String, Object> practiceResult(@RequestParam(value="params[]") ArrayList <String> params, String test_prac_flag, String loginId, String elapse_time, String test_no){

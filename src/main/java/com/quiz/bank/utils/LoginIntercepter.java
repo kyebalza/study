@@ -22,7 +22,8 @@ public class LoginIntercepter extends HandlerInterceptorAdapter {
 			pass = true;
 		}else {
 			pass = false;
-			response.sendRedirect("./");
+			response.sendRedirect("./loginPage");
+			System.out.println("로그인이 필요합니다!!!");
 		}
 		
 		return pass;

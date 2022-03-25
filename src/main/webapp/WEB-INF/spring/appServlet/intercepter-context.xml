@@ -10,7 +10,48 @@
 		<mvc:interceptor>
 			<!-- joinFrom, del에 test를 위해서 intercepter 걸어놈 -->
 			<!-- <mvc:mapping path="/joinForm"/> -->
-			<mvc:mapping path="/del*"/>
+			<mvc:mapping path="/*"/>
+			<!-- 로그인, 회원관련 -->
+			<mvc:exclude-mapping path="/"/>
+			<mvc:exclude-mapping path="/joinForm"/>
+			<mvc:exclude-mapping path="/overlay"/>
+			<mvc:exclude-mapping path="/join"/>
+			<mvc:exclude-mapping path="/loginPage"/>
+			<mvc:exclude-mapping path="/login"/>
+			<mvc:exclude-mapping path="/idfind"/>
+			<mvc:exclude-mapping path="/findid"/>
+			<mvc:exclude-mapping path="/mailTest"/>
+			<mvc:exclude-mapping path="/overlayemail"/>
+			<mvc:exclude-mapping path="/pwfind"/>
+			<mvc:exclude-mapping path="/submitTempPw"/>
+			<!-- 자유게시판 -->
+			<mvc:exclude-mapping path="/freeBoardList"/>
+			<mvc:exclude-mapping path="/FBlistCall"/>
+			<mvc:exclude-mapping path="/FBClistCall"/>
+			<mvc:exclude-mapping path="/freeBoardDetail"/>
+			<mvc:exclude-mapping path="/FreeSearch"/>
+			<!-- 문의게시판 -->
+			<mvc:exclude-mapping path="/inquiryBoardList"/>
+			<mvc:exclude-mapping path="/inquirylist"/>
+			<mvc:exclude-mapping path="/InquirySearchBoardList"/>
+			<mvc:exclude-mapping path="/inquiryBoardDetail"/>
+			<!-- 문제은행 -->
+			<mvc:exclude-mapping path="/quizBankList"/>
+			<mvc:exclude-mapping path="/testDetail"/>
+			<mvc:exclude-mapping path="/search"/>
+			<mvc:exclude-mapping path="/testCountListCall"/>
+			<mvc:exclude-mapping path="/quizBankTestDetail"/>
+			<mvc:exclude-mapping path="/subjectListCall"/>
+			<mvc:exclude-mapping path="/bookmarkListCall"/>
+			<mvc:exclude-mapping path="/quizBankTestDetai"/>
+			<mvc:exclude-mapping path="/quiz_call"/>
+			<!-- 공부게시판 -->
+			<mvc:exclude-mapping path="/studyBoard/list"/>
+			<mvc:exclude-mapping path="/studyBoard/listCall"/>
+			<mvc:exclude-mapping path="/studyBoard/detail"/>
+			<mvc:exclude-mapping path="/studyBoard/studySearch"/>
+			<mvc:exclude-mapping path="/studyBoard/SBClistCall"/>
+			
 			<bean class="com.quiz.bank.utils.LoginIntercepter"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

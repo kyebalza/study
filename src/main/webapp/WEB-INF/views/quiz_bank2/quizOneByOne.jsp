@@ -381,7 +381,12 @@ function quiz_call(quiz_no){
 			}
 			
 			$('#subjectArea').html('<h4>'+quiz.quiz_index+'. '+quiz.quiz_content+'</h4>');
-			$('#statisticArea').html('<span>정답률 : '+(data.qos.rightCnt/data.qos.allCnt*100).toFixed()+'%</span>');
+			if(data.qos.allCnt == 0 ){
+				$('#statisticArea').html('<span>정답률 : 없음</span>');				
+				
+			} else {
+				$('#statisticArea').html('<span>정답률 : '+(data.qos.rightCnt/data.qos.allCnt*100).toFixed(2)+'%</span>');				
+			}
 			var optTxt = '';
 			optTxt += '';
 			if(parseInt(quiz.quiz_type) == 1){

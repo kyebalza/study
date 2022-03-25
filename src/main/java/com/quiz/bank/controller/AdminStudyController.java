@@ -242,9 +242,9 @@ public class AdminStudyController {
 		logger.info("{}",params.getOrDefault("ori_filename", "없습니다"));
 		logger.info("{}",params.get("ori_filename"));
 		
-		service.updateQuiz(params);
+		int success = service.updateQuiz(params);
 		
-		map.put("msg", service.updateQuiz(params));
+		map.put("msg", success);
 		return map;
 	}
 	

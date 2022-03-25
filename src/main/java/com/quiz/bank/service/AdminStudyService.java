@@ -499,6 +499,34 @@ public class AdminStudyService {
 		return map;
 	}
 
+	public HashMap<String, Object> mainStatics() {
+		
+		//1.많이 푼 사람
+		ArrayList<HashMap<String, String>> manyQuiz= dao.manyQuiz();
+		
+		//2.많이 맞춘 사람
+		ArrayList<HashMap<String, String>> manyCorrect= dao.manyCorrect();
+		
+		//3.정답률 높은 사람
+		ArrayList<HashMap<String, String>> manyCorrectPer = dao.manyCorrectPer();
+
+		
+		//4.공부 좋아요 많은 게시글
+		ArrayList<HashMap<String, String>> studyBoardLike = dao.studyBoardLike();
+		//5.자유 좋아요 많은 게시글
+		ArrayList<HashMap<String, String>> freeBoardLike = dao.freeBoardLike();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("manyQuiz", manyQuiz);
+		map.put("manyCorrect", manyCorrect);
+		map.put("manyCorrectPer", manyCorrectPer);
+		map.put("studyBoardLike", studyBoardLike);
+		map.put("freeBoardLike", freeBoardLike);
+		
+		return map;
+		
+		
+	}
+
 
 
 

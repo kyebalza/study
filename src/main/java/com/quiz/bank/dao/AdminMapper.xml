@@ -19,7 +19,8 @@
 	
 	<!-- 관리자 문의 게시판 리스트 호출 쿼리 -->
 	<select id="Inquirylist" resultType="com.quiz.bank.dto.InquiryBoardDTO">
-		SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no LIMIT #{param1} OFFSET #{param2}
+		SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no ORDER BY board_no DESC LIMIT #{param1} OFFSET #{param2}
+		
 	</select>
 	
 	<!-- 문의 게시판 페이징 관련 -->
@@ -29,7 +30,8 @@
 	
 	<!-- 관리자 자유 게시판 리스트 호출 쿼리 -->
 	<select id="Freelist" resultType="com.quiz.bank.dto.FreeBoardDTO">
-		SELECT * FROM free_board JOIN board_category ON free_board.board_cate_no = board_category.board_cate_no LIMIT #{param1} OFFSET #{param2}
+		SELECT * FROM free_board JOIN board_category ON free_board.board_cate_no = board_category.board_cate_no ORDER BY board_no DESC LIMIT #{param1} OFFSET #{param2}
+		
 	</select>
 	
 	<!-- 자유 게시판 페이징 관련 -->
@@ -49,7 +51,7 @@
 	
 	<!-- 신고 게시판 리스트 호출 쿼리 -->
 	<select id="ManagDelist" resultType="com.quiz.bank.dto.ReprotDTO">
-		SELECT * FROM report_board WHERE reply_no = 0 LIMIT #{param1} OFFSET #{param2}
+		SELECT * FROM report_board WHERE reply_no = 0 ORDER BY report_date DESC LIMIT #{param1} OFFSET #{param2}
 		
 		<!-- <choose>
 			<when test="board_name.equals('free_board') ">
@@ -69,7 +71,7 @@
 	
 	<!-- 신고 댓글 리스트 호출 쿼리 -->
 	<select id="ManagDeComentlist" resultType="com.quiz.bank.dto.ReprotDTO">
-		SELECT * FROM report_board WHERE reply_no != 0 LIMIT #{param1} OFFSET #{param2}
+		SELECT * FROM report_board WHERE reply_no != 0 ORDER BY report_date DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<!-- 신고 댓글 페이징 관련 -->

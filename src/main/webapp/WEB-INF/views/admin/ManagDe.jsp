@@ -143,7 +143,7 @@
 								}
 							str+="<td>"+"<a onclick='mamde(\""+item.board_name+"\","+item.board_no+")'>"+item.board_no+"</a>"+"</td>";
 							/* str+="<td>"+item.title+"</td>"; */
-							str+="<td>"+item.report_user+"</td>";
+							str+="<td><a href='ADdetail?user_id="+item.report_user+"'>"+item.report_user+"</a></td>";
 							str+="<td>"+item.reported_user+"</td>";
 							str+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
 							str+="<td>"+item.report_processing +"</td>";
@@ -236,7 +236,7 @@
 					content+="<td>"+"<a onclick='mamde(\""+item.board_name+"\","+item.board_no+")'>"+item.board_no+"</a>"+"</td>";
 					/* content+="<td>"+item.title+"</td>"; */
 					content+="<td>"+item.report_user+"</td>";
-					content+="<td>"+item.reported_user+"</td>";
+					content+="<td><a href='ADdetail?user_id="+item.reported_user+"'>"+item.reported_user+"</a></td>";
 					content+="<td>"+item.report_reason+"</td>";
 					content+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
 					content+="<td>"+item.report_processing +"</td>";
@@ -294,10 +294,10 @@
 			console.log("재확인 게시글 이름 : "+a+" 글번호 : "+b);
 			
 			if (board_name == "study_board") {
-				location.href='adminUserUpdate?board_no=${info.user_id}';
+				location.href='./studyBoard/detail?board_no='+b;
 				//공부 게시판 상세보기로 넘어가기
 			}else{
-				location.href='adminUserUpdate?board_no=${info.user_id}';
+				location.href='freeBoardDetail?board_no='+b;
 				//자유 게시판 상세보기로 넘어가기
 			}
 			

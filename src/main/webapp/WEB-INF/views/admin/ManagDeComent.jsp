@@ -26,18 +26,18 @@
 		margin : 10px 0px 10px 0px;
 		width : 200px;
 	}
-	#ManageDePostList tr:nth-child(odd){
+	#ManageDeComentList tr:nth-child(odd){
 		background-color :  #e6ffe6;
 		
 	}
-	#ManageDePostList tr:nth-child(odd) input{
+	#ManageDeComentList tr:nth-child(odd) input{
 		background-color :  #e6ffe6;	
 	}
-	#ManageDePostList tr:nth-child(even){
+	#ManageDeComentList tr:nth-child(even){
 		background-color :  white;
 		
 	}
-	#ManageDePostList tr:nth-child(even) input{
+	#ManageDeComentList tr:nth-child(even) input{
 		background-color :  white;	
 	}
 	input[value="처리완료"]{
@@ -231,10 +231,10 @@
 						}else{
 							content+="<td>자유 게시판</td>";
 						}
-					content+="<td>"+item.reply_no+"</td>";
+					content+="<td>"+"<a onclick='mamde(\""+item.board_name+"\","+item.board_no+")'>"+item.reply_no+"</a>"+"</td>";
 					/* content+="<td>"+item.title+"</td>"; */
 					content+="<td>"+item.report_user+"</td>";
-					content+="<td>"+item.reported_user+"</td>";
+					content+="<td><a href='ADdetail?user_id="+item.reported_user+"'>"+item.reported_user+"</a></td>";
 					content+="<td>"+item.report_reason+"</td>";
 					content+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
 					content+="<td>"+item.report_processing +"</td>";
@@ -285,6 +285,20 @@
 		    	} 
 		
 			}
-		
+			function mamde(a,b) {
+				console.log("클릭 확인 : "+a+b);
+				var board_name = a;
+				var board_no = b;
+				console.log("재확인 게시글 이름 : "+a+" 글번호 : "+b);
+				
+				if (board_name == "study_board") {
+					location.href='./studyBoard/detail?board_no='+b;
+					//공부 게시판 상세보기로 넘어가기
+				}else{
+					location.href='freeBoardDetail?board_no='+b;
+					//자유 게시판 상세보기로 넘어가기
+				}
+				
+			}	
 </script>
 </html>

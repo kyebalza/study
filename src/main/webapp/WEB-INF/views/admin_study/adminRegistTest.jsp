@@ -84,7 +84,8 @@
 			border : 1px solid gray;
 			margin : 10px 0px 10px 0px;
 			width : 300px;
-		}		            
+		}
+        
 	</style>
 </head>
 <body>

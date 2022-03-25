@@ -120,6 +120,18 @@ public interface AdminStudyDAO {
 
 	int updateQuizState(String quiz_no);
 
+	ArrayList<HashMap<String, String>> mainQuizStatics();
+
+	ArrayList<HashMap<String, String>> studyBoardLike();
+
+	ArrayList<HashMap<String, String>> freeBoardLike();
+
+	ArrayList<HashMap<String, String>> manyQuiz();
+
+	ArrayList<HashMap<String, String>> manyCorrect();
+
+	ArrayList<HashMap<String, String>> manyCorrectPer();
+
 
 
 }

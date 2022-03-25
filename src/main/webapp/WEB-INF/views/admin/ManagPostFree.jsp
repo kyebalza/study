@@ -110,11 +110,11 @@
 				<th>삭제</th>
 			</tr>
 		</thead>
-		
+		<!-- 
 			<c:if test="${Freeboardlist eq null || size == 0}">
 			<tr><td colspan="7">해당 게시글은 존재하지 않습니다.</td></tr>
 			</c:if>
-		
+		 -->
 		
 		<tbody id = "Freeboardlist">
 

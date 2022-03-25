@@ -160,7 +160,7 @@
 	</select>
 	
 	<select id="adminUpdateQuizForm" resultType="hashmap">
-	SELECT * FROM quiz LEFT JOIN photo ON (quiz.quiz_no = photo.board_no) WHERE quiz_no = #{param1}
+	SELECT * FROM quiz LEFT JOIN quiz_photo ON (quiz.quiz_no = quiz_photo.board_no) WHERE quiz_no = #{param1}
 	</select>
 	
 	<update id="updateQuiz" parameterType="hashmap">
@@ -215,6 +215,7 @@
 		compl_flag = false
 		</if>
 	</where>
+	ORDER BY quiz_report_no DESC
 	</select>
 	
 	<update id="quizReportComplete">
@@ -348,7 +349,22 @@
 	UPDATE quiz SET del_flag = !del_flag WHERE quiz_no = #{param1}
 	</update>
 
+	<select id="manyQuiz" resultType="HashMap">
+	SELECT user_id,count(correct_wrong) AS ccw ,sum(correct_wrong) AS scw FROM quiz_solve qs GROUP BY user_id ORDER BY ccw DESC limit 5
+	</select>	
+	<select id="manyCorrect" resultType="HashMap">
+	SELECT user_id,count(correct_wrong) AS ccw ,sum(correct_wrong) AS scw FROM quiz_solve qs GROUP BY user_id ORDER BY scw DESC limit 5
+	</select>		
+	<select id="manyCorrectPer" resultType="HashMap">
+	SELECT user_id,(sum(correct_wrong)/count(correct_wrong)) AS per FROM quiz_solve qs GROUP BY user_id ORDER BY per DESC limit 5
+	</select>		
 	
+	<select id="studyBoardLike" resultType="HashMap">
+	SELECT * FROM study_board_like_cnt JOIN study_board USING (board_no) WHERE del_flag = 0 ORDER BY like_cnt  DESC limit 5
+	</select>	
+	<select id="freeBoardLike" resultType="HashMap">
+	SELECT * FROM free_board_like_cnt JOIN free_board USING (board_no) WHERE del_flag = 0   ORDER BY like_cnt  DESC limit 5
+	</select>	
 	
 	
 </mapper>

@@ -81,6 +81,8 @@
 			padding-right : 200px;
 			padding-top : 5px;
 			padding-left : 10px;
+			margin-top : 10px;
+
 		} 
     
     
@@ -90,7 +92,7 @@
 <%@ include file="../header.jsp" %>
 <div id="grid">
 	<div id="lefter"><iframe id="lefter" src="adminLefter"></iframe>		</div>
-	<div class="mainPage">
+	<div class="mainPage" style="margin-left : auto;margin-right : auto;">
 	<table>
 	<tr>
 

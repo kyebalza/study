@@ -7,11 +7,17 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<style>
 		.quizList{
-			border: solid black;
-			text-align : center;
-			width: 20%;
-			height: 150px;
-			display: inline-block;
+			text-align: center;
+		    width: 20%;
+		    height: 150px;
+		    display: inline-block;
+		    margin-left: 2%;
+		    margin-right: 2%;
+		    max-width: 300px;
+		    background-color: #ededed;
+		    border-radius: 11px;
+		    border-bottom: solid 3px gray;
+		    border-top: solid 5px #6AA84F;
 		}
 		.all{
 			border: solid black;

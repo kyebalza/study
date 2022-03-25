@@ -11,6 +11,7 @@
 			<!-- joinFrom, del에 test를 위해서 intercepter 걸어놈 -->
 			<!-- <mvc:mapping path="/joinForm"/> -->
 			<mvc:mapping path="/*"/>
+			<mvc:exclude-mapping path="/mainStatics"/>
 			<!-- 로그인, 회원관련 -->
 			<mvc:exclude-mapping path="/"/>
 			<mvc:exclude-mapping path="/joinForm"/>

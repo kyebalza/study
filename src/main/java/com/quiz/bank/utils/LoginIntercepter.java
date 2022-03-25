@@ -33,10 +33,10 @@ public class LoginIntercepter extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView mav) throws Exception {
 		// righter에서 조금만 바꿔서 사용하기
-		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("loginId");
-		String content = id+" 님, 반갑습니다. <button onclick= \"loction.href='logout'\">logout</button>";
-		mav.addObject("loginBox", content);
+//		HttpSession session = request.getSession();
+//		String id = (String) session.getAttribute("loginId");
+//		String content = id+" 님, 반갑습니다. <button onclick= \"loction.href='logout'\">logout</button>";
+//		mav.addObject("loginBox", content);
 
 	}
 	

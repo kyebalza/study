@@ -53,6 +53,8 @@
 			text-align: center;
 		}
 		#sbListAll{
+			max-width: 1200px;
+            margin: 0 auto;
 			padding: 10%,30%;
 		}
 		
@@ -60,8 +62,8 @@
 </head>
 <body >
 	<%@ include file="../header.jsp" %>
-	<br/>
 	<div id="sbListAll">
+	<br/>
 		<button class="search" onclick="location.href='writeForm'">글쓰기</button>
 		
 		<!-- 카테고리 검색 -->

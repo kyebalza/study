@@ -43,11 +43,20 @@
 		.like,.bHit,.report{
 		
 		}
+		#sbListAll{/*페이지 전체*/
+			max-width: 1200px;
+            margin: 0 auto;
+			padding: 10%,30%;
+		}
+		#footer{
+			top: 100%;
+		}
 	
 	</style>
 </head>
 <body>
 	<%@ include file="../header.jsp" %>
+	<div id="sbListAll">
 	<table>
 		<tr>
 			<th>제목</th>
@@ -115,7 +124,10 @@
 	<hr/>
 	<%@ include file="sbComent.jsp" %>
 	<br/>
-	<%@ include file="../footer.jsp" %>
+	<div id="footer">
+		<%@ include file="../footer.jsp" %>
+	</div>
+	</div>
 </body>
 <script>
 

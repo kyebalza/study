@@ -15,10 +15,19 @@
 		input.button{
 			text-align: center;
 		}
+		#sbListAll{
+			max-width: 1200px;
+            margin: 0 auto;
+			padding: 10%,30%;
+		}
+		#footer{
+			top: 100%;
+		}
 	</style>
 </head>
 <body>
 	<%@ include file="../header.jsp" %>
+	<div id="sbListAll">
 	<form action="update" method="post"  enctype="multipart/form-data">
 		<table>
 			<tr>
@@ -80,7 +89,10 @@
 		<input type="button" onclick="location.href='list'" value="취소"/>
 		<input type="submit" value="등록"/>
 	</form>
-	<%@ include file="../footer.jsp" %>
+	</div>
+	<div id="footer">
+		<%@ include file="../footer.jsp" %>
+	</div>
 </body>
 <script>
 	

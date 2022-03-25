@@ -52,20 +52,24 @@
 			text-align: left;
 			font-size: 10px;
 		}
-		#sbWriteFormAll{
+		#sbListAll{
+			max-width: 1200px;
+            margin: 0 auto;
 			padding: 10%,30%;
-			margin: 10px;
 		}
 		#file{
 		
+		}
+		#footer{
+			top: 100%;
 		}
 		
 	</style>
 </head>
 <body>
 	<%@ include file="../header.jsp" %>
+	<div id="sbListAll">
 	<br/>
-	<div id="sbWriteFormAll">
 	<form action="write" method="post"  enctype="multipart/form-data">
 		<table>
 			<tr>
@@ -147,7 +151,9 @@
 		<input type="submit" value="등록"/>
 	</form>
 	</div>
-	<%@ include file="../footer.jsp" %>
+	<div id="footer">
+		<%@ include file="../footer.jsp" %>
+	</div>
 </body>
 <script>
 	

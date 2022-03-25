@@ -49,24 +49,24 @@
 <body>
 
 <div id="header_all">
-	<div class="header_main_logo" ><img src="<c:url value='/resources/img/Logo.png'/>" onclick="parent.location.href='./'" style="margin-left: 35%;"/></div>
+	<div class="header_main_logo" ><img src="<c:url value='/resources/img/Logo.png'/>" onclick="parent.location.href='<c:url value='/./'/>'" style="margin-left: 35%;"/></div>
 	<div class="header_center_cate" ><a href="<c:url value='/quizBankList'/>" target="_parent">문제은행</a></div>
 	<div class="header_center_cate" ><a href="<c:url value='/studyBoard/list'/>" target="_parent">공부게시판</a></div>
 	<div class="header_center_cate" ><a href="<c:url value='/freeBoardList'/>" target="_parent">자유게시판</a></div>
 	<div class="header_center_cate" ><a href="<c:url value='/inquiryBoardList'/>" target="_parent">문의게시판</a></div>
 	<div class="header_login">
 		<c:if test="${loginId eq null }">
-			<a href="loginPage" target="_parent">로그인</a>
+			<a href="<c:url value='/loginPage'/>" target="_parent">로그인</a>
 		</c:if>
 		<c:if test="${loginId ne null }">
-			<a href="logout" target="_parent">로그아웃</a>
+			<a href="<c:url value='/logout'/>" target="_parent">로그아웃</a>
 		</c:if>
 		<br/>
 		<c:if test="${admin == '관리자' }">
-			<a href="adminPage" target="_parent">관리자페이지</a>
+			<a href="<c:url value='/adminPage'/>" target="_parent">관리자페이지</a>
 		</c:if>
 		<c:if test="${admin == '회원' }">
-			<a href="myBoard" target="_parent">마이페이지</a>
+			<a href="<c:url value='/myBoard'/>" target="_parent">마이페이지</a>
 		</c:if>
 	</div>
 </div>

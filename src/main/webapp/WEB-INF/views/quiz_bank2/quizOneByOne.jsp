@@ -119,6 +119,88 @@
 	h4{
 		margin : 10px;
 	}
+	.option_yn1 {
+	    display:none;
+	}
+	.option_yn1 + label {
+		display: inline-block;
+		background: url("resources/img/1번.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 	width: 22px; 
+	 	height: 22px; 
+	 	cursor:pointer; 
+	 	margin-right: 9px;
+	 }
+	 .option_yn1:checked + label {
+	 	background: url("resources/img/정답체크.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 }
+	.option_yn2{
+		display: none!important;
+	}
+	.option_yn2 + label {
+		display: inline-block;
+		background: url("resources/img/2번.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 	width: 22px; 
+	 	height: 22px; 
+	 	cursor:pointer; 
+	 	margin-right: 9px;
+	 }
+	 .option_yn2:checked + label {
+	 	background: url("resources/img/정답체크.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 }
+	.option_yn3{
+		display: none!important;
+	}
+	.option_yn3 + label {
+		display: inline-block;
+		background: url("resources/img/3번.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 	width: 22px; 
+	 	height: 22px; 
+	 	cursor:pointer; 
+	 	margin-right: 9px;
+	 }
+	 .option_yn3:checked + label {
+	 	background: url("resources/img/정답체크.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 }
+	.option_yn4{
+		display: none!important;
+	}
+	.option_yn4 + label {
+		display: inline-block;
+		background: url("resources/img/4번.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 	width: 22px; 
+	 	height: 22px; 
+	 	cursor:pointer; 
+	 	margin-right: 9px;
+	 }
+	 .option_yn4:checked + label {
+	 	background: url("resources/img/정답체크.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 }
+	.option_yn5{
+		display: none!important;
+	}
+	
+	.option_yn5 + label {
+		display: inline-block;
+		background: url("resources/img/5번.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 	width: 22px; 
+	 	height: 22px; 
+	 	cursor:pointer; 
+	 	margin-right: 9px;
+	 }
+	 .option_yn5:checked + label {
+	 	background: url("resources/img/정답체크.png") 0 0 no-repeat;
+	 	background-size: cover; 
+	 }	
+	
 	</style>
 </head>
 <body>
@@ -301,16 +383,16 @@ function quiz_call(quiz_no){
 			$('#subjectArea').html('<h4>'+quiz.quiz_index+'. '+quiz.quiz_content+'</h4>');
 			$('#statisticArea').html('<span>정답률 : '+(data.qos.rightCnt/data.qos.allCnt*100).toFixed()+'%</span>');
 			var optTxt = '';
-			optTxt += '<ol>';
+			optTxt += '';
 			if(parseInt(quiz.quiz_type) == 1){
 				optTxt = '<input type="text"/>';
 			} else  {
 				for (var i = 1; i <= parseInt(quiz.quiz_type); i++) {
-					optTxt += '<li><input type="checkbox" value="'+i+'"/>'+quiz["option"+i]+'</li>';					
+					optTxt += '<p><input type="checkbox" class="option_yn'+i+'" id="option_yn'+i+'" value="'+i+'"/><label for="option_yn'+i+'"></label>'+quiz["option"+i]+'</p>';					
 				}
 			}
 			if(quiz.quiz_type*1 !=1){
-				optTxt += '</ol>';				
+				optTxt += '';				
 			}
 			$('#optArea').html(optTxt);
 			if(data.photo != null){

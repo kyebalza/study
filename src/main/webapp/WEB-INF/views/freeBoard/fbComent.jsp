@@ -74,7 +74,7 @@
 						</tr>			
 					</table>
 				</c:forEach> --%>
-
+				
 		</div>
 	</div>
 </body>

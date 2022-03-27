@@ -24,7 +24,7 @@
 	<!-- 2. 로그인 -->
 	<select id = "login" resultType="hashmap">	
 		SELECT user_id,user_admin FROM user_info
-				WHERE user_id = #{param1}
+				WHERE user_id = #{param1} AND user_state="정상"
 	</select>
 	
 	<!-- 2-1.암호화된 비밀번호 확인 -->
@@ -35,7 +35,7 @@
 	<!-- 4. 아이디 찾기 -->
 	<select id="findid" resultType="string">
 		SELECT user_id FROM user_info WHERE user_name = #{param1} 
-			AND user_phone = #{param2} AND user_email = #{param3}
+			AND user_phone = #{param2} AND user_email = #{param3} AND user_state="정상"
 	</select> 
 	
 	<select id="confirmIdAndEmail" resultType="int">

@@ -6,7 +6,7 @@
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<style>
-				.bookmark{
+		.bookmark{
 			width: 30px;
 			height: 30px;
 			cursor: pointer;
@@ -219,7 +219,7 @@
 </head>
 <body>
 	<div class="test_name">
-		<div class="test_name2">정보처리기사</div>
+		<div class="test_name2">정보처리기사[시험]</div>
 		<h1 id="stopwatch">
              <input type="hidden" class="elapse_time">
         </h1>
@@ -232,7 +232,7 @@
 				<hr/>
 					<input type="hidden" value="${test.quiz_no}"/>
 					<c:choose>
-						<c:when test="${test.bookmark_quiz_no != null && test.user_id == loginId}">
+						<c:when test="${test.bookmark_quiz_no != null}">
 							<img class="bookmark" src="resources/img/별.png" alt="북마크">
 						</c:when>
 						

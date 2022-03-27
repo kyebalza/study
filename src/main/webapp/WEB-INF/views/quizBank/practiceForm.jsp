@@ -19,7 +19,6 @@
 		.quiz_form {
 			width: 900px;
 	    	height: auto;
-			border : 1px solid gray;
 			border-radius : 5px;
 			margin-left: auto; 
 			margin-right: auto;
@@ -66,7 +65,91 @@
 			width : 150px;
 			height : 150px;
 		}
-		
+		.test_name{
+		    border: solid yellowgreen;
+		    text-align: center;
+		    background-color: yellowgreen;
+		    color: white;
+		}
+		.score{
+			margin: 40px;
+		    border: yellowgreen solid;
+		    text-align: center;
+		    background: yellowgreen;
+		    border-radius: 25px;
+		    height: 50px;
+		    padding: 20px;
+		    font-size: 35px;
+		    color: white;
+		}
+		.elapse_time{
+			text-align: center;
+		    font-size: 23px;
+		    color: red;
+		}
+		.answerArea{
+			border: solid greenyellow;
+		    text-align: center;
+		    background-color: greenyellow;
+		    border-radius: 9px;
+		    font-size: 20px;
+		}
+		.explationArea{
+			border: solid yellowgreen;
+		    text-align: center;
+		    background-color: yellowgreen;
+		    border-radius: 9px;
+		    font-size: 20px;
+		    margin-top: 15px;
+		    margin-bottom: 15px;
+		    padding: 20px;
+		    color: white;
+		}
+		#bntArea{
+			text-align: right;
+			margin-bottom: 15px;
+		}
+		.result{
+			background-color: #96d36f;
+		    border: #96d36f;
+		    padding: 10px;
+		    border-radius: 8px;
+		    cursor: pointer;
+		    color: white;
+		}
+		.statisticArea{
+			text-align: right;
+		    color: #b9b9b9;
+		    font-size: 15px;
+		}
+		.quiz_titleArea{
+			font-size: 20px;
+    		font-weight: 600;
+		}
+		#stopwatch{
+			text-align: right;
+			padding-right: 50px;
+		}
+		.bntArea{
+			text-align: right;
+			margin-bottom: 15px;
+		}
+		.question{
+			background-color: #96d36f;
+		    border: #96d36f;
+		    padding: 10px;
+		    border-radius: 8px;
+		    cursor: pointer;
+		    color: white;
+		}
+		.error{
+			background-color: #ffac93;
+   			border: #ffac93;
+		    padding: 10px;
+		    border-radius: 8px;
+		    cursor: pointer;
+		    color: white;
+		}
 		
 	/*문제 보기 css*/	
 	.option_yn1 {
@@ -156,12 +239,12 @@
 	</style>
 </head>
 <body>
-	<div>
+	<div class="test_name">
+		<div class="test_name2">정보처리기사[연습]</div>
 		<h1 id="stopwatch">
              <input type="hidden" class="elapse_time">
         </h1>
 	</div>
-		<h3>연습페이지입니다.</h3>
 			<c:forEach items="${test}" var="test">
 			<hr/>
 			<input type="hidden" class="test_no ${test.quiz_index}" value="${test.test_no}">
@@ -170,7 +253,7 @@
 			<input type="hidden" class="quiz_index ${test.quiz_index}" value="${test.quiz_index}">
 					<input type="hidden" value="${test.quiz_no}"/>
 					<c:choose>
-						<c:when test="${test.bookmark_quiz_no != null && test.user_id == loginId}">
+						<c:when test="${test.bookmark_quiz_no != null}">
 							<img class="bookmark" src="resources/img/별.png" alt="북마크">
 						</c:when>
 						
@@ -228,9 +311,11 @@
 				<input type="hidden" class="quiz_answer ${test.quiz_index}" value="${test.quiz_answer}">
 				<div class="answerArea"><h3>정답 : ${test.quiz_answer}</h3></div>
 				<div class="explationArea"><h3>해설 : ${test.quiz_explation}</h3></div>
-				<input type="button" class="question" onclick="question()" value="질문하기"/>
-				<input type="hidden" value="${test.quiz_no}"/>
-				<input type="button" class="error" onclick="error()" value="오류신고"/>
+				<div class="bntArea">
+					<input type="button" class="question" onclick="question()" value="질문하기"/>
+					<input type="hidden" value="${test.quiz_no}"/>
+					<input type="button" class="error" onclick="error()" value="오류신고"/>
+				</div>
 			</div>
 			
 		</c:forEach>

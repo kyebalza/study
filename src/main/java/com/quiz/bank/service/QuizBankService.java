@@ -208,6 +208,8 @@ public class QuizBankService {
 		
 		//사진 가져오기 
 		ArrayList<HashMap<String, String>> quiz_Photo = dao.quiz_Photo();
+		//북마크 가져오기
+		ArrayList<HashMap<String, String>> quiz_bookmark = dao.quiz_bookmark(loginId);
 		//사진+ 통계 값 담기
 		for(int i = 0; i <testList.size(); ++i) {
 			String comp_no = String.valueOf(testList.get(i).get("quiz_no"));
@@ -226,6 +228,14 @@ public class QuizBankService {
 				if(comp_no.equals(comp_no3)) {
 					logger.info("사진 값 담김");
 					testList.get(i).put("photo",String.valueOf(quiz_Photo.get(i3).get("new_filename")));
+				}
+			}
+			for(int i4 = 0; i4 <quiz_bookmark.size(); ++i4) {
+				String comp_no4 = String.valueOf(quiz_bookmark.get(i4).get("bookmark_quiz_no"));
+				logger.info("북마크넘버"+comp_no4);
+				if(comp_no.equals(comp_no4)) {
+					logger.info("북마크 값 담김");
+					testList.get(i).put("bookmark_quiz_no",String.valueOf(quiz_bookmark.get(i4).get("bookmark_quiz_no")));
 				}
 			}
 		}
@@ -408,6 +418,8 @@ public class QuizBankService {
 
 		//사진 가져오기 
 		ArrayList<HashMap<String, String>> quiz_Photo = dao.quiz_Photo();
+		//북마크 가져오기
+		ArrayList<HashMap<String, String>> quiz_bookmark = dao.quiz_bookmark(loginId);
 		//사진+ 통계 값 담기
 		for(int i = 0; i <testList.size(); ++i) {
 			String comp_no = String.valueOf(testList.get(i).get("quiz_no"));
@@ -428,6 +440,15 @@ public class QuizBankService {
 					testList.get(i).put("photo",String.valueOf(quiz_Photo.get(i3).get("new_filename")));
 				}
 			}
+			for(int i4 = 0; i4 <quiz_bookmark.size(); ++i4) {
+				String comp_no4 = String.valueOf(quiz_bookmark.get(i4).get("bookmark_quiz_no"));
+				logger.info("북마크넘버"+comp_no4);
+				if(comp_no.equals(comp_no4)) {
+					logger.info("북마크 값 담김");
+					testList.get(i).put("bookmark_quiz_no",String.valueOf(quiz_bookmark.get(i4).get("bookmark_quiz_no")));
+				}
+			}
+			
 		}
 
 		logger.info("회차별 시험문제 리스트 갯수 : {}", testList.size());
@@ -514,7 +535,8 @@ public class QuizBankService {
 			}
 		}
 
-
+		//북마크 가져오기
+		ArrayList<HashMap<String, String>> quiz_bookmark = dao.quiz_bookmark(loginId);
 		//사진 가져오기 
 		ArrayList<HashMap<String, String>> quiz_Photo = dao.quiz_Photo();
 		//사진+ 통계 값 담기
@@ -535,6 +557,14 @@ public class QuizBankService {
 				if(comp_no.equals(comp_no3)) {
 					logger.info("사진 값 담김");
 					testList.get(i).put("photo",String.valueOf(quiz_Photo.get(i3).get("new_filename")));
+				}
+			}
+			for(int i4 = 0; i4 <quiz_bookmark.size(); ++i4) {
+				String comp_no4 = String.valueOf(quiz_bookmark.get(i4).get("bookmark_quiz_no"));
+				logger.info("북마크넘버"+comp_no4);
+				if(comp_no.equals(comp_no4)) {
+					logger.info("북마크 값 담김");
+					testList.get(i).put("bookmark_quiz_no",String.valueOf(quiz_bookmark.get(i4).get("bookmark_quiz_no")));
 				}
 			}
 		}

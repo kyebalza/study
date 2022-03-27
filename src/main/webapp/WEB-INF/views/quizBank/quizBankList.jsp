@@ -62,6 +62,8 @@
 		    width: 100%;
 		    z-index: 2;
 		    border-radius: 5px;
+		    text-align: center;
+    		font-size: 15px;
 		}
 		.quizBankSearchButton{
 			height: 35px;

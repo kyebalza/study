@@ -129,7 +129,7 @@ $('#indetify').click(function(){
 						
 			
 			if(data.overLay > 0){
-				alert('이미 사용중인 아이디 입니다.');
+				alert('이미 사용중인 이메일 입니다.');
 
 			} else {
 				alert('메일로 인증번호를 전송했습니다.');
@@ -243,7 +243,7 @@ $('input[name="email"]').keyup(function(e){
 				alert('휴대폰 번호를 입력 하세요');
 				$user_phone.focus();
 			} else if(!certifinum_check){
-				alert('메일 인증이나 하세요');
+				alert('메일 인증을 해주세요');
 			} else {
 				$('#joinForm').submit();//서버전송				
 				alert('회원가입에 성공하셨습니다');					

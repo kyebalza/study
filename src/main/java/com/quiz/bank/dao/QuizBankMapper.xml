@@ -30,7 +30,6 @@
 	<!-- 3.시험보기 페이지 및 시험문제 가져오기 -->
 	<select id="testFrom" resultType="hashmap">
 		SELECT * FROM quiz
-			LEFT JOIN bookmark ON (bookmark.bookmark_quiz_no = quiz.quiz_no)
 			WHERE del_flag= 'false' AND test_no=#{param1}
 			ORDER BY quiz_index
 	</select>
@@ -44,10 +43,15 @@
 		SELECT quiz_no , count(quiz_no) as 'right' FROM quiz_solve  WHERE correct_wrong = TRUE GROUP BY quiz_no
 	</select>
 	
+	<!-- 3-2. 사진값 가져오기 -->
 	<select id="quiz_Photo" resultType="hashmap">
 		SELECT new_filename, board_no FROM photo WHERE board_name = 'quiz'
 	</select>
 	
+	<!-- 3-3. 북마크 값 가져오기 -->
+	<select id="quiz_bookmark" resultType="hashmap">
+		select * from bookmark where user_id =#{param1}
+	</select>
 	<!-- 4. 시험명 검색기능 -->
 	<select id="search" parameterType="hashmap" 
 		resultType="TestCategory">
@@ -97,9 +101,15 @@
 	</update>
 	
 	<!-- 9. 결과가져오기 -->
-	<select id="resultFrom" resultType="hashmap">
-		select * from quiz inner join quiz_solve using (quiz_no) where test_prac_flag = #{param1}
+	 <select id="resultFrom" resultType="hashmap">
+		SELECT * FROM quiz INNER JOIN quiz_solve USING (quiz_no)
+			WHERE test_prac_flag = #{param1} AND del_flag= 'false';
 	</select>
+	<!-- 
+	<select id="resultFrom" resultType="hashmap">
+		select * from quiz inner join quiz_solve using (quiz_no) where test_prac_flag = #{param1} and del_flag= 'false'
+	</select>
+	 -->
 	
 	<!-- 9-1.시험결과 가져오기 -->
 	<select id="getTestResult" resultType="hashmap">

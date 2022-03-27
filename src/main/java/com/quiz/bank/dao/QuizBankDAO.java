@@ -31,6 +31,9 @@ public interface QuizBankDAO {
 
 	//3-2. 사진 가져오기
 	ArrayList<HashMap<String, String>> quiz_Photo();
+	
+	//3-3. 북마크 값 가져오기
+	ArrayList<HashMap<String, String>> quiz_bookmark(String loginId);
 
 	//4. 시험 검색기능 
 	ArrayList<TestCategoryDTO> search(HashMap<String, String> params);
@@ -65,6 +68,8 @@ public interface QuizBankDAO {
 	
 	//9-2. 시험 기본 정보들 가져오기
 	HashMap<String, String> test_info(int test_cate_no, int test_no);
+
+	
 
 
 

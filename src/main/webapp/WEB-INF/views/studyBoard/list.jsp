@@ -10,79 +10,105 @@
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="/bank/resources/js/jquery.twbsPagination.js"></script>
 	<style>
-		table{
+		.List{
+			min-width : 1170px;
 			border: 2px solid #6AA84F;
 			text-align: center;
 			padding : 10px;
+			margin : auto;
 		}
-		th{
-			height: 50px;
-			background-color:#6AA84F;
+		.List tr,td,th{
 			border: 1px solid #6AA84F;
 			text-align: center;
-			padding: 10px;
-			margin:5px;
-			color:white;
-			
+			padding: 5px;
 		}
-		tr,td{
-			border: 1px solid #6AA84F;
+		#sbwrite{/*카테고리 검색내용 입력*/
 			text-align: center;
-			padding: 10px;
-			margin:5px;
-			
-		}
-		#search_con{/*카테고리 검색내용 입력*/
-			color:white;
-			boarder:1px solid green;
-			float:none;
-			width: 230px;
-			height: 30px;
-			border-radius: 9px;
-			border: 1px solid #6AA84F;
-			text-align: center;
-		}
-		.search{/*카테고리 검색, 글쓰기버튼*/
+			position: relative;
 			background-color : #6AA84F;
-			color:white;
-			boarder:1px solid #6AA84F;
-			float:none;
+			color: white;
+			border: none;
+			margin: auto;
+			width: 100px;
 			height: 30px;
-			border-radius: 9px;
-			border: 1px solid #6AA84F;
-			text-align: center;
+			border-radius: 11px;
+		}
+		.search{
+			 float: right;
+			 left : 40%;
 		}
 		#sbListAll{
+		/*
 			max-width: 1200px;
             margin: 0 auto;
 			padding: 10%,30%;
+		*/
+			min-width : 1150px;
+			left: 20%;
+			position: absolute;
+		}
+		.select{
+			border: 1px solid #6AA84F;
+			width: 100px;
+			margin: 5px;
+			height: 30px;	
+			border-radius: 9px;
+			text-align: center;
+			background: #6AA84F;
+			color: white;
+		}
+		.select option{
+			background: white;
+			color: black;
+			border: 1px solid #6AA84F;
+			border-radius: 9px;
 		}
 		
 	</style>
 </head>
 <body >
 	<%@ include file="../header.jsp" %>
-	<div id="sbListAll">
 	<br/>
-		<button class="search" onclick="location.href='writeForm'">글쓰기</button>
-		
-		<!-- 카테고리 검색 -->
-		<form action="studyboardSearch" method="GET" name="studyboardSearch" autocomplete="off">
-				<select class="search" name ="SearchType">
-					<option selected>전체</option>
-					<option value="all">전체</option>
-					<option value="title">제목</option>
-					<option value="user">작성자</option>
-				</select>
-				<input  id="search_con" type="text" name="Keyword" placeholder="검색할 내용을 입력해주세요"/>
-				<input class="search" type="button" value="검색" onclick="studySearch()"/>
-			</form>
+	<div id="sbListAll">
+		<div>
+			<button id="sbwrite" onclick="location.href='writeForm'">글쓰기</button>
+			
+			<!-- 카테고리 검색 -->
+			<form class="search" action="studyboardSearch" method="GET" name="studyboardSearch" autocomplete="off">
+					<select class="select" name ="SearchType">
+						<option selected>전체</option>
+						<option value="all">전체</option>
+						<option value="title">제목</option>
+						<option value="user">작성자</option>
+					</select>
+					<input type="text" name="Keyword" placeholder="검색할 내용을 입력해주세요"
+						style="
+							width: 230px;
+							height: 30px;
+							border-radius: 9px;
+							border: 1px solid #6AA84F;
+							text-align: center;
+						"
+					/>
+					<input type="button" value="검색" onclick="studySearch()"
+						style="
+							background-color : #6AA84F;
+							color: white;
+							border: none;
+							margin: auto;
+							width: 100px;
+							height: 30px;
+							border-radius: 11px;
+						"
+					/>
+				</form>
+			</div>
 			<!-- 카테고리 검색 -->
 			
 		<!-- 게시판 리스트 -->
-		<table>
+		<table class="List">
 			<thead>
-			<tr>
+			<tr style="background: #6AA84F; color:white;">
 				<th>글번호</th>
 				<th>제목</th>
 				<th>카테고리</th>

@@ -11,6 +11,8 @@
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="resources/js/jquery.twbsPagination.js"></script>
 	<link rel="stylesheet" href="resources/css/header.css"/>
+	<script src="resources/js/.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
  
  <style>
 
@@ -62,6 +64,10 @@
 	
 	.iall {
 		margin: right;
+		position: absolute;
+			/* background: blue; */
+		min-width : 1150px;
+		left: 20%;
 	}
 	
 	.select{
@@ -71,7 +77,17 @@
 		height: 30px;	
 		border-radius: 9px;
 		text-align: center;
+		background: #6AA84F;
+		color: white;
 	
+	}
+	
+	
+	.select option{
+		background: white;
+		color: black;
+		border: 1px solid #6AA84F;
+		border-radius: 9px;
 	}
 	
 	

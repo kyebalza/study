@@ -41,6 +41,11 @@
 	
 	}
 	
+	input.button {
+		text-align: center;
+		background-color: #6AAA84F;
+	}
+	
 	
 	.cate, .date {
 		text-align: center;
@@ -97,13 +102,18 @@
 		
 	</table>
 	
-	<img src="/bank/resources/img/bHit.png">${info.bHit} 
-	<br/>
-	<br/>
-	<input type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
-	<input type="button" onclick="del()" value="삭제"/>			
-	<input type="button" onclick="location.href='./inquiryBoardList?currpage=1'" value="목록"/>
+	<div style="float: right;">
+		<img class="bHit" src="/bank/resources/img/bHit.png">(${info.bHit}) 
+	</div>
 	
+	<br/>
+	<br/>
+	
+	<div style="float: center;">
+		<input type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
+		<input type="button" onclick="del()" value="삭제"/>			
+		<input type="button" onclick="location.href='./inquiryBoardList?currpage=1'" value="목록"/>
+	</div>
 	
 	
 	<br/><br/>

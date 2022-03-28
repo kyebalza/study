@@ -12,7 +12,7 @@
 댓글
 <hr/>
 
-	<c:if test="${sessionScope.loginId eq 'admin'}">
+	<c:if test="${sessionScope.loginId eq 'user'}">
 	<div id="ibcoment_wep">
 		<span id="loginId"> ${loginId} </span>
 		<div id="ibinput_wep">

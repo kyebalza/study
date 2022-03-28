@@ -91,7 +91,10 @@
 				</tr>				
 				<tr>
 					<th>전화번호</th>
-					<td><input type="text" name="user_phone" placeholder="010-0000-0000"/></td>
+					<td>
+						<input type="text" name="user_phone" placeholder="010-0000-0000"/>
+						<p id="phone_confirm"></p>
+					</td>
 				</tr>
 				<tr>
 					<th colspan="2">
@@ -109,7 +112,7 @@ var pw_check = 'T';
 var certifinum = null;
 var certifinum_check = false;
 var overlayChk = false;//ID
-
+var phoneConfirm =  'F';
 
 
 
@@ -119,33 +122,47 @@ $('#indetify').click(function(){
 	var email = $('input[name="user_email"]').val();
 	console.log('check email : ',email);
 	
-	$.ajax({
-		type:'get',
-		url :'overlayemail',
-		data:{'email':email},
-		dataType:'json',
-		success:function(data){
-			console.log(data.certifiNum);
-						
-			
-			if(data.overLay > 0){
-				alert('이미 사용중인 이메일 입니다.');
-
-			} else {
-				alert('메일로 인증번호를 전송했습니다.');
-				$('#emailIdnum').attr('type','text');
-				$('#emailIdbtn').attr('type','button');
-				certifinum = data.certifiNum;
-			} 
-			
+	
+	//이메일 정규식 체크
+	function email_check(email) {
+		var reg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+		return reg.test(email);
+	}
+	
+	if(!email_check(email)){
+		alert("이메일 형식에 맞게 입력해주세요");
+	}else{
 		
-
-		},
-		error:function(e){//에러시 서버에서보낸 에러관련 매개변수이다.
-			console.log('에러...');
-			console.log(e);	
-		}
-	});		
+		$.ajax({
+			type:'get',
+			url :'overlayemail',
+			data:{'email':email},
+			dataType:'json',
+			success:function(data){
+				console.log(data.certifiNum);
+							
+				
+				if(data.overLay > 0){
+					alert('이미 사용중인 이메일 입니다.');
+	
+				} else {
+					alert('메일로 인증번호를 전송했습니다.');
+					$('#emailIdnum').attr('type','text');
+					$('#emailIdbtn').attr('type','button');
+					certifinum = data.certifiNum;
+				} 
+				
+			
+	
+			},
+			error:function(e){//에러시 서버에서보낸 에러관련 매개변수이다.
+				console.log('에러...');
+				console.log(e);	
+			}
+		});
+		
+	}
+	
 });
 
 //인증확인 버튼
@@ -203,7 +220,7 @@ $('input[name="user_email"]').keyup(function(e){
 		overlayChk = false;
 	});
 	
-
+	//2. 비밀번호 확인
 	$('input[class="pwconfirmSet"]').keyup(function(e){
 		pw = $('input[name="user_pw"]').val();
 		pwConfirm = $('input[name="pwConfirm"]').val();
@@ -242,12 +259,15 @@ $('input[name="user_email"]').keyup(function(e){
 				alert('이름을 입력 해주세요');
 				$user_name.focus();
 			}else if ($user_email.val() == '') {
-				alert('이메일을 입력하세요');
+				alert('이메일을 입력해주세요');
 				$user_email.focus();			
 			}else if ($user_phone.val() == '') {
-				alert('휴대폰 번호를 입력 하세요');
+				alert('휴대폰 번호를 입력해주세요');
 				$user_phone.focus();
-			} else if(!certifinum_check){
+			}else if(phoneConfirm == 'F'){
+				alert('전화번호를 확인해주세요');
+				$user_phone.focus();
+			}else if(!certifinum_check){
 				alert('메일 인증을 해주세요');
 			} else {
 				$('#joinForm').submit();//서버전송				
@@ -260,7 +280,22 @@ $('input[name="user_email"]').keyup(function(e){
 			alert('아이디 중복 체크를 해 주세요');			
 		}
 	});
-	
+	//4. 전화번호 형식확인
+		
+	$('input[name="user_phone"]').keyup(function(e){
+		var phone = $('input[name="user_phone"]').val();
+		
+
+		if(/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(phone)){
+			$('#phone_confirm').html('유효한 전화번호입니다.');
+			$('#phone_confirm').css({'color':'blue','font-size':'5px'});
+			phoneConfirm = 'T';
+		} else {
+			$('#phone_confirm').html('유효하지 않는 전화번호입니다.')
+			$('#phone_confirm').css({'color':'red','font-size':'5px'});
+			phoneConfirm = 'F';
+		}
+	});	
 </script>
 </html>
 

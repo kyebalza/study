@@ -19,6 +19,9 @@
 			border: 1px solid #6AA84F;
 			border-collapse: collapse;
 			padding : 5px 10px;
+			width: 1000px;
+		    margin: auto;
+		    margin-top: 10px;
 		}
 		th{
 			text-align: center;

@@ -7,9 +7,28 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="/bank/resources/js/jquery.twbsPagination.js"></script>
+	<script src="resources/js/.bootstrap.min.js"></script>
+   <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
 	<style>
-		table{
-			margin:5px;
+		table,td{
+		/*
+			border: 2px solid #6AA84F;
+			text-align: center;
+			padding : 10px;
+			width: 70%;
+			margin: auto;
+			border-collapse: collapse;
+		*/	
+			border: 1px solid #6AA84F;
+			border-collapse: collapse;
+			padding : 5px 10px;
+		}
+		th{
+			text-align: center;
+			width: 100px;
+			background-color: #6AA84F;
+			color: white;
+				
 		}
 		.sbcom_list{
 			padding: 5px;
@@ -21,6 +40,8 @@
 		.relike{
 			width:31;
 			height:31;
+			margin-left: 10px;
+			margin-bottom: 5px;
 		}
 	</style>
 </head>
@@ -244,7 +265,7 @@
 		//console.log('댓글');
 		if ('${loginId}' == '') {
 			alert("로그인이 필요한 서비스 입니다.");
-			location.href="./loginPage";
+			location.href="redirect:/loginPage";
 		}else if ($('#com_content').val() == ""){
 			alert("내용을 입력해주세요.");
 		}else{

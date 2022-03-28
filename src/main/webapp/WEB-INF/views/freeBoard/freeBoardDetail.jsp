@@ -74,14 +74,13 @@
 					<td colspan="4">${info.content}</td>
 				</tr>
 				<c:if test="${fbphoto.size()>0}">
-				<tr>
-					
-					<td colspan="4" style="width: 25px; text-align:center;">
-						<c:forEach items="${fbphoto}" var="fbphoto">
-							<img src="/photo/${fbphoto.new_filename}" width="250px"/><br/><br/>
-						</c:forEach>
-					</td>
-				</tr>
+					<tr>
+						<td colspan="4" style="width: 25px; text-align:center;">
+							<c:forEach items="${fbphoto}" var="fbphoto">
+								<img src="/photo/${fbphoto.new_filename}" width="250px"/><br/><br/>
+							</c:forEach>
+						</td>
+					</tr>
 				</c:if>
 			</table>
 		</form>
@@ -101,8 +100,10 @@
 				<img class="boardreport" src="/bank/resources/img/report.png"  alt="신고하기">
 			</div>
 			<div style="margin: auto;">
-				<input type="button" onclick="location.href='./freeUpdateForm?board_no=${info.board_no}'" value="수정"/>
-				<input type="button" onclick="del()" value="삭제"/>			
+				<c:if test="${loginId == info.user_id}">			
+					<input type="button" onclick="location.href='./freeUpdateForm?board_no=${info.board_no}'" value="수정"/>
+					<input type="button" onclick="del()" value="삭제"/>			
+				</c:if>
 				<input type="button" onclick="location.href='./freeBoardList?currpage=1'" value="목록"/>
 			</div>
 		<%@ include file="fbComent.jsp" %>
@@ -127,6 +128,7 @@
 		//console.log("좋아요");
 		if('${loginId}' == ''){
 			alert('로그인이 필요한 서비스 입니다.');
+			location.href='redirect:/loginPage';
 		}else{
 			
 			var loginId = '${loginId}';
@@ -179,31 +181,36 @@
 			alert("로그인이 필요한 서비스 입니다.");
 			location.href='redirect:/loginPage';
 		}else{
-			
 			var report = prompt("신고 사유를 입력해주세요.","");
 			console.log(report);
 			
-			var board_name = $('#board_name').val();
-			var board_no = $('#board_no').val();
-			var reported_user = '${info.user_id}';
-			var board_cate_no = $('#board_cate_no').val();
+			if (report == '') {
+				alert("신고 사유를 입력해주세요.");
+			}else{
+				var board_name = $('#board_name').val();
+				var board_no = $('#board_no').val();
+				var reported_user = '${info.user_id}';
+				var board_cate_no = $('#board_cate_no').val();
+				
+				var params = {'report':report ,'board_name':board_name ,'board_no':board_no ,'reported_user':reported_user, 'board_cate_no':board_cate_no}
+				
+				console.log(params)
+				
+				$.ajax({
+					type:'POST',
+					url:'fbReport',
+					data:params,
+					dataType:'JSON',
+					success:function(result){
+						console.log('신고등록 완료',result);
+					},
+					error:function(e){
+						console.log('서버에 문제가 발생하였습니다.',e);
+					}
+				});
+				
+			}
 			
-			var params = {'report':report ,'board_name':board_name ,'board_no':board_no ,'reported_user':reported_user, 'board_cate_no':board_cate_no}
-			
-			console.log(params)
-			
-			$.ajax({
-				type:'POST',
-				url:'fbReport',
-				data:params,
-				dataType:'JSON',
-				success:function(result){
-					console.log('신고등록 완료',result);
-				},
-				error:function(e){
-					console.log('서버에 문제가 발생하였습니다.',e);
-				}
-			});
 		}
 		
 	});

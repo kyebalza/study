@@ -13,11 +13,11 @@
 
 	<style>
 	#studyboardlist tr:nth-child(odd){
-		background-color :  #e6ffe6;
+		background-color :  #d0ebb2;
 		
 	}
 	#studyboardlist tr:nth-child(odd) input{
-		background-color :  #e6ffe6;	
+		background-color :  #d0ebb2;	
 	}
 	#studyboardlist tr:nth-child(even){
 		background-color :  white;
@@ -49,10 +49,12 @@
 	}
 	
 	input[value="복구"]{
-		color : skyblue;
+		color : #0023d4;
+		/* font-weight: bold; */
 	}
 	input[value="삭제"]{
-		color : Tomato;
+		color : red;
+		/* font-weight: bold; */
 	}
 	
 	
@@ -64,7 +66,7 @@
 		
 		#mainPage{
 			padding-right : 200px;
-			padding-top : 10px;
+			padding-top : 50px;
 			padding-left : 10px;
 		}
 		
@@ -110,7 +112,7 @@
 				<th>작성자</th>
 				<th>작성 날짜</th>
 				<th>조회수</th>
-				<th>삭제</th>
+				<th>상태</th>
 			</tr>
 		</thead>
 		
@@ -152,7 +154,7 @@
 						var date = new Date(item.reg_date);
 						str="<tr>"
 						str+="<td>"+item.board_no+"</td>";
-						str+="<td><a href='detail?idx="+item.board_no+"'>"+item.title+"</a></td>";
+						str+="<td><a href='studyBoard/detail?board_no="+item.board_no+"'>"+item.title+"</a></td>";
 						str+="<td>"+item.board_cate+"</td>";
 						str+="<td>"+item.user_id+"</td>";
 						str+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
@@ -240,7 +242,7 @@
 				var date = new Date(item.reg_date);
 				content+="<tr>";
 				content+="<td>"+item.board_no+"</td>";
-				content+="<td><a href='detail?idx="+item.board_no+"'>"+item.title+"</a></td>";
+				content+="<td><a href='studyBoard/detail?board_no="+item.board_no+"'>"+item.title+"</a></td>";
 				content+="<td>"+item.board_cate+"</td>";
 				content+="<td>"+item.user_id+"</td>";
 				content+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";

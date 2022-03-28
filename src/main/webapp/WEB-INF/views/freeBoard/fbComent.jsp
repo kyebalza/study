@@ -194,43 +194,46 @@
 	$(document).on("click",".fbComReport",function() {
 		console.log(this.classList[1]);
 		
-		if ('${loginId}' == null) {
-			alert ('로그인이 필요한 서비스 입니다.');
+		if ('${loginId}' == '') {
+			alert("로그인이 필요한 서비스 입니다.");
 		}else{
 			var report_reason = prompt ("신고 사유를 입력해주세요.","");
 			console.log(report_reason);
 			
-			var board_name = $('#board_name').val();
-			var board_no = $('#board_no').val();
-			
-			
-			
-			var reported_user = $('.fbcuser_id.'+this.classList[1]).val(); //값을 못가져옴
-			var reply_no = this.classList[1];
-			
-			
-			
-			var board_cate_no = $('#board_cate_no').val();
-			
-			console.log(reported_user);
-			console.log(reply_no);
-			
-			var params = {'board_name':board_name ,'board_no':board_no ,'reported_user':reported_user, 'reply_no':reply_no ,'board_cate_no':board_cate_no ,'report_reason':report_reason}
-			
-			console.log(params);
+			if (report == '') {
+				alert("신고 사유를 입력해주세요.");
+			}else{
+				var board_name = $('#board_name').val();
+				var board_no = $('#board_no').val();
 
-			/* $.ajax({
-				type:'POST',
-				url:'fbcomReport',
-				data:params,
-				dataType:'JSON',
-				success:function(result){
-					console.log('신고등록 완료',result);
-				},
-				error:function(e){
-					console.log('서버에 문제가 발생하였습니다.',e);
-				}
-			}); */
+				var reported_user = $('.fbcuser_id.'+this.classList[1]).val(); //값을 못가져옴
+				var reply_no = this.classList[1];
+
+				var board_cate_no = $('#board_cate_no').val();
+				
+				console.log(reported_user);
+				console.log(reply_no);
+				
+				var params = {'board_name':board_name ,'board_no':board_no ,'reported_user':reported_user, 'reply_no':reply_no ,'board_cate_no':board_cate_no ,'report_reason':report_reason}
+				
+				console.log(params);
+	
+				$.ajax({
+					type:'POST',
+					url:'fbcomReport',
+					data:params,
+					dataType:'JSON',
+					success:function(result){
+						console.log('신고등록 완료',result);
+					},
+					error:function(e){
+						console.log('서버에 문제가 발생하였습니다.',e);
+					}
+				});
+				
+			}
+			
+			
 			
 			
 		}

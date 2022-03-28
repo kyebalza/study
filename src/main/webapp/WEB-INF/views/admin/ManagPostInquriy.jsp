@@ -13,11 +13,11 @@
 
 	<style>
 	#Inquiryboardlist tr:nth-child(odd){
-		background-color :  #e6ffe6;
+		background-color :  #d0ebb2;
 		
 	}
 	#Inquiryboardlist tr:nth-child(odd) input{
-		background-color :  #e6ffe6;	
+		background-color :  #d0ebb2;	
 	}
 	#Inquiryboardlist tr:nth-child(even){
 		background-color :  white;
@@ -49,10 +49,12 @@
 	}
 	
 	input[value="복구"]{
-		color : skyblue;
+		color : #0023d4;
+		/* font-weight: bold; */
 	}
 	input[value="삭제"]{
-		color : Tomato;
+		color : red;
+		/* font-weight: bold; */
 	}	
 
 		#grid {
@@ -140,7 +142,7 @@
 						var date = new Date(item.reg_date);
 						str="<tr>"
 						str+="<td>"+item.board_no+"</td>";
-						str+="<td><a href='detail?idx="+item.board_no+"'>"+item.title+"</a></td>";
+						str+="<td><a href='inquiryBoardDetail?board_no="+item.board_no+"'>"+item.title+"</a></td>";
 						str+="<td>"+item.board_cate+"</td>";
 						str+="<td>"+item.user_id+"</td>";
 						str+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
@@ -227,15 +229,14 @@
 				var date = new Date(item.reg_date);
 				content+="<tr>"
 				content+="<td>"+item.board_no+"</td>";
-				content+="<td><a href='detail?idx="+item.board_no+"'>"+item.title+"</a></td>";
+				content+="<td><a href='inquiryBoardDetail?board_no="+item.board_no+"'>"+item.title+"</a></td>";
 				content+="<td>"+item.board_cate+"</td>";
 				content+="<td>"+item.user_id+"</td>";
 				content+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
-				var str = '';
 				if (item.answer == false) {
-					str+="<td><div>대기</div></td>";
+					content+="<td><div>대기</div></td>";
 				}else{
-					str+="<td><div>완료</div></td>";
+					content+="<td><div>완료</div></td>";
 				}
 				
 				if (item.del_flag == false){

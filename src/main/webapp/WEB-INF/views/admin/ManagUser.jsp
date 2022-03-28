@@ -10,11 +10,11 @@
 	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
 	<style>
 	#Memlist tr:nth-child(odd){
-		background-color :  #e6ffe6;
+		background-color :  #d0ebb2;
 		
 	}
 	#Memlist tr:nth-child(odd) input{
-		background-color :  #e6ffe6;	
+		background-color :  #d0ebb2;	
 	}
 	#Memlist tr:nth-child(even){
 		background-color :  white;

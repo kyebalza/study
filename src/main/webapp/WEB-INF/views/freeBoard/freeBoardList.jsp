@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="resources/css/header.css"/>
 	<script src="resources/js/jquery.twbsPagination.js"></script>
 	<script src="resources/js/.bootstrap.min.js"></script>
-	<link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+   <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
 	<style>
 		.List{
 			min-width : 1170px;
@@ -82,13 +82,13 @@
 			
 			<!-- 카테고리 검색 -->
 				<form class = "FreeSearch" action="FreeboardSearch" method="GET" name="FreeboardSearch" autocomplete="off">
-					<select	name = "FBSearchType" class="select">
+					<!-- <select	name = "FBSearchType" class="select">
 						<option value="fball" selected>전체</option>
 						<option value="testim">시험 정보</option>
 						<option value="worry">고민 상담</option>
 						<option value="cert">자격증</option>
 						<option value="jock">잡담</option>
-					</select>
+					</select> -->
 					
 					<select name ="SearchType" class="select">
 						<option value="all" selected>전체</option>
@@ -103,15 +103,15 @@
 						text-align: center;
 					"/>
 					<input type="button" value="검색" onclick="fbSearchList()" 
-					
-					style="
-						background-color : #6AA84F;
-						color: white;
-						border: none;
-						margin: auto;
-						width: 100px;
-						height: 30px;
-						border-radius: 11px;
+						onKeypress="javascript:if(event.keyCode == 13){fbSearchList()}"
+						style="
+							background-color : #6AA84F;
+							color: white;
+							border: none;
+							margin: auto;
+							width: 100px;
+							height: 30px;
+							border-radius: 11px;
 					"/>
 				</form>
 		</div>	

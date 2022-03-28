@@ -27,11 +27,11 @@
 		width : 200px;
 	}
 	#ManageDeComentList tr:nth-child(odd){
-		background-color :  #e6ffe6;
+		background-color :  #d0ebb2;
 		
 	}
 	#ManageDeComentList tr:nth-child(odd) input{
-		background-color :  #e6ffe6;	
+		background-color :  #d0ebb2;	
 	}
 	#ManageDeComentList tr:nth-child(even){
 		background-color :  white;
@@ -42,15 +42,15 @@
 	}
 	input[value="처리완료"]{
 		border : none;
-		color : skyblue;
+		color : #0023d4;
 	}
 	input[value="처리대기"]{
 		border : none;
-		color : Tomato;	
+		color : red;	
 	}
 	td,th{
 		height : 20px;
-		font-size : 10px;
+		/* font-size : 10px; */
 	}
 		tr{
 		height : 30px;
@@ -62,7 +62,24 @@
 	#pageTitle h3{
 		font-weight : bold;
 	}
-	
+	select{
+		border-top : none;
+		border-left : none;
+		border-right : 1px solid gray;
+		border-bottom : 1px solid gray;
+		width : 130px;
+		border-radius : 5px;
+	}
+	input[type="text"]{
+		border-left : none;
+		border-top : none;
+		border-right : none;
+		border-bottom : 1px solid black;
+	}
+	input[type="button"]{
+		background-color : transparent;
+		border : none;
+	}
 	</style>
 </head>
 <body>

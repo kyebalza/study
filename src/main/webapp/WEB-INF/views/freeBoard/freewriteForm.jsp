@@ -36,7 +36,7 @@
 </head>
 <body>
  
-	<form action="freeWrite" method="post" enctype="multipart/form-data">
+	<form id="freeWrite" action="freeWrite" method="post" enctype="multipart/form-data">
 		<table> 
 			<tr>
 				<td>
@@ -53,15 +53,30 @@
 			</tr>
 
 			<tr>
-				<td><input type="file" name="uploadFile"/></td>
+				<td><input type="file" name="uploadFile" accept="image/jpg, image/jpeg, image/png"/></td>
 			</tr>
 		</table>
 		
 		<input type="button" onclick="location.href='freeBoardList'" value="취소"/>
-		<input type="submit" value="등록"/>
+		<input type="button" id="FWcheck" value="등록"/>
 	</form>
   	
 </body>
 <script>
+
+	$('#FWcheck').click(function () {
+		
+		var title = $('input[name="title"]');
+		var content = $('input[name="content"]');
+		
+		if (title.val() == '') {
+			alert('제목을 입력해주세요.');
+		}else{
+			$('#freeWrite').submit();
+		}
+		
+	});
+
+
 </script>
 </html>

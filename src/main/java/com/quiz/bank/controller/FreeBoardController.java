@@ -168,13 +168,12 @@ public class FreeBoardController {
 	//자유 게시글 리스트 검색 요청
 	@ResponseBody
 	@RequestMapping(value = "/FreeSearch", method = RequestMethod.GET)
-	public List<FreeBoardDTO> FreeSearch(@RequestParam("SearchType") String SearchType, @RequestParam("Keyword") String Keyword, @RequestParam("FBSearchType") String FBSearchType) {
+	public List<FreeBoardDTO> FreeSearch(@RequestParam("SearchType") String SearchType, @RequestParam("Keyword") String Keyword) {
 		logger.info("자유 게시판 리스트 검색 요청");
-		logger.info(SearchType +" : "+FBSearchType+" : "+Keyword);
+		logger.info(SearchType +" : "+Keyword);
 		FreeBoardDTO fbdto = new FreeBoardDTO();
 		fbdto.setKeyword(Keyword);
 		fbdto.setSearchType(SearchType);
-		fbdto.setFBSearchType(FBSearchType);
 		
 		return fbservice.FreeSearch(fbdto);
 	}	

@@ -27,11 +27,11 @@
 		width : 200px;
 	}
 	#ManageDePostList tr:nth-child(odd){
-		background-color :  #e6ffe6;
+		background-color :  #d0ebb2;
 		
 	}
 	#ManageDePostList tr:nth-child(odd) input{
-		background-color :  #e6ffe6;	
+		background-color :  #d0ebb2;	
 	}
 	#ManageDePostList tr:nth-child(even){
 		background-color :  white;
@@ -42,15 +42,15 @@
 	}
 	input[value="처리완료"]{
 		border : none;
-		color : skyblue;
+		color : #0023d4;
 	}
 	input[value="처리대기"]{
 		border : none;
-		color : Tomato;	
+		color : red;	
 	}
 	td,th{
 		height : 20px;
-		font-size : 10px;
+	/* 	font-size : 10px; */
 	}
 		tr{
 		height : 30px;
@@ -61,7 +61,25 @@
 	}
 	#pageTitle h3{
 		font-weight : bold;
+	}
+	select{
+		border-top : none;
+		border-left : none;
+		border-right : 1px solid gray;
+		border-bottom : 1px solid gray;
+		width : 130px;
+		border-radius : 5px;
 	}	
+	input[type="text"]{
+		border-left : none;
+		border-top : none;
+		border-right : none;
+		border-bottom : 1px solid black;
+	}
+	input[type="button"]{
+		background-color : transparent;
+		border : none;
+	}
 	
 	</style>
 </head>
@@ -134,7 +152,7 @@
 					if(result.length>=1){
 						var str = '';
 						result.forEach(function(item){
-							var date = new Date(item.reg_date);
+							var date = new Date(item.report_date);
 							str="<tr>"
 								if (item.board_name == 'study_board') {
 									str+="<td>공부 게시판</td>";
@@ -145,6 +163,7 @@
 							/* str+="<td>"+item.title+"</td>"; */
 							str+="<td><a href='ADdetail?user_id="+item.report_user+"'>"+item.report_user+"</a></td>";
 							str+="<td>"+item.reported_user+"</td>";
+							str+="<td>"+item.report_reason+"</td>";
 							str+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
 							str+="<td>"+item.report_processing +"</td>";
 							

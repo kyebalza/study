@@ -81,9 +81,7 @@
 	<!-- 자유 게시판 검색 쿼리 -->
 	<select id="FreeSeasrch" parameterType="com.quiz.bank.dto.FreeBoardDTO" resultType="com.quiz.bank.dto.FreeBoardDTO">
 		SELECT * FROM free_board JOIN board_category ON free_board.board_cate_no = board_category.board_cate_no
-		
-		
-		<if test="FBSearchType != null and FBSearchType.equals('fball')">
+
 			<choose>
 				<when test="SearchType != null and SearchType.equals('all') ">
 					WHERE del_flag = 0 AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
@@ -95,7 +93,6 @@
 					WHERE del_flag = 0 AND user_id LIKE CONCAT ('%',#{keyword},'%')
 				</when>	
 			</choose>	
-		</if>
 	</select>
 
 	<!-- 게시글 좋아요 여부 확인 -->

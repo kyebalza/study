@@ -54,7 +54,7 @@
 			</tr>
 
 			<tr>
-				<td><input type="file" name="uploadFile"/></td>
+				<td><input type="file" name="uploadFile" accept="image/jpg, image/jpeg, image/png"/></td>
 				<!-- 현재 업로드된 파일 삭제 -->
 				<c:forEach items="${uploadFile}">
 					<img src="/photo/${fbphoto.new_filename}"/>

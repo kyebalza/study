@@ -119,6 +119,8 @@
 		<button onclick="location.href='quizBankList'">리스트</button>
 	</div>
 </div>
+
+<jsp:include page="../footer.jsp"></jsp:include>	
 </body>
 <script>
 var test_cate = "${test_category.test_cate}"

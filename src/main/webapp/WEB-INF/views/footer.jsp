@@ -15,9 +15,10 @@
                 background-color: #2b2b2b;
                 color: white;
                 width: 100%;
-                bottom: 0px;
+                /*bottom: 0px;*/
                 position: absolute;
                 font-size: 5px;
+                margin-top: 400px;
             }
             .test{
                 /* background-color: blue; */

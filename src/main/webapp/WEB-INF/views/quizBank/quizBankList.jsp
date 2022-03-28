@@ -110,13 +110,16 @@
 			<div class="quizList">
 				<br/>
 				<br/>
-				<a class="boardtitle" href="testDetail?test_cate_no=${list.test_cate_no}">${list.test_cate}</a>
+				<a class="boardtitle" href="quizBankTestDetail?test_cate_no=${list.test_cate_no}">${list.test_cate}</a>
 				<br/>
 				<br/>
 				<input type = "button" class= "testTitle" value = "문제리스트" onclick = "location.href='quizBankTestDetail?test_cate_no=${list.test_cate_no}'"/>
 			</div>
 		</c:forEach>
 	</div>
+	
+	
+<jsp:include page="../footer.jsp"></jsp:include>	
 </body>
 <script></script>
 </html>

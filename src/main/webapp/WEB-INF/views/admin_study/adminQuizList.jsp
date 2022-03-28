@@ -4,11 +4,16 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
+	<!-- 
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>  
+     -->
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="resources/js/jquery.twbsPagination.js"></script>
 	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
+	<script src="resources/js/.bootstrap.min.js"></script>
+   <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+	
 	<style>
 	body{
 		margin : 0px;

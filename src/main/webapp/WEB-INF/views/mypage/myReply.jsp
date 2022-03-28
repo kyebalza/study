@@ -9,6 +9,8 @@
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>  
 	<script src="resources/js/jquery.twbsPagination.js"></script>
 	<link rel="stylesheet" href="resources/css/myPage.css"/>
+	<script src="resources/js/.bootstrap.min.js"></script>
+   <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>	
 	<style>
 			#header{
 			width: 100%;

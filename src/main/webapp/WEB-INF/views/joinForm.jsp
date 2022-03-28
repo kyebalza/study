@@ -163,7 +163,7 @@ $('#emailIdbtn').click(function(){
 	}		
 });
 //이메일 값이 한번이라도 바뀌면, 체크를 false로
-$('input[name="email"]').keyup(function(e){
+$('input[name="user_email"]').keyup(function(e){
 	certifinum_check = false;
 });	
 
@@ -196,6 +196,11 @@ $('input[name="email"]').keyup(function(e){
 				console.log(e);
 			}
 		});
+	});
+	
+	//1-1. 인증 후 아이디 값이 바뀌면, 인증을 false로 변경
+	$('input[name="user_id"]').keyup(function(e){
+		overlayChk = false;
 	});
 	
 

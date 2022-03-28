@@ -7,26 +7,34 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<link rel="stylesheet" href="resources/css/header.css"/>
 	<style>
-		table{
+		table,td{
+		/*
 			border: 2px solid #6AA84F;
+			text-align: center;
+			padding : 10px;
 			width: 70%;
-		}
-		tr,td,th{
+			margin: auto;
+			border-collapse: collapse;
+		*/	
 			border: 1px solid #6AA84F;
-			padding: 10px;
-			margin: 5px;
+			border-collapse: collapse;
+			padding : 5px 10px;
+		}
+		th{
+			text-align: center;
+			width: 100px;
+			background-color: #6AA84F;
+			color: white;
+				
 		}
 		input.button{
 			text-align: center;
 		}
 		#quiz{/*문제 전체*/
-			border : 1px solid black;
-		}
-		.quiz_option{/*문제 보기*/
-			
+			text-align: left;
 		}
 		textarea {
-			width: 70%;
+			width: 100%;
 			height: 150px;
 			resize: none;
 		}
@@ -39,94 +47,129 @@
 		img.like,img.bHit,img.report{
 			width:31;
 			height:31;
+			margin:0px;
 		}
-		.like,.bHit,.report{
-		
-		}
+		/*.like{
+			float: right;
+		}*/
 		#sbListAll{/*페이지 전체*/
+			/*
 			max-width: 1200px;
             margin: 0 auto;
 			padding: 10%,30%;
+		*/
+			min-width : 1150px;
+			left: 20%;
+			position: absolute;
 		}
-		#footer{
-			top: 100%;
+		.like,.bHit,.report{
+			float: left;
+			margin: 0px;
+			
+		}
+		.boardButton{
+			background-color : #6AA84F;
+			color: white;
+			border: none;
+			margin: auto;
+			width: 100px;
+			height: 30px;
+			border-radius: 11px;
+		}
+		#board_sub{
+			display: float;
+			float: right;
+			height:31;
+		}
+		.sbdetail{
+			min-width : 1170px;
+			border: 2px solid #6AA84F;
+			padding : 15px;
+			margin : auto;
 		}
 	
 	</style>
 </head>
 <body>
 	<%@ include file="../header.jsp" %>
-	<div id="sbListAll">
-	<table>
-		<tr>
-			<th>제목</th>
-			<td colspan="3">${info.title}</td>
-		</tr>
-		<tr>
-			<th>작성자</th>
-			<td>${info.user_id}</td>
-			<th>작성일자</th>
-			<td>${info.reg_date}</td>
-		</tr>
-		<tr>
-			<th>문제</th>
-			<td colspan="3">
-				<div id="quiz">
-					<p>${Qinfo.quiz_content}</p>
-					<!-- 문제보기 -->
-					<div class="quiz_option">
-						<p class="option_num">보기1 : ${Qinfo.option1}</p>
+	<br/><br/>
+	<div id="sbListAll" >
+		<table class="sbdetail">
+			<tr>
+				<th style="text-align:center; padding : 15px;">제목</th>
+				<td colspan="3" style="padding : 15px;">${info.title}</td>
+			</tr>
+			<tr>
+				<th style="text-align:center; padding : 15px;">작성자</th>
+				<td style="padding : 15px;">${info.user_id}</td>
+				<th style="text-align:center">작성일자</th>
+				<td style="padding : 15px;">${info.reg_date}</td>
+			</tr>
+			<tr>
+				<th style="width: 25px; text-align:center; padding : 15px;">문제</th>
+				<td colspan="3">
+					<div id="quiz">
+						<p style="padding : 15px;">${Qinfo.quiz_index}번 문제.<br/> ${Qinfo.quiz_content}</p>
+						<!-- 문제보기 -->
+						<p style="padding : 15px;" class="option_num">보기1 : ${Qinfo.option1}</p>
+						<p style="padding : 15px;" class="option_num">보기2 : ${Qinfo.option2}</p>
+						<p style="padding : 15px;" class="option_num">보기3 : ${Qinfo.option3}</p>
+						<p style="padding : 15px;" class="option_num">보기4 : ${Qinfo.option4}</p>
+						<p style="padding : 15px;" class="option_num">보기5 : ${Qinfo.option5}</p>
 					</div>
-					<div class="quiz_option">
-						<p class="option_num">보기2 : ${Qinfo.option2}</p>
-					</div>
-					<div class="quiz_option">
-						<p class="option_num">보기3 : ${Qinfo.option3}</p>
-					</div>
-					<div class="quiz_option">
-						<p class="option_num">보기4 : ${Qinfo.option4}</p>
-					</div>
-					<div class="quiz_option">
-						<p class="option_num">보기5 : ${Qinfo.option5}</p>
-					</div>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td colspan="3" height="100px">${info.content}</td>
-		</tr>
-		<tr>
-			<th>이미지</th>
-			<td colspan="3"><img src="/photo/${photo.new_filename}" width="400px" height="400px"/></td>
-		</tr>
-	</table>
-	<div>
-		<input id="board_name" type="hidden" value="${info.board_name}"/>
-		<c:choose>
-			<c:when test="${like2 == 1}">
-				<img class="like" src="/bank/resources/img/like.png" alt="좋아요">
-			</c:when>
+				</td>
+			</tr>
+			<tr>
+				<th style="width: 25px; text-align:center; padding : 15px;">내용</th>
+				<td colspan="3" height="100px" style="padding : 15px;">${info.content}</td>
+			</tr>
+			<tr>
+				<th style="width: 25px; padding : 15px;">이미지</th>
+				<td colspan="3" style="padding : 15px;" style="padding : 15px;">
+					<img src="/photo/${photo.new_filename}" width="400px" height="400px"/>
+				</td>
+			</tr>
+		</table>
+		<div id="board_sub" style="margin-top: 10px;">
+			<input id="board_name" type="hidden" value="${info.board_name}"/>
+			<c:choose>
+				<c:when test="${like2 == 1}">
+					<img class="like" src="/bank/resources/img/like.png" alt="좋아요">
+				</c:when>
+				
+				<c:otherwise> 
+					<img class="like" src="/bank/resources/img/unlike.png" alt="빈 좋아요">
+				</c:otherwise> 
+			</c:choose>
+			<input id="board_no" type="hidden" value="${info.board_no}">
+				<p class="like" style="
+				    margin-top: 6px;
+				    margin-bottom: 5px;
+				">${countlike}</p>
+			</input>
 			
-			<c:otherwise> 
-				<img class="like" src="/bank/resources/img/unlike.png" alt="빈 좋아요">
-			</c:otherwise> 
-		</c:choose>
-		<input id="board_no" type="hidden" value="${info.board_no}"></input>
-		<p class="like">${countlike}</p>
-	</div>
-	<p class="bHit"><img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수">(${info.bHit})</p>&nbsp;&nbsp;
-	<img class="report" src="/bank/resources/img/report.png" alt="신고하기">
-	<input type="button" onclick="location.href='./list'" value="목록"/>
-	<input type="button" onclick="location.href='./updateForm?board_no=${info.board_no}'" value="수정"/>
-	<input type="button" onclick="del()" value="삭제"/>
-	
+		
+		<img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수" style="
+		    margin-left: 10px;
+		"/>
+		<p class="bHit" style="
+		    margin-top: 6px;
+		    margin-bottom: 5px;
+		">(${info.bHit})</p>
+		<img class="report" src="/bank/resources/img/report.png" alt="신고하기" style="
+		    margin-left: 10px;
+		"/>
+		</div>
+		<div style="margin-top: 10px;">
+			<input class="boardButton" type="button" onclick="location.href='./list'" value="목록"/>
+			<input class="boardButton" type="button" onclick="location.href='./updateForm?board_no=${info.board_no}'" value="수정"/>
+			<input class="boardButton" type="button" onclick="del()" value="삭제"/>
+		</div>
 	<hr/>
 	<%@ include file="sbComent.jsp" %>
-	<br/>
-	<div id="footer">
+	<%-- <div id="footer">
 		<%@ include file="../footer.jsp" %>
-	</div>
+	</div>--%>
 	</div>
 </body>
 <script>

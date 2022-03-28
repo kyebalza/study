@@ -39,6 +39,8 @@ StudyBoardDTO photo(String board_no);
 
 int update(HashMap<String, String> params);
 
+void fileUpdate(int board_no, String oriFileName, String newFileName);
+
 ArrayList<StudyBoardDTO> listCall(int pagePerCnt, int offset);
 
 int allCount();
@@ -82,6 +84,7 @@ int sbcomreport(HashMap<String, String> params);
 int sbCallCount(String board_no);
 
 ArrayList<HashMap<String, String>> SBClistCall(int pagePerCnt, int offset, String board_no);
+
 
 
 

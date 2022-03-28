@@ -113,6 +113,7 @@ public class StudyBoardService {
 		
 	}
 	
+	/* 상세보기 파일 가져오기 */
 	public StudyBoardDTO photo(String board_no) {
 		// TODO Auto-generated method stub
 		return dao.photo(board_no);
@@ -139,9 +140,34 @@ public class StudyBoardService {
 		
 		if(dao.update(params)>0) {
 			page = "redirect:/studyBoard/detail?board_no="+board_no;
-			saveFile(board_no, uploadFile);//파일저장 처리			
+			updateFile(board_no, uploadFile);//파일저장 처리			
 		}
 		return page;
+	}
+	
+	private void updateFile(int board_no, MultipartFile uploadFile) {
+		
+		try {
+			String oriFileName = uploadFile.getOriginalFilename();
+			int index = oriFileName.lastIndexOf(".");
+			logger.info("index : {}",index);
+			
+			if(index>0) {
+				String ext = oriFileName.substring(index);
+				String newFileName = System.currentTimeMillis()+ext;
+				logger.info(oriFileName+"->"+newFileName);
+				
+				byte[] bytes = uploadFile.getBytes();
+				Path path = Paths.get("C:/upload/"+newFileName);
+				Files.write(path,bytes);
+				logger.info(oriFileName+"Save완료!");
+				dao.fileUpdate(board_no,oriFileName,newFileName);
+			}
+			
+		}catch(Exception e){
+			logger.info("오류 발생 : {}",e);
+		}
+		
 	}
 
 	public ArrayList<StudyBoardDTO> listCall() {

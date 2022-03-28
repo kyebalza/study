@@ -102,6 +102,13 @@
 			WHERE board_no = #{board_no}
 	</update>
 	
+	<!-- 파일수정업로드 -->
+	<update id="fileUpdate" parameterType="hashmap">
+		UPDATE photo SET board_no=#{param1}, ori_filename =#{param2}
+		,new_filename =#{param3} ,board_name = 'study_board'
+			 WHERE board_no = #{param1} AND board_name = 'study_board'
+	</update>
+	
 	<!-- 삭제하기 -->
 	<delete id="delete">
 		DELETE FROM study_board WHERE board_no = #{param1}

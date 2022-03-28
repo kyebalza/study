@@ -7,7 +7,7 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="/bank/resources/js/jquery.twbsPagination.js"></script>
-	<script src="resources/js/.bootstrap.min.js"></script>
+	<script src="/bank/resources/js/.bootstrap.min.js"></script>
    <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
 	<style>
 		table,td{
@@ -22,6 +22,7 @@
 			border: 1px solid #6AA84F;
 			border-collapse: collapse;
 			padding : 5px 10px;
+			border-radius: 9px;
 		}
 		th{
 			text-align: center;
@@ -33,6 +34,7 @@
 		.sbcom_list{
 			padding: 5px;
 			margin:5px;
+			border-radius: 9px;
 		}
 		a{
 			text-decoration:none;
@@ -43,20 +45,48 @@
 			margin-left: 10px;
 			margin-bottom: 5px;
 		}
+		#sbcoment{
+			margin-left: 70px;
+			height: 150px;
+		}
+		#sbcomentAll{
+			margin: auto;
+		}
+		#sbinput_wep{
+			margin-bottom: 50px;
+		}
 	</style>
 </head>
 <body>
 <br/>
 <br/>
-	<div id="sbcoment_wep">
-		<span id="loginId"> ${loginId} </span>
+	<div id="sbcomentAll">
+		<span id="loginId" 
+			 style="padding-left: 10px;
+   						font-weight: bold;
+   						margin-left: 70px;
+   						font-size: 17px;
+    	"> ${loginId} </span>
 		<div id="sbinput_wep">
 			<form action="sbcoment" id="sbcoment" method="POST">
 				<input type="hidden" name="loginId" value="${loginId}">
 				<input type="hidden" name="user_id" value="${info.user_id}">
 				<input type="hidden" name="board_no" value="${info.board_no}">
-				<textarea id="reply_content" name="reply_content" placeholder="댓글을 입력하세요"></textarea>
-				<input type="button" id="sbcom_button" value="등록" />
+				<textarea id="reply_content" name="reply_content" placeholder="댓글을 입력하세요"
+						style="border: 1px solid #6AA84F;
+								border-radius: 9px;
+								width: 1000px;
+				"></textarea>
+				<input type="button" id="sbcom_button" value="등록" 
+					style="border: 1px solid #6AA84F;
+					    border-radius: 9px;
+					    background-color: #6AA84F;
+					    height: 150;
+					    margin-bottom: 0px;
+					    position: absolute;
+					    top: 1180px;
+					    margin-left: 5px;
+				"/>
 			</form>
 		</div>
 		<div>
@@ -183,7 +213,7 @@
 			content += '<tr>';
 			content += '<td>';
 			content += '<div class = "sbcom_list">';
-			content += '<span>'+item.user_id+'</span>';
+			content += '<span style="font-weight: bold;">'+item.user_id+'</span>';
 			content += '<input id="sbcuser_id" type="hidden" class = "sbcuser_id" value = '+item.user_id+'   />';
 			content += '<input id="reply_no" type="hidden" class = "reply_no" value = '+item.reply_no+'   />';
 			content += '<span class = "sbcom_a">';

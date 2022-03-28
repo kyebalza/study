@@ -9,7 +9,7 @@
 	<!-- 아래 요 친구가 있어야지 페이징이 깨지지 않아요 -->
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="/bank/resources/js/jquery.twbsPagination.js"></script>
-	<script src="resources/js/.bootstrap.min.js"></script>
+	<script src="/bank/resources/js/.bootstrap.min.js"></script>
    <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
 	<style>
 		.List{

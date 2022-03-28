@@ -13,6 +13,7 @@
 		<input type="file" name="photos"/>
 		<input type="hidden" name="quizCnt" value="${quizCnt }"/>
 		<button>저장</button>
+		<h5>*파일을 첨부하지 않고 저장버튼을 누르면, 기존 사진만 삭제됩니다.</h5>
 	</form>
 	<c:if test="${newPhotoName ne null }">
 		<div id="image_container">

@@ -99,7 +99,7 @@
 		<td colspan="4" style="text-align : right;"><input type="button" class="quizUpdate" onclick="quizUpdate(this)" value="수정"/></td>
 	</tr>
 	<tr>
-		<td><h5>문제번호</h5><input type="number" min=1 id="quiz_index" value="${quiz_info.quiz_index }"/></td>
+		<td><h5>문제번호</h5><input type="number" readonly min=1 id="quiz_index" value="${quiz_info.quiz_index }"/></td>
 		<td><h5>배점</h5><input type="number" min=1 id="quiz_point" value="${quiz_info.quiz_point }"/></td>
 		<td><h5>과목선택</h5><select id="subject_cate_no"></select></td>
 		<td><h5>세부과목선택</h5><select id="detailed_subject_cate_no"></select></td>
@@ -192,7 +192,7 @@ function subjectCategoryCall(upperCate,Cate,id){
 		data : obj,
 		dataType : 'JSON',
 		success : function(data){
-			var txt = '<option value="">-- 과목카테고리 --</option>';
+			var txt = '<option value="none">-- 과목카테고리 --</option>';
 			data.Category.forEach(function(item,idx){
 				if(item.subject_cate_no == subject_cate_no){
 					txt += '<option value="'+item.subject_cate_no+'" selected>'+item.subject_cate+'</option>';				
@@ -202,12 +202,18 @@ function subjectCategoryCall(upperCate,Cate,id){
 			});		
 			id.empty();
 			id.append(txt);
+			
 		},
 		error : function(e){
 			console.log(e);
 		}
 	});
 }
+$('#subject_cate_no').change(function(){
+	detailSubjectCategoryCall(this.value,"detailed",$('#detailed_subject_cate_no'));	
+	
+});
+
 function detailSubjectCategoryCall(upperCate,Cate,id){
 	var obj = {upperCate:upperCate,Cate:Cate};
 	console.log(obj);
@@ -219,7 +225,7 @@ function detailSubjectCategoryCall(upperCate,Cate,id){
 		success : function(data){
 			console.log(data);
 			
-			var txt = '<option value="">-- 시험과목 카테고리 --</option>';
+			var txt = '<option value="none">-- 시험과목 카테고리 --</option>';
 			data.Category.forEach(function(item,idx){
 				if(item.detailed_subject_cate_no == "${quiz_info.detailed_subject_cate_no}") {
 					txt += '<option value="'+item.detailed_subject_cate_no+'" selected>'+item.detailed_subject_cate+'</option>';
@@ -258,7 +264,7 @@ function photoChildOpen(e){
 }
 
 
-
+var quizcomplete = false;
 function quizUpdate(){
 	var obj = {};
 	obj.quiz_no = "${quiz_info.quiz_no}"
@@ -267,11 +273,11 @@ function quizUpdate(){
 	obj.quiz_explation = $('#quiz_explation').val();
 	obj.quiz_index = $('#quiz_index').val();
 	obj.quiz_point = $('#quiz_point').val();
-	obj.option1 = '';
-	obj.option2  = '';
-	obj.option3  = '';
-	obj.option4  = '';
-	obj.option5  = '';
+	obj.option1 = '없음';
+	obj.option2  = '없음';
+	obj.option3  = '없음';
+	obj.option4  = '없음';
+	obj.option5  = '없음';
 	obj.subject_cate_no = $('#subject_cate_no').val();
 	obj.detailed_subject_cate_no = $('#detailed_subject_cate_no').val();
 	obj.quiz_type = $('#quiz_type').val();
@@ -295,19 +301,51 @@ function quizUpdate(){
 		}			
 	}
 	obj.quiz_answer = answer;
+	
+	
+	//등록전 공란 확인
+	if(obj.quiz_index == ''
+		||obj.quiz_point == ''
+		||obj.quiz_type == ''
+		||obj.quiz_answer == ''
+		||obj.quiz_content == ''
+		||obj.quiz_explation == ''
+		||obj.answer == ''
+		||obj.option1 == ''
+		||obj.option2 == ''
+		||obj.option3 == ''
+		||obj.option4 == ''		
+		||obj.option5 == ''
+		||obj.subject_cate_no == 'none'
+		||obj.detailed_subject_cate_no == 'none'
+	){
+		quizcomplete = false;
+	}else {
+		quizcomplete = true;
+	}
+	
+	
+	
+	
+	
+	
 
 	console.log(obj);
 	if(confirm('문제를 수정하시겠습니까?')){
-		$.ajax({
-			url : 'adminUpdateQuiz',
-			type : 'get',
-			data : obj,
-			dataType : 'json',
-			success : function(data){
-				console.log(data.msg);
-				alert('수정완료되었습니다.')},
-			error : function(e){console.log(e)}		
-		});
+		if(quizcomplete){
+			$.ajax({
+				url : 'adminUpdateQuiz',
+				type : 'get',
+				data : obj,
+				dataType : 'json',
+				success : function(data){
+					console.log(data.msg);
+					alert('수정완료되었습니다.')},
+				error : function(e){console.log(e)}		
+			});			
+		} else {
+			alert('미입력 항목이 있습니다.');
+		}
 		
 	}
 	

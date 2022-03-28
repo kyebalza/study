@@ -22,7 +22,7 @@ body{
 	</style>
 </head>
 <body>
-<iframe id="header" src="header"></iframe>
+<%@ include file="../header.jsp" %>
 
 <div id="all">
 <div id="myPageHeader">

@@ -206,36 +206,46 @@ var currPage = 1;
 var totalPage = 2;
 
 testCategoryCall("0","test",$('#test_cate_no'));
-
+var list_call = 0; 
 
 $('#test_cate_no').change(function(){
 	search(currPage,10);
-
+	list_call = 0;
+	currPage = 1;
 	
 });
 $('#test_year').change(function(){
 	search(currPage,10);
-
+	list_call = 0;
+	currPage = 1;
 });
 $('#test_count').change(function(){
 	search(currPage,10);
-
+	list_call = 0;
+	currPage = 1;
 });
 $('#subject_cate_no').change(function(){
 	search(currPage,10);
-
+	list_call = 0;
+	currPage = 1;
 });
 $('#detailed_subject_cate_no').change(function(){
 	search(currPage,10);
-
+	list_call = 0;
+	currPage = 1;
 });
 $('#quiz_content').keyup(function(){
 	search(currPage,10);
-
+	list_call = 0;
+	currPage = 1;
 });
 search(currPage,10);
 
+
+
+
 function search(page,cnt){
+	
 	var search_info = {};
 	search_info.test_cate_no = $('#test_cate_no').val();
 	search_info.test_year = $('#test_year').val();
@@ -255,15 +265,43 @@ function search(page,cnt){
 		success : function(data){
 			console.log(data);
 			totalPage = data.pages;
+			console.log('만들 수 있는 페이지수 : ',totalPage);
 			listDraw(data.quiz_search_list);
-            $('#pagination').twbsPagination({
+			
+			var page_count = Math.ceil(totalPage / 10);
+			var page_data = $('#pagination').data();
+			if(typeof(page_data.twbsPagination) != 'undefined'){
+				if(page_data.twbsPagination.options.totalPages != page_count){
+					$('#pagination').twbsPagination('destroy');
+				}	
+			};
+			
+           	
+            
+           	
+           	
+           	
+           	
+           	$('#pagination').twbsPagination({
                 startPage: currPage,//현재 페이지
                 totalPages: totalPage,//만들수 있는 총 페이지 수
-                visiblePages:5, //[1][2][3]... 이걸 몇개 까지 보여줄 것인지
-                onPageClick:function(evt,page){//해당 페이지 번호를 클릭했을때 일어날 일들
+                visiblePages: 5, //[1][2][3]... 이걸 몇개 까지 보여줄 것인지
+                onPageClick:function (evt,page){//해당 페이지 번호를 클릭했을때 일어날 일들
                    console.log(evt); //현재 일어나는 클릭 이벤트 관련 정보들
                    console.log(page);//몇 페이지를 클릭 했는지에 대한 정보
-                   search(page,10);
+                   if(list_call != 0){
+                	   currPage = page;
+	                   search(page,10);                	   
+                   }
+                   //list_call ++;
+                   
+                   if(list_call == 0){
+	                   list_call = 1;
+                   } else {
+                	   list_call = 0;
+                   }
+                   
+                   
 
                 }
              });

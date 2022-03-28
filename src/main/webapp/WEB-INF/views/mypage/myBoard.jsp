@@ -25,7 +25,7 @@
 		padding-left : 300px;
 		font-size : 10px;
 	}
-	img{
+	#list_body img{
 		height : 10px;
 		width : 10px;
 	}
@@ -52,7 +52,7 @@
 	</style>
 </head>
 <body>
-<iframe id="header" src="header"></iframe>
+<%@ include file="../header.jsp" %>
 
 
 

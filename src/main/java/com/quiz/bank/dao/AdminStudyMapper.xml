@@ -215,7 +215,7 @@
 		compl_flag = false
 		</if>
 	</where>
-	ORDER BY quiz_report_no DESC
+	ORDER BY quiz_report_no DESC LIMIT ${pagePerCnt} offset ${offset}
 	</select>
 	
 	<update id="quizReportComplete">

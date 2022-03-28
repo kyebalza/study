@@ -322,6 +322,7 @@ public class AdminStudyService {
 		
 		map.put("quiz_report_list", quiz_report_list);		
 		map.put("pages",range);
+		logger.info("pages : {}",map);
 		return map;
 	}
 

@@ -36,7 +36,7 @@ body{
 	</style>
 </head>
 <body>
-<iframe id="header" src="header"></iframe>
+<%@ include file="../header.jsp" %>
 
 <div id="all">
 <div id="myPageHeader">
@@ -170,7 +170,7 @@ $('#emailIdbtn').click(function(){
 	}		
 });
 //이메일 값이 한번이라도 바뀌면, 체크를 false로
-$('input[name="email"]').keyup(function(e){
+$('input[name="user_email"]').keyup(function(e){
 	certifinum_check = false;
 });	
 
@@ -216,7 +216,7 @@ $('input[name="email"]').keyup(function(e){
 			alert('휴대폰 번호를 입력 하세요');
 			$user_phone.focus();
 		} else if(!certifinum_check){
-			alert('메일 인증이나 하세요');
+			alert('메일을 인증 해 주세요');
 		} else {
 			$('#updateForm').submit();//서버전송				
 			alert('수정에 성공하셨습니다');					

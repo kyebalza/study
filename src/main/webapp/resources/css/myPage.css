@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-img{
+#list_body img{
 	height : 20px;
 	width : 20px;	
 }

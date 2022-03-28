@@ -367,8 +367,9 @@ $('#quiz_save').click(function(){
 		testcomplete = true;
 	}
 
-	
-
+	var uncomplete = [];
+	var quiz_index_list = [];
+	var quiz_index_overlay_list = [];
 	
 	for (var i = 0; i < all_quiz_cnt; i++) {
 		
@@ -407,9 +408,16 @@ $('#quiz_save').click(function(){
 		
 		obj.quiz_content = $('.quiz_content.'+class_num).val();
 		obj.quiz_explation = $('.quiz_explation.'+class_num).val();
-		obj.newPhotoName = $('.quiz_img_newName.'+class_num).val()
-		obj.oriPhotoName = $('.quiz_img_oriName.'+class_num).val()
+		obj.newPhotoName = $('.quiz_img_newName.'+class_num).val();
+		obj.oriPhotoName = $('.quiz_img_oriName.'+class_num).val();
 		
+		
+		if(quiz_index_list.indexOf(obj.quiz_index) > -1){
+			console.log(quiz_index_list.indexOf(obj.quiz_index));
+			quiz_index_overlay_list.push(obj.quiz_index);
+			quizcomplete = false;
+		}
+		quiz_index_list.push(obj.quiz_index);
 		
 		quiz_list.push(JSON.stringify(obj));
 		console.log(obj);
@@ -427,12 +435,16 @@ $('#quiz_save').click(function(){
 			||obj.option3 == ''
 			||obj.option4 == ''		
 			||obj.option5 == ''
-					
+			||obj.quiz_subject == 'none'
+			||obj.quiz_detailed_subject == 'none'
 		){
 			quizcomplete = false;
+			uncomplete.push(obj.quiz_index);
 		}else {
 			quizcomplete = true;
 		}
+		
+		/*
 		if(obj.quiz_subject == 'none'){
 			testcomplete = false;
 			alert('과목 미선택 :'+obj.quiz_index+'번');
@@ -442,6 +454,7 @@ $('#quiz_save').click(function(){
 			testcomplete = false;	
 			alert('세부과목 미선택 :'+obj.quiz_index+'번');
 		}	
+		*/
 		
 	}
 	console.log(quiz_list);
@@ -466,11 +479,16 @@ $('#quiz_save').click(function(){
 		});
 	} else {
 		if(!testcomplete){
-			alert('시험 항목 중 미등록 사항이 있습니다.');
+			alert('시험 항목 중 미등록 사항이 있습니다.\n');
+			
 		}
 		if(!quizcomplete){
-			alert('문제 항목 중 미등록 사항이 있습니다.');			
+			alert('문제 항목 중 미등록 사항이 있습니다.\n'+uncomplete.join(', ')+'번');			
 		}
+		if(quiz_index_overlay_list.length > 0 ){
+			alert(quiz_index_overlay_list.join(',') + ' 번문제번호가 중복됩니다.');
+		}
+
 	}
 });
 

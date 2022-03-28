@@ -68,7 +68,7 @@
 		</table>
 		
 		<input type="button" onclick="location.href='inquiryBoardList'" value="취소"/>
-		<input type="submit" value="등록"/>
+		<input type="submit" id="registration" value="등록"/>
 	</form>
 	
 	
@@ -76,5 +76,19 @@
   	
 </body>
 <script>
+	
+	$("#registration").click(function() {
+		console.log('click');
+		if (check) {
+			console.log('문의게시글 작성 시작');
+			var $title = $('input[name="title"]');
+			var $content = $('input[name="content"]');
+		}
+		
+		
+	})
+	
+	
+
 </script>
 </html>

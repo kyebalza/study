@@ -130,7 +130,9 @@
 <jsp:include page="./footer.jsp"></jsp:include>
 </body>
 <script>
-mainStatics();
+setInterval(mainStatics(),5000);
+
+
 function mainStatics(){
 	$.ajax({
 		url : 'mainStatics',

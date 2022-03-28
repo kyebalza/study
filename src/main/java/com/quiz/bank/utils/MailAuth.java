@@ -9,7 +9,7 @@ public class MailAuth extends Authenticator{
     
     public MailAuth() {
         String mail_id = "lsk920110@gmail.com";
-        String mail_pw = "sjrnf7337";
+        String mail_pw = "sjrnf7337!";
         
         pa = new PasswordAuthentication(mail_id, mail_pw);
     }

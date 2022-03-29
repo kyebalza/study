@@ -84,8 +84,7 @@
 			<!-- 카테고리 검색 -->
 			<form class="search" action="studyboardSearch" method="GET" name="studyboardSearch" autocomplete="off">
 					<select class="select" name ="SearchType">
-						<option selected>전체</option>
-						<option value="all">전체</option>
+						<option selected value="all">전체</option>
 						<option value="title">제목</option>
 						<option value="user">작성자</option>
 					</select>
@@ -99,6 +98,7 @@
 						"
 					/>
 					<input type="button" value="검색" onclick="studySearch()"
+						onKeypress="javascript:if(event.keyCode == 13){studySearch()}"
 						style="
 							background-color : #6AA84F;
 							color: white;
@@ -171,14 +171,14 @@
 						str += "<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
 						str += '</tr>';
 						
-						$('#boardlist').append(str);
 					
 					})
+						$('#boardlist').append(str);
 				}
 			}
 		});
-		console.log($("form[name=studyboardSearch]").serialize());
-		console.log($("form[name=SearchType]").serialize());
+		/*console.log($("form[name=studyboardSearch]").serialize());
+		console.log($("form[name=SearchType]").serialize());*/
 	}; 
 
 
@@ -257,15 +257,6 @@
 	    $('#boardlist').append(content);
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

@@ -191,14 +191,14 @@
 
 	function check_input(){
 		var title = $('#title').val();
-		if($('#title').val() == ""){
+		if(title == ""){
 			alert("제목을 입력해주세요.");
 			$('#title').focus();
 		   }
-		if(document.sbWrite.title.value) {
+		/*if(document.sbWrite.title.value) {
 			confirm("게시글을 등록하시겠습니까?")
 		   	document.sbWrite.submit();
-		}
+		}*/
 	};
 	
 	function quiz(){

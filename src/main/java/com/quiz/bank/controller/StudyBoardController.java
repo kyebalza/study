@@ -110,8 +110,8 @@ public class StudyBoardController {
 	@RequestMapping(value = "/studyBoard/write", method = RequestMethod.POST)
 	public String write(Model model, @RequestParam HashMap<String, String>params,MultipartFile uploadFile,HttpSession session) {
 		logger.info("upload 파일요청 : {}", uploadFile);
-		//로그인 확인
 		String page = "redirect:/loginPage";
+		//로그인 확인
 		if(session.getAttribute("loginId") != null) {
 			page="studyBoard/writeForm";
 		}

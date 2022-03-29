@@ -169,8 +169,8 @@ $('#select').change(function(){
 	$('#pagination').twbsPagination('destroy');
 
 	listCall(currPage,10,this.value);
-	list_call = 0;
-	//currPage = 1;
+	//list_call = 0;
+	currPage = 1;
 });
 
 
@@ -190,21 +190,7 @@ function listCall(page,cnt,compl_yn){
 			//console.log(data);
 			totalPage = data.pages;
 			listDraw(data.quiz_report_list);
-            console.log(totalPage);
-			/*
-			var page_count = Math.ceil(totalPage / 10);
-			var page_data = $('#pagination').data();
-			
-			console.log('page_count',page_count);
-			console.log('page_data',page_data);
-			//console.log('page_data.twbsPagination.options.totalPages',page_data.twbsPagination.options.totalPages);
-			if(typeof(page_data.twbsPagination) != 'undefined'){
-				if(page_data.twbsPagination.options.totalPages != page_count){
-					$('#pagination').twbsPagination('destroy');
-					console.log('페이지네이션 초기화');
-				}	
-			};
-			*/
+
             $('#pagination').twbsPagination({
                 startPage: currPage,//현재 페이지
                 totalPages: totalPage,//만들수 있는 총 페이지 수

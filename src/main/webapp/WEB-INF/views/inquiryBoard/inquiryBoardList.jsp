@@ -102,7 +102,7 @@
 			
 			<form class="Search" action="InquiryBoardSearch" method="GET" name="InquiryBoardSearch" autocomplete="off">
 				<select class="select" name ="SearchType">
-					<option value="all" selected>전체</option>
+					<option value="all" selected>제목+내용</option>
 					<option value="tit">제목</option>
 					<option value="user">작성자</option>
 				</select>
@@ -114,7 +114,7 @@
 					border: 1px solid #6AA84F;
 					text-align: center;"
 				/>
-				<input type="button" value="검색" id="btnSearch" onclick="SearchList()"
+				<input type="button" value="검색" id="btnSearch"
 					style="
 						background-color : #6AA84F;
 						color: white;
@@ -171,81 +171,30 @@
 	
 </body>
 <script>
+// 페이징 처리
+var currPage = 1;
+var totalPage = 2;
+
+SearchList(currPage,10);
+$('#btnSearch').click(function(){
+	
+	$('#pagination').twbsPagination('destroy');
+	SearchList(currPage,10);
+	currPage = 1;
+});
+
 
 	//검색
-	function SearchList(){
+	function SearchList(page, cnt){
 		console.log("문의게시판 검색");
 		$.ajax({
 			type: 'GET',
 			url : 'InquirySearchBoardList',
-			data : $("form[name=InquiryBoardSearch]").serialize(),
-			success : function(result){
-				console.log(result);
-				//테이블 초기화
-				$('#inquirylist').empty();
-				if(result.length>=1){
-					var str = '';
-					result.forEach(function(item){
-						var date = new Date(item.reg_date);
-						str="<tr>"
-						str+="<td>"+item.board_no+"</td>";
-						str+="<td><a href='inquiryBoardDetail?board_no="+item.board_no+"'>"+item.title+"</a></td>";
-						str+="<td>"+item.board_cate+"</td>";
-						str+="<td>"+item.user_id+"</td>";
-						str+="<td>"+item.bHit+"</td>";
-						str+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
-						
-						if (item.answer == false) {
-							str+="<td><div>답변대기</div></td>";
-						}else{
-							str+="<td><div>답변완료</div></td>";
-						}
-						
-						str+="</tr>";
-						$('#inquirylist').append(str);
-						
-		
-	       		})				 
-				}
-			}
-		})
-	
-	console.log($("form[name=InquirySearch]").serialize());
-	console.log($("form[name=ICateGoryType]").serialize());
-	console.log($("form[name=SearchType]").serialize());
-}; 
-
-	// 페이징 처리
-	var currPage = 1;
-	var totalPage = 2;
-	
-	listCall(currPage,10);
-	
-	/*
-	function more(){
-		currPage++;
-		console.log('currPage',currPage);
-		if(currPage>totalPage){
-			$('button').attr('disabled',true);
-		}else{
-			listCall(currPage, 10);			
-		}
-	}
-	*/
-	
-	
-	function listCall(page, cnt){				
-		
-		$.ajax({
-			type:'GET',
-			url:'inquirylist',
-			data:{'page':page,'cnt':cnt},
-			dataTyps:'JSON',
-			success: function(data){
+			data : $("form[name=InquiryBoardSearch]").serialize() +"&page="+page+"&cnt="+cnt,
+			success : function(data){
 				console.log(data);
 				totalPage = data.pages;
 				listDraw(data.list);
-				
 				$('#pagination').twbsPagination({
 					startPage: currPage,//현재 페이지
 					totalPages: totalPage,//만들수 있는 총 페이지 수
@@ -253,16 +202,17 @@
 					onPageClick:function(evt,page){//해당 페이지 번호를 클릭했을때 일어날 일들
 						console.log(evt); //현재 일어나는 클릭 이벤트 관련 정보들
 						console.log(page);//몇 페이지를 클릭 했는지에 대한 정보
-						listCall(page, 10);
+						currPage = page;
+						SearchList(page, 10);
 					}
 				});
-								
-			},
-			error:function(e){
-				console.log(e);
+
 			}
-		});		
-	}
+		})
+}; 
+
+
+
 	
 	// 리스트를 불러올 때 하단 생성
 	function listDraw(list){ 

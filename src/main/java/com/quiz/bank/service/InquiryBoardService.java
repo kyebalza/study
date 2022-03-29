@@ -134,6 +134,7 @@ public class InquiryBoardService {
 
 
 	// 3. 문의게시판 리스트 호출(페이징)
+	/*
 	public HashMap<String, Object> inquirylist(int currPage, int pagePerCnt) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -156,12 +157,35 @@ public class InquiryBoardService {
 	
 		return map;
 	}
+	*/
 	
 	
 	// 문의게시글 리스트 검색
-	public List<InquiryBoardDTO> InquirySearchBoardList(InquiryBoardDTO dto) {
+	public HashMap<String, Object> InquirySearchBoardList(InquiryBoardDTO dto) {
 		logger.info("문의게시판 리스트 검색 요청 도착");
-		return dao.InquirySearchBoardList(dto);
+		int currPage = dto.getPage();
+		int pagePerCnt = dto.getCnt();
+		
+		int offset = ((currPage -1) * pagePerCnt -1) >=0 ?
+				((currPage-1)*pagePerCnt-1) : 0;
+		logger.info("offset : " +offset);
+		dto.setOffset(offset);
+		
+		int totalCount = dao.allCount(dto); // 테이블 모든 글의 총 갯수
+		// 만들 수 있는 페이지의 수 (전체 갯수 / 보여줄 수)
+		int range = totalCount%pagePerCnt > 0 ?
+				(totalCount/pagePerCnt)+1 : (totalCount/pagePerCnt);
+		
+		logger.info("총 갯수 : {}",totalCount);
+		logger.info("만들 수 있는 총 페이지 : {}",range);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("totalCount", totalCount);
+		map.put("pages", range);
+		map.put("list", dao.InquirySearchBoardList(dto));		
+		
+		
+		
+		return map;
 	}
 	
 

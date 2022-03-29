@@ -9,27 +9,41 @@
 
 	<!-- 문의게시판 리스트 호출 -->
 	<select id="inquirylist" resultType="com.quiz.bank.dto.InquiryBoardDTO">
-		SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no ORDER BY board_no DESC LIMIT #{param1} OFFSET #{param2}
+		SELECT * FROM inquiry_board JOIN board_category 
+		ON inquiry_board.board_cate_no = board_category.board_cate_no 
+		WHERE del_flag = 0 
+		ORDER BY board_no DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<!-- 문의 게시판 페이징 관련 -->
 	<select id="allCount" resultType="int">
-		SELECT COUNT (board_no) FROM inquiry_board
+		SELECT COUNT (board_no) FROM inquiry_board WHERE del_flag = 0
+		<choose>
+			<when test="SearchType != null and SearchType.equals('all') ">
+				AND (title LIKE CONCAT ('%',#{keyword},'%') OR content LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC
+			</when>
+			<when test="SearchType != null and SearchType.equals('tit') ">
+				AND (title LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC
+			</when>
+			<when test="SearchType != null and SearchType.equals('user') ">
+				AND (user_id LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC
+			</when>
+		</choose>
 	</select>
 	
 	<!-- 문의 게시판 검색 쿼리 -->
 	<select id="InquirySearchBoardList" parameterType="com.quiz.bank.dto.InquiryBoardDTO" resultType="com.quiz.bank.dto.InquiryBoardDTO">
 		SELECT * FROM inquiry_board JOIN board_category ON inquiry_board.board_cate_no = board_category.board_cate_no
-		
+		WHERE del_flag = 0
 		<choose>
 			<when test="SearchType != null and SearchType.equals('all') ">
-				WHERE title OR user_id LIKE CONCAT ('%',#{keyword},'%') ORDER BY board_no DESC
+				AND (title LIKE CONCAT ('%',#{keyword},'%') OR content LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC LIMIT 10 offset ${offset}
 			</when>
 			<when test="SearchType != null and SearchType.equals('tit') ">
-				WHERE title LIKE CONCAT ('%',#{keyword},'%') ORDER BY board_no DESC
+				AND (title LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC LIMIT 10 offset ${offset}
 			</when>
 			<when test="SearchType != null and SearchType.equals('user') ">
-				WHERE user_id LIKE CONCAT ('%',#{keyword},'%') ORDER BY board_no DESC
+				AND (user_id LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC LIMIT 10 offset ${offset}
 			</when>
 		</choose>
 	</select>
@@ -87,7 +101,8 @@
 	
 	<!-- 문의게시판 삭제하기 -->
 	<delete id="inquirydelete">
-		DELETE FROM inquiry_board WHERE board_no = #{param1}
+	<!-- DELETE FROM inquiry_board WHERE board_no = #{param1} -->
+		UPDATE inquiry_board SET del_flag = 1 WHERE board_no = #{param1}
 	</delete>
 	
 	

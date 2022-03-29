@@ -53,6 +53,7 @@ public class InquiryBoardController {
 	}
 	
 	// 1-1. 문의게시판 리스트 출력
+	/*
 	@ResponseBody
 	@GetMapping(value = "/inquirylist")
 	public HashMap<String, Object> inquirylist(@RequestParam  String page, @RequestParam String cnt) {
@@ -65,16 +66,23 @@ public class InquiryBoardController {
 		
 		return service.inquirylist(currPage,pagePerCnt);
 	}
+	*/
 	
 	// 1-2 문의 게시글 리스트 검색 요청
 	  @ResponseBody  
 	  @GetMapping(value = "/InquirySearchBoardList")
-	  public List<InquiryBoardDTO> InquirySearchBoardList(@RequestParam("SearchType")String SearchType, @RequestParam("Keyword") String Keyword) {
-		  logger.info("문의 게시판 리스트 검색 요청");
+	  public HashMap<String,Object> InquirySearchBoardList(
+			  @RequestParam("SearchType")String SearchType, @RequestParam("Keyword") String Keyword,
+			  @RequestParam("page")String page, @RequestParam("cnt")String cnt) {
+		  logger.info("문의 게시판 리스트 검색 요청 : page : {},cnt : {}",page,cnt);
 		  logger.info(SearchType +" : "+Keyword);
 		  InquiryBoardDTO dto = new InquiryBoardDTO();
 		  dto.setKeyword(Keyword);
 		  dto.setSearchType(SearchType);
+		  int currPage = Integer.parseInt(page);
+		  int pagePerCnt = Integer.parseInt(cnt);
+		  dto.setPage(currPage);
+		  dto.setCnt(pagePerCnt);
 		  
 		  return service.InquirySearchBoardList(dto); 
 	  
@@ -133,7 +141,7 @@ public class InquiryBoardController {
 		
 		model.addAttribute("loginId", session.getAttribute("loginId"));
 		
-		model.addAttribute("admin", session.getAttribute("loginId"));
+		model.addAttribute("admin", session.getAttribute("admin"));
 		
 		return "inquiryBoard/inquiryBoardDetail";
 		

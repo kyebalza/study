@@ -17,7 +17,7 @@ public interface InquiryBoardDAO {
 
 	ArrayList<InquiryBoardDTO> inquirylist(int pagePerCnt, int offset);
 	
-	int allCount();
+	int allCount(InquiryBoardDTO dto);
 	
 	List<InquiryBoardDTO> InquirySearchBoardList(InquiryBoardDTO dto); // 문의게시판 검색 리스트
 	

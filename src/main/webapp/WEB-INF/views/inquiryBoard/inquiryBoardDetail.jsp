@@ -144,8 +144,10 @@
 	<br/>
 	
 	<div style="margin: auto;">
-		<input class="boardButton" type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
-		<input class="boardButton" type="button" onclick="del()" value="삭제"/>			
+		<c:if test="${sessionScope.loginId eq info.user_id}">
+			<input class="boardButton" type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
+			<input class="boardButton" type="button" onclick="del()" value="삭제"/>			
+		</c:if>
 		<input class="boardButton" type="button" onclick="location.href='./inquiryBoardList?currpage=1'" value="목록"/>
 	</div>
 
@@ -170,6 +172,8 @@
 
 	function del(){
 		var yn = confirm("정말 이 글을 삭제 하시겠습니까?");
+		
+		
 		
 		if(yn){
 			location.href='./inquirydelete?board_no=${info.board_no}';

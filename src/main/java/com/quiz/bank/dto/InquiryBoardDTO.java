@@ -37,9 +37,29 @@ public class InquiryBoardDTO {
 	private String ori_filename;
 	private String new_filename;
 	
+	//페이징
+	private int page;
+	private int cnt;
+	private int offset;
 	
-	
-	
+	public int getOffset() {
+		return offset;
+	}
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public int getBoard_no() {
 		return board_no;
 	}

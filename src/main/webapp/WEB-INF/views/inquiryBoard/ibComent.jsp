@@ -19,7 +19,7 @@
 댓글
 <hr/>
 
-	<c:if test="${sessionScope.loginId eq 'user'}">
+	<c:if test="${sessionScope.admin eq '관리자'}">
 	<div id="ibcoment_wep">
 		<span id="loginId"
 			style= "
@@ -107,9 +107,7 @@
 	//댓글 전송 버튼
 	$('#ibcom_button').click(function () {
 		
-		if ('${loginId}' == '') {
-			alert("로그인이 필요한 서비스 입니다.");
-		}else if ($('#com_content').val() == ""){
+		if ($('#reply_content').val() == ""){
 			alert("내용을 입력해주세요.");
 		}else{
 			$('#ibcoment').submit();

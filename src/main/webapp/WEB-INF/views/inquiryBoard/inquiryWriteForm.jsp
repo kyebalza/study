@@ -95,7 +95,7 @@
 		               	</c:forEach>
             		</select>
 				</td>
-				<td><input type="file" name="uploadFile"/></td>
+				<td><input type="file" name="uploadFile" accept=".gif, .jpg, .png"/></td>
 			</tr>
 			<tr>
 				<th>내용</th>
@@ -105,7 +105,7 @@
 		</table>
 		
 		<input type="button" id="cancel" onclick="location.href='inquiryBoardList'" value="취소"/>
-		<input type="submit" id="registration" value="등록"/>
+		<input type="button" id="registration" value="등록"/>
 	</form>
 	
 	
@@ -116,10 +116,20 @@
 	
 	$("#registration").click(function() {
 		console.log('click');
+		var check = true;
+		var $title = $('input[name="title"]');
+		var $content = $('textarea[name="content"]');
+		if($title.val() == ''){
+			alert('제목을 입력해주세요');
+			check = false;
+		}
+		if($content.val() == ''){
+			alert('내용을 입력해주세요');
+			check = false;
+		}
 		if (check) {
 			console.log('문의게시글 작성 시작');
-			var $title = $('input[name="title"]');
-			var $content = $('input[name="content"]');
+			$('form').submit();
 		}
 		
 		

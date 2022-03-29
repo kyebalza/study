@@ -72,7 +72,7 @@
 	<%@ include file="../header.jsp" %>
 	<div id="sbListAll">
 		<br/>
-		<form action="write" method="post" name="sbWrite" enctype="multipart/form-data">
+		<form id="sbWrite" action="write" method="post" name="sbWrite" enctype="multipart/form-data">
 			<table class="sbwrite">
 				<tr>
 					<th>제목</th>
@@ -171,7 +171,7 @@
 							height: 30px;
 							border-radius: 11px;
 					"/>
-				<input id="submit" class="button" type="submit" value="등록" onclick="check_input()"
+				<input id="submit" class="button" type="button" value="등록"
 					style="
 							background-color : #6AA84F;
 							color: white;
@@ -188,18 +188,18 @@
 	</div>
 </body>
 <script>	
-
-	function check_input(){
+	$('#submit').click(function(){
 		var title = $('#title').val();
+		
 		if(title == ""){
 			alert("제목을 입력해주세요.");
+			$('#title').val('');
 			$('#title').focus();
-		   }
-		/*if(document.sbWrite.title.value) {
-			confirm("게시글을 등록하시겠습니까?")
-		   	document.sbWrite.submit();
-		}*/
-	};
+	   }else{
+		   $('#sbWrite').submit();
+	   }
+		
+	});
 	
 	function quiz(){
 		console.log("문제불러오기");

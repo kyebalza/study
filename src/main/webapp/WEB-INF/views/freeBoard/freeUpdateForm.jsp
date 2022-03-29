@@ -63,7 +63,7 @@
 		</table>
 		
 		<input type="button" onclick="location.href='freeBoardDetail?board_no=${fbdto.board_no}'" value="취소"/>
-		<input type="submit" value="저장"/>
+		<input type="button" id="FWcheck" value="등록"/>
 	</form>
   	
 </body>
@@ -78,5 +78,22 @@
 		
 	}
 
+	
+	$('#FWcheck').click(function () {
+			
+			var title = $('input[name="title"]').val();
+			var blank_pattern = /^\s+|\s+$/g;
+			
+			if (title.replace(blank_pattern, '') == "") {
+				alert('제목을 입력해주세요.');
+				$('input[name="title"]').val('');
+				$('input[name="title"]').focus();
+			}else{
+				$('#freeWrite').submit();
+			}
+			
+		});
+	
+	
 </script>
 </html>

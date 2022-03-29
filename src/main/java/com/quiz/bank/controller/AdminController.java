@@ -200,49 +200,49 @@ public class AdminController {
 	}
 	
 
-//	  //문의 게시글 리스트 검색 요청
-//	  @ResponseBody  
-//	  @RequestMapping(value = "/InquirySearchList", method = RequestMethod.GET)
-//	  public List<InquiryBoardDTO> InquirySearchList(@RequestParam("SearchType")String SearchType, @RequestParam("Keyword") String Keyword) {
-//		  logger.info("문의 게시판 리스트 검색 요청");
-//		  logger.info(SearchType +" : "+Keyword);
-//		  InquiryBoardDTO IBdto = new InquiryBoardDTO();
-//		  IBdto.setKeyword(Keyword);
-//		  IBdto.setSearchType(SearchType);
-//		  
-//		  return adservice.InquirySearchList(IBdto); 
-//	  
-//	  }
-//	  
-//	  
-//	  //자유 게시글 리스트 검색 요청 (자유게시판 dto에... 아무것도 없다...)
-//	  @ResponseBody 
-//	  @RequestMapping(value = "/FreeSearchList", method = RequestMethod.GET)
-//	  public List<FreeBoardDTO> FreeSearchList(@RequestParam("SearchType") String SearchType, @RequestParam("Keyword") String Keyword) {
-//		  logger.info("자유 게시판 리스트 검색 요청"); 
-//		  logger.info(SearchType +" : "+Keyword);
-//		  FreeBoardDTO FBdto = new FreeBoardDTO();
-//		  FBdto.setKeyword(Keyword);
-//		  FBdto.setSearchType(SearchType);
-//		  
-//		  return adservice.FreeSearchList(FBdto); 
-//	  
-//	  }
-//	  
-//	  
-//	  //회원 리스트 검색 요청 (유저 dto에 검색 추가 필요) 
-//	  @ResponseBody 
-//	  @RequestMapping(value = "/MemSearchList", method = RequestMethod.GET)
-//	  public List<UserDTO> MemSearchList(@RequestParam("SearchType") String SearchType, @RequestParam("Keyword") String Keyword) {
-//		  logger.info("자유 게시판 리스트 검색 요청"); 
-//		  logger.info(SearchType +" : "+Keyword);
-//		  UserDTO UBdto = new UserDTO();
-//		  UBdto.setKeyword(Keyword);
-//		  UBdto.setSearchType(SearchType);
-//		  
-//		  return adservice.MemSearchList(UBdto); 
-//	  
-//	  }
+	  //문의 게시글 리스트 검색 요청
+	  @ResponseBody  
+	  @RequestMapping(value = "/InquirySearchList", method = RequestMethod.GET)
+	  public List<InquiryBoardDTO> InquirySearchList(@RequestParam("SearchType")String SearchType, @RequestParam("Keyword") String Keyword) {
+		  logger.info("문의 게시판 리스트 검색 요청");
+		  logger.info(SearchType +" : "+Keyword);
+		  InquiryBoardDTO IBdto = new InquiryBoardDTO();
+		  IBdto.setKeyword(Keyword);
+		  IBdto.setSearchType(SearchType);
+		  
+		  return adservice.InquirySearchList(IBdto); 
+	  
+	  }
+	  
+	  
+	  //자유 게시글 리스트 검색 요청 (자유게시판 dto에... 아무것도 없다...)
+	  @ResponseBody 
+	  @RequestMapping(value = "/FreeSearchList", method = RequestMethod.GET)
+	  public List<FreeBoardDTO> FreeSearchList(@RequestParam("SearchType") String SearchType, @RequestParam("Keyword") String Keyword) {
+		  logger.info("자유 게시판 리스트 검색 요청"); 
+		  logger.info(SearchType +" : "+Keyword);
+		  FreeBoardDTO FBdto = new FreeBoardDTO();
+		  FBdto.setKeyword(Keyword);
+		  FBdto.setSearchType(SearchType);
+		  
+		  return adservice.FreeSearchList(FBdto); 
+	  
+	  }
+	  
+	  
+	  //회원 리스트 검색 요청 (유저 dto에 검색 추가 필요) 
+	  @ResponseBody 
+	  @RequestMapping(value = "/MemSearchList", method = RequestMethod.GET)
+	  public List<UserDTO> MemSearchList(@RequestParam("SearchType") String SearchType, @RequestParam("Keyword") String Keyword) {
+		  logger.info("자유 게시판 리스트 검색 요청"); 
+		  logger.info(SearchType +" : "+Keyword);
+		  UserDTO UBdto = new UserDTO();
+		  UBdto.setKeyword(Keyword);
+		  UBdto.setSearchType(SearchType);
+		  
+		  return adservice.MemSearchList(UBdto); 
+	  
+	  }
 	  
 	 
 	//신고 게시글 리스트 검색 요청

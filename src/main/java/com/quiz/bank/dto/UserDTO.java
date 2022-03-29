@@ -13,6 +13,24 @@ public class UserDTO {
 	private String user_state;
 	private String user_admin;
 	
+	private String SearchType;
+	private String Keyword;
+	
+	
+	
+	
+	public String getSearchType() {
+		return SearchType;
+	}
+	public void setSearchType(String searchType) {
+		SearchType = searchType;
+	}
+	public String getKeyword() {
+		return Keyword;
+	}
+	public void setKeyword(String keyword) {
+		Keyword = keyword;
+	}
 	public String getUser_id() {
 		return user_id;
 	}

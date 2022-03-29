@@ -48,10 +48,14 @@
 			 left : 40%;
 		}
 		.flall{
-			position: absolute;
+			/* position: absolute; */
 			/* background: blue; */
 			min-width : 1150px;
-			left: 20%;
+			/* left: 30%; */
+			display: flex;
+		}
+		.flin{
+			margin: auto;
 		}
 		.select{
 			border: 1px solid #6AA84F;
@@ -77,59 +81,62 @@
 	<%@ include file="../header.jsp" %>
 	</br></br></br></br></br>
 	<div class="flall">
-		<div>
-			<button class="button" onclick="location.href='freewriteForm'">글쓰기</button>
-			
-			<!-- 카테고리 검색 -->
-				<form class = "FreeSearch" action="FreeboardSearch" method="GET" name="FreeboardSearch" autocomplete="off">
-					<!-- <select	name = "FBSearchType" class="select">
-						<option value="fball" selected>전체</option>
-						<option value="testim">시험 정보</option>
-						<option value="worry">고민 상담</option>
-						<option value="cert">자격증</option>
-						<option value="jock">잡담</option>
-					</select> -->
-					
-					<select name ="SearchType" class="select">
-						<option value="all" selected>전체</option>
-						<option value="tit">제목</option>
-						<option value="user">작성자</option>
-					</select>
-					<input type="text" name="Keyword" placeholder="검색할 내용을 입력해주세요." style="
-						width: 230px;
-						height: 30px;
-						border-radius: 9px;
-						border: 1px solid #6AA84F;
-						text-align: center;
-					"/>
-					<input type="button" value="검색" onclick="fbSearchList()" 
-						onKeypress="javascript:if(event.keyCode == 13){fbSearchList()}"
-						style="
-							background-color : #6AA84F;
-							color: white;
-							border: none;
-							margin: auto;
-							width: 100px;
+		<div class="flin">
+			<div>
+				<c:if test="${loginId  != null}">
+					<button class="button" onclick="location.href='freewriteForm'">글쓰기</button>
+				</c:if>
+				
+				<!-- 카테고리 검색 -->
+					<form class = "FreeSearch" action="FreeboardSearch" method="GET" name="FreeboardSearch" autocomplete="off">
+						<!-- <select	name = "FBSearchType" class="select">
+							<option value="fball" selected>전체</option>
+							<option value="testim">시험 정보</option>
+							<option value="worry">고민 상담</option>
+							<option value="cert">자격증</option>
+							<option value="jock">잡담</option>
+						</select> -->
+						
+						<select name ="SearchType" class="select">
+							<option value="all" selected>전체</option>
+							<option value="tit">제목</option>
+							<option value="user">작성자</option>
+						</select>
+						<input type="text" name="Keyword" placeholder="검색할 내용을 입력해주세요." style="
+							width: 230px;
 							height: 30px;
-							border-radius: 11px;
-					"/>
-				</form>
-		</div>	
-			<!-- 카테고리 검색 -->
-			
-		<!-- 게시판 리스트 -->
-		<table class="List">
-			<thead style="background: #6AA84F; color:white;">
-			<tr>
-				<th>글번호</th>
-				<th>제목</th>
-				<th>카테고리</th>
-				<th>작성자</th>
-				<th>작성일자</th>
-			</tr>
-			</thead>
-			<tbody id="Fboardlist"></tbody>
-		</table>
+							border-radius: 9px;
+							border: 1px solid #6AA84F;
+							text-align: center;
+						"/>
+						<input type="button" value="검색" onclick="fbSearchList()" 
+							onKeypress="javascript:if(event.keyCode == 13){fbSearchList()}"
+							style="
+								background-color : #6AA84F;
+								color: white;
+								border: none;
+								margin: auto;
+								width: 100px;
+								height: 30px;
+								border-radius: 11px;
+						"/>
+					</form>
+			</div>	
+				<!-- 카테고리 검색 -->
+				
+			<!-- 게시판 리스트 -->
+			<table class="List">
+				<thead style="background: #6AA84F; color:white;">
+				<tr>
+					<th>글번호</th>
+					<th>제목</th>
+					<th>카테고리</th>
+					<th>작성자</th>
+					<th>작성일자</th>
+				</tr>
+				</thead>
+				<tbody id="Fboardlist"></tbody>
+			</table>
 			<table class="paging" style="border: none;">
 				<tr style="border: none;">
 					<td colspan="5" id="paging" style="border: none;">
@@ -141,6 +148,7 @@
 					</td>
 				</tr>
 			</table>
+		</div>
 	</div>
 	
 		<%@ include file="../footer.jsp" %>

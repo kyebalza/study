@@ -9,7 +9,7 @@
 	<!-- 관리자 공부 게시판 리스트 호출 쿼리 -->
 	<!-- 페이징 작업시에 맨 뒤에 있는 LIMIT 을 붙이지 않으면 페이지가 잘리지 않음 -->
 	<select id="studylist" resultType="com.quiz.bank.dto.StudyBoardDTO">
-		SELECT * FROM study_board JOIN board_category ON study_board.board_cate_no = board_category.board_cate_no LIMIT #{param1} OFFSET #{param2}
+		SELECT * FROM study_board JOIN board_category ON study_board.board_cate_no = board_category.board_cate_no ORDER BY board_no DESC LIMIT #{param1} OFFSET #{param2}
 	</select>
 	
 	<!-- 공부 게시판 페이징 관련 -->

@@ -43,7 +43,29 @@
 		color: white;
 		
 	}
+	 .input{
+      position: absolute;
+      left: 40%;
+   }
+ 
+    .button{
+       text-align: center;
+      background-color : #6AA84F;
+      color: white;
+      border: 1px solid #6AA84F;
+      border-radius: 9px;
+      width: 65px;
+      height: 30px;
+      margin: 5px;
+    }
 	
+	.buttonout{
+		display: flex;
+	}
+	.buttonin{
+		margin: auto;
+		
+	}
  
  </style>
 </head>
@@ -99,12 +121,14 @@
 				<img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수">(${info.bHit})
 				<img class="boardreport" src="/bank/resources/img/report.png"  alt="신고하기">
 			</div>
-			<div style="margin: auto;">
-				<c:if test="${loginId == info.user_id}">			
-					<input type="button" onclick="location.href='./freeUpdateForm?board_no=${info.board_no}'" value="수정"/>
-					<input type="button" onclick="del()" value="삭제"/>			
-				</c:if>
-				<input type="button" onclick="location.href='./freeBoardList?currpage=1'" value="목록"/>
+			<div class="buttonout">
+				<div class="buttonin">
+					<c:if test="${loginId == info.user_id}">			
+						<input type="button" class="button" onclick="location.href='./freeUpdateForm?board_no=${info.board_no}'" value="수정"/>
+						<input type="button" class="button" onclick="del()" value="삭제"/>			
+					</c:if>
+					<input type="button" class="button" onclick="location.href='./freeBoardList?currpage=1'" value="목록"/>
+				</div>
 			</div>
 		<%@ include file="fbComent.jsp" %>
 	</div>
@@ -177,6 +201,8 @@
 	//신고하기
 	$(document).on("click",".boardreport",function () {
 		console.log("신고 클릭 확인");
+		var blank_pattern = /^\s+|\s+$/g;
+		
 		if ('${loginId}' == '') {
 			alert("로그인이 필요한 서비스 입니다.");
 			location.href='redirect:/loginPage';
@@ -185,6 +211,8 @@
 			console.log(report);
 			
 			if (report == '') {
+				alert("신고 사유를 입력해주세요.");
+			}else if(report.replace(blank_pattern, '') == ""){
 				alert("신고 사유를 입력해주세요.");
 			}else{
 				var board_name = $('#board_name').val();

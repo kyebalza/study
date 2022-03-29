@@ -165,7 +165,12 @@
 							str+="<td>"+item.reported_user+"</td>";
 							str+="<td>"+item.report_reason+"</td>";
 							str+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
-							str+="<td>"+item.report_processing +"</td>";
+							
+							if (item.report_processing == null) {
+								content+="<td><p>미처리</p></td>";
+							}else{
+								content+="<td>"+item.report_processing +"</td>";
+							}
 							
 							if (item.report_state == 0){
 								str+="<td>"+'<input type="button" id="Processing" onclick="manap('+item.report_no+')" value="처리대기"/>'+'</td>';					
@@ -258,7 +263,11 @@
 					content+="<td><a href='ADdetail?user_id="+item.reported_user+"'>"+item.reported_user+"</a></td>";
 					content+="<td>"+item.report_reason+"</td>";
 					content+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
-					content+="<td>"+item.report_processing +"</td>";
+					if (item.report_processing == null) {
+						content+="<td><p>미처리</p></td>";
+					}else{
+						content+="<td>"+item.report_processing +"</td>";
+					}
 					if (item.report_state == 0){
 						content+="<td>"+'<input type="button" id="Processing" onclick="manap('+item.report_no+')" value="처리대기"/>'+'</td>';					
 					} else {
@@ -291,7 +300,7 @@
 			var inputOut = prompt("처리 내용을 입력해주세요.");
 			//alert(inputOut1);
 
-		     if(inputOut != null){
+		     if(inputOut != ''){
 		    	 
 		    	 $.ajax({
 		    		 type: "GET", 
@@ -303,7 +312,9 @@
 				    	 listCall(currPage,10);
 		    		 }
 		    	 });	
-		    	} 
+		    	}else{
+		    		alert('처리 내용을 입력해주세요.');
+		    	}
 			}
 		
 		function mamde(a,b) {

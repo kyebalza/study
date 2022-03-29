@@ -8,6 +8,38 @@
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="resources/js/jquery.twbsPagination.js"></script>
 	<style>
+		textarea {
+         width: 100%;
+         height: 50px;
+         padding: 10px;
+         box-sizing: border-box;
+         border: solid 2px #6AA84F;
+         border-radius: 5px;
+         font-size: 16px;
+         resize: none;
+	     }
+	      
+	      #fbcom_button{
+	         text-align: center;
+	         background-color : #6AA84F;
+	         color: white;
+	         border: 1px solid #6AA84F;
+	         border-radius: 9px;
+	         width: 65px;
+	         height: 30px;
+	         margin: 5px;      
+	      }
+	      
+	      #fbcomentlist{
+	         border: none;
+	      }
+	      
+	      table, tr, td, th {
+	         padding: 10px;
+	      }
+	      #paging{
+	      	
+	      }
 		
 	</style>
 </head>
@@ -28,9 +60,9 @@
 		<div>
 			<div id = "fbcomentlist">
 			</div>
-				<table>
+				<table id = "paging" style="border: none">
 					<tr>
-						<td id="paging">
+						<td>
 							<div class="container">
 								<nav aria-label="Page navigation" style="text-align:center">
 									<ul class="pagenation" id="pagination"></ul>
@@ -82,10 +114,17 @@
 
 	//댓글 전송 버튼
 	$('#fbcom_button').click(function () {
+		
+		var com = $('#reply_content').val();
+		console.log(com);
+		var blank_pattern = /^\s+|\s+$/g;
+		
 		if ('${loginId}' == '') {
 			alert("로그인이 필요한 서비스 입니다.");
-		}else if ($('#com_content').val() == ""){
+		}else if (com.replace(blank_pattern, '') == ""){
 			alert("내용을 입력해주세요.");
+			$('#reply_content').val('');
+			$('#reply_content').focus();
 		}else{
 			console.log("클릭 확인");
 			$('#fbcoment').submit();
@@ -193,16 +232,20 @@
 	
 	$(document).on("click",".fbComReport",function() {
 		console.log(this.classList[1]);
-		
+		var blank_pattern = /^\s+|\s+$/g;
+
 		if ('${loginId}' == '') {
 			alert("로그인이 필요한 서비스 입니다.");
 		}else{
 			var report_reason = prompt ("신고 사유를 입력해주세요.","");
 			console.log(report_reason);
 			
-			if (report == '') {
+			if (report_reason == '') {
 				alert("신고 사유를 입력해주세요.");
+			}else if (report_reason.replace(blank_pattern, '') == "") {
+				alert('신고 사유를 입력해주세요.');
 			}else{
+		
 				var board_name = $('#board_name').val();
 				var board_no = $('#board_no').val();
 
@@ -230,6 +273,10 @@
 						console.log('서버에 문제가 발생하였습니다.',e);
 					}
 				});
+				
+				
+				
+				
 				
 			}
 			

@@ -66,11 +66,13 @@
 
 	$('#FWcheck').click(function () {
 		
-		var title = $('input[name="title"]');
-		var content = $('input[name="content"]');
+		var title = $('input[name="title"]').val();
+		var blank_pattern = /^\s+|\s+$/g;
 		
-		if (title.val() == '') {
+		if (title.replace(blank_pattern, '') == "") {
 			alert('제목을 입력해주세요.');
+			$('input[name="title"]').val('');
+			$('input[name="title"]').focus();
 		}else{
 			$('#freeWrite').submit();
 		}

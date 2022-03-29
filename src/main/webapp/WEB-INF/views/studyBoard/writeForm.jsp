@@ -72,7 +72,7 @@
 	<%@ include file="../header.jsp" %>
 	<div id="sbListAll">
 		<br/>
-		<form action="write" method="post"  enctype="multipart/form-data">
+		<form action="write" method="post" name="sbWrite" enctype="multipart/form-data">
 			<table class="sbwrite">
 				<tr>
 					<th>제목</th>
@@ -82,7 +82,7 @@
 			               		<option value="${study_cate.board_cate_no }">${study_cate.board_cate }</option>
 			               	</c:forEach>
 		            	</select>
-		            	<input type="text" name="title" placeholder="제목을 입력해주세요."
+		            	<input type="text" name="title" id ="title" placeholder="제목을 입력해주세요."
 		            		style="
 								width: 230px;
 								height: 30px;
@@ -171,7 +171,7 @@
 							height: 30px;
 							border-radius: 11px;
 					"/>
-				<input class="button" type="submit" value="등록"
+				<input id="submit" class="button" type="submit" value="등록" onclick="check_input()"
 					style="
 							background-color : #6AA84F;
 							color: white;
@@ -180,6 +180,7 @@
 							width: 100px;
 							height: 30px;
 							border-radius: 11px;
+					
 					"/>
 				</div>
 		</form>
@@ -188,7 +189,19 @@
 		<%@ include file="../footer.jsp" %>
 	</div>--%>
 </body>
-<script>
+<script>	
+
+	function check_input(){
+		var title = $('#title').val();
+		if($('#title').val() == ""){
+			alert("제목을 입력해주세요.");
+			$('#title').focus();
+		   }
+		if(document.sbWrite.title.value) {
+			confirm("게시글을 등록하시겠습니까?")
+		   	document.sbWrite.submit();
+		}
+	};
 	
 	function quiz(){
 		console.log("문제불러오기");

@@ -7,8 +7,8 @@
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="/bank/resources/js/jquery.twbsPagination.js"></script>
-	<script src="/bank/resources/js/.bootstrap.min.js"></script>
-   <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+	<script src="<c:url value='resources/js/.bootstrap.min.js'/>"></script>
+   <link rel="stylesheet" href="<c:url value='esources/css/bootstrap.min.css'/>"/>
 	<style>
 		table,td{
 		/*

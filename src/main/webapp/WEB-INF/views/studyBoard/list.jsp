@@ -9,8 +9,8 @@
 	<!-- 아래 요 친구가 있어야지 페이징이 깨지지 않아요 -->
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="/bank/resources/js/jquery.twbsPagination.js"></script>
-	<script src="/bank/resources/js/.bootstrap.min.js"></script>
-   <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+	<script src="<c:url value='resources/js/.bootstrap.min.js'/>"></script>
+   <link rel="stylesheet" href="<c:url value='resources/css/bootstrap.min.css'/>"/>
 	<style>
 		.List{
 			min-width : 1170px;
@@ -30,14 +30,17 @@
 			background-color : #6AA84F;
 			color: white;
 			border: none;
-			margin: auto;
+			margin-left: 340px;
+    		margin-top: 70px;
 			width: 100px;
 			height: 30px;
 			border-radius: 11px;
 		}
 		.search{
-			 float: right;
-			 left : 40%;
+			 /*float: right;
+			 left : 40%;*/
+			 margin-top: 60px;
+    		 margin-right: 130px;
 		}
 		#sbListAll{
 		/*
@@ -47,7 +50,6 @@
 		*/
 			min-width : 1150px;
 			left: 20%;
-			position: absolute;
 		}
 		.select{
 			border: 1px solid #6AA84F;
@@ -130,7 +132,14 @@
 			</tr>
 		</table>
 	</div>
-	<%@ include file="../footer.jsp" %>
+	<%--<div id="footer" 
+		style="
+		    top: 86%;
+		    margin-top: 0px;
+	">
+		<iframe src="<c:url value='../footer'/>"></iframe>
+	</div>--%>
+		<%@ include file="../footer.jsp" %> 
 </body>
 <script>
 

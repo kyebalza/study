@@ -299,7 +299,7 @@ function question(){
 	openNewWindow.location.href='studyBoard/writeForm';
 }
 function error(){
-	if('${sessionScope.loginId eq null}'){
+	if(loginId == null){
 		alert('로그인 서비스입니다.');
 	} else{
 		
@@ -314,7 +314,7 @@ function error(){
 			$.ajax({
 				url : 'quizErrorReport',
 				type : 'get',
-				data : {'report_content':report_content,'quiz_no':quiz_list[quiz_index] ,'loginId':loginId,'answer':answer},
+				data : {'report_content':report_content,'quiz_no':quiz_list[quiz_index] ,'user_id':loginId},
 				dataType : 'json',
 				success : function(data){
 					if(data.msg > 0){alert('오류신고가 접수되었습니다.');}

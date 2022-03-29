@@ -372,8 +372,10 @@ $('.result').click(function(){
 					if(grading == correct){
 						console.log("정답입니다"+k);
 						$('#correct'+class_num).html('<img src="resources/img/correct_circle.png"/>');
+						$('#wrong'+class_num).empty();
 					}else{
 						$('#wrong'+class_num).html('<img src="resources/img/wrong_x.png"/>');
+						$('#correct'+class_num).empty();
 					}
 				}
 			}			
@@ -381,6 +383,7 @@ $('.result').click(function(){
 		if(answer == ''){
 			answer = "0";
 			$('#wrong'+class_num).html('<img src="resources/img/wrong_x.png"/>');
+			$('#correct'+class_num).empty();
 		}
 		obj.my_answer = answer;
 		//////////////////////////////////////

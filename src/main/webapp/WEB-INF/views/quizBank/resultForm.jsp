@@ -434,7 +434,7 @@ function error(){
 			$.ajax({
 				url : 'quizErrorReport',
 				type : 'get',
-				data : {'report_content':report_content,'quiz_no':quiz_no ,'loginId':loginId},
+				data : {'report_content':report_content,'quiz_no':quiz_no ,'user_id':loginId},
 				dataType : 'json',
 				success : function(data){
 					if(data.msg > 0){alert('오류신고가 접수되었습니다.');}

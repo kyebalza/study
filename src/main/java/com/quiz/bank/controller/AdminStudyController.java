@@ -321,6 +321,7 @@ public class AdminStudyController {
 	@RequestMapping(value="quizErrorReport")
 	@ResponseBody
 	public HashMap<String, Object> quizErrorReport(@RequestParam HashMap<String, String> params){
+		logger.info("오류신고 서비스 도착");
 		return service.quizErrorReport(params);
 	}
 	

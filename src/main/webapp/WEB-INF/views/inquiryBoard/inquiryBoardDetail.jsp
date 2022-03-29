@@ -8,17 +8,8 @@
  <link rel="stylesheet" href="resources/css/header.css"/>
  
  <style>
- 
- 
- 
-	table, tr, td, th{
-		border: 1px solid black;
-		border-collapse: collapse;
-		border-color: #6AA84F;
-		padding : 5px 10px;	
-		width: 1000px;
-		height: 10%;
-	}
+
+
 	
 	table {
 		margin-left: auto;
@@ -27,12 +18,22 @@
 	   	min-width: 1166px;
 	}
 	
+	table,td{
+		border: 1px solid #6AA84F;
+		border-collapse: collapse;
+		padding : 5px 10px;			
+		width: 1000px;
+		margin: auto;
+		margin-top: 10px;
+	}
+	
 	
 	th {
 		border: 1px solid black;
 		border-color: white;
 		background-color: #6AA84F;
 		width: 500px;
+		padding: 15px;
 	}
 	
 	td {
@@ -46,9 +47,40 @@
 		background-color: #6AAA84F;
 	}
 	
+	#iblistAll {
+		min-width : 1150px;
+		left: 20%;
+		position: absolute;
 	
-	.cate, .date {
-		text-align: center;
+	}
+	
+	
+	.bHit {
+		float: left;
+		margin: 0px;
+	}
+	
+	.boardButton{
+			background-color : #6AA84F;
+			color: white;
+			border: none;
+			margin: auto;
+			width: 100px;
+			height: 30px;
+			border-radius: 11px;
+	
+	}
+	
+	#board_sub {
+		display: float;
+		float: right;
+		height:31;
+	}
+	
+	textarea {
+		width: 100%;
+		height: 150px;
+		resize: none;
 	}
 	
 	
@@ -62,109 +94,78 @@
 
 
 	<%@ include file="../header.jsp" %>
-
-	
-	
-	
-	<br/>
-	<br/>
-	<br/>
-
-	
-	<table>
-		<tr>
-			<th style="color:white;">제목</th>
-			<td>${info.title}</td>
-			<th style="color:white;">카테고리</th>
-			<td class="cate">${info.board_cate}</td>
-		</tr>
-		
-		<tr>
-			<th style="color:white;">작성자</th>
-			<td id="user_id">${info.user_id}</td>
-			<th style="color:white;">작성일자</th>
-			<td class="date">${info.reg_date}</td>
-		</tr>
-		<tr>
-			<th style="color:white;" rowspan="2">내용</th>
-			<td colspan="4">${info.content}</td>
-		</tr>
-		
-		<c:if test="${photo.size()>0}">
-		<tr>
-			<td colspan="4">
-			<c:forEach items="${photo}" var="photo">
-			<img src="/photo/${photo.new_filename}" width="400px" height="400px"/>
-			</c:forEach>
-			</td>
-		</tr>
-		</c:if>
-		
-	</table>
-	
-	<div style="float: right;">
-		<img class="bHit" src="/bank/resources/img/bHit.png">(${info.bHit}) 
-	</div>
-	
-	<br/>
-	<br/>
-	
-	<div style="float: center;">
-		<input type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
-		<input type="button" onclick="del()" value="삭제"/>			
-		<input type="button" onclick="location.href='./inquiryBoardList?currpage=1'" value="목록"/>
-	</div>
-	
-	
 	<br/><br/>
 	
-	  
+	<div id="ibListAll">
+		<table class="ibdetail">
+			<tr>
+				<th style=" color:white;">제목</th>
+				<td>${info.title}</td>
+				<th style="color:white;">카테고리</th>
+				<td class="cate" style="text-align:center" >${info.board_cate}</td>
+			</tr>
+			
+			<tr>
+				<th style="color:white;">작성자</th>
+				<td id="user_id">${info.user_id}</td>
+				<th style="color:white;">작성일자</th>
+				<td class="date" style="text-align:center">${info.reg_date}</td>
+			</tr>
+			<tr>
+				<th style="color:white;" rowspan="2">내용</th>
+				<td colspan="4">${info.content}</td>
+			</tr>
+			
+			<c:if test="${photo.size()>0}">
+			<tr>
+				<td colspan="4">
+				<c:forEach items="${photo}" var="photo">
+				<img src="/photo/${photo.new_filename}" width="400px" height="400px"/>
+				</c:forEach>
+				</td>
+			</tr>
+			</c:if>
+			
+		</table>
+	
+	
+	<div id="board_sub" style="margin-top: 10px;">
+		<img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수" style="
+		    margin-left: 10px;
+		"/>
+		<p class="bHit" style="
+		    margin-top: 6px;
+		    margin-bottom: 8px;
+		">(${info.bHit})</p>
+	</div>
+
+	
+	<br/>
+	<br/>
+	
+	<div style="margin: auto;">
+		<input class="boardButton" type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
+		<input class="boardButton" type="button" onclick="del()" value="삭제"/>			
+		<input class="boardButton" type="button" onclick="location.href='./inquiryBoardList?currpage=1'" value="목록"/>
+	</div>
+
+	<br/><br/>
+	
 	<%@ include file="ibComent.jsp" %>
 	
 	
 	
-	<!--  
-	<table>
-		<thead>
-			<tr>
-				<td colspan="3">
-					<textarea class="adminbutton" name="reply_comment"></textarea><input class="adminbutton" type="button" onclick="reply_write()" value="등록"/>
-						<input type="hidden" name="user_id" value="${sessionScope.loginId}"/>
-						<input type="hidden" name="board_no" value="${info.board_no}"/>	
-				</td>
-			</tr>
-		</thead>
-	
-	<tbody id="reply">
-	</tbody>
-	
-	</table>
-	-->
+
+</div>
 	
 	
+
 	
 	
 
 	
 </body>
 <script>
-
-/*
-console.log("${sessionScope.loginId}");
-console.log($('#user_id').html());
-console.log("${sessionScope.admin}");
-
-if("${sessionScope.loginId}" != $('#user_id').html()) {
-	$('.identify[type="button"]').attr('type','hidden');
-
-};
-
-if("${sessionScope.admin}" != 'Y') {
-	$('.adminbutton').css('display','none');
-
-};
-*/
-
 
 
 	function del(){

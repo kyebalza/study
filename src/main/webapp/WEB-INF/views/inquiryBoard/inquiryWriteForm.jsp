@@ -9,32 +9,61 @@
  
  <style>
  
- 
-	textarea {
-	    width: 1185px;
-	    height: 450px;
-	    resize: none;
+ 	table {
+ 		min-width : 1170px;
+		border: 2px solid #6AA84F;
+		text-align: center;
+		padding : 10px;
+		margin : auto;
+ 	
+ 	}
+ 	
+ 	th {
+ 		height: 50px;
+		background-color:#6AA84F;
+		border: 1px solid #6AA84F;
+		text-align: center;
+		padding: 10px;
+		margin:5px;
+		color:white;
+ 	}
+ 	
+ 	tr,td{
+		border: 1px solid #6AA84F;
+		text-align: center;
+		padding: 10px;
+		margin:5px;
+			
 	}
-	table{
-	   	margin-left: auto;
-	   	margin-right: auto;
-    }
-
- 	.category{
- 		width:150px;
- 		height:50px;
+ 
+ 
+ 	.title {
+ 		border: none;
+ 	
  	}
- 	.title{
- 		width: 1100px;
- 		height:50px;
+ 	
+ 	textarea {
+ 		width: 603px;
+ 		height: 112px;
+ 		border-radius: 9px;
  	}
- 			
- 			
- 	button{
- 		text-align: center;
-		background-color : green;
+ 	
+ 	select{
+		background-color: #6AA84F;
 		color: white;
-	}  
+		border-radius: 9px;
+		height: 30px;
+		text-align: center;
+	}
+	
+	#ibListAll{
+			min-width : 1150px;
+			left: 20%;
+			position: absolute;
+			
+		}
+ 
+ 
  
  
  </style>
@@ -47,27 +76,35 @@
 	<br/>
  
 	<form action="inquiryWrite" method="post" enctype="multipart/form-data">
-		<table> 
+		<table class="ibwrite"> 
 			<tr>
-				<td>
-					<select onclick="boardcate" name="board_cate_no">
+				<th>
+				제목
+				</th>
+				<td colspan="2">
+            		<input class="title" type="text" placeholder="제목을 입력하세요" name="title"/>
+            	</td>
+            </tr>
+            
+            <tr>
+            	<th>카테고리/파일</th>
+            	<td>
+					<select class="select" onclick="boardcate" name="board_cate_no">
 						<c:forEach items="${inquiry_cate}" var="inquiry_cate"> 
 		               		<option value="${inquiry_cate.board_cate_no}">${inquiry_cate.board_cate}</option>
 		               	</c:forEach>
             		</select>
-            		<input class="title" type="text" placeholder="제목을 입력하세요" name="title"/>
 				</td>
-			</tr>
-			<tr>
-				<td><textarea placeholder="내용을 입력하세요 " name="content"></textarea></td>
-			</tr>
-
-			<tr>
 				<td><input type="file" name="uploadFile"/></td>
 			</tr>
+			<tr>
+				<th>내용</th>
+				<td colspan="2"><textarea placeholder="내용을 입력하세요 " name="content"></textarea></td>
+			</tr>
+
 		</table>
 		
-		<input type="button" onclick="location.href='inquiryBoardList'" value="취소"/>
+		<input type="button" id="cancel" onclick="location.href='inquiryBoardList'" value="취소"/>
 		<input type="submit" id="registration" value="등록"/>
 	</form>
 	

@@ -5,23 +5,49 @@
  <meta charset="UTF-8">
  <title>Insert title here</title>
  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
- <style></style>
+ 
+ <style>
+ 	
+
+ 
+
+ 
+ </style>
 </head>
 <body>
-<br/>
+
 댓글
 <hr/>
 
 	<c:if test="${sessionScope.loginId eq 'user'}">
 	<div id="ibcoment_wep">
-		<span id="loginId"> ${loginId} </span>
+		<span id="loginId"
+			style= "
+			padding-left: 10px;
+   			font-weight: bold;
+   			font-size: 17px;
+		"> ${loginId} </span>
 		<div id="ibinput_wep">
 			<form action="ibcoment" id="ibcoment" method="POST"> 
 			<input type="hidden" name="loginId" value="${loginId}">
 			<input type="hidden" name="user_id" value="${info.user_id}"> 
 			<input type="hidden" name="board_no" value="${info.board_no}">
-			<textarea id="reply_content" name="reply_content" placeholder="댓글을 입력하세요"></textarea>
-			<input type="button" id="ibcom_button" value="등록" />
+			<textarea id="reply_content" name="reply_content" placeholder="댓글을 입력하세요"
+				style= "border: 1px solid #6AA84F;
+								border-radius: 9px;
+								width: 1000px;
+			"></textarea>
+			<input type="button" id="ibcom_button" value="등록"
+				style= "
+					color: white; 
+					border: 1px solid #6AA84F;
+	    			border-radius: 9px;
+					background-color: #6AA84F;
+					height: 150;
+					margin-bottom: 0px;
+					top: 1000px;
+					margin-left: 5px;
+			"/>
 			</form>
 		</div>
 	</div>
@@ -52,6 +78,10 @@
 		
 		</c:forEach>
 	</div>
+	
+	
+	
+	<jsp:include page="../footer.jsp"></jsp:include>
 		
 
   
@@ -88,20 +118,6 @@
 		
 	});
 	
-	/*
-	var loginId = "${loginId}";
-	var $board_no = "${info.board_no}";
-	var $user_id = "${info.user_id}";
-	
-	$('.ibcom_del').click(function () {
-		
-		var yn = confirm("이 댓글을 삭제 하시겠습니까?");
-		
-		if(yn){
-			location.href='./freecomdelete?reply_no=${info.reply_no}';
-		}
-	})
-	*/
 
 </script>
 </html>

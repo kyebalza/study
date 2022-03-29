@@ -15,35 +15,22 @@
     <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
  
  <style>
-
- 	table{
- 		margin-left: auto;
-	   	margin-right: auto;
- 		min-width: 1300px;
-	   	max-width: 1166px;
+ 
+ 	.List {
+ 		min-width : 1170px;
+		border: 2px solid #6AA84F;
 		text-align: center;
-		padding: 10px;
-		margin: auto;
-		
-		
-	}
+		padding : 10px;
+		margin : auto;
+ 	}
 	
-	tr,th,td {
+	.List tr,th,td {
 		border: 1px solid green;
-	}
-	
-
-	
-	input.button{
 		text-align: center;
+		padding: 5px;
 	}
 	
-	th{
-		background-color: #6AA84F;
-		text-align: center;
-	}
-	
-	button{
+	#ibwrite{
 		text-align: center;
 		position: relative;
 		background-color : #6AA84F;
@@ -55,17 +42,13 @@
 		border-radius: 11px;
 	}
 	
-	.InquirySearch {
+	.search{
 		float: right;
 		left : 40%;
-		
 	}
 	
 	
-	.iall {
-		margin: right;
-		position: absolute;
-			/* background: blue; */
+	#ibListAll{
 		min-width : 1150px;
 		left: 20%;
 	}
@@ -79,9 +62,7 @@
 		text-align: center;
 		background: #6AA84F;
 		color: white;
-	
 	}
-	
 	
 	.select option{
 		background: white;
@@ -91,92 +72,97 @@
 	}
 	
 	
-
+	.ibwrite{
+		background-color : #6AA84F;
+		color: white;
+		border: none;
+		margin: auto;
+		width: 100px;
+		height: 30px;
+		border-radius: 11px;
+	}
 	
-
-
-		
+	
+	
+	
+	
+	
  </style>
 </head>
 <body>
 
 	
 	<%@ include file="../header.jsp" %>
-	 
-
 	<br/>
 	
+	<div id="ibListAll">
+
+		<div>
+			<button class="ibwrite" onclick="location.href='inquiryWriteForm'">글쓰기</button>
+			
+			<form class="Search" action="InquiryBoardSearch" method="GET" name="InquiryBoardSearch" autocomplete="off">
+				<select class="select" name ="SearchType">
+					<option value="all" selected>전체</option>
+					<option value="tit">제목</option>
+					<option value="user">작성자</option>
+				</select>
+				
+				<input type="text" name="Keyword" placeholder="검색할 내용을 입력해주세요." style="
+					width: 230px;
+					height: 30px;
+					border-radius: 9px;
+					border: 1px solid #6AA84F;
+					text-align: center;"
+				/>
+				<input type="button" value="검색" id="btnSearch" onclick="SearchList()"
+					style="
+						background-color : #6AA84F;
+						color: white;
+						border: none;
+						margin: auto;
+						width: 100px;
+						height: 30px;
+						border-radius: 11px;
+					"				
+				/>
+			</form>
+		</div>
 
 	
-		<button class="iwritebutton" onclick="location.href='inquiryWriteForm'">글쓰기</button>
-		
-		<form class="InquirySearch" action="InquiryBoardSearch" method="GET" name="InquiryBoardSearch" autocomplete="off">
-			
-			<select class="select" name ="SearchType">
-				<option value="all" selected>전체</option>
-				<option value="tit">제목</option>
-				<option value="user">작성자</option>
-			</select>
-			
-			<input type="text" name="Keyword" placeholder="검색할 내용을 입력해주세요." style="
-				width: 230px;
-				height: 30px;
-				border-radius: 9px;
-				border: 1px solid #6AA84F;
-				text-align: center;"
-			/>
-			<input type="button" value="검색" id="btnSearch" onclick="SearchList()"
-			
-			style="
-				background-color : #6AA84F;
-				color: white;
-				border: none;
-				margin: auto;
-				width: 100px;
-				height: 30px;
-				border-radius: 11px;
-			"/>
-		</form>
+			<table class="List">
+				<thead>
+					<tr style="background: #6AA84F; color:white;">
+						<th>글번호</th>
+						<th>제목</th>
+						<th>카테고리</th>
+						<th>작성자</th>
+						<th>조회수</th>
+						<th>작성일자</th>
+						<th>답변여부</th>
+					</tr>
+					</thead>
+				
+				<!--  
+				
+				<c:if test="${list eq null || size ==0}">
+				<tr><td colspan="7">등록된 글이 없습니다.</td></tr>
+				</c:if>
+				
+				-->	
+				
+				<tbody id= "inquirylist"></tbody>
+					<tr>
+						<td colspan="7" id="paging" >
+							<div class="container" style="width:850px;">                           
+					        	<nav aria-label="Page navigation" style="text-align:center;">
+					            	<ul class="pagination" id="pagination"></ul>
+					         	</nav>               
+					        </div>
+						</td>
+					</tr>	
+			</table>
 
-	
-	<table>
-		<thead>
-			<tr>
-				<th style="color:white;">글번호</th>
-				<th style="color:white;">제목</th>
-				<th style="color:white;">카테고리</th>
-				<th style="color:white;">작성자</th>
-				<th style="color:white;">조회수</th>
-				<th style="color:white;">작성일자</th>
-				<th style="color:white;">답변여부</th>
-			</tr>
-			</thead>
-		
-		<!--  
-		
-		<c:if test="${list eq null || size ==0}">
-		<tr><td colspan="7">등록된 글이 없습니다.</td></tr>
-		</c:if>
-		
-		-->	
-		
-		<tbody id= "inquirylist"></tbody>
-			<tr>
-				<td colspan="7" id="paging" >
-					<div class="container" style="width:850px;">                           
-			        	<nav aria-label="Page navigation" style="text-align:center;">
-			            	<ul class="pagination" id="pagination"></ul>
-			         	</nav>               
-			        </div>
-				</td>
-			</tr>	
-	</table>
-	
-
-	
-	
-	
-	
+</div>
 	
 	<jsp:include page="../footer.jsp"></jsp:include>
 	

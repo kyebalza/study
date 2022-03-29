@@ -111,6 +111,7 @@ body{
 			</table>
 		</form>
 	</div>
+<%@ include file="../footer.jsp" %>	
 </body>
 <script>
 var pw = '';

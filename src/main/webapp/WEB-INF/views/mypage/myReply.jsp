@@ -72,6 +72,7 @@ body{
             </div>
 </div>	.
 </div>
+<%@ include file="../footer.jsp" %>
 </body>
 <script>
 var currPage = 1;

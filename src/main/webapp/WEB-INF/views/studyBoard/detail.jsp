@@ -170,9 +170,7 @@
 		</div>
 	<hr/>
 	<%@ include file="sbComent.jsp" %>
-	<%-- <div id="footer">
-		<%@ include file="../footer.jsp" %>
-	</div>--%>
+	<%@ include file="../footer.jsp" %>
 	</div>
 </body>
 <script>

@@ -40,7 +40,6 @@
 		*/
 			min-width : 1150px;
 			left: 20%;
-			position: absolute;
 		}
 		.sbupdate{
 			min-width : 1170px;
@@ -130,9 +129,12 @@
 			</table>
 			<br/>
 			<input id="file" type="file" name="uploadFile" 
-							style="border: 1px solid #6AA84F; float:right;"/>
+							style="border: 1px solid #6AA84F;
+										float:right;
+										margin-right: 19%;"/>
 			<br/>
-			<div style="margin-top: 10px;">
+			<div style="float: left;
+							margin-left: 19%;">
 				<input type="button" onclick="location.href='detail?board_no=${dto.board_no}'" value="취소"
 					style="
 							background-color : #6AA84F;
@@ -156,9 +158,7 @@
 			</div>
 		</form>
 	</div>
-	<%-- <div id="footer">
-		<%@ include file="../footer.jsp" %>
-	</div>--%>
+	<%@ include file="../footer.jsp" %>
 </body>
 <script>
 	

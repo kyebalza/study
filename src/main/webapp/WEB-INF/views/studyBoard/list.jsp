@@ -24,23 +24,27 @@
 			text-align: center;
 			padding: 5px;
 		}
-		#sbwrite{/*카테고리 검색내용 입력*/
+		#sbwrite{/*글쓰기버튼*/
 			text-align: center;
 			position: relative;
 			background-color : #6AA84F;
 			color: white;
 			border: none;
-			margin-left: 340px;
-    		margin-top: 70px;
+			margin-left: 360px;
+    		margin-top: 40px;
+    		margin-bottom: 20px;
 			width: 100px;
 			height: 30px;
 			border-radius: 11px;
+			top: 96px;
+			
 		}
-		.search{
+		.search{/*카테고리 검색*/
 			 /*float: right;
 			 left : 40%;*/
-			 margin-top: 60px;
-    		 margin-right: 130px;
+			 margin-top: 40px;
+   		     margin-right: 150px;
+    		 margin-left: 1095px;
 		}
 		#sbListAll{
 		/*

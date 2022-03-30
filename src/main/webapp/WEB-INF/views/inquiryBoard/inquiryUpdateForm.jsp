@@ -20,10 +20,7 @@
 	   	margin-right: auto;
     }
 
- 	.category{
- 		width:150px;
- 		height:50px;
- 	}
+
  	.title{
  		width: 1099px;
  		height:50px;
@@ -35,6 +32,9 @@
 <body>
 
 	<%@ include file="../header.jsp" %>
+	
+	<br/>
+	<br/>
 
 	
 	<form action="inquiryUpdate" method="post" enctype="multipart/form-data">
@@ -66,6 +66,8 @@
 		<input type="button" onclick="location.href='inquiryBoardDetail?board_no=${dto.board_no}'" value="취소"/>
 		<input type="submit" value="저장"/>
 	</form>
+	
+	<jsp:include page="../footer.jsp"></jsp:include>
 
 	
   	

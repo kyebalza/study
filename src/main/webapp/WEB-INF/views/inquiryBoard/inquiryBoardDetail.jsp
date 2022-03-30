@@ -83,6 +83,17 @@
 		resize: none;
 	}
 	
+	.buttonout{
+		display: flex;
+	}
+	
+	.buttonin{
+		margin: auto;
+		
+	}
+	
+	
+	
 	
 	
 	
@@ -143,12 +154,14 @@
 	<br/>
 	<br/>
 	
-	<div style="margin: auto;">
-		<c:if test="${sessionScope.loginId eq info.user_id}">
-			<input class="boardButton" type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
-			<input class="boardButton" type="button" onclick="del()" value="삭제"/>			
-		</c:if>
-		<input class="boardButton" type="button" onclick="location.href='./inquiryBoardList?currpage=1'" value="목록"/>
+	<div class="buttonout">
+		<div class="buttonin">
+			<c:if test="${sessionScope.loginId eq info.user_id}">
+				<input class="boardButton" type="button" onclick="location.href='./inquiryUpdateForm?board_no=${info.board_no}'" value="수정"/>
+				<input class="boardButton" type="button" onclick="del()" value="삭제"/>			
+			</c:if>
+			<input class="boardButton" type="button" onclick="location.href='./inquiryBoardList?currpage=1'" value="목록"/>
+		</div>
 	</div>
 
 	<br/><br/>

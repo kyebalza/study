@@ -10,7 +10,7 @@
  <style>
  
  	table {
- 		min-width : 1170px;
+ 		min-width : 1000px;
 		border: 2px solid #6AA84F;
 		text-align: center;
 		padding : 10px;
@@ -38,13 +38,14 @@
  
  
  	.title {
+ 		width: 1000px;
  		border: none;
  	
  	}
  	
  	textarea {
- 		width: 603px;
- 		height: 112px;
+ 		width: 1000px;
+ 		height: 250px;
  		border-radius: 9px;
  	}
  	
@@ -56,13 +57,26 @@
 		text-align: center;
 	}
 	
+
+	
 	#ibListAll{
 			min-width : 1150px;
 			left: 20%;
 			position: absolute;
 			
 		}
- 
+	
+	
+	.buttonout{
+		display: flex;
+	}
+	.buttonin{
+		margin: auto;
+		
+	}
+		
+
+
  
  
  
@@ -87,7 +101,7 @@
             </tr>
             
             <tr>
-            	<th>카테고리/파일</th>
+            	<th>카테고리 선택</th>
             	<td>
 					<select class="select" onclick="boardcate" name="board_cate_no">
 						<c:forEach items="${inquiry_cate}" var="inquiry_cate"> 
@@ -95,18 +109,47 @@
 		               	</c:forEach>
             		</select>
 				</td>
-				<td><input type="file" name="uploadFile" accept=".gif, .jpg, .png"/></td>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td colspan="2"><textarea placeholder="내용을 입력하세요 " name="content"></textarea></td>
+				<td><textarea placeholder="내용을 입력하세요 " name="content"></textarea></td>
+			</tr>
+			<tr>
+				<th>파일첨부</th>
+				<td><input type="file" name="uploadFile"/></td>
 			</tr>
 
 		</table>
 		
-		<input type="button" id="cancel" onclick="location.href='inquiryBoardList'" value="취소"/>
-		<input type="button" id="registration" value="등록"/>
+		<br/>
+		
+		<div class="buttonout">
+			<div class="buttonin">
+				<input type="button" id="cancel" onclick="location.href='inquiryBoardList'" value="취소"
+					style="
+						background-color : #6AA84F;
+						color: white;
+						border: none;
+						width: 100px;
+						height: 30px;
+						border-radius: 11px;
+					"/>
+				
+				<input type="button" id="registration" value="등록"
+					style="
+						background-color : #6AA84F;
+						color: white;
+						border: none;
+						width: 100px;
+						height: 30px;
+						border-radius: 11px;
+					"/>
+			</div>
+		</div>
+		
 	</form>
+	
+	<jsp:include page="../footer.jsp"></jsp:include>
 	
 	
 	

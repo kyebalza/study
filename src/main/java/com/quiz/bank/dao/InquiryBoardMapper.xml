@@ -100,10 +100,10 @@
 	
 	
 	<!-- 문의게시판 삭제하기 -->
-	<delete id="inquirydelete">
+	<update id="inquirydelete">
 	<!-- DELETE FROM inquiry_board WHERE board_no = #{param1} -->
 		UPDATE inquiry_board SET del_flag = 1 WHERE board_no = #{param1}
-	</delete>
+	</update>
 	
 	
 	<!-- 문의게시판 댓글 조회 -->

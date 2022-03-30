@@ -91,7 +91,7 @@
 	
 	<!-- 상세보기 파일 가져오기 -->
 	<select id="photo" resultType="StudyBoard">
-		SELECT ori_filename, new_filename FROM photo 
+		SELECT photo_no,ori_filename, new_filename FROM photo 
 			WHERE board_no = #{board_no} AND board_name = 'study_board'
 	</select>
 	
@@ -103,11 +103,11 @@
 	</update>
 	
 	<!-- 파일수정업로드 -->
-	<update id="fileUpdate" parameterType="hashmap">
-		UPDATE photo SET board_no=#{param1}, ori_filename =#{param2}
-		,new_filename =#{param3} ,board_name = 'study_board'
-			 WHERE board_no = #{param1} AND board_name = 'study_board'
-	</update>
+	<insert id="fileUpdate" parameterType="hashmap">
+		INSERT into photo (photo_no,board_no, ori_filename, new_filename, board_name)
+			VALUES (#{param1},#{param2},#{param3},#{param4},'study_board') 
+				ON DUPLICATE KEY UPDATE ori_filename = #{param3}, new_filename = #{param4}
+	</insert>
 	
 	<!-- 삭제하기 -->
 	<delete id="delete">

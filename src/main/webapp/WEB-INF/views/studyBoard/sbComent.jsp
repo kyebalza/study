@@ -84,7 +84,7 @@
 					    height: 150;
 					    margin-bottom: 0px;
 					    position: absolute;
-					    top: 1180px;
+					    top: 750px;
 					    margin-left: 5px;
 				"/>
 			</form>
@@ -249,40 +249,49 @@
 		
 	
 	}
-		 
+		
+	//댓글 신고하기
  	$(document).on("click",".sbComReport",function(){
 		
-		if ('${loginId}' == null) {
+		if ('${loginId}' == '') {
 			alert ('로그인이 필요한 서비스 입니다.');
 		}else{
 			var report_reason = prompt ("신고 사유를 입력해주세요.","");
-			console.log(report_reason);
 			
-			var board_name = $('#board_name').val();
-			var board_no = $('#board_no').val();
-			var reported_user = $('.sbcuser_id').val(); //값을 못가져옴
-			var reply_no = $('.reply_no').val();
-			var board_cate_no = $('#board_cate_no').val();
-			
-			console.log(reported_user);
-			console.log(reply_no);
-			
-			var params = {'board_name':board_name ,'board_no':board_no ,'reported_user':reported_user, 'reply_no':reply_no ,'report_reason':report_reason}
-			
-			console.log(params);
-			
-			 $.ajax({
-				type:'POST',
-				url:'sbcomreport',
-				data:params,
-				dataType:'JSON',
-				success:function(result){
-					console.log('신고등록 완료',result);
-				},
-				error:function(e){
-					console.log('서버에 문제가 발생하였습니다.',e);
-				}
-			});
+			if(report_reason == ''){
+				alert('신고사유를 입력해주세요');
+			}else if(report == null){
+				alert('취소했습니다.');
+			}else{
+				
+				console.log(report_reason);
+				
+				var board_name = $('#board_name').val();
+				var board_no = $('#board_no').val();
+				var reported_user = $('.sbcuser_id').val(); //값을 못가져옴
+				var reply_no = $('.reply_no').val();
+				var board_cate_no = $('#board_cate_no').val();
+				
+				console.log(reported_user);
+				console.log(reply_no);
+				
+				var params = {'board_name':board_name ,'board_no':board_no ,'reported_user':reported_user, 'reply_no':reply_no ,'report_reason':report_reason}
+				
+				console.log(params);
+				
+				 $.ajax({
+					type:'POST',
+					url:'sbcomreport',
+					data:params,
+					dataType:'JSON',
+					success:function(result){
+						console.log('신고등록 완료',result);
+					},
+					error:function(e){
+						console.log('서버에 문제가 발생하였습니다.',e);
+					}
+				});
+			}
 			
 			
 		

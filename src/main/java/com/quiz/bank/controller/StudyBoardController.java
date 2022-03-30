@@ -171,9 +171,14 @@ public class StudyBoardController {
 		//문제가져오기
 		StudyBoardDTO qdto = service.studyQuiz(board_no);
 		model.addAttribute("Qinfo", qdto);
+		//사진 가져오기
+		StudyBoardDTO photo = service.photo(board_no);
+		logger.info("사진 : {}",photo);
+		model.addAttribute("photo",photo);
 		//페이지 이동은 꼭 Controller에서만 하는 건 아니다.
 		return service.updateForm(model, board_no);
 	}
+
 	
 	/*공부 게시글 수정*/
 	@RequestMapping(value = "/studyBoard/update", method = RequestMethod.POST)

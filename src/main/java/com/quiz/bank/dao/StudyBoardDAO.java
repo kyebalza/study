@@ -87,6 +87,8 @@ ArrayList<HashMap<String, String>> SBClistCall(int pagePerCnt, int offset, Strin
 
 int SearchallCount(StudyBoardDTO sBdto);
 
+void fileUpdate(int photo_no, int board_no, String oriFileName, String newFileName);
+
 
 
 

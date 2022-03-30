@@ -25,7 +25,7 @@
 		}
 		th{
 			text-align: center;
-			width: 100px;
+			width: 130px;
 			background-color: #6AA84F;
 			color: white;
 				
@@ -131,6 +131,7 @@
 					<%-- <th style="width: 25px; padding : 15px;">이미지</th>--%>
 					<td colspan="4" style="padding : 15px;" style="padding : 15px;">
 						<%-- <c:forEach items="${photo}" var="photo">--%>
+							<input type="hidden" value="${photo.photo_no}"/>
 							<img src="/photo/${photo.new_filename}" width="400px" height="400px"/>
 						<%-- </c:forEach>--%>
 					</td>
@@ -169,8 +170,10 @@
 		</div>
 		<div style="margin-top: 10px;">
 			<input class="boardButton" type="button" onclick="location.href='./list'" value="목록"/>
-			<input class="boardButton" type="button" onclick="location.href='./updateForm?board_no=${info.board_no}'" value="수정"/>
-			<input class="boardButton" type="button" onclick="del()" value="삭제"/>
+			<c:if test="${loginId == info.user_id}">	
+				<input class="boardButton" type="button" onclick="location.href='./updateForm?board_no=${info.board_no}'" value="수정"/>
+				<input class="boardButton" type="button" onclick="del()" value="삭제"/>
+			</c:if>
 		</div>
 	<hr/>
 	<%@ include file="sbComent.jsp" %>
@@ -185,33 +188,40 @@ $('.report').click(function(){
 	
 	if('${loginId}' == ''){
 		alert("로그인이 필요한 서비스 입니다.");
-		location.href='redirect:/loginPage';
+		//location.href='redirect:/login';
 	}else{
 		
 		var report = prompt("신고 사유를 입력해주세요.","");
-		console.log(report);
 		
-		var board_name = $('#board_name').val();
-		var board_no = $('#board_no').val();
-		var reported_user = '${info.user_id}';//글 작성자
-		
-		console.log(report,'+',board_name,'+',board_no,'+',reported_user);
-		
-		var params = {'report':report, 'board_name':board_name,'board_no':board_no,'reported_user':reported_user};
-		
-		$.ajax({
-			type:'POST',
-			url:'studyReport',
-			data:params,
-			dataType:'JSON',
-			success:function(result){
-				console.log('신고등록 완료',result);
-				alert("신고가 완료되었습니다.");
-			},
-			error:function(e){
-				console.log('서버에 문제가 발생하였습니다.',e);
-			}
-		});//ajax괄호끝
+		if(report == ''){
+			alert('신고내용을 입력해주세요');
+		}else if(report == null){
+			alert('취소했습니다.');
+		}else{
+			console.log(report);
+			
+			var board_name = $('#board_name').val();
+			var board_no = $('#board_no').val();
+			var reported_user = '${info.user_id}';//글 작성자
+			console.log(report,'+',board_name,'+',board_no,'+',reported_user);
+			
+			var params = {'report':report, 'board_name':board_name,'board_no':board_no,'reported_user':reported_user};
+			
+			$.ajax({
+				type:'POST',
+				url:'studyReport',
+				data:params,
+				dataType:'JSON',
+				success:function(result){
+					console.log('신고등록 완료',result);
+					alert("신고가 완료되었습니다.");
+				},
+				error:function(e){
+					console.log('서버에 문제가 발생하였습니다.',e);
+				}
+			});//ajax괄호끝
+			
+		}
 		
 	}
 });//신고하기 괄호끝

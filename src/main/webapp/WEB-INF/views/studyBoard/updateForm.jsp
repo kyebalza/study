@@ -53,13 +53,13 @@
 	<%@ include file="../header.jsp" %>
 	<br/>
 	<div id="sbListAll">
-		<form action="update" method="post"  enctype="multipart/form-data">
+		<form id="sbupdate" action="update" method="post"  enctype="multipart/form-data">
 			<table class="sbupdate">
 				<tr>
 					<th>제목</th>
 					<td colspan="3">
 		            	<input type="hidden" name="board_no" value="${dto.board_no}"/>
-		            	<input type="text" name="title" value="${dto.title }"
+		            	<input type="text" class="title" name="title" value="${dto.title }"
 		            		style="
 								width: 230px;
 								height: 30px;
@@ -123,12 +123,15 @@
 				<tr>
 					<th>이미지</th>
 					<td colspan="3" style="padding : 15px;" style="padding : 15px;">
-						<img src="/photo/${photo.new_filename}" width="400px" height="400px"/>
+						<c:if test="${photo != null}">
+							<input class="pdel" type="hidden" name="photo_no" value="${photo.photo_no}"/>
+							<img src="/photo/${photo.new_filename}" width="400px" height="400px"/>
+						</c:if>
 					</td>
 				</tr>
 			</table>
 			<br/>
-			<input id="file" type="file" name="uploadFile" 
+			<input id="file" type="file" name="uploadFile" accept="image/jpg, image/jpeg, image/png"
 							style="border: 1px solid #6AA84F;
 										float:right;
 										margin-right: 19%;"/>
@@ -145,7 +148,7 @@
 							height: 30px;
 							border-radius: 11px;
 					"/>
-				<input type="submit" value="등록" 
+				<input class="update_submit" type="button" value="등록" 
 					style="
 							background-color : #6AA84F;
 							color: white;
@@ -161,6 +164,17 @@
 	<%@ include file="../footer.jsp" %>
 </body>
 <script>
+
 	
+	
+	$('.update_submit').click(function(){
+		var title = $('input[name="title"]').val();
+		var blank_pattern = /^\s+|\s+$/g;
+		if(title.replace(blank_pattern, '') == ""){
+			alert('제목은 필수입력 사항입니다.');
+		}else{
+			$('#sbupdate').submit();
+		}
+	});
 </script>
 </html>

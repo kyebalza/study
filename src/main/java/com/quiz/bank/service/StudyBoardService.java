@@ -133,19 +133,47 @@ public class StudyBoardService {
 		return "/studyBoard/updateForm";
 	}
 
-	public String update(HashMap<String, String> params, MultipartFile uploadFile) {
-		logger.info("update 서비스 도착 : {}",params);
+
+public String update(HashMap<String, String> params, MultipartFile uploadFile) {
+		logger.info("update 서비스 도착 : {},{}",params,uploadFile);
+//		int board_no = Integer.parseInt(params.get("board_no"));
+//		int photo_no =Integer.parseInt(params.get("photo_no"));
+//		logger.info("photo_no : {}",photo_no);
+//		String page = "redirect:/studyBoard/detail?board_no="+board_no;
+//		
+//		if(dao.update(params)>0) {
+//			page = "redirect:/studyBoard/detail?board_no="+board_no;
+//			if(uploadFile == null) {
+//				logger.info("사진 저장처리");
+//				saveFile(board_no,uploadFile);//파일저장 처리
+//			}else {
+//				logger.info("사진 업데이트 처리");
+//				updateFile(board_no, uploadFile,photo_no);//파일업데이트 처리
+//			}
+//		}
+		
 		int board_no = Integer.parseInt(params.get("board_no"));
+		int photo_no = 0;
+		if(params.get("photo_no") != null) {
+			photo_no =Integer.parseInt(params.get("photo_no"));
+		}
+		logger.info("photo_no : {}",photo_no);
 		String page = "redirect:/studyBoard/detail?board_no="+board_no;
 		
 		if(dao.update(params)>0) {
 			page = "redirect:/studyBoard/detail?board_no="+board_no;
-			updateFile(board_no, uploadFile);//파일저장 처리			
+			if(uploadFile == null) {
+				logger.info("사진 저장처리");
+				saveFile(board_no,uploadFile);//파일저장 처리
+			}else {
+				logger.info("사진 업데이트 처리");
+				updateFile(board_no, uploadFile,photo_no);//파일업데이트 처리
+			}
 		}
 		return page;
 	}
 	
-	private void updateFile(int board_no, MultipartFile uploadFile) {
+	private void updateFile(int board_no, MultipartFile uploadFile, int photo_no) {
 		
 		try {
 			String oriFileName = uploadFile.getOriginalFilename();
@@ -160,8 +188,8 @@ public class StudyBoardService {
 				byte[] bytes = uploadFile.getBytes();
 				Path path = Paths.get("C:/upload/"+newFileName);
 				Files.write(path,bytes);
-				logger.info(oriFileName+"Save완료!");
-				dao.fileUpdate(board_no,oriFileName,newFileName);
+				logger.info(oriFileName+"Update완료!");
+				dao.fileUpdate(photo_no,board_no,oriFileName,newFileName);
 			}
 			
 		}catch(Exception e){

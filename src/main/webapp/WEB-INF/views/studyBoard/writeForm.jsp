@@ -154,9 +154,10 @@
 				<tr>
 					<th>이미지</th>
 					<td>
-						<input id="file" type="file" name="uploadFile" 
+						<input id="file" type="file" name="uploadFile" accept="image/jpg, image/jpeg, image/png"
 							style="border: 1px solid #6AA84F;
 							"/><!-- 파일첨부 -->
+							
 					</td>
 				</tr>
 			</table>
@@ -188,11 +189,15 @@
 	</div>
 </body>
 <script>	
+	
+
+
 	$('#SBsubmit').click(function(){
 		console.log('버튼클릭');
 		var title = $('#title').val();
+		var blank_pattern = /^\s+|\s+$/g;
 		
-		if(title == ""){
+		if(title.replace(blank_pattern, '') == ""){
 			alert("제목을 입력해주세요.");
 			$('#title').val('');
 			$('#title').focus();

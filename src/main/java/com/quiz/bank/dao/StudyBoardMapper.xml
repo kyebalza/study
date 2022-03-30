@@ -115,22 +115,7 @@
 	</delete>
 	
 	
-	 <!-- 공부게시판 검색-->	
- 	<select id="studySearch" parameterType="StudyBoard" resultType="StudyBoard">
- 		SELECT * FROM study_board JOIN board_category ON study_board.board_cate_no = board_category.board_cate_no
- 		
- 		<choose>
- 			<when test="SearchType != null and SearchType.equals('all')">
- 				WHERE title OR user_id LIKE CONCAT ('%',#{keyword},'%')
- 			</when>
- 			<when test="SearchType != null and SearchType.equals('title') ">
-				WHERE title LIKE CONCAT ('%',#{keyword},'%')
-			</when>
-			<when test="SearchType != null and SearchType.equals('user') ">
-				WHERE user_id LIKE CONCAT ('%',#{keyword},'%')
-			</when>
- 		</choose>
- 	</select>
+
  	
  	<!-- 좋아요 가져오기 
  	<select id="like" resultType="StudyBoard">
@@ -221,5 +206,37 @@
  		INSERT INTO report_board (reply_no,board_name,board_no,reported_user,report_user,report_reason,report_state)
  		 VALUES (#{reply_no},#{board_name}, #{board_no},#{reported_user},#{report_user},#{report_reason},'0')
  	</insert>
- 
+ 	
+ 	<select id="SearchallCount" parameterType="StudyBoard" resultType="int">
+		SELECT COUNT (board_no) FROM inquiry_board WHERE del_flag = 0
+		<choose>
+			<when test="SearchType != null and SearchType.equals('all') ">
+				AND (title LIKE CONCAT ('%',#{keyword},'%') OR content LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC
+			</when>
+			<when test="SearchType != null and SearchType.equals('tit') ">
+				AND (title LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC
+			</when>
+			<when test="SearchType != null and SearchType.equals('user') ">
+				AND (user_id LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC
+			</when>
+		</choose> 	
+ 	</select>
+
+
+	 <!-- 공부게시판 검색-->	
+ 	<select id="studySearch" parameterType="StudyBoard" resultType="StudyBoard">
+ 		SELECT * FROM study_board JOIN board_category ON study_board.board_cate_no = board_category.board_cate_no
+ 		
+		<choose>
+			<when test="SearchType != null and SearchType.equals('all') ">
+				AND (title LIKE CONCAT ('%',#{keyword},'%') OR content LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC LIMIT 10 offset ${offset}
+			</when>
+			<when test="SearchType != null and SearchType.equals('tit') ">
+				AND (title LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC LIMIT 10 offset ${offset}
+			</when>
+			<when test="SearchType != null and SearchType.equals('user') ">
+				AND (user_id LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC LIMIT 10 offset ${offset}
+			</when>
+		</choose>
+ 	</select>	
 </mapper>

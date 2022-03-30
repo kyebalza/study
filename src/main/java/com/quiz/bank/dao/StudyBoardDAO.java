@@ -85,6 +85,8 @@ int sbCallCount(String board_no);
 
 ArrayList<HashMap<String, String>> SBClistCall(int pagePerCnt, int offset, String board_no);
 
+int SearchallCount(StudyBoardDTO sBdto);
+
 
 
 

@@ -127,9 +127,29 @@ public class FreeBoardService {
 	}
 
 	//자유 게시판 리스트 검색
-	public List<FreeBoardDTO> FreeSearch(FreeBoardDTO fbdto) {
+	public HashMap<String, Object> FreeSearch(FreeBoardDTO fbdto) {
 		logger.info("자유 게시판 리스트 검색");
-		return fbdao.FreeSeasrch(fbdto);
+		int currPage = fbdto.getPage();
+		int pagePerCnt = fbdto.getCnt();
+		
+		int offset = ((currPage -1) * pagePerCnt -1) >=0 ?
+				((currPage-1)*pagePerCnt-1) : 0;
+		logger.info("offset : " +offset);
+		fbdto.setOffset(offset);
+		
+		int totalCount = fbdao.allCount(fbdto); // 테이블 모든 글의 총 갯수
+		// 만들 수 있는 페이지의 수 (전체 갯수 / 보여줄 수)
+		int range = totalCount%pagePerCnt > 0 ?
+				(totalCount/pagePerCnt)+1 : (totalCount/pagePerCnt);
+		
+		logger.info("총 갯수 : {}",totalCount);
+		logger.info("만들 수 있는 총 페이지 : {}",range);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("totalCount", totalCount);
+		map.put("pages", range);
+		map.put("list", fbdao.FreeSeasrch(fbdto));				
+		
+		return map;
 	}
 
 	//자유 게시판 상세보기 이동

@@ -77,6 +77,24 @@
 	</update>
 	
 	
+		<!-- 문의 게시판 페이징 관련 -->
+	<select id="allCount" resultType="int">
+		SELECT COUNT (board_no) FROM free_board WHERE del_flag = 0
+		<choose>
+			<when test="SearchType != null and SearchType.equals('all') ">
+				AND (title LIKE CONCAT ('%',#{keyword},'%') OR content LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC
+			</when>
+			<when test="SearchType != null and SearchType.equals('tit') ">
+				AND (title LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC
+			</when>
+			<when test="SearchType != null and SearchType.equals('user') ">
+				AND (user_id LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC
+			</when>
+		</choose>
+	</select>
+	
+	
+	
 
 	<!-- 자유 게시판 검색 쿼리 -->
 	<select id="FreeSeasrch" parameterType="com.quiz.bank.dto.FreeBoardDTO" resultType="com.quiz.bank.dto.FreeBoardDTO">
@@ -84,13 +102,13 @@
 
 			<choose>
 				<when test="SearchType != null and SearchType.equals('all') ">
-					WHERE del_flag = 0 AND title OR user_id LIKE CONCAT ('%',#{keyword},'%')
+					WHERE del_flag = 0 AND (title LIKE CONCAT ('%',#{keyword},'%') OR content LIKE CONCAT ('%',#{keyword},'%'))  ORDER BY board_no DESC LIMIT 10 offset ${offset}
 				</when>
 				<when test="SearchType != null and SearchType.equals('tit') ">
-					WHERE del_flag = 0 AND title LIKE CONCAT ('%',#{keyword},'%')
+					WHERE del_flag = 0 AND (title LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC LIMIT 10 offset ${offset}
 				</when>
 				<when test="SearchType != null and SearchType.equals('user') ">
-					WHERE del_flag = 0 AND user_id LIKE CONCAT ('%',#{keyword},'%')
+					WHERE del_flag = 0 AND (user_id LIKE CONCAT ('%',#{keyword},'%')) ORDER BY board_no DESC LIMIT 10 offset ${offset}
 				</when>	
 			</choose>	
 	</select>

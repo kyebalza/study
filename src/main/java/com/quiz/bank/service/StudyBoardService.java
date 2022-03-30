@@ -195,9 +195,25 @@ public class StudyBoardService {
 		return map;
 	}
 
-	public List<StudyBoardDTO> studySearch(StudyBoardDTO SBdto) {
+	public HashMap<String,Object> studySearch(StudyBoardDTO SBdto) {
 		logger.info("공부게시판 검색 서비스 도착");
-		return dao.studySearch(SBdto);
+		int currPage = SBdto.getPage();
+		int pagePerCnt = SBdto.getCnt();
+		int offset = ((currPage -1) * pagePerCnt -1) >=0 ?
+				((currPage-1)*pagePerCnt-1) : 0;
+		logger.info("offset : " +offset);
+		SBdto.setOffset(offset);		
+		int totalCount = dao.SearchallCount(SBdto); // 테이블 모든 글의 총 갯수
+		// 만들 수 있는 페이지의 수 (전체 갯수 / 보여줄 수)
+		int range = totalCount%pagePerCnt > 0 ?
+				(totalCount/pagePerCnt)+1 : (totalCount/pagePerCnt);		
+		logger.info("총 갯수 : {}",totalCount);
+		logger.info("만들 수 있는 총 페이지 : {}",range);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("totalCount", totalCount);
+		map.put("pages", range);
+		map.put("list", dao.studySearch(SBdto));			
+		return map;
 	}
 
 	public ArrayList<HashMap<String, String>> test_no() {

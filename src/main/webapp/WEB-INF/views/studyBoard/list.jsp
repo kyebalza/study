@@ -85,7 +85,7 @@
 			<form class="search" action="studyboardSearch" method="GET" name="studyboardSearch" autocomplete="off">
 					<select class="select" name ="SearchType">
 						<option selected value="all">전체</option>
-						<option value="title">제목</option>
+						<option value="tit">제목</option>
 						<option value="user">작성자</option>
 					</select>
 					<input type="text" name="Keyword" placeholder="검색할 내용을 입력해주세요"
@@ -97,8 +97,7 @@
 							text-align: center;
 						"
 					/>
-					<input type="button" value="검색" onclick="studySearch()"
-						onKeypress="javascript:if(event.keyCode == 13){studySearch()}"
+					<input type="button" value="검색" id="btnSearch"
 						style="
 							background-color : #6AA84F;
 							color: white;
@@ -146,22 +145,36 @@
 		<%@ include file="../footer.jsp" %> 
 </body>
 <script>
+var currPage = 1;
+var totalPage = 2;
+studySearch(currPage,10);
+$('#btnSearch').click(function(){
+	
+	$('#pagination').twbsPagination('destroy');
+	studySearch(currPage,10);
+	currPage = 1;
+});
 
-
+$('input[type="text"]').keydown(function() {
+	  if (event.keyCode === 13) {
+	    event.preventDefault();
+	    $('#btnSearch').click();
+	  };
+	});
 	//검색
-	function studySearch(){
+	function studySearch(page, cnt){
 		//console.log("검색");
 		$.ajax({
 			type:'GET',
 			url:'studySearch',
-			data: $("form[name=studyboardSearch]").serialize(),
+			data: $("form[name=studyboardSearch]").serialize() +"&page="+page+"&cnt="+cnt,
 			success : function(result){
 				console.log("확인");
+				totalPage = result.pages;
 				//테이블 초기화
-				$('#boardlist').empty();
-				if(result.length>0){
-					var str = '';
-					result.forEach(function(item){
+				var str = '';
+				if(result.list.length>0){
+					result.list.forEach(function(item){
 						var date = new Date(item.reg_date);
 						str += '<tr>';
 						str += '<td>'+item.board_no+'</td>';
@@ -170,11 +183,25 @@
 						str += '<td>'+item.user_id+'</td>';
 						str += "<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
 						str += '</tr>';
-						
-					
 					})
-						$('#boardlist').append(str);
+				}else {
+					str += '<tr><td colspan="5">검색결과가 없습니다.</td></tr>';
 				}
+				
+				
+						$('#boardlist').empty();
+						$('#boardlist').append(str);
+						
+						$('#pagination').twbsPagination({
+							startPage: currPage,//현재페이지
+							totalPages: totalPage,//만들 수 있는 총 페이지 수
+							visiblePages: 5,//[1],[2],[3]...이걸 몇개까지 보여줄 것인지
+							onPageClick: function(evt,page){//해당 페이지 번호를 클릭했을 때 일어날 일들
+								console.log(evt);//현재 일어나는 클릭 이벤트 관련 정보들
+								console.log(page);//몇 페이지를 클릭했는지에 대한 정보
+								studySearch(page, 10);
+							}
+						});
 			}
 		});
 		/*console.log($("form[name=studyboardSearch]").serialize());

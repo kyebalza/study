@@ -198,13 +198,19 @@ public class StudyBoardController {
 	/*공부게시판 리스트 검색*/
 	@ResponseBody
 	@RequestMapping(value = "/studyBoard/studySearch", method = RequestMethod.GET)
-	public  List<StudyBoardDTO> studySearch(@RequestParam("SearchType") String SearchType
-			, @RequestParam("Keyword") String Keyword) {
+	public  HashMap<String,Object> studySearch(@RequestParam("SearchType") String SearchType
+			, @RequestParam("Keyword") String Keyword,
+			@RequestParam("page")String page, @RequestParam("cnt")String cnt) {
 		logger.info("공부게시판 리스트 검색 요청");
 		logger.info(SearchType + " : "+Keyword);
 		StudyBoardDTO SBdto = new StudyBoardDTO();
 		SBdto.setKeyword(Keyword);
 		SBdto.setSearchType(SearchType);
+		int currPage = Integer.parseInt(page);
+		int pagePerCnt = Integer.parseInt(cnt);
+		SBdto.setPage(currPage);
+		SBdto.setCnt(pagePerCnt);
+		
 		
 		return service.studySearch(SBdto);
 	}

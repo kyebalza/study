@@ -64,6 +64,8 @@ public interface FreeBoardDAO {
 
 	int fbdoIHaveReLike(String board_no, String user_id, String reply_no);
 
+	int allCount(FreeBoardDTO fbdto);
+
 
 
 

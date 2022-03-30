@@ -109,7 +109,7 @@
 							border: 1px solid #6AA84F;
 							text-align: center;
 						"/>
-						<input type="button" value="검색" onclick="fbSearchList()" 
+						<input type="button" value="검색" 
 							onKeypress="javascript:if(event.keyCode == 13){fbSearchList()}"
 							style="
 								background-color : #6AA84F;
@@ -155,23 +155,40 @@
 	
 </body>
 <script>
+//페이징
+var currPage = 1;
+var totalPage = 2;
 
+
+$('input[value="검색"]').click(function(){
+	$('#pagination').twbsPagination('destroy');
+	fbSearchList(currPage,10);
+	currPage = 1;
+});
+
+$('input[type="text"]').keydown(function() {
+	  if (event.keyCode === 13) {
+	    event.preventDefault();
+	    $('input[value="검색"]').click();
+	  };
+	});
 
 	//검색
-	function fbSearchList(){
+	function fbSearchList(page, cnt){
 		console.log("검색");
 		$.ajax({
 			type:'GET',
 			url:'FreeSearch',
-			data: $("form[name=FreeboardSearch]").serialize(),
+			data: $("form[name=FreeboardSearch]").serialize() +"&page="+page+"&cnt="+cnt,
 			success : function(result){
 				console.log(result);
+				totalPage = result.pages;
 				//테이블 초기화
-				$('#Fboardlist').empty();
+								
+				var str = '';
 				
-				if(result.length>=1){
-					var str = '';
-					result.forEach(function(item){
+				if(result.list.length>=1){
+					result.list.forEach(function(item){
 						var date = new Date(item.reg_date);
 						str += '<tr>';
 						str += '<td>'+item.board_no+'</td>';
@@ -180,11 +197,25 @@
 						str += '<td>'+item.user_id+'</td>';
 						str += "<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>";
 						str += '</tr>';
-						
-					
+
 					})
-						$('#Fboardlist').append(str);
+				} else {
+					str += '<tr><td colspan="5">검색결과가 없습니다.</td></tr>';
 				}
+				console.log(str);
+				$('#Fboardlist').empty();
+				$('#Fboardlist').append(str);
+					$('#pagination').twbsPagination({
+						startPage: currPage,//현재 페이지
+						totalPages: totalPage,//만들수 있는 총 페이지 수
+						visiblePages:5, //[1][2][3]... 이걸 몇개 까지 보여줄 것인지
+						onPageClick:function(evt,page){//해당 페이지 번호를 클릭했을때 일어날 일들
+						console.log(evt); //현재 일어나는 클릭 이벤트 관련 정보들
+						console.log(page);//몇 페이지를 클릭 했는지에 대한 정보
+						currPage = page;
+						fbSearchList(page, 10);
+					}
+				});
 			}
 		});
 		/* console.log($("form[name=studyboardSearch]").serialize());
@@ -192,9 +223,7 @@
 	}; 
 
 
-	//페이징
-	var currPage = 1;
-	var totalPage = 2;
+
 	
 	listCall(currPage,10);
 	

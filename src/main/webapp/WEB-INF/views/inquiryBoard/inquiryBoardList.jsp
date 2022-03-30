@@ -77,6 +77,20 @@
 		border-radius: 9px;
 	}
 	
+	.a{
+		border: solid red;
+		background-color: red;
+		color: white;
+		border-radius: 20px;
+	}
+	
+	.b{
+		border: solid blue;
+		background-color: blue;
+		color: white;
+		border-radius: 20px;
+	}
+	
 	
 	
 	
@@ -229,9 +243,10 @@ $('input[type="text"]').keydown(function() {
 				content+="<td>"+date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0" + date.getDate()).slice(-2)+"</td>"; // 작성일자
 				
 				if (item.answer == false) { // 답변여부
-					content+="<td><div>답변대기</div></td>";
+					content+="<td><div class='a'>답변대기</div></td>";
+					
 				}else{
-					content+="<td><div>답변완료</div></td>";
+					content+="<td><div class='b'>답변완료</div></td>";					
 				}
 				
 				content+="</tr>";

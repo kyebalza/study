@@ -132,6 +132,12 @@ public interface AdminStudyDAO {
 
 	ArrayList<HashMap<String, String>> manyCorrectPer();
 
+	ArrayList<HashMap<String, String>> adminTestListCall(String test_cate_no);
+
+	void adminQuizDel(String test_no);
+
+	void adminDelTest(String test_no);
+
 
 
 }

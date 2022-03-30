@@ -530,6 +530,23 @@ public class AdminStudyService {
 		
 	}
 
+	public ArrayList<HashMap<String, String>> adminTestListCall(String test_cate_no) {
+
+		
+		
+		return dao.adminTestListCall(test_cate_no);
+	}
+
+	public void adminDeleteTest(String test_no) {
+		//1.문제삭제
+		dao.adminQuizDel(test_no);
+		//2.응시 시험 삭제 --> 안해도 될듯
+		
+		//3.시험 삭제
+		dao.adminDelTest(test_no);
+		
+	}
+
 
 
 

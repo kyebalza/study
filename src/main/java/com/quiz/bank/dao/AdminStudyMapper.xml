@@ -367,4 +367,17 @@
 	</select>	
 	
 	
+	
+	<select id="adminTestListCall" resultType="HashMap">
+	SELECT * FROM test_list INNER JOIN test_category tc USING (test_cate_no)  WHERE test_cate_no = #{param1}
+	</select>
+	
+	
+	<update id="adminQuizDel">
+	UPDATE quiz SET del_flag = 1 WHERE test_no = #{param1}
+	</update>
+	<update id="adminDelTest">
+	UPDATE test_list SET del_flag = 1 WHERE test_no = #{param1}
+	</update>	
+	
 </mapper>

@@ -40,6 +40,7 @@
 		<h3>시험관리</h3>
 			<ul>
 				<li><a href="adminRegistTest" target="_parent">-시험 및 문제 등록</a></li>
+				<li><a href="adminTestList" target="_parent">-시험 관리</a></li>
 				<li><a href="adminQuizList" target="_parent">-시험 문제 관리</a></li>	
 				<li><a href="adminQuizReport" target="_parent">-문제 오류신고 관리</a></li>				
 			</ul>	

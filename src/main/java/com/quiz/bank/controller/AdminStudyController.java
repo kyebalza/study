@@ -210,11 +210,42 @@ public class AdminStudyController {
 		
 		return mav;
 	}
+	@RequestMapping(value="adminTestList")
+	public ModelAndView adminTestList(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("admin_study/adminTestList");	
+		ArrayList<HashMap<String, String>> testCateList = service.testCategoryCall();
+		mav.addObject("testCateList", testCateList);
+		return mav;
+	}
 	@RequestMapping(value="adminQuizListQuizCountList")
 	@ResponseBody
 	public HashMap<String, Object> adminQuizListQuizCountList(){		
 		return service.adminQuizListQuizCountList();
 	}
+	@RequestMapping(value="adminTestListCall")
+	@ResponseBody
+	public HashMap<String, Object>adminTestListCall(@RequestParam String test_cate_no){
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("testList", service.adminTestListCall(test_cate_no));
+		
+		
+		
+		return map;
+	}
+	@RequestMapping(value="adminDeleteTest")
+	@ResponseBody
+	public HashMap<String, Object>adminDeleteTest(@RequestParam String test_no){
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		service.adminDeleteTest(test_no);
+		
+		
+		
+		return map;
+	}	
+	
+	
+	
 	
 	@RequestMapping(value="adminSearchQuiz")
 	@ResponseBody

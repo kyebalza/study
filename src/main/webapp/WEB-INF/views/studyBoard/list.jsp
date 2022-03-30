@@ -210,8 +210,7 @@ $('input[type="text"]').keydown(function() {
 
 
 	//페이징
-	var currPage = 1;
-	var totalPage = 2;
+
 	
 	listCall(currPage,10);
 	

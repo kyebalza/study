@@ -321,9 +321,11 @@
 				success:function(data){
 					if(data.success==1){
 						console.log('댓글 좋아요 추가');
+						location.reload();
 					}
 					if(data.row2 == 1){
 						console.log('댓글 좋아요 취소');
+						location.reload();
 					}
 				},
 				error:function(e){

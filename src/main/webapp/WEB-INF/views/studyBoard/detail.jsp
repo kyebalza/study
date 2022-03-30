@@ -123,15 +123,19 @@
 				</td>
 			</tr>
 			<tr>
-				<th style="width: 25px; text-align:center; padding : 15px;">내용</th>
+				<th rowspan="2" style="width: 25px; text-align:center; padding : 15px;">내용</th>
 				<td colspan="3" height="100px" style="padding : 15px;">${info.content}</td>
 			</tr>
-			<tr>
-				<th style="width: 25px; padding : 15px;">이미지</th>
-				<td colspan="3" style="padding : 15px;" style="padding : 15px;">
-					<img src="/photo/${photo.new_filename}" width="400px" height="400px"/>
-				</td>
-			</tr>
+			<c:if test="${photo != null}">
+				<tr>
+					<%-- <th style="width: 25px; padding : 15px;">이미지</th>--%>
+					<td colspan="4" style="padding : 15px;" style="padding : 15px;">
+						<%-- <c:forEach items="${photo}" var="photo">--%>
+							<img src="/photo/${photo.new_filename}" width="400px" height="400px"/>
+						<%-- </c:forEach>--%>
+					</td>
+				</tr>
+			</c:if>
 		</table>
 		<div id="board_sub" style="margin-top: 10px;">
 			<input id="board_name" type="hidden" value="${info.board_name}"/>
@@ -178,9 +182,10 @@
 //신고하기
 $('.report').click(function(){
 	//console.log('신고하기');
-	if('${loginId}' == null){
+	
+	if('${loginId}' == ''){
 		alert("로그인이 필요한 서비스 입니다.");
-		location.href='/loginPage';
+		location.href='redirect:/loginPage';
 	}else{
 		
 		var report = prompt("신고 사유를 입력해주세요.","");
@@ -201,11 +206,13 @@ $('.report').click(function(){
 			dataType:'JSON',
 			success:function(result){
 				console.log('신고등록 완료',result);
+				alert("신고가 완료되었습니다.");
 			},
 			error:function(e){
 				console.log('서버에 문제가 발생하였습니다.',e);
 			}
 		});//ajax괄호끝
+		
 	}
 });//신고하기 괄호끝
 

@@ -72,7 +72,7 @@
 	<%@ include file="../header.jsp" %>
 	<div id="sbListAll">
 		<br/>
-		<form id="sbWrite" action="write" method="post" name="sbWrite" enctype="multipart/form-data">
+		<form id="write" action="write" method="post" name="sbWrite" enctype="multipart/form-data">
 			<table class="sbwrite">
 				<tr>
 					<th>제목</th>
@@ -171,7 +171,7 @@
 							height: 30px;
 							border-radius: 11px;
 					"/>
-				<input id="submit" class="button" type="button" value="등록"
+				<input id="SBsubmit" class="button" type="button" value="등록"
 					style="
 							background-color : #6AA84F;
 							color: white;
@@ -188,7 +188,8 @@
 	</div>
 </body>
 <script>	
-	$('#submit').click(function(){
+	$('#SBsubmit').click(function(){
+		console.log('버튼클릭');
 		var title = $('#title').val();
 		
 		if(title == ""){
@@ -196,7 +197,8 @@
 			$('#title').val('');
 			$('#title').focus();
 	   }else{
-		   $('#sbWrite').submit();
+		   console.log('폼 전송');
+		   $('#write').submit();
 	   }
 		
 	});

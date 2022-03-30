@@ -239,7 +239,13 @@ public class QuizBankService {
 				}
 			}
 		}
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		//9-2. 시험 기본 정보들 가져오기
+		String String_test_cate_no = String.valueOf(testList.get(1).get("test_cate_no"));//test_cate_no 가져오기
+		int test_cate_no = Integer.parseInt(String_test_cate_no);
+		int test_no2 = Integer.parseInt(test_no);
+		HashMap<String, String> test_info = dao.test_info(test_cate_no, test_no2);
+		mav.addObject("test_info", test_info);
 		
 		logger.info("회차별 시험문제 리스트 갯수 : {}", testList.size());
 		mav.addObject("test", testList);
@@ -453,6 +459,13 @@ public class QuizBankService {
 
 		logger.info("회차별 시험문제 리스트 갯수 : {}", testList.size());
 		mav.addObject("test", testList);
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		//9-2. 시험 기본 정보들 가져오기
+		String String_test_cate_no = String.valueOf(testList.get(1).get("test_cate_no"));//test_cate_no 가져오기
+		int test_cate_no = Integer.parseInt(String_test_cate_no);
+		int test_no2 = Integer.parseInt(test_no);
+		HashMap<String, String> test_info = dao.test_info(test_cate_no, test_no2);
+		mav.addObject("test_info", test_info);
 		
 		//로그인 아이디 확인
 		logger.info("로그인 아이디 : "+loginId);

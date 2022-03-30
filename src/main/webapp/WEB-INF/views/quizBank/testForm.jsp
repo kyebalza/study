@@ -219,7 +219,7 @@
 </head>
 <body>
 	<div class="test_name">
-		<div class="test_name2">정보처리기사[시험]</div>
+		<h1>${test_info.test_year}년 ${test_info.test_count}회  ${test_info.test_cate} [시험]</h1>
 		<h1 id="stopwatch">
              <input type="hidden" class="elapse_time">
         </h1>
@@ -313,6 +313,7 @@ var loginId = "${sessionScope.loginId}";
 quizState(quiz_state);//클래스 상태 바꾸기
 var test_no = $('.test_no.1').val();
 JSON.stringify(test_no);
+var test_time = ${test_info.test_time};//이거 시간 변수에 넣어주면됨
 
 ///////////////////////////////////////////////////////////////
 //체점하기

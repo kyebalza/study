@@ -43,7 +43,7 @@
 				<tr>
 					<th>아이디</th>
 					<td>
-						<input type="text" name="user_id"/>
+						<input type="text" name="user_id" placeholder="영문 or 숫자만 입력가능"/>
 						<input id="overlay" type="button" value="중복체크"/>
 					</td>
 				</tr>
@@ -218,6 +218,16 @@ $('input[name="user_email"]').keyup(function(e){
 	//1-1. 인증 후 아이디 값이 바뀌면, 인증을 false로 변경
 	$('input[name="user_id"]').keyup(function(e){
 		overlayChk = false;
+		
+		//영문과 숫자만입력 가능
+		v = $(this).val();
+        var engNum = /^[a-zA-Z0-9]*$/;
+
+        if (!engNum.test(v)) {
+            alert("영문과 숫자만 입력가능 합니다.");
+            $(this).val(v.replace(v,''));
+        }
+        
 	});
 	
 	//2. 비밀번호 확인
@@ -287,11 +297,11 @@ $('input[name="user_email"]').keyup(function(e){
 		
 
 		if(/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(phone)){
-			$('#phone_confirm').html('유효한 전화번호입니다.');
+			$('#phone_confirm').html('유효한 전화번호 형식입니다.');
 			$('#phone_confirm').css({'color':'blue','font-size':'5px'});
 			phoneConfirm = 'T';
 		} else {
-			$('#phone_confirm').html('유효하지 않는 전화번호입니다.')
+			$('#phone_confirm').html('전화번호를 확인해주세요.')
 			$('#phone_confirm').css({'color':'red','font-size':'5px'});
 			phoneConfirm = 'F';
 		}

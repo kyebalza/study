@@ -8,7 +8,32 @@
  
  <style>
  	
-
+ 	#ibcom_button{
+ 		text-align: center;
+ 		background-color : #6AA84F;
+	    color: white;
+	    border: 1px solid #6AA84F;
+	    border-radius: 9px;
+	    width: 65px;
+	    height: 30px;
+	    margin: 5px;
+	}
+	
+	table, tr, td, th {
+		padding: 10px;
+	}
+	
+	textarea {
+         width: 100%;
+         height: 50px;
+         padding: 10px;
+         box-sizing: border-box;
+         border: solid 2px #6AA84F;
+         border-radius: 5px;
+         font-size: 15px;
+         resize: none;
+   	}
+	
  
 
  
@@ -16,45 +41,26 @@
 </head>
 <body>
 
-댓글
+<p style="color: green;">답변<p>
 <hr/>
 
 	<c:if test="${sessionScope.admin eq '관리자'}">
 	<div id="ibcoment_wep">
-		<span id="loginId"
-			style= "
-			padding-left: 10px;
-   			font-weight: bold;
-   			font-size: 17px;
-		"> ${loginId} </span>
+		<span id="loginId"> ${loginId} </span>
 		<div id="ibinput_wep">
 			<form action="ibcoment" id="ibcoment" method="POST"> 
 			<input type="hidden" name="loginId" value="${loginId}">
 			<input type="hidden" name="user_id" value="${info.user_id}"> 
 			<input type="hidden" name="board_no" value="${info.board_no}">
-			<textarea id="reply_content" name="reply_content" placeholder="댓글을 입력하세요"
-				style= "border: 1px solid #6AA84F;
-								border-radius: 9px;
-								width: 1000px;
-			"></textarea>
-			<input type="button" id="ibcom_button" value="등록"
-				style= "
-					color: white; 
-					border: 1px solid #6AA84F;
-	    			border-radius: 9px;
-					background-color: #6AA84F;
-					height: 150;
-					margin-bottom: 0px;
-					top: 1000px;
-					margin-left: 5px;
-			"/>
+			<textarea id="reply_content" name="reply_content" placeholder="댓글을 입력하세요"></textarea>
+			<input type="button" id="ibcom_button" value="등록"/>
 			</form>
 		</div>
 	</div>
 	</c:if>
 	
 	
-	<div>
+	<div id = "ibcomentlist">
 		<c:forEach items="${ibcomList}" var="ibcomList">
 			<table>
 				<tr>

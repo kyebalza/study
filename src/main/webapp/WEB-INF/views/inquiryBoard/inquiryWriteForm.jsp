@@ -35,19 +35,24 @@
 		margin:5px;
 			
 	}
- 
- 
+	
+
  	.title {
- 		width: 1000px;
- 		border: none;
+ 		text-align: center;
+ 		width: 500px;
+ 		border: 2px solid #6AA84F;
+		left: 20%;
+		border-radius: 9px;
  	
  	}
  	
  	textarea {
- 		width: 1000px;
+ 		width: 800px;
  		height: 250px;
  		border-radius: 9px;
+ 		resize: none;
  	}
+ 	
  	
  	select{
 		background-color: #6AA84F;
@@ -59,13 +64,7 @@
 	
 
 	
-	#ibListAll{
-			min-width : 1150px;
-			left: 20%;
-			position: absolute;
-			
-		}
-	
+
 	
 	.buttonout{
 		display: flex;
@@ -95,8 +94,8 @@
 				<th>
 				제목
 				</th>
-				<td colspan="2">
-            		<input class="title" type="text" placeholder="제목을 입력하세요" name="title"/>
+				<td>
+            		<input class="title" type="text" placeholder="제목을 입력하세요." name="title"/>
             	</td>
             </tr>
             
@@ -112,7 +111,7 @@
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea placeholder="내용을 입력하세요 " name="content"></textarea></td>
+				<td><textarea placeholder="내용을 입력하세요." name="content"></textarea></td>
 			</tr>
 			<tr>
 				<th>파일첨부</th>
@@ -125,7 +124,7 @@
 		
 		<div class="buttonout">
 			<div class="buttonin">
-				<input type="button" id="cancel" onclick="location.href='inquiryBoardList'" value="취소"
+				<input type="button" onclick="location.href='inquiryBoardList'" value="취소"
 					style="
 						background-color : #6AA84F;
 						color: white;
@@ -135,7 +134,7 @@
 						border-radius: 11px;
 					"/>
 				
-				<input type="button" id="registration" value="등록"
+				<input id="registration" type="button" class="button" value="등록"
 					style="
 						background-color : #6AA84F;
 						color: white;

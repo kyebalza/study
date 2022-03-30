@@ -30,7 +30,7 @@
 		padding: 5px;
 	}
 	
-	#ibwrite{
+	button {
 		text-align: center;
 		position: relative;
 		background-color : #6AA84F;
@@ -42,17 +42,22 @@
 		border-radius: 11px;
 	}
 	
-	.search{
+	.inquirySearch {
 		float: right;
-		left : 40%;
+		left: 40%;
+	
 	}
 	
-	
-	#ibListAll{
+	.ilall{
 		min-width : 1150px;
-		left: 20%;
+		display: flex;
 	}
 	
+	.ilin{
+		margin: auto;
+	}
+	
+
 	.select{
 		border: 1px solid #6AA84F;
 		width: 100px;
@@ -64,25 +69,13 @@
 		color: white;
 	}
 	
+	
 	.select option{
 		background: white;
 		color: black;
 		border: 1px solid #6AA84F;
 		border-radius: 9px;
 	}
-	
-	
-	.ibwrite{
-		background-color : #6AA84F;
-		color: white;
-		border: none;
-		margin: auto;
-		width: 100px;
-		height: 30px;
-		border-radius: 11px;
-	}
-	
-	
 	
 	
 	
@@ -93,14 +86,14 @@
 
 	
 	<%@ include file="../header.jsp" %>
-	<br/>
+	<br/><br/><br/><br/>
 	
-	<div id="ibListAll">
-
-		<div>
-			<button class="ibwrite" onclick="location.href='inquiryWriteForm'">글쓰기</button>
+	<div class="ilall">
+		<div class="ilin">
+			<div>
+				<button class="button" onclick="location.href='inquiryWriteForm'">글쓰기</button>
 			
-			<form class="Search" action="InquiryBoardSearch" method="GET" name="InquiryBoardSearch" autocomplete="off">
+			<form class="inquirySearch" action="InquiryBoardSearch" method="GET" name="InquiryBoardSearch" autocomplete="off">
 				<select class="select" name ="SearchType">
 					<option value="all" selected>제목+내용</option>
 					<option value="tit">제목</option>
@@ -161,7 +154,7 @@
 						</td>
 					</tr>	
 			</table>
-
+	</div>
 </div>
 	
 	<jsp:include page="../footer.jsp"></jsp:include>

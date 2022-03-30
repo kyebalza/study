@@ -183,6 +183,12 @@ $('#btnSearch').click(function(){
 	currPage = 1;
 });
 
+$('input[type="text"]').keydown(function() {
+	  if (event.keyCode === 13) {
+	    event.preventDefault();
+	    $('#btnSearch').click();
+	  };
+	});
 
 	//검색
 	function SearchList(page, cnt){

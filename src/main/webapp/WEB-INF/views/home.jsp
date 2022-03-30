@@ -19,6 +19,7 @@
 		height : 500px;
 		margin-left : auto;
 		margin-right : auto;
+		background-color: #4caf50;
 		/*
 		border : 1px solid blue;
 		*/
@@ -27,12 +28,11 @@
 	#rankingDiv {
 		margin-left : auto;
 		margin-right : auto;
-	
-
-		width : 910px;
-		height : 300px;
+		width : 1000px;
+		height : 500px;
 	}
 	#boardDiv{
+		background-color: aqua;
 		margin-left : auto;
 		margin-right : auto;
 		width : 800px;
@@ -42,6 +42,7 @@
 	}
 	
 	#rankingDiv div{
+			
 		/*
 		border : 1px solid red;
 		*/
@@ -63,6 +64,7 @@
 	thead th{
 		border-bottom : 2px solid lightGreen;
 	}
+	
 	
 	/*이벤트 슬라이더*/
 	.animation_canvas {/*실제로 보여지는 위치*/
@@ -101,6 +103,11 @@
 	.control_button.select{top:-31px;}
 	
 	
+	.a {
+		text-align: center;
+	}
+	
+	
 	
 	</style>
 </head>
@@ -128,8 +135,21 @@
 
 <div id="allDiv">
 	<div id="rankingDiv">
-		<div>
-			<h3>열심상</h3>
+	
+		<p style="
+			color: white;
+			font-size: 30px;
+			text-align: center;
+			
+		">실시간 문제풀이 순위</p>
+	
+		<div style="
+			background-color: green;
+		">
+			<h3 style="
+			text-align: center;
+			font-weight: bold;
+			">열심상</h3>
 			<ol id="manyQuiz">
 				<li></li>
 				<li></li>
@@ -138,8 +158,14 @@
 				<li></li>
 			</ol>
 		</div>
-		<div>
-			<h3>다득점</h3>
+		
+		<div style="
+			background-color: yellowgreen;
+			margin-left: 30px;
+		">
+			<h3 style="
+				text-align: center;
+			">다득점</h3>
 			<ol id="manyCorrect">
 				<li></li>
 				<li></li>
@@ -148,8 +174,17 @@
 				<li></li>
 			</ol>
 		</div>
-		<div>
-			<h3>백발백중</h3>
+		
+		<div style="
+			background-color: lightgreen;
+			margin-left: 30px;
+		">
+		
+		
+			<h3 style="
+				text-align: center;">
+				백발백중
+			</h3>
 			<ol id="manyCorrectPer">
 				<li></li>
 				<li></li>
@@ -160,6 +195,7 @@
 		</div>
 			
 	</div>
+
 	
 	<div id="boardDiv">
 		<table>
@@ -169,6 +205,7 @@
 			<tbody id="studyBoardLike">
 			</tbody>
 		</table>
+	
 		<table>
 			<thead>
 				<tr><th colspan="2">자유게시판 인기 게시글</th></tr>
@@ -177,6 +214,7 @@
 			</tbody>
 		</table>
 	</div>
+	
 </div>
 
 
@@ -200,15 +238,15 @@ function mainStatics(){
 			console.log(data);
 			var manyQuiz = '';
 			data.manyQuiz.forEach(function(item,idx){
-				manyQuiz += '<li>'+item.user_id+'  '+item.ccw+'개 </li>';
+				manyQuiz += '<li class="a">'+item.user_id+'  '+item.ccw+'개 </li>';
 				});
 			var manyCorrect = '';
 			data.manyCorrect.forEach(function(item,idx){
-				manyCorrect += '<li>'+item.user_id+'  '+item.scw+'개 </li>';	
+				manyCorrect += '<li class="a">'+item.user_id+'  '+item.scw+'개 </li>';	
 				});
 			var manyCorrectPer = '';
 			data.manyCorrectPer.forEach(function(item,idx){
-				manyCorrectPer += '<li>'+item.user_id+'  '+item.per*100+'% </li>';
+				manyCorrectPer += '<li class="a">'+item.user_id+'  '+item.per*100+'% </li>';
 				});
 			
 				

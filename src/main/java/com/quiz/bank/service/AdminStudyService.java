@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -146,6 +147,7 @@ public class AdminStudyService {
 		return newphotonames;
 	}
 
+	@Transactional
 	public int registTestAndQuiz(ArrayList<String> params) {
 		TestListDTO testListDTO = new TestListDTO();
 		int success = 0;

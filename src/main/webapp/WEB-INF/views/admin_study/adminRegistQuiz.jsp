@@ -183,7 +183,7 @@ var quizCnt = 0;
 subjectCategory();
 function subjectCategory(){
 	var txt = '<select class="quiz_subject '+quizCnt+'" onchange="detailSubjectCategoryCall(this)">';
-		txt += '<option value="none">선택하세요</option>';
+		txt += '<option value="none" selected>선택하세요</option>';
 		subjectCategory_json.forEach(function(item,idx){
 		//console.log(item);
 		txt += '<option value="'+item.subject_cate_no+'">'+item.subject_cate+'</option>';
@@ -195,7 +195,7 @@ function detailSubjectCategoryCall(e){
 
 	var thisCnt = $(e)[0].classList[1];
 	var txt = '';
-	txt +='<option>선택하세요</option>';
+	txt +='<option value="none" selected>선택하세요</option>';
 	detailedCategory_json.forEach(function(item,idx){
 		if(e.value == item.subject_cate_no){
 			txt += '<option value="'+item.detailed_subject_cate_no+'">'+item.detailed_subject_cate+'</option>';
@@ -338,7 +338,7 @@ $('#excelBtn').click(function(){
 
 $('#quiz_save').click(function(){
 	var testcomplete = false;
-	var quizcomplete = false;
+	var quizcomplete = true;
 	
 	
 	var quiz_list = [];
@@ -437,12 +437,17 @@ $('#quiz_save').click(function(){
 			||obj.option5 == ''
 			||obj.quiz_subject == 'none'
 			||obj.quiz_detailed_subject == 'none'
+			||obj.quiz_subject == null
+			||obj.quiz_detailed_subject == null
 		){
 			quizcomplete = false;
 			uncomplete.push(obj.quiz_index);
-		}else {
+		}
+		/*
+		else {
 			quizcomplete = true;
 		}
+		*/
 		
 		/*
 		if(obj.quiz_subject == 'none'){
@@ -461,6 +466,7 @@ $('#quiz_save').click(function(){
 	console.log(JSON.stringify(quiz_list));
 	
 	console.log(test_obj);
+	
 	if(testcomplete == true && quizcomplete == true){
 		$.ajax({
 			url : 'adminRegistTestAndQuiz',

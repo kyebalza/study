@@ -232,6 +232,7 @@ public class InquiryBoardService {
 		
 		if (dao.inquiryUpdate(params)>0) {
 			page = "redirect:/inquiryBoardDetail?board_no="+board_no;
+			dao.delPhoto(board_no);			
 			saveFile(board_no, uploadFile); // 파일저장 처리
 			
 		}

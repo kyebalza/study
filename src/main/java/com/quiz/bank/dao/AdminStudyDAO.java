@@ -138,6 +138,8 @@ public interface AdminStudyDAO {
 
 	void adminDelTest(String test_no);
 
+	ArrayList<HashMap<String, String>> adminTestListCallAll();
+
 
 
 }

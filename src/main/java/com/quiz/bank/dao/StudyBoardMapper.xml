@@ -30,7 +30,7 @@
 	
 	<!-- 자격증 종류 가져오기 -->
 	<select id="test_name" resultType="hashmap">
-		SELECT test_cate_no , test_cate FROM test_category ;
+		SELECT test_cate_no , test_cate FROM test_category WHERE del_flag = 0
 	</select>
 	
 	<!-- 시험 시행년도,회차 가져오기 -->
@@ -43,16 +43,32 @@
 		SELECT quiz_index FROM quiz ORDER BY quiz_index
 	</select>
 	
+	<!-- 자격증 종류 가져오기 -->
+	<select id="test_year_ajax" resultType="hashmap">
+		SELECT DISTINCT test_year FROM test_list WHERE test_cate_no = #{param1} AND test_list.del_flag = 0
+	</select>
+	
+	<!-- 시험 시행년도,회차 가져오기 -->
+	<select id="test_times_ajax" resultType="hashmap">
+	SELECT DISTINCT test_count FROM test_list INNER JOIN test_category using (test_cate_no)
+	WHERE test_cate_no = #{param1} AND test_year = #{param2}  AND test_list.del_flag = 0
+	</select>
+	
+	<!-- 문제번호 가져오기 : 문제번호에  null값 있어서 오류? java.lang.NumberFormatException: For input string: "quiz_index" -->
+	<select id="quiz_no_ajax" resultType="hashmap">
+	SELECT DISTINCT quiz_no,quiz_index FROM quiz INNER JOIN test_list USING (test_no)
+	WHERE quiz.test_cate_no = #{param1}
+	AND test_year = #{param2}
+	AND test_count = #{param3}
+	AND quiz.del_flag = 0
+	</select>	
+	
+	
+	
+	
 	<!-- 문제가져오기 -->
 	<select id="quizselect" resultType="hashmap">
-		SELECT * FROM quiz
-		LEFT JOIN test_category USING (test_cate_no)
-			LEFT JOIN test_list USING (test_no)
-			WHERE test_cate =#{test_cate}
-				AND test_year = #{test_year}
-				AND test_count = #{test_count}
-				AND quiz_index = #{quiz_index}
-				limit 1;
+		SELECT * FROM quiz WHERE quiz_no = #{param1}
 	</select>
 	
 	<!-- 글쓰기 -->
@@ -85,8 +101,12 @@
 	
 	<!-- 상세보기 문제불러오기 -->
 	<select id="studyQuiz" resultType="StudyBoard">
-		SELECT quiz_no, quiz_content, option1, option2, option3, option4, option5 
-			FROM quiz inner join study_board using (quiz_no) WHERE board_no = #{param1} limit 1;
+	SELECT quiz_index,quiz_no, quiz_content, option1, option2, option3, option4, option5 , test_cate,subject_cate,detailed_subject_cate
+	FROM quiz inner join study_board using (quiz_no)
+	INNER JOIN test_category USING (test_cate_no)
+	INNER JOIN subject_category USING (subject_cate_no)
+	INNER JOIN detailed_subject_category USING (detailed_subject_cate_no)
+	WHERE board_no = #{param1} limit 1;
 	</select>
 	
 	<!-- 상세보기 파일 가져오기 -->
@@ -239,4 +259,11 @@
 			</when>
 		</choose>
  	</select>	
+ 	
+ 	
+  	<select id="quizinfo" resultType="HashMap">
+ 	SELECT * FROM quiz INNER JOIN test_list USING (test_no)
+ 	WHERE quiz_no = #{param1}
+ 	</select>	
+ 	
 </mapper>

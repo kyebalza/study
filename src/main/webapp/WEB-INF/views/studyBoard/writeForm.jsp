@@ -41,6 +41,7 @@
 			border-radius: 9px;
 			height: 30px;
 			text-align: center;
+			width : 150px;
 		}
 		#sbListAll{
 		/*
@@ -77,7 +78,7 @@
 				<tr>
 					<th>제목</th>
 					<td>
-						<select onclick="boardcate" name="board_cate_no">
+						<select name="board_cate_no">
 			               <c:forEach items="${study_cate}" var="study_cate"> 
 			               		<option value="${study_cate.board_cate_no }">${study_cate.board_cate }</option>
 			               	</c:forEach>
@@ -96,26 +97,28 @@
 				<tr>
 					<th>문제</th>
 					<td>
-						<select onclick="quiz_name" name="quiz_name" id="quiz_name"><!-- 시험종류 -->
+						<select name="quiz_name" id="quiz_name"><!-- 시험종류 -->
+							<option value="none">선택하세요</option>
 							<c:forEach items="${quiz_name}" var="quiz_name">
-								<option value="${quiz_name.test_cate}">${quiz_name.test_cate}</option>
+								<option value="${quiz_name.test_cate_no}">${quiz_name.test_cate}</option>
 							</c:forEach>
+						
 						</select>
-						<select onclick="quiz_year" name="quiz_year" id="quiz_year"><!-- 시행년도 -->
+						<select name="quiz_year" id="quiz_year"><!-- 시행년도 -->
+<!-- 
 							<c:forEach items="${year_count}" var="year_count">
 								<option value="${year_count.test_year}">${year_count.test_year}</option>
 							</c:forEach>
+ -->
 						</select>
-						<select onclick="quiz_times" name="quiz_times" id="quiz_times"><!-- 시험회차 -->
+						<select name="quiz_times" id="quiz_times"><!-- 시험회차 -->
+						<!-- 
 							<c:forEach items="${year_count}" var="year_count">
 								<option value="${year_count.test_count}">${year_count.test_count}</option>
 							</c:forEach>
+						 -->
 						</select>
-						<select onclick="quiz_no" name="quiz_no" id="quiz_no"><!-- 문제번호 -->
-							<c:forEach items="${quiz_no}" var="quiz_no">
-								<option value="${quiz_no.quiz_index}">${quiz_no.quiz_index}</option>
-							</c:forEach>
-						</select>
+						<select name="quiz_no" id="quiz_no"></select><!-- 문제번호 -->
 						<input id="quizcall" type="button" onclick="quiz()" value="문제불러오기"
 							style="
 								background-color : #6AA84F;
@@ -130,13 +133,12 @@
 						
 						<!-- 문제 -->
 						<div id="quiz">
-						<p style="padding : 15px;">${Qinfo.quiz_index}번 문제.<br/> ${Qinfo.quiz_content}</p>
-						<!-- 보기 -->
-							<p class="option_num" style="padding : 5px;">보기1 : ${Qinfo.option1}</p>
-							<p class="option_num" style="padding : 5px;">보기2 : ${Qinfo.option2}</p>
-							<p class="option_num" style="padding : 5px;">보기3 : ${Qinfo.option3}</p>
-							<p class="option_num" style="padding : 5px;">보기4 : ${Qinfo.option4}</p>
-							<p class="option_num" style="padding : 5px;">보기5 : ${Qinfo.option5}</p>
+							<p id="quiz_content"></p>
+							<p id="opt1"></p>
+							<p id="opt2"></p>
+							<p id="opt3"></p>
+							<p id="opt4"></p>
+							<p id="opt5"></p>
 						</div>
 					</td>
 				</tr>
@@ -189,8 +191,122 @@
 	</div>
 </body>
 <script>	
-	
+var quiz_no = "${quiz_no}";
 
+window.addEventListener('load', function () {
+	if(quiz_no > 0){
+		$.ajax({
+			url : 'quizinfo',
+			type : 'get',
+			data : {'quiz_no':quiz_no},
+			dataType : 'json',
+			success : function(data){
+				console.log('문제정보 : ',data);
+				$('#quiz_name').val(data.quizInfo.test_cate_no).change();
+				setTimeout(function() {
+					$('#quiz_year').val(data.quizInfo.test_year).change();	
+					setTimeout(function() {
+						$('#quiz_times').val(data.quizInfo.test_count).change();	
+						setTimeout(function() {
+							$('#quiz_no').val(data.quizInfo.quiz_no).change();
+							setTimeout(function(){
+								quiz();
+							},100);
+						}, 100);
+
+					}, 100);
+
+				}, 100);
+
+			},
+			error : function(e){}
+			
+		});
+	}
+	  
+	});	
+
+$('#quiz_name').change(function(){
+	selectYearListCall($(this).val());
+});
+$('#quiz_year').change(function(){
+	selectMonthListCall($(this).val());		
+});
+$('#quiz_times').change(function(){
+	selectCountListCall($(this).val());		
+});
+
+function selectYearListCall(test_cate_no){
+
+	$.ajax({
+		url : 'selectYearListCall',
+		type : 'get',
+		data : {'test_cate_no':test_cate_no},
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			var opt = '<option>------</option>';
+			
+
+			data.year.forEach(function(item,idx){
+				opt += '<option value="'+item.test_year+'">'+item.test_year+' 년</option>';
+				console.log(item);
+			});
+			$('#quiz_year').empty();
+			$('#quiz_times').empty();
+			$('#quiz_no').empty();
+			$('#quiz_year').append(opt);
+		
+		},
+		error : function(e){console.log(e)},		
+	});
+};
+function selectMonthListCall(test_year){
+	console.log(test_year);
+	$.ajax({
+		url : 'selectMonthListCall',
+		type : 'get',
+		data : {'test_cate_no':$('#quiz_name').val(),'test_year':test_year},
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			var opt = '<option>------</option>';
+			
+
+			data.count.forEach(function(item,idx){
+				opt += '<option value="'+item.test_count+'">'+item.test_count+' 회</option>';
+			});
+			$('#quiz_times').empty();
+			$('#quiz_no').empty();
+			$('#quiz_times').append(opt);
+
+		},
+		error : function(e){console.log(e)},		
+	});
+};
+function selectCountListCall(test_count){
+	$.ajax({
+		url : 'selectCountListCall',
+		type : 'get',
+		data : {'test_cate_no':$('#quiz_name').val(),'test_year':$('#quiz_year').val(),'test_count':test_count},
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			var opt = '<option>------</option>';
+			
+		
+			data.quiz.forEach(function(item,idx){
+				opt += '<option value="'+item.quiz_no+'">'+item.quiz_index+'</option>';
+			});
+			$('#quiz_no').empty();
+			$('#quiz_no').append(opt);
+	
+		
+			
+		},
+		error : function(e){console.log(e)},		
+	});
+};
 
 	$('#SBsubmit').click(function(){
 		console.log('버튼클릭');
@@ -209,30 +325,27 @@
 	});
 	
 	function quiz(){
-		console.log("문제불러오기");
-		
-		var quiz_name = $('#quiz_name').val();
-		var quiz_year = $('#quiz_year').val();
-		var quiz_times = $('#quiz_times').val();
-		var quiz_no = $('#quiz_no').val();
-		console.log(quiz_name,quiz_year,quiz_times,quiz_no);
-		
-		var params = {'quiz_name':quiz_name,'quiz_year':quiz_year,'quiz_times':quiz_times,'quiz_no':quiz_no};
-		console.log(params);
+
 		
 		$.ajax({
 			type:'POST',
 			url:'selectquiz',
-			data:params,
+			data:{'quiz_no':$('#quiz_no').val()},
 			dataType:'JSON',
 			success:function(data){
 				console.log('문제가져오기 : ',data);
+				$('#quiz_content').html(data.quiz.quiz_content);
+				/*
 				$('#quiz_content').val(data.quiz_content);
 				$('#option1').val(data.option1);
 				$('#option2').val(data.option2);
 				$('#option3').val(data.option3);
 				$('#option4').val(data.option4);
 				$('#option5').val(data.option5);//값 없으면 숨기기
+				*/
+				for (var i = 1; i <= data.quiz.quiz_type; i++) {
+					$('#opt'+i).html(i+'번 : '+data.quiz["option"+i]);
+				}
 				
 				
 			},
@@ -240,12 +353,8 @@
 				console.log('문제발생: ',e);
 			}
 		});//ajax괄호끝
-		
-		if($('#option5').val() == null){
-			$('#option5').hide();
-		};
+
 	};//quiz() 괄호끝
-	
 	
 </script>
 </html>

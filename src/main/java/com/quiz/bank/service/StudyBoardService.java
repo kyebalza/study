@@ -244,10 +244,7 @@ public String update(HashMap<String, String> params, MultipartFile uploadFile) {
 		return map;
 	}
 
-	public ArrayList<HashMap<String, String>> test_no() {
-		logger.info("문제번호 카테고리");
-		return dao.test_no();
-	}
+
 	
 	//게시글 좋아요 여부 확인
 	public int like2(String loginId, String board_no) {
@@ -280,9 +277,9 @@ public String update(HashMap<String, String> params, MultipartFile uploadFile) {
 		return dao.countlike(board_no);
 	}
 
-	public HashMap<String, Object> quizselect(HashMap<String, String> params) {
+	public HashMap<String, Object> quizselect(String quiz_no) {
 		logger.info("문제가져오기 서비스");
-		return dao.quizselect(params);
+		return dao.quizselect(quiz_no);
 	}
 
 	public HashMap<String, Object> studyReport(HashMap<String, String> params) {
@@ -407,10 +404,30 @@ public String update(HashMap<String, String> params, MultipartFile uploadFile) {
 	
 
 
+	public ArrayList<HashMap<String, String>> test_no() {
+		logger.info("문제번호 카테고리");
+		return dao.test_no();
+	}
 
 
+	public ArrayList<HashMap<String, String>> test_year_ajax(String test_cate_no) {
+		logger.info("시험년도 카테고리");
+		return dao.test_year_ajax(test_cate_no);
+	}
+	public ArrayList<HashMap<String, String>> test_times_ajax(String test_cate_no,String test_year) {
+		logger.info("시험회차 카테고리");
+		return dao.test_times_ajax(test_cate_no,test_year);
+	}	
+	public ArrayList<HashMap<String, String>> quiz_no_ajax(String test_cate_no,String test_year,String test_count) {
+		logger.info("문제번호 카테고리");
+		return dao.quiz_no_ajax(test_cate_no,test_year,test_count);
+	}
 
 
+	public HashMap<String, String> quizinfo(String quiz_no) {
+		return dao.quizinfo(quiz_no);
+		
+	}
 
 
 	

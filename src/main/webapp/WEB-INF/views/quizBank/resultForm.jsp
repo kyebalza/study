@@ -310,7 +310,7 @@
 				<div class="answerArea">정답 : ${test.quiz_answer}</div>
 				<div class="explationArea">해설 : ${test.quiz_explation}</div>
 			<div class="bntArea">
-				<input type="button" class="question" onclick="question()" value="질문하기"/>
+				<input type="button" class="question" onclick="question(${test.quiz_no})" value="질문하기"/>
 				<input type="hidden" value="${test.quiz_no}"/>
 				<input type="button" class="error" onclick="error()" value="오류신고"/>
 			</div>
@@ -408,9 +408,9 @@ $('.bookmark').click(function(){
 });
 ///////////////////////////////////////////////////////////////////////////
 //문제 질문하기
-function question(){
+function question(quiz_no){
 	var openNewWindow = window.open("about:blank");
-	openNewWindow.location.href='studyBoard/writeForm';
+	openNewWindow.location.href='studyBoard/writeForm?quiz_no='+quiz_no;
 }
 ///////////////////////////////////////////////////////////////////////////
 //오류신고

@@ -293,19 +293,19 @@
 	SELECT quiz.quiz_no,tl.test_year,tl.test_count,quiz.quiz_index FROM bookmark 
 	INNER JOIN quiz ON (bookmark.bookmark_quiz_no = quiz.quiz_no) 
 	INNER JOIN test_list tl ON (tl.test_no = quiz.test_no) 
-	WHERE user_id = #{param1}
+	WHERE user_id = #{param1} AND quiz.del_flag = 0
 	ORDER BY bookmark_date DESC
 	</select>
 	
 	<select id="quizSubjectList" resultType="int" parameterType="string">
-	SELECT quiz_no FROM quiz WHERE subject_cate_no = #{param1} ORDER BY rand()
+	SELECT quiz_no FROM quiz WHERE subject_cate_no = #{param1} AND del_flag = 0 ORDER BY rand()
 	</select>
 	<select id="quizDetailedSubjectList" resultType="int" parameterType="string">
-	SELECT quiz_no FROM quiz WHERE detailed_subject_cate_no = #{param1} ORDER BY rand()
+	SELECT quiz_no FROM quiz WHERE detailed_subject_cate_no = #{param1} AND del_flag = 0 ORDER BY rand()
 	</select>
 	<select id="quizBookmarkList" resultType="int" parameterType="string">
 	SELECT quiz_no FROM quiz LEFT JOIN bookmark ON (bookmark.bookmark_quiz_no = quiz.quiz_no)
-	WHERE subject_cate_no = #{param1} AND 
+	WHERE subject_cate_no = #{param1} AND quiz.del_flag = 0 AND
 	user_id = #{param2} ORDER BY rand()	
 	<!-- SELECT quiz_no FROM quiz WHERE subject_cate_no = #{param1} -->
 	</select>
@@ -369,9 +369,24 @@
 	
 	
 	<select id="adminTestListCall" resultType="HashMap">
-	SELECT * FROM test_list INNER JOIN test_category tc USING (test_cate_no)  WHERE test_cate_no = #{param1}
+	SELECT test_no,tl.test_cate_no,test_year,test_month,test_count,test_passrate,test_time,test_fullscore
+	,tl.del_flag,tl.pass_criterion ,test_cate,count(quiz_no) cq ,sum(quiz_point) sq
+	FROM test_list tl
+	INNER JOIN test_category tc USING (test_cate_no) 
+	INNER JOIN quiz q USING (test_no)
+	WHERE tl.test_cate_no = #{param1} 
+	GROUP BY test_no
+	ORDER BY test_no DESC
 	</select>
-	
+	<select id="adminTestListCallAll" resultType="HashMap">
+	SELECT test_no,tl.test_cate_no,test_year,test_month,test_count,test_passrate,test_time,test_fullscore
+	,tl.del_flag,tl.pass_criterion ,test_cate,count(quiz_no) cq ,sum(quiz_point) sq
+	FROM test_list tl
+	INNER JOIN test_category tc USING (test_cate_no) 
+	INNER JOIN quiz q USING (test_no)
+	GROUP BY test_no
+	ORDER BY test_no DESC
+	</select>	
 	
 	<update id="adminQuizDel">
 	UPDATE quiz SET del_flag = 1 WHERE test_no = #{param1}

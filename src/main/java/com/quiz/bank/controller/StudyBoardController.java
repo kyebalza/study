@@ -80,8 +80,11 @@ public class StudyBoardController {
 	
 	/*공부게시판 글쓰기 페이지 이동 -도연*/
 	@RequestMapping(value="/studyBoard/writeForm", method = RequestMethod.GET)
-	public String writeForm(Model model,HttpSession session) {
+	public String writeForm(Model model,HttpSession session, @RequestParam String quiz_no) {
 		logger.info("글쓰기 페이지 이동");
+		//HashMap<String, String> quizinfo = service.quizinfo(quiz_no);
+		model.addAttribute("quiz_no", quiz_no);
+		
 		//게시판 세부 카테고리
 		ArrayList<HashMap<String, String>> study_cate = service.studyboard_cate();
 		model.addAttribute("study_cate",study_cate);
@@ -89,6 +92,7 @@ public class StudyBoardController {
 		ArrayList<HashMap<String, String>> quiz_name = service.test_name();
 		logger.info("quiz_name : {}", quiz_name);
 		model.addAttribute("quiz_name",quiz_name);
+		/*
 		//시행년도 카테고리
 		ArrayList<HashMap<String, String>> year_count = service.test_year();
 		logger.info("year_count : {}", year_count);
@@ -97,6 +101,7 @@ public class StudyBoardController {
 		ArrayList<HashMap<String, String>> quiz_no = service.test_no();
 		logger.info("quiz_no : {}", quiz_no);
 		model.addAttribute("quiz_no",quiz_no);
+		 */
 		
 		//로그인 여부 확인
 		String page = "redirect:/loginPage";
@@ -105,6 +110,53 @@ public class StudyBoardController {
 		}
 		return page;
 	}
+
+	
+	@RequestMapping(value="/studyBoard/quizinfo")
+	@ResponseBody
+	public HashMap<String, Object> quizinfo (@RequestParam String quiz_no){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("quizInfo", service.quizinfo(quiz_no));
+		
+		return map;
+	}
+	
+	@RequestMapping(value="studyBoard/selectYearListCall",method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> selectYearListCall(@RequestParam String test_cate_no){
+		logger.info("listCall {}",test_cate_no);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("year", service.test_year_ajax(test_cate_no));
+
+		logger.info("{}",map);
+		
+		return map;
+	}
+	@RequestMapping(value="studyBoard/selectMonthListCall",method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> selectMonthListCall(@RequestParam String test_cate_no
+			,@RequestParam String test_year){
+		logger.info("listCall {}",test_cate_no);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("count", service.test_times_ajax(test_cate_no,test_year));
+
+		logger.info("{}",map);
+		
+		return map;
+	}	
+	@RequestMapping(value="studyBoard/selectCountListCall",method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> selectCountListCall(@RequestParam String test_cate_no
+			,@RequestParam String test_year,@RequestParam String test_count){
+		logger.info("listCall {}",test_cate_no);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("quiz", service.quiz_no_ajax(test_cate_no,test_year,test_count));
+
+		logger.info("{}",map);
+		
+		return map;
+	}	
+	
 	
 	/*공부 게시판 글쓰기 - 도연  (get으로 보내면 url의 길이가 점점 길어지기때문에 post로 보낸다)*/
 	@RequestMapping(value = "/studyBoard/write", method = RequestMethod.POST)
@@ -114,6 +166,9 @@ public class StudyBoardController {
 		//로그인 확인
 		if(session.getAttribute("loginId") != null) {
 			page="studyBoard/writeForm";
+		}
+		if(!params.containsKey("quiz_no")) {
+			params.put("quiz_no", "0");
 		}
 		//세션에서 로그인한 아이디 가져와서 params에 넣어줌
 		params.put("user_id", (String) session.getAttribute("loginId"));
@@ -250,9 +305,11 @@ public class StudyBoardController {
 	/*글쓰기 문제불러오기*/
 	@ResponseBody
 	@RequestMapping(value = "/studyBoard/selectquiz", method = RequestMethod.POST)
-	public HashMap<String, Object> selectquiz(@RequestParam HashMap<String, String> params) {
-		logger.info("공부게시판 문제불러오기 요청 : {}",params);
-		return service.quizselect(params);
+	public HashMap<String, Object> selectquiz(@RequestParam String quiz_no) {
+		logger.info("공부게시판 문제불러오기 요청 : {}",quiz_no);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("quiz", service.quizselect(quiz_no));
+		return map;
 	}
 	
 	/*글 신고하기*/

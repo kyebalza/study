@@ -79,7 +79,7 @@
 	<br/>
 	<div id="sbListAll">
 		<div>
-			<button id="sbwrite" onclick="location.href='writeForm'">글쓰기</button>
+			<button id="sbwrite" onclick="location.href='writeForm?quiz_no=0'">글쓰기</button>
 			
 			<!-- 카테고리 검색 -->
 			<form class="search" action="studyboardSearch" method="GET" name="studyboardSearch" autocomplete="off">

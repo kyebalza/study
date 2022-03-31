@@ -59,7 +59,7 @@ ArrayList<StudyBoardDTO> like(String board_no, String loginId);
 
 int countlike(String board_no);
 
-HashMap<String, Object> quizselect(HashMap<String, String> params);
+HashMap<String, Object> quizselect(String params);
 
 int studyReport(HashMap<String, String> params);
 
@@ -89,7 +89,13 @@ int SearchallCount(StudyBoardDTO sBdto);
 
 void fileUpdate(int photo_no, int board_no, String oriFileName, String newFileName);
 
+ArrayList<HashMap<String, String>> test_year_ajax(String test_cate_no);
 
+ArrayList<HashMap<String, String>> test_times_ajax(String test_cate_no, String test_year);
+
+ArrayList<HashMap<String, String>> quiz_no_ajax(String test_cate_no, String test_year, String test_count);
+
+HashMap<String, String> quizinfo(String quiz_no);
 
 
 

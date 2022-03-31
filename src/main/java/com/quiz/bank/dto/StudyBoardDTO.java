@@ -42,6 +42,20 @@ public class StudyBoardDTO {
 	
 	//시험종류 카테(test_category)
 	private String test_cate;
+	public String getSubject_cate() {
+		return subject_cate;
+	}
+	public void setSubject_cate(String subject_cate) {
+		this.subject_cate = subject_cate;
+	}
+	public String getDetailed_subject_cate() {
+		return detailed_subject_cate;
+	}
+	public void setDetailed_subject_cate(String detailed_subject_cate) {
+		this.detailed_subject_cate = detailed_subject_cate;
+	}
+	private String subject_cate;
+	private String detailed_subject_cate;
 	
 	//시험 년도, 회차 카테고리
 	private int test_year;
@@ -65,6 +79,10 @@ public class StudyBoardDTO {
 	private int page;
 	private int cnt;
 	private int offset;	
+	
+
+
+	
 
 	public int getPage() {
 		return page;

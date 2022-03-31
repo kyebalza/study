@@ -531,10 +531,13 @@ public class AdminStudyService {
 	}
 
 	public ArrayList<HashMap<String, String>> adminTestListCall(String test_cate_no) {
-
+		if(test_cate_no.equals("0")) {
+			return dao.adminTestListCallAll();
+		} else {
+			return dao.adminTestListCall(test_cate_no);			
+		}
 		
 		
-		return dao.adminTestListCall(test_cate_no);
 	}
 
 	public void adminDeleteTest(String test_no) {

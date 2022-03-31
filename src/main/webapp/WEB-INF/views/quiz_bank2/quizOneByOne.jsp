@@ -296,7 +296,7 @@ function result(){
 }
 function question(){
 	var openNewWindow = window.open("about:blank");
-	openNewWindow.location.href='studyBoard/writeForm';
+	openNewWindow.location.href='studyBoard/writeForm?quiz_no='+quiz_list[quiz_index];
 }
 function error(){
 	if(loginId == null){

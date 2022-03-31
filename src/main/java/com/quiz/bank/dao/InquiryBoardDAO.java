@@ -44,6 +44,8 @@ public interface InquiryBoardDAO {
 	ArrayList<ReplyDTO> inquiryboardcoment(String board_no); // 댓글 불러오기
 
 	void inquiryBoardAnswer(int board_no);
+
+	void delPhoto(int board_no);
 	
 
 	

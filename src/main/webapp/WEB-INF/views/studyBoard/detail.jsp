@@ -112,13 +112,16 @@
 				<th style="width: 25px; text-align:center; padding : 15px;">문제</th>
 				<td colspan="3">
 					<div id="quiz">
-						<p style="padding : 15px;">${Qinfo.quiz_index}번 문제.<br/> ${Qinfo.quiz_content}</p>
+						<c:if test="${info.quiz_no != '0' }">
+						<h4 style="padding : 15px;">${Qinfo.test_cate}-${Qinfo.subject_cate}-${Qinfo.detailed_subject_cate} ${Qinfo.quiz_index}번 문제.<br/> ${Qinfo.quiz_content}</h4>
+
 						<!-- 문제보기 -->
 						<p style="padding : 15px;" class="option_num">보기1 : ${Qinfo.option1}</p>
 						<p style="padding : 15px;" class="option_num">보기2 : ${Qinfo.option2}</p>
 						<p style="padding : 15px;" class="option_num">보기3 : ${Qinfo.option3}</p>
 						<p style="padding : 15px;" class="option_num">보기4 : ${Qinfo.option4}</p>
 						<p style="padding : 15px;" class="option_num">보기5 : ${Qinfo.option5}</p>
+						</c:if>
 					</div>
 				</td>
 			</tr>
@@ -154,7 +157,6 @@
 				    margin-top: 6px;
 				    margin-bottom: 5px;
 				">${countlike}</p>
-			</input>
 			
 		
 		<img class="bHit" src="/bank/resources/img/bHit.png" alt="조회수" style="

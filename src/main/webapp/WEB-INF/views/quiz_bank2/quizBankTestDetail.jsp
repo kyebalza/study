@@ -22,12 +22,12 @@
 			padding: 5px;
 		}
 		th {
-		 background-color : LimeGreen; 
+		 background-color : #7cc35d; 
 		 color : white; 
 		 font-weight : bold;
 		}
 		td {
-		 background-color : BEFABF; 
+		 background-color : #e9e9e9; 
 		 color : gray; 
 		 font-weight : bold;
 		}
@@ -52,7 +52,7 @@
 		}
 		.onClk{
 			color : white;
-			background-color : LimeGreen; 
+			background-color : #7cc35d; 
 			font-weight : bold;
 		}	
 			
@@ -69,16 +69,20 @@
 			color : white;
 		}
 		.testList input[value="시험보기"]{
-			background-color : Coral;
+			background-color : #fb84ac;
+			cursor: pointer;
 		}
 		.testList input[value="연습하기"]{
 			background-color : CornflowerBlue;
+			cursor: pointer;
 		}
 		th input[value="문제풀기"]{
-			background-color : Coral;
+			background-color : #fb84ac;
+			cursor: pointer;
 		}
 		td input[value="문제풀기"]{
-			background-color : CornflowerBlue;		
+			background-color : CornflowerBlue;
+			cursor: pointer;		
 		}
 		table{
 			width : 480px;

@@ -19,7 +19,7 @@
 		height : 500px;
 		margin-left : auto;
 		margin-right : auto;
-		background-color: #4caf50;
+		background-color: #89F781;
 		/*
 		border : 1px solid blue;
 		*/
@@ -32,10 +32,9 @@
 		height : 500px;
 	}
 	#boardDiv{
-		background-color: aqua;
 		margin-left : auto;
 		margin-right : auto;
-		width : 800px;
+		width : 950px;
 		/*
 		border : 1px solid tomato;
 		*/
@@ -107,6 +106,14 @@
 		text-align: center;
 	}
 	
+	.b{
+		color: blue;
+	}
+	
+	.c{
+		color: blue;
+	}
+	
 	
 	
 	</style>
@@ -137,18 +144,19 @@
 	<div id="rankingDiv">
 	
 		<p style="
-			color: white;
-			font-size: 30px;
+			margin-top: 10px;
+			color: red;
+			font-size: 25px;
 			text-align: center;
 			
 		">실시간 문제풀이 순위</p>
 	
 		<div style="
-			background-color: green;
+			background-color: #FAECC5;
+			margin-left: 15px;
 		">
 			<h3 style="
 			text-align: center;
-			font-weight: bold;
 			">열심상</h3>
 			<ol id="manyQuiz">
 				<li></li>
@@ -160,7 +168,7 @@
 		</div>
 		
 		<div style="
-			background-color: yellowgreen;
+			background-color: #FAECC5;
 			margin-left: 30px;
 		">
 			<h3 style="
@@ -176,11 +184,9 @@
 		</div>
 		
 		<div style="
-			background-color: lightgreen;
+			background-color: #FAECC5;
 			margin-left: 30px;
 		">
-		
-		
 			<h3 style="
 				text-align: center;">
 				백발백중
@@ -195,24 +201,28 @@
 		</div>
 			
 	</div>
+	
+	<br/>
 
 	
 	<div id="boardDiv">
-		<table>
-			<thead>
-				<tr><th colspan="2">공부게시판 인기 게시글</th></tr>
-			</thead>
-			<tbody id="studyBoardLike">
-			</tbody>
-		</table>
-	
-		<table>
-			<thead>
-				<tr><th colspan="2">자유게시판 인기 게시글</th></tr>
-			</thead>
-			<tbody id="freeBoardLike">
-			</tbody>
-		</table>
+
+			<table style="margin-left: 2px; ">
+				<thead>
+					<tr style="background-color: lightGreen;"><th colspan="2"><img src="resources/img/book.png"/>공부게시판 인기 게시글</th></tr>
+				</thead>
+				<tbody id="studyBoardLike">
+				</tbody>
+			</table>
+
+			<table style="margin-left: 90px;">
+				<thead>
+					<tr style="background-color: lightGreen;"><th colspan="2"><img src="resources/img/dialogue.png"/>자유게시판 인기 게시글</th></tr>
+				</thead>
+				<tbody id="freeBoardLike">
+				</tbody>
+			</table>
+		
 	</div>
 	
 </div>
@@ -260,7 +270,7 @@ function mainStatics(){
 			data.studyBoardLike.forEach(function(item,idx){
 				studyBoardLike += '<tr>';
 				studyBoardLike += '<td><img src="resources/img/like.png"/>'+item.like_cnt+'</td>';
-				studyBoardLike += "<td>"+"<a onclick='goStudyBoard(\""+item.board_no+"\")'>"+item.title+"</a>"+"</td>";
+				studyBoardLike += "<td class='b'>"+"<a onclick='goStudyBoard(\""+item.board_no+"\")'>"+item.title+"</a>"+"</td>";
 				studyBoardLike += '</tr>';
 			});
 			
@@ -271,7 +281,7 @@ function mainStatics(){
 			data.freeBoardLike.forEach(function(item,idx){
 				freeBoardLike += '<tr>';
 				freeBoardLike += '<td><img src="resources/img/like.png"/>'+item.like_cnt+'</td>';
-				freeBoardLike += "<td>"+"<a onclick='goFreeBoard(\""+item.board_no+"\")'>"+item.title+"</a>"+"</td>";
+				freeBoardLike += "<td class='c'>"+"<a onclick='goFreeBoard(\""+item.board_no+"\")'>"+item.title+"</a>"+"</td>";
 				freeBoardLike += '</tr>';
 			});
 			$('#freeBoardLike').empty();

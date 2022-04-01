@@ -167,7 +167,7 @@ public class QuizBankService {
 //	}
 
 	//3.시험보기 페이지 및 시험문제 가져오기
-	public ModelAndView testFroml(String test_no, String loginId) {
+	public ModelAndView testFrom(String test_no, String loginId) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("quizBank/testForm");
 		ArrayList<HashMap<String, String>> testList = dao.testFrom(test_no);//문제 리스트 담기

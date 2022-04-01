@@ -306,5 +306,9 @@ function testForm(no){
 	var openNewWindow = window.open("about:blank");
 	openNewWindow.location.href='testForm?test_no='+no;	
 }
+function practiceForm(no){
+	var openNewWindow = window.open("about:blank");
+	openNewWindow.location.href='practiceForm?test_no='+no;	
+}
 </script>
 </html>

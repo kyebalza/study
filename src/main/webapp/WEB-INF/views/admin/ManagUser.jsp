@@ -8,6 +8,10 @@
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="resources/js/jquery.twbsPagination.js"></script>
 	<link rel="stylesheet" href="resources/css/adminLefter.css"/>
+	<script src="resources/js/.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+	
+	
 	<style>
 	#Memlist tr:nth-child(odd){
 		background-color :  #d0ebb2;

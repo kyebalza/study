@@ -46,7 +46,7 @@ public class QuizBankController {
 		logger.info("시험페이지 요청 : {}",test_no);
 		String loginId = (String)session.getAttribute("loginId");
 		
-		return service.testFroml(test_no, loginId);
+		return service.testFrom(test_no, loginId);
 	}
 	
 	//4.검색기능

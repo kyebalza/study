@@ -6,6 +6,8 @@
  <title>Insert title here</title>
  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
  <link rel="stylesheet" href="resources/css/header.css"/>
+ 	<script src="resources/js/.bootstrap.min.js"></script>
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css"/>
  
  <style>
 

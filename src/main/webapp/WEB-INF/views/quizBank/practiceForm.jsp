@@ -397,7 +397,7 @@ $('.result').click(function(){
 	
 	$.ajax({
 		url : 'practiceResult',
-		type : 'get',
+		type : 'post',
 		data : {
 			"params":quiz_solve
 			,"test_prac_flag":"연습"			
@@ -513,7 +513,7 @@ $('.bookmark').click(function(){
             stopwatch.innerText = timeData;// HTML에 변환한 시간 넣어주기
         }
 
-        test_timer(1*5); // <-- test_time(분) * 60  넣으세요
+        test_timer(test_time*1); // <-- test_time(분) * 60  넣으세요
         var timeOut;
         function test_timer(test_time){
 	        window.onload = function startClock(){

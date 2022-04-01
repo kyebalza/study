@@ -83,8 +83,8 @@
 					    background-color: #6AA84F;
 					    height: 150;
 					    margin-bottom: 0px;
-					    position: absolute;
-					    top: 750px;
+					    position: relative;
+					    top: -71px;
 					    margin-left: 5px;
 				"/>
 			</form>

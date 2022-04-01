@@ -235,7 +235,7 @@ function bookmarkListCall(){
 					txt += '<tr>';
 					txt += '<td colspan="5">';
 					txt += '<img src="resources/img/별.png" class="bookmark '+item.quiz_no+'" onclick="bookMarkChange('+item.quiz_no+')"/>';
-					txt += item.test_year+'년 '+item.test_count+'회 '+test_cate+' '+item.quiz_no;
+					txt += item.test_year+'년 '+item.test_count+'회 '+test_cate+' '+item.quiz_index+'번';
 					txt += '</td>';
 					txt += '<td style="text-align : center;"><input type="button" value="문제풀기" onclick="bookMarkOne('+item.quiz_no+')"/></td>';
 					txt += '</tr>';

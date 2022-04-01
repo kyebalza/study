@@ -41,9 +41,6 @@
 			height: 150px;
 			resize: none;
 		}
-		a{
-			float:right;
-		}
 		.sbcom_reply_create{
 			float:right;
 		}
@@ -272,9 +269,11 @@ function del(){
 				success:function(data){
 					if(data.success==1){
 						console.log('좋아요 추가');
+						location.reload();
 					}
 					if(data.row2 == 1){
 						console.log('좋아요 취소');
+						location.reload();
 					}
 				},
 				error:function(e){

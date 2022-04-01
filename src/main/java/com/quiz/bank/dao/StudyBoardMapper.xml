@@ -165,7 +165,7 @@
  	
  	<!-- 좋아요 수 -->
  	<select id="countlike" resultType="int">
- 		SELECT COUNT(*) FROM board_like WHERE board_no = #{param1} AND board_name='study_board'
+ 		SELECT COUNT(*) FROM board_like WHERE board_no = #{param1} AND board_name='study_board' AND reply_no='0'
  	</select>
  
  	<!-- 공부게시판 신고하기 -->

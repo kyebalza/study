@@ -209,7 +209,7 @@ $('#testCategory').change(function(){
 	}
 	console.log(this.value);
 	subjectCategoryCall(this.value,"subject",$('#subjectCategory'));
-	detailSubjectCategoryCall("0","detail",$('#detailSubjectCategory'));
+	detailSubjectCategoryCall("none","detail",$('#detailSubjectCategory'));
 
 	$testCategory = this.value;
 });
@@ -423,8 +423,11 @@ function subjectCategoryCall(upperCate,Cate,id){
 			
 			var txt = '<option value="none">-- 과목카테고리 --</option>';
 			if(upperCate != 'addCate'){
-				txt += '<option value="addCate">+ 추가하기</option>';				
+				if(upperCate != 'none'){
+					txt += '<option value="addCate">+ 추가하기</option>';				
+				}
 			}
+			
 			data.Category.forEach(function(item,idx){
 				txt += '<option value="'+item.subject_cate_no+'">'+item.subject_cate+'</option>';
 			});
@@ -452,7 +455,9 @@ function detailSubjectCategoryCall(upperCate,Cate,id){
 			
 			var txt = '<option value="none">-- 시험과목 카테고리 --</option>';
 			if(upperCate != 'addCate'){
-				txt += '<option value="addCate">추가하기</option>';				
+				if(upperCate != 'none'){
+					txt += '<option value="addCate">+ 추가하기</option>';				
+				}				
 			}
 			data.Category.forEach(function(item,idx){
 				txt += '<option value="'+item.detailed_subject_cate_no+'">'+item.detailed_subject_cate+'</option>';

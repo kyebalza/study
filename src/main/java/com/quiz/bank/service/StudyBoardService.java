@@ -39,13 +39,21 @@ public class StudyBoardService {
 		} 
 		return dao.detail(board_no);
 	}
-
+	
+	//공부 게시글 삭제
 	public void delete(String board_no) {
 		logger.info("글 삭제 서비스 : {}", board_no);
 		int success = dao.delete(board_no);
 		logger.info("삭제완료 여부 : "+success);
 		
 	}
+	
+	public void filedelete(String board_no, String photo_no) {
+		logger.info("업로드 파일 삭제 서비스: {}", photo_no);
+		int success = dao.filedelete(board_no,photo_no);
+		logger.info("파일 삭제여부 : "+success);
+	}
+
 
 	public ArrayList<HashMap<String, String>> studyboard_cate() {
 		logger.info("게시판 세부 카테고리");
@@ -64,7 +72,7 @@ public class StudyBoardService {
 		return dao.test_year();
 	}
 
-
+	//공부게시판 글쓰기
 	public String write(HashMap<String, String> params, MultipartFile uploadFile) {
 		logger.info("글쓰기 서비스 도착");
 		String page = "redirect:/studyBoard/list";
@@ -87,7 +95,8 @@ public class StudyBoardService {
 		return page;
 		
 	}
-
+	
+	//업로드 파일 저장하기
 	private void saveFile(int board_no, MultipartFile uploadFile) {
 		
 		try {
@@ -133,46 +142,47 @@ public class StudyBoardService {
 		return "/studyBoard/updateForm";
 	}
 
-
-public String update(HashMap<String, String> params, MultipartFile uploadFile) {
-		logger.info("update 서비스 도착 : {},{}",params,uploadFile);
-//		int board_no = Integer.parseInt(params.get("board_no"));
-//		int photo_no =Integer.parseInt(params.get("photo_no"));
-//		logger.info("photo_no : {}",photo_no);
-//		String page = "redirect:/studyBoard/detail?board_no="+board_no;
-//		
-//		if(dao.update(params)>0) {
-//			page = "redirect:/studyBoard/detail?board_no="+board_no;
-//			if(uploadFile == null) {
-//				logger.info("사진 저장처리");
-//				saveFile(board_no,uploadFile);//파일저장 처리
-//			}else {
-//				logger.info("사진 업데이트 처리");
-//				updateFile(board_no, uploadFile,photo_no);//파일업데이트 처리
-//			}
-//		}
-		
-		int board_no = Integer.parseInt(params.get("board_no"));
-		int photo_no = 0;
-		if(params.get("photo_no") != null) {
-			photo_no =Integer.parseInt(params.get("photo_no"));
-		}
-		logger.info("photo_no : {}",photo_no);
-		String page = "redirect:/studyBoard/detail?board_no="+board_no;
-		
-		if(dao.update(params)>0) {
-			page = "redirect:/studyBoard/detail?board_no="+board_no;
-			if(uploadFile == null) {
-				logger.info("사진 저장처리");
-				saveFile(board_no,uploadFile);//파일저장 처리
-			}else {
-				logger.info("사진 업데이트 처리");
-				updateFile(board_no, uploadFile,photo_no);//파일업데이트 처리
+	//게시글 수정하기
+	public String update(HashMap<String, String> params, MultipartFile uploadFile) {
+			logger.info("update 서비스 도착 : {},{}",params,uploadFile);
+	//		int board_no = Integer.parseInt(params.get("board_no"));
+	//		int photo_no =Integer.parseInt(params.get("photo_no"));
+	//		logger.info("photo_no : {}",photo_no);
+	//		String page = "redirect:/studyBoard/detail?board_no="+board_no;
+	//		
+	//		if(dao.update(params)>0) {
+	//			page = "redirect:/studyBoard/detail?board_no="+board_no;
+	//			if(uploadFile == null) {
+	//				logger.info("사진 저장처리");
+	//				saveFile(board_no,uploadFile);//파일저장 처리
+	//			}else {
+	//				logger.info("사진 업데이트 처리");
+	//				updateFile(board_no, uploadFile,photo_no);//파일업데이트 처리
+	//			}
+	//		}
+			
+			int board_no = Integer.parseInt(params.get("board_no"));
+			int photo_no = 0;
+			if(params.get("photo_no") != null) {
+				photo_no =Integer.parseInt(params.get("photo_no"));
 			}
+			logger.info("photo_no : {}",photo_no);
+			String page = "redirect:/studyBoard/detail?board_no="+board_no;
+			
+			if(dao.update(params)>0) {
+				page = "redirect:/studyBoard/detail?board_no="+board_no;
+				if(uploadFile == null) {
+					logger.info("사진 저장처리");
+					saveFile(board_no,uploadFile);//파일저장 처리
+				}else {
+					logger.info("사진 업데이트 처리");
+					updateFile(board_no, uploadFile,photo_no);//파일업데이트 처리
+				}
+			}
+			return page;
 		}
-		return page;
-	}
 	
+	//게시글 파일 변경
 	private void updateFile(int board_no, MultipartFile uploadFile, int photo_no) {
 		
 		try {
@@ -197,12 +207,14 @@ public String update(HashMap<String, String> params, MultipartFile uploadFile) {
 		}
 		
 	}
-
+	
+	//공부게시판 리스트
 	public ArrayList<StudyBoardDTO> listCall() {
 		logger.info("listCall service : DAO 호출");
 		return dao.listCall(0,0);
 	}
-
+	
+	//공부 게시판 페이징
 	public HashMap<String, Object> list(int currPage, int pagePerCnt) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -276,12 +288,14 @@ public String update(HashMap<String, String> params, MultipartFile uploadFile) {
 		
 		return dao.countlike(board_no);
 	}
-
+	
+	//문제가져오기
 	public HashMap<String, Object> quizselect(String quiz_no) {
 		logger.info("문제가져오기 서비스");
 		return dao.quizselect(quiz_no);
 	}
-
+	
+	//게시글 신고하기
 	public HashMap<String, Object> studyReport(HashMap<String, String> params) {
 		logger.info("공부게시판 신고 서비스 : {}",params);
 		int success = dao.studyReport(params);
@@ -290,7 +304,8 @@ public String update(HashMap<String, String> params, MultipartFile uploadFile) {
 		map.put("msg", success);
 		return map;
 	}
-
+	
+	//상세보기 문제 가져오기
 	public StudyBoardDTO studyQuiz(String board_no) {
 		logger.info("상세보기 문제 가져오기 : {}", board_no);
 		return dao.studyQuiz(board_no);
@@ -331,7 +346,8 @@ public String update(HashMap<String, String> params, MultipartFile uploadFile) {
 		
 		return coment;
 	}
-
+	
+	//댓글 삭제하기
 	public void sbcomdel(String reply_no) {
 		logger.info("댓글 삭제 서비스");
 		dao.sbcomdel(reply_no);
@@ -356,7 +372,8 @@ public String update(HashMap<String, String> params, MultipartFile uploadFile) {
 		logger.info("좋아요 등록 서비스 : {}",row);
 		return row;
 	}
-
+	
+	//댓글 신고하기
 	public HashMap<String, Object> sbcomreport(HashMap<String, String> params) {
 		logger.info("공부게시판 신고 서비스 : {}",params);
 		int success = dao.sbcomreport(params);
@@ -429,6 +446,7 @@ public String update(HashMap<String, String> params, MultipartFile uploadFile) {
 		
 	}
 
+	
 
 	
 

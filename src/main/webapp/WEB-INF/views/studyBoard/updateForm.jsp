@@ -126,6 +126,7 @@
 						<c:if test="${photo != null}">
 							<input class="pdel" type="hidden" name="photo_no" value="${photo.photo_no}"/>
 							<img src="/photo/${photo.new_filename}" width="400px" height="400px"/>
+							<a href="filedelete?photo_no=${photo.photo_no}&board_no=${dto.board_no}">삭제</a>
 						</c:if>
 					</td>
 				</tr>

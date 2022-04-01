@@ -211,12 +211,12 @@ window.addEventListener('load', function () {
 							$('#quiz_no').val(data.quizInfo.quiz_no).change();
 							setTimeout(function(){
 								quiz();
-							},100);
-						}, 100);
+							},500);
+						}, 500);
 
-					}, 100);
+					}, 500);
 
-				}, 100);
+				}, 500);
 
 			},
 			error : function(e){}

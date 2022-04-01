@@ -66,7 +66,10 @@
 		#quiz{/*문제 전체*/
 			text-align: left;
 		}
-		
+		.imgArea img{
+		    width: 400px;
+	    	height: 300px;
+		}
 	</style>
 </head>
 <body>
@@ -134,6 +137,7 @@
 						<!-- 문제 -->
 						<div id="quiz">
 							<p id="quiz_content"></p>
+							<div class="imgArea"></div>
 							<p id="opt1"></p>
 							<p id="opt2"></p>
 							<p id="opt3"></p>
@@ -347,6 +351,8 @@ function selectCountListCall(test_count){
 					$('#opt'+i).html(i+'번 : '+data.quiz["option"+i]);
 				}
 				
+				var photo = '<img src="/photo/'+data.photo.new_filename+'"/>';
+				$('.imgArea').append(photo);
 				
 			},
 			error:function(e){

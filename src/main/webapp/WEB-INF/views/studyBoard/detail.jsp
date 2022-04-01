@@ -89,7 +89,10 @@
 			padding : 15px;
 			margin : auto;
 		}
-	
+		.imgArea img{
+		    width: 400px;
+	    	height: 300px;
+		}
 	</style>
 </head>
 <body>
@@ -113,7 +116,9 @@
 					<div id="quiz">
 						<c:if test="${info.quiz_no != '0' }">
 						<h4 style="padding : 15px;">${Qinfo.test_cate}-${Qinfo.subject_cate}-${Qinfo.detailed_subject_cate}<br/><br/> ${Qinfo.quiz_index}번 문제.<br/><br/> ${Qinfo.quiz_content}</h4>
-
+						<c:if test="${quiz_photo.new_filename != null}">
+							<div class="imgArea"><img class="quiz_photo" src="/photo/${quiz_photo.new_filename}" alt="quiz_img"/></div>
+						</c:if>
 						<!-- 문제보기 -->
 						<p style="padding : 15px;" class="option_num">보기1 : ${Qinfo.option1}</p>
 						<p style="padding : 15px;" class="option_num">보기2 : ${Qinfo.option2}</p>

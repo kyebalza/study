@@ -99,6 +99,8 @@ HashMap<String, String> quizinfo(String quiz_no);
 
 int filedelete(String board_no, String photo_no);
 
+HashMap<String, String> studyQuiz_photo(int quiz_no);
+
 
 
 

@@ -109,6 +109,10 @@
 	WHERE board_no = #{param1} limit 1;
 	</select>
 	
+	<select id="studyQuiz_photo" resultType="HashMap">
+		SELECT new_filename, board_no FROM photo WHERE board_name = 'quiz' AND board_no= #{param1}
+	</select>
+	
 	<!-- 상세보기 파일 가져오기 -->
 	<select id="photo" resultType="StudyBoard">
 		SELECT photo_no,ori_filename, new_filename FROM photo 

@@ -189,6 +189,9 @@ public class StudyBoardController {
 		//문제가져오기
 		StudyBoardDTO qdto = service.studyQuiz(board_no);
 		model.addAttribute("Qinfo", qdto);
+		HashMap<String, String> quiz_photo = service.studyQuiz_photo(qdto.getQuiz_no());
+		model.addAttribute("quiz_photo", quiz_photo);
+		
 		//사진 가져오기
 		StudyBoardDTO photo = service.photo(board_no);
 		logger.info("사진 : {}",photo);
@@ -318,6 +321,8 @@ public class StudyBoardController {
 		logger.info("공부게시판 문제불러오기 요청 : {}",quiz_no);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("quiz", service.quizselect(quiz_no));
+		HashMap<String, String> quiz_photo = service.studyQuiz_photo(Integer.parseInt(quiz_no));
+		map.put("photo", quiz_photo);
 		return map;
 	}
 	

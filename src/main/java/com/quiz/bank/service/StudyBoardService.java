@@ -445,6 +445,10 @@ public class StudyBoardService {
 		return dao.quizinfo(quiz_no);
 		
 	}
+	//상세보기 문제에 맞는 사진 불러오기 
+	public HashMap<String, String> studyQuiz_photo(int quiz_no) {
+		return dao.studyQuiz_photo(quiz_no);
+	}
 
 	
 

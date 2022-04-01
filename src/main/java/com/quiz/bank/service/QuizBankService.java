@@ -180,7 +180,7 @@ public class QuizBankService {
 		ArrayList<HashMap<String, String>> per = new ArrayList<HashMap<String,String>>();
 		for (HashMap<String, String> quizAllCnt : quizAllCntList) {
 			for (HashMap<String, String> quizRightCnt : quizRightCntList) {
-				if(quizAllCnt.get("quiz_no") == quizRightCnt.get("quiz_no")) {
+				if(String.valueOf(quizAllCnt.get("quiz_no")).equals(String.valueOf(quizRightCnt.get("quiz_no"))) ) {
 					logger.info("valueof 전 : {}",quizAllCnt.get("all"));
 					logger.info("valueof 전 : {}",quizRightCnt.get("right"));
 					logger.info("valueof 후 : {}",String.valueOf(quizAllCnt.get("all")));
@@ -195,6 +195,7 @@ public class QuizBankService {
 					
 					String percent = Integer.toString(percent2);
 					String quiz_no = String.valueOf(quizRightCnt.get("quiz_no"));
+					logger.info("퀴즈 통계 : {}",quiz_no);
 					
 					HashMap<String, String> asd =new HashMap<String, String>();
 					asd.put("quiz_no", quiz_no);
@@ -216,7 +217,7 @@ public class QuizBankService {
 			logger.info(comp_no);
 			for(int i2 = 0; i2 <per.size(); ++i2) {
 				String comp_no2 = String.valueOf(per.get(i2).get("quiz_no"));
-				logger.info("통계넘버"+comp_no2);
+				//logger.info("통계넘버"+comp_no2);
 				if(comp_no.equals(comp_no2)) {
 					logger.info("통계 값 담김");
 					testList.get(i).put("percent",String.valueOf(per.get(i2).get("percent")));
@@ -400,7 +401,7 @@ public class QuizBankService {
 		ArrayList<HashMap<String, String>> per = new ArrayList<HashMap<String,String>>();
 		for (HashMap<String, String> quizAllCnt : quizAllCntList) {
 			for (HashMap<String, String> quizRightCnt : quizRightCntList) {
-				if(quizAllCnt.get("quiz_no") == quizRightCnt.get("quiz_no")) {
+				if(String.valueOf(quizAllCnt.get("quiz_no")).equals(String.valueOf(quizRightCnt.get("quiz_no"))) ) {
 					String right = String.valueOf(quizRightCnt.get("right"));
 					String all = String.valueOf(quizAllCnt.get("all"));
 					
@@ -527,7 +528,7 @@ public class QuizBankService {
 		ArrayList<HashMap<String, String>> per = new ArrayList<HashMap<String,String>>();
 		for (HashMap<String, String> quizAllCnt : quizAllCntList) {
 			for (HashMap<String, String> quizRightCnt : quizRightCntList) {
-				if(quizAllCnt.get("quiz_no") == quizRightCnt.get("quiz_no")) {
+				if(String.valueOf(quizAllCnt.get("quiz_no")).equals(String.valueOf(quizRightCnt.get("quiz_no"))) ) {
 					String right = String.valueOf(quizRightCnt.get("right"));
 					String all = String.valueOf(quizAllCnt.get("all"));
 					

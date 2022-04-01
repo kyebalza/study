@@ -28,32 +28,32 @@
 	</select>
 
 	<!-- 3.시험보기 페이지 및 시험문제 가져오기 -->
-	<select id="testFrom" resultType="hashmap">
+	<select id="testFrom" resultType="HashMap">
 		SELECT * FROM quiz
 			WHERE del_flag= 'false' AND test_no=#{param1}
 			ORDER BY quiz_index
 	</select>
 
 	<!-- 3-1. 문제통계 -->
-	<select id="quizAllCnt" resultType="hashmap">
+	<select id="quizAllCnt" resultType="HashMap">
 		SELECT quiz_no , count(quiz_no) as 'all' FROM quiz_solve  GROUP BY quiz_no
 	</select>
 	
-	<select id="quizRightCnt" resultType="hashmap">
+	<select id="quizRightCnt" resultType="HashMap">
 		SELECT quiz_no , count(quiz_no) as 'right' FROM quiz_solve  WHERE correct_wrong = TRUE GROUP BY quiz_no
 	</select>
 	
 	<!-- 3-2. 사진값 가져오기 -->
-	<select id="quiz_Photo" resultType="hashmap">
+	<select id="quiz_Photo" resultType="HashMap">
 		SELECT new_filename, board_no FROM photo WHERE board_name = 'quiz'
 	</select>
 	
 	<!-- 3-3. 북마크 값 가져오기 -->
-	<select id="quiz_bookmark" resultType="hashmap">
+	<select id="quiz_bookmark" resultType="HashMap">
 		select * from bookmark where user_id =#{param1}
 	</select>
 	<!-- 4. 시험명 검색기능 -->
-	<select id="search" parameterType="hashmap" 
+	<select id="search" parameterType="HashMap" 
 		resultType="TestCategory">
 		SELECT test_cate_no, test_cate FROM test_category WHERE
 				test_cate LIKE CONCAT('%',#{keyword},'%') AND del_flag = 'false' 
@@ -101,23 +101,23 @@
 	</update>
 	
 	<!-- 9. 결과가져오기 -->
-	 <select id="resultFrom" resultType="hashmap">
+	 <select id="resultFrom" resultType="HashMap">
 		SELECT * FROM quiz INNER JOIN quiz_solve USING (quiz_no)
 			WHERE test_prac_flag = #{param1} AND del_flag= 'false';
 	</select>
 	<!-- 
-	<select id="resultFrom" resultType="hashmap">
+	<select id="resultFrom" resultType="HashMap">
 		select * from quiz inner join quiz_solve using (quiz_no) where test_prac_flag = #{param1} and del_flag= 'false'
 	</select>
 	 -->
 	
 	<!-- 9-1.시험결과 가져오기 -->
-	<select id="getTestResult" resultType="hashmap">
+	<select id="getTestResult" resultType="HashMap">
 		select * from test_result where test_result_no= #{param1}
 	</select>
 	
 	<!-- 9-2. 시험 기본 정보들 가져오기 -->
-	<select id="test_info" resultType="hashmap">
+	<select id="test_info" resultType="HashMap">
 		SELECT tl.test_cate_no, tl.test_no, tl.test_year, tl.test_month, tl.test_count , tl.test_passrate, tl.test_time, tl.test_fullscore , tl.del_flag  AS test_list_del, tl.pass_criterion,
 			 tc.test_cate, tc.del_flag AS test_cate_del, tc.pass_criterion AS test_cate_pass,
 			 sc.subject_cate , sc.del_flag AS subject_cate_del, sc.pass_criterion AS subject_category_pass 

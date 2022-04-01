@@ -256,7 +256,7 @@ function mainStatics(){
 				});
 			var manyCorrectPer = '';
 			data.manyCorrectPer.forEach(function(item,idx){
-				manyCorrectPer += '<li class="a">'+item.user_id+'  '+item.per*100+'% </li>';
+				manyCorrectPer += '<li class="a">'+item.user_id+'  '+(item.per*100).toFixed(2)+'% </li>';
 				});
 			
 				

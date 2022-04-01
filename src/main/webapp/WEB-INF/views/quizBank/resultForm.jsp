@@ -240,9 +240,9 @@
 		 소요시간 : ${testResult.elapse_time}
 	</div>
 			<c:forEach items="${test}" var="test">
-				<hr/>
 				<input type="hidden" value="${test.quiz_no}"/>
 			<div class="quiz_form ${test.quiz_index}">
+				<hr/>
 			
 				<c:choose>
 					<c:when test="${test.correct_wrong eq true}">

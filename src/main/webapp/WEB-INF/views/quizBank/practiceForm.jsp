@@ -246,10 +246,10 @@
         </h1>
 	</div>
 			<c:forEach items="${test}" var="test">
-			<hr/>
 			<input type="hidden" class="test_no ${test.quiz_index}" value="${test.test_no}">
 			<!-- 지울 것 : <c:set var="i" value="${i+1}"/> -->
 			<div class="quiz_form ${test.quiz_index}">
+			<hr/>
 			<input type="hidden" class="quiz_index ${test.quiz_index}" value="${test.quiz_index}">
 					<input type="hidden" value="${test.quiz_no}"/>
 					<c:choose>

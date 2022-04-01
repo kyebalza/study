@@ -241,8 +241,6 @@
 						</c:otherwise> 
 					</c:choose>  
 				<br/>
-				<div class="correct"><img src="resources/img/correct_circle.png"/></div>
-				<div class="wrong"><img src="resources/img/wrong_x.png"/></div>
 				<div class="quiz_titleArea"><input type="hidden" class="quiz_no ${test.quiz_index}" value="${test.quiz_no}"> ${test.quiz_index}번. ${test.quiz_content}</div>
 				<br/>
 				<c:if test="${test.percent != null}">
@@ -290,11 +288,7 @@
 					</c:choose>
 				</div>
 				<input type="hidden" class="quiz_answer ${test.quiz_index}" value="${test.quiz_answer}">
-				<div class="answerArea"><h3>정답 : ${test.quiz_answer}</h3></div>
-				<div class="explationArea"><h3>해설 : ${test.quiz_explation}</h3></div>
 			</div>
-			<input type="button" class="question" onclick="question()" value="질문하기"/>
-			<input type="button" class="error" onclick="error()" value="오류신고"/>
 		</c:forEach>
 			<input type="hidden" class="var" value="${i}">
 		<div id="bntArea">

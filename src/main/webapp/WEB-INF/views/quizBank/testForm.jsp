@@ -497,7 +497,7 @@ $('.bookmark').click(function(){
         }
         
         */
-        test_timer(100*60); // <-- test_time(분) * 60  넣으세요
+        test_timer(1*60); // <-- test_time(분) * 60  넣으세요
         var timeOut;
         function test_timer(test_time){
 	        window.onload = function startClock(){

@@ -208,13 +208,24 @@ var totalPage = 2;
 testCategoryCall("0","test",$('#test_cate_no'));
 var list_call = 0; 
 
+//2.과목 카테고리 건들때
+$('#subject_cate_no').change(function(){
+	console.log(this.value);
+	detailSubjectCategoryCall(this.value,"detail",$('#detailed_subject_cate_no'));
+});
+
+
 $('#test_cate_no').change(function(){
+	detailSubjectCategoryCall("0","detail",$('#detailed_subject_cate_no'));
+	subjectCategoryCall(this.value,"subject",$('#subject_cate_no'));
+	selectYearListCall($(this).val());
 	search(currPage,10);
 	list_call = 0;
 	currPage = 1;
 	
 });
 $('#test_year').change(function(){
+	selectMonthListCall($(this).val());
 	search(currPage,10);
 	list_call = 0;
 	currPage = 1;
@@ -314,6 +325,8 @@ function search(page,cnt){
 
 function listDraw(list){
 	var txt = '';
+	
+	
 		list.forEach(function(item,idx){
 			//console.log(item);
 			txt += '<tr>';
@@ -343,6 +356,10 @@ function listDraw(list){
 			
 			txt += '</tr>';
 		});
+		if(list.length == 0){
+			txt = '<td colspan="19" style="text-align : center;">검색 결과가 없습니다.</td>';
+		}
+		
 		$('#quizList').empty();
 		$('#quizList').append(txt);
 }
@@ -389,8 +406,57 @@ function updateQuizState(e){
 	
 	
 }
+function selectYearListCall(test_cate_no){
 
+	$.ajax({
+		url : 'studyBoard/selectYearListCall',
+		type : 'get',
+		data : {'test_cate_no':test_cate_no},
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			var opt = '<option value="">전 연도</option>';
+			
 
+			data.year.forEach(function(item,idx){
+				opt += '<option value="'+item.test_year+'">'+item.test_year+' 년</option>';
+				console.log(item);
+			});
+			$('#test_year').empty();
+			$('#test_count').empty();
+			/*
+			$('#quiz_no').empty();
+			*/
+			$('#test_year').append(opt);
+			$('#test_count').append('<option value="">전 회차</option>');
+		
+		},
+		error : function(e){console.log(e)},		
+	});
+};
+function selectMonthListCall(test_year){
+	console.log(test_year);
+	$.ajax({
+		url : 'studyBoard/selectMonthListCall',
+		type : 'get',
+		data : {'test_cate_no':$('#test_cate_no').val(),'test_year':test_year},
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			var opt = '<option value="">전 회차</option>';
+			
+
+			data.count.forEach(function(item,idx){
+				opt += '<option value="'+item.test_count+'">'+item.test_count+' 회</option>';
+			});
+			$('#test_count').empty();
+			$('#test_count').append(opt);
+
+		},
+		error : function(e){console.log(e)},		
+	});
+};
+/*
 test_time(new Date());
 function test_time(date){
 	var txt = '<option value="">전체</option>';
@@ -400,7 +466,7 @@ function test_time(date){
 	console.log(txt);
 	$('#test_year').append(txt);
 }
-
+*/
 //카테고리 불러오기. 상위카테고리 선택한거(value),부를 카테고리,선택자
 function testCategoryCall(upperCate,Cate,id){
 	var obj = {upperCate:upperCate,Cate:Cate};
@@ -471,17 +537,9 @@ function detailSubjectCategoryCall(upperCate,Cate,id){
 		}
 	});
 }
-//1.시험카테고리 건들때
-$('#test_cate_no').change(function(){
-	console.log(this.value);
-	subjectCategoryCall(this.value,"subject",$('#subject_cate_no'));
-});
-//2.과목 카테고리 건들때
-$('#subject_cate_no').change(function(){
-	console.log(this.value);
-	detailSubjectCategoryCall(this.value,"detail",$('#detailed_subject_cate_no'));
-});
+
 //
+/*
 $.ajax({  
 	url : 'adminQuizListQuizCountList',
 	type : 'get',
@@ -497,6 +555,7 @@ $.ajax({
 	},
 	error : function(e){console.log(e)}	
 });
+*/
 subjectCategoryCall("0","subject",$('#subject_cate_no'));
 detailSubjectCategoryCall("0","detail",$('#detailed_subject_cate_no'));
 </script>

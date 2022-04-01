@@ -230,19 +230,32 @@ public class AdminStudyService {
 		int offset= ((currPage-1) * pagePerCnt-1)>=0 ? ((currPage-1) * pagePerCnt-1) :0;
 		//0-9,10-19,20-29,30-39
 		logger.info("offset : {}",offset);
-		int totalCount = dao.allCount(search_info); // bbs테이블의 모든 글의 갯수
+		int totalCount = 0;
+		if(search_info.get("test_cate_no").equals("") && search_info.get("quiz_content").equals("")) {
+			totalCount = dao.allCountAll();			
+		} else {
+			totalCount = dao.allCount(search_info); // bbs테이블의 모든 글의 갯수			
+		}
+		
+		
 		logger.info("totalCount : {}",totalCount);
 		//만들수 있는 총 페이지의 수(전체 갯수/보여줄 수)
 		int range = totalCount%pagePerCnt > 0 ? (totalCount/pagePerCnt) +1 : (totalCount/pagePerCnt) ;
 		map.put("pages",range);
 		search_info.put("pagePerCnt", Integer.toString(pagePerCnt));
 		search_info.put("offset", Integer.toString(offset));
-		
-		
+		ArrayList<HashMap<String, String>> quiz_search_list = new ArrayList<HashMap<String,String>>();
+		if(search_info.get("test_cate_no").equals("") && search_info.get("quiz_content").equals("")) {
+			
+			logger.info("test_cate_no 이 null,All검색!");
+			quiz_search_list = dao.adminSearchQuizAll(search_info);	
+		} else {
+			logger.info("test_cate_no 이Not null,검색!");
+			quiz_search_list = dao.adminSearchQuiz(search_info);			
+		}
 		
 		logger.info("{}", search_info);
 		logger.info("검색할 값들 : {}", search_info);
-		ArrayList<HashMap<String, String>> quiz_search_list = dao.adminSearchQuiz(search_info);
 		logger.info("검색 결과 : {}", quiz_search_list);
 
 		map.put("quiz_search_list", quiz_search_list);

@@ -178,6 +178,8 @@
 </div>
 </body>
 <script>
+selectTestCate(0);
+
 $('select').change(function(){
 		console.log('카테고리 선택!');
 		selectTestCate(this.value);	

@@ -234,6 +234,12 @@ function listDraw(list){
 			}
 			txt += '</tr>';
 		});
+		
+		if(list.length == 0){
+			txt = '<td colspan="5" style="text-align : center;">검색 결과가 없습니다.</td>';
+		}
+		
+		
 		$('#quiz_report_list').empty();
 		$('#quiz_report_list').append(txt);
 }

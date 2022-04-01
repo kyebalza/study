@@ -140,6 +140,10 @@ public interface AdminStudyDAO {
 
 	ArrayList<HashMap<String, String>> adminTestListCallAll();
 
+	ArrayList<HashMap<String, String>> adminSearchQuizAll(HashMap<String, String> search_info);
+
+	int allCountAll();
+
 
 
 }

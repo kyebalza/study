@@ -130,7 +130,14 @@
 	</where>
 	ORDER BY quiz_no DESC LIMIT ${pagePerCnt} OFFSET ${offset}
 	</select>
-	
+	<select id="adminSearchQuizAll" resultType="hashmap" parameterType="hashmap">
+	SELECT * FROM quiz q
+	LEFT JOIN test_category tc USING (test_cate_no)
+	LEFT JOIN subject_category sc USING (subject_cate_no)
+	LEFT JOIN detailed_subject_category dsc USING (detailed_subject_cate_no)
+	LEFT JOIN test_list t USING (test_no)	
+	ORDER BY quiz_no DESC LIMIT ${pagePerCnt} OFFSET ${offset}
+	</select>	
 	<select id="allCount" resultType="int">
 	SELECT count (quiz_no) FROM quiz q
 	LEFT JOIN test_category tc USING (test_cate_no)
@@ -158,7 +165,9 @@
 		</if>
 	</where>
 	</select>
-	
+	<select id="allCountAll" resultType="int">
+	SELECT count (quiz_no) FROM quiz
+	</select>	
 	<select id="adminUpdateQuizForm" resultType="hashmap">
 	SELECT * FROM quiz LEFT JOIN quiz_photo ON (quiz.quiz_no = quiz_photo.board_no) WHERE quiz_no = #{param1}
 	</select>

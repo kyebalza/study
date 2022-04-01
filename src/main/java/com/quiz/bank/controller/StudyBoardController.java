@@ -245,6 +245,15 @@ public class StudyBoardController {
 		
 	}
 	
+	/*공부 게시글 수정 업로드파일 삭제하기*/
+	@RequestMapping(value = "/studyBoard/filedelete", method = RequestMethod.GET)
+	public String filedelete(Model model, @RequestParam String board_no, @RequestParam String photo_no) {
+		logger.info("업로드파일 삭제요청 : {}", photo_no);
+		service.filedelete(board_no,photo_no);
+		return "redirect:/studyBoard/updateForm?board_no="+board_no;
+		
+	}
+	
 	
 	/*공부 게시글 삭제- 도연*/
 	@RequestMapping(value = "/studyBoard/delete", method = RequestMethod.GET)

@@ -129,9 +129,14 @@
 				ON DUPLICATE KEY UPDATE ori_filename = #{param3}, new_filename = #{param4}
 	</insert>
 	
+	<!-- 업로드 파일 삭제하기 -->
+	<delete id="filedelete">
+		DELETE FROM photo WHERE board_no = #{param1}
+	</delete>
+	
 	<!-- 삭제하기 -->
 	<delete id="delete">
-		DELETE FROM study_board WHERE board_no = #{param1}
+		DELETE FROM study_board WHERE board_no = #{param1} AND photo_no =#{param2}
 	</delete>
 	
 	

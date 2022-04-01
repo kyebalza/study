@@ -97,6 +97,8 @@ ArrayList<HashMap<String, String>> quiz_no_ajax(String test_cate_no, String test
 
 HashMap<String, String> quizinfo(String quiz_no);
 
+int filedelete(String board_no, String photo_no);
+
 
 
 

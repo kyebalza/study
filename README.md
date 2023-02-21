@@ -97,6 +97,7 @@
 <details>
 <summary><strong> 게시판 기능 </strong></summary>
 <div markdown="1">   
+  
   - 글 작성 기능
     - 사진 등록 기능
   - 글 수정 기능

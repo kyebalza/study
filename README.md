@@ -8,6 +8,8 @@
 
 # 팀 노션
 
+✔ [팀 노션 Click!](https://www.notion.so/2-EVA-Study-5bcf5c88b1b746e98990df52feadc4b0)
+
 
 # ERD
 <details>
